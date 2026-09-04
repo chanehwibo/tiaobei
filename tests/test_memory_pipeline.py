@@ -342,6 +342,51 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertTrue(all(item.lexical_score >= 0 for item in first))
         self.assertTrue(all(item.semantic_score >= 0 for item in first))
 
+    def test_search_requires_unambiguous_scope_and_can_abstain(self) -> None:
+        records = DataIngestionPipeline().ingest(
+            [
+                {
+                    "id": "tenant-a-doc",
+                    "tenant_id": "tenant-a",
+                    "user_id": "user-a",
+                    "source_type": "manual_config",
+                    "content": "模板：甲租户报销模板包含金额和票据字段。",
+                    "metadata": {"title": "甲租户报销模板"},
+                },
+                {
+                    "id": "tenant-b-doc",
+                    "tenant_id": "tenant-b",
+                    "user_id": "user-b",
+                    "source_type": "manual_config",
+                    "content": "模板：乙租户报销模板包含金额和票据字段。",
+                    "metadata": {"title": "乙租户报销模板"},
+                },
+            ]
+        )
+        store = MemoryStore()
+        for memory in KnowledgeExtractor().extract(records):
+            store.upsert_knowledge(memory)
+
+        with self.assertRaises(ValueError):
+            store.search_knowledge("报销模板", top_k=5)
+        tenant_a = store.search_knowledge(
+            "报销模板",
+            top_k=5,
+            tenant_id="tenant-a",
+            user_id="user-a",
+        )
+        self.assertEqual([item.title for item in tenant_a], ["甲租户报销模板"])
+        self.assertEqual(
+            store.search_knowledge(
+                "火星火箭发动机",
+                top_k=5,
+                tenant_id="tenant-a",
+                user_id="user-a",
+                min_score=0.8,
+            ),
+            [],
+        )
+
     def test_kylin_embedding_provider_adapter_contract(self) -> None:
         class FakeKylinClient:
             def embed_query(self, text: str) -> dict[str, list[float]]:

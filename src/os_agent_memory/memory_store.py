@@ -221,6 +221,11 @@ class MemoryStore:
         *,
         include_pending: bool = False,
         candidate_limit: int | None = None,
+        tenant_id: str | None = None,
+        user_id: str | None = None,
+        scene: str | None = None,
+        min_score: float = 0.08,
+        include_shared: bool = True,
     ) -> list[SearchResult]:
         if top_k <= 0:
             raise ValueError("top_k must be positive")
@@ -231,11 +236,21 @@ class MemoryStore:
             candidate_limit = max(64, top_k * 12)
         if candidate_limit < top_k:
             raise ValueError("candidate_limit must be greater than or equal to top_k")
+        if not 0.0 <= min_score <= 1.0:
+            raise ValueError("min_score must be between zero and one")
 
         allowed_statuses = {MemoryStatus.ACTIVE}
         if include_pending:
             allowed_statuses.add(MemoryStatus.CONFLICT_PENDING)
-        candidates = [item for item in self.knowledge.values() if item.status in allowed_statuses]
+        tenant_id, user_id = self._resolve_search_scope(tenant_id, user_id, allowed_statuses)
+        candidates = [
+            item
+            for item in self.knowledge.values()
+            if item.status in allowed_statuses
+            and item.tenant_id == tenant_id
+            and (item.user_id == user_id or (include_shared and item.user_id == "*"))
+            and (scene is None or item.scene in {scene, "default", "global"})
+        ]
         query_tokens = self._lexical_tokens(query)
         lexical_scores = {
             item.id: self._lexical_similarity(query_tokens, self._tokens_for(item))
@@ -263,7 +278,7 @@ class MemoryStore:
             semantic_score = cosine_similarity(query_embedding, item.embedding)
             lexical_score = lexical_scores[item.id]
             score = 0.65 * semantic_score + 0.3 * lexical_score + 0.05 * item.authority
-            if score <= 0.0:
+            if score < min_score:
                 continue
             scored.append(
                 SearchResult(
@@ -279,6 +294,25 @@ class MemoryStore:
             )
         scored.sort(key=lambda result: result.score, reverse=True)
         return scored[:top_k]
+
+    def _resolve_search_scope(
+        self,
+        tenant_id: str | None,
+        user_id: str | None,
+        allowed_statuses: set[MemoryStatus],
+    ) -> tuple[str, str]:
+        visible = [item for item in self.knowledge.values() if item.status in allowed_statuses]
+        if tenant_id is None:
+            tenants = {item.tenant_id for item in visible}
+            if len(tenants) > 1:
+                raise ValueError("tenant_id is required when the store contains multiple tenants")
+            tenant_id = next(iter(tenants), "default")
+        if user_id is None:
+            users = {item.user_id for item in visible if item.tenant_id == tenant_id and item.user_id != "*"}
+            if len(users) > 1:
+                raise ValueError("user_id is required when the tenant contains multiple users")
+            user_id = next(iter(users), "default_user")
+        return tenant_id, user_id
 
     def rebuild_index(self) -> None:
         self._token_index.clear()
