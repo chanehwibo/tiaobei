@@ -8,6 +8,7 @@ from pathlib import Path
 from .evaluation import run_evaluation_suite, run_smoke_evaluation
 from .embeddings import KylinEmbeddingConfig, check_kylin_embedding
 from .compatibility import collect_compatibility_report, write_compatibility_report
+from .diagnostics import run_preflight
 from .benchmark import run_scale_benchmark, write_benchmark_report
 from .ingestion import DataIngestionPipeline
 from .knowledge import KnowledgeExtractor
@@ -158,6 +159,14 @@ def main() -> None:
     compat_check.add_argument("--output-json", required=True, type=Path, help="JSON report path")
     compat_check.add_argument("--output-md", required=True, type=Path, help="Markdown report path")
 
+    doctor = subparsers.add_parser("doctor", help="Preflight the local demonstration")
+    doctor.add_argument("--workspace", default=Path.cwd(), type=Path)
+    doctor.add_argument("--input", required=True, type=Path)
+    doctor.add_argument("--suite", required=True, type=Path)
+    doctor.add_argument("--host", default="127.0.0.1")
+    doctor.add_argument("--port", default=8765, type=int)
+    doctor.add_argument("--sdk-module", help="Optional real Kylin SDK module")
+
     args = parser.parse_args()
     if args.command == "demo":
         run_demo(args.input)
@@ -217,6 +226,19 @@ def main() -> None:
             markdown_path=args.output_md,
         )
         print(json.dumps(report, ensure_ascii=False, indent=2))
+    elif args.command == "doctor":
+        sdk_config = KylinEmbeddingConfig(module_name=args.sdk_module) if args.sdk_module else None
+        result = run_preflight(
+            workspace=args.workspace,
+            input_path=args.input,
+            suite_path=args.suite,
+            host=args.host,
+            port=args.port,
+            sdk_config=sdk_config,
+        )
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        if not result["ready_for_local_demo"]:
+            raise SystemExit(2)
 
 
 if __name__ == "__main__":

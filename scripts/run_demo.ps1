@@ -1,26 +1,82 @@
 param(
-    [string]$ReportPath = ".\data\eval\latest_report.json",
-    [string]$StorePath = ".\data\memory.sqlite"
+    [string]$ReportPath = ".\artifacts\runtime\latest_evaluation.json",
+    [string]$StorePath = ".\artifacts\runtime\memory.sqlite",
+    [string]$PythonCommand = "python",
+    [string]$HostAddress = "127.0.0.1",
+    [int]$Port = 8765,
+    [string]$SdkModule = "",
+    [switch]$SkipTests,
+    [switch]$NoServer
 )
 
 $ErrorActionPreference = "Stop"
-
 $ProjectRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $ProjectRoot
 $env:PYTHONPATH = "$ProjectRoot\src"
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$InputPath = ".\data\samples\events.jsonl"
+$SuitePath = ".\data\eval\office_memory_eval_v2.json"
 
-Write-Host "== Demo: sample memory pipeline =="
-python -m os_agent_memory.cli demo --input ".\data\samples\events.jsonl"
+function Invoke-PythonStep {
+    param([string]$Title, [string[]]$Arguments)
+    Write-Host "`n== $Title ==" -ForegroundColor Cyan
+    & $PythonCommand @Arguments
+    if ($LASTEXITCODE -ne 0) {
+        throw "$Title failed with exit code $LASTEXITCODE"
+    }
+}
 
-Write-Host "`n== Evaluation: summary + full report =="
-python -m os_agent_memory.cli evaluate --suite ".\data\eval\office_memory_eval.json" --top-k 3 --summary-only --output $ReportPath
+$DoctorArguments = @(
+    "-m", "os_agent_memory.cli", "doctor",
+    "--workspace", ".",
+    "--input", $InputPath,
+    "--suite", $SuitePath,
+    "--host", $HostAddress,
+    "--port", "$Port"
+)
+if ($SdkModule) {
+    $DoctorArguments += @("--sdk-module", $SdkModule)
+}
 
-Write-Host "`n== Build SQLite memory store =="
-python -m os_agent_memory.cli build-store --input ".\data\samples\events.jsonl" --output $StorePath
+Invoke-PythonStep "Preflight" $DoctorArguments
+Invoke-PythonStep "Sample memory pipeline" @(
+    "-m", "os_agent_memory.cli", "demo", "--input", $InputPath
+)
+Invoke-PythonStep "Frozen test evaluation" @(
+    "-m", "os_agent_memory.cli", "evaluate",
+    "--suite", $SuitePath,
+    "--split", "test",
+    "--top-k", "3",
+    "--summary-only",
+    "--output", $ReportPath
+)
+Invoke-PythonStep "Build SQLite v2 store" @(
+    "-m", "os_agent_memory.cli", "build-store",
+    "--input", $InputPath,
+    "--output", $StorePath
+)
 
-Write-Host "`n== Unit tests =="
-python -m unittest discover -s tests
+if (-not $SkipTests) {
+    Invoke-PythonStep "Automated tests" @(
+        "-m", "unittest", "discover", "-s", "tests", "-v"
+    )
+}
 
-Write-Host "`nDemo finished."
+Write-Host "`nLocal demo verification finished." -ForegroundColor Green
 Write-Host "Report: $ReportPath"
 Write-Host "SQLite store: $StorePath"
+if ($NoServer) {
+    Write-Host "Dashboard was not started because -NoServer was supplied."
+    exit 0
+}
+
+Write-Host "Dashboard: http://${HostAddress}:$Port" -ForegroundColor Green
+Write-Host "Press Ctrl+C to stop the local server."
+& $PythonCommand -m os_agent_memory.cli serve `
+    --input $InputPath `
+    --database $StorePath `
+    --host $HostAddress `
+    --port $Port
+if ($LASTEXITCODE -ne 0) {
+    throw "Dashboard failed with exit code $LASTEXITCODE"
+}
