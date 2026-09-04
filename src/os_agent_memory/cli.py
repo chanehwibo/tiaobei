@@ -6,6 +6,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from .evaluation import run_evaluation_suite, run_smoke_evaluation
+from .embeddings import KylinEmbeddingConfig, check_kylin_embedding
 from .benchmark import run_scale_benchmark, write_benchmark_report
 from .ingestion import DataIngestionPipeline
 from .knowledge import KnowledgeExtractor
@@ -139,6 +140,14 @@ def main() -> None:
     benchmark_command.add_argument("--output-json", required=True, type=Path, help="JSON report path")
     benchmark_command.add_argument("--output-md", required=True, type=Path, help="Markdown report path")
 
+    sdk_check = subparsers.add_parser("kylin-sdk-check", help="Validate a configurable Kylin embedding SDK")
+    sdk_check.add_argument("--module", default="kylin_embedding_sdk", help="Importable SDK module")
+    sdk_check.add_argument("--factory", help="Optional client factory name")
+    sdk_check.add_argument("--method", default="encode", help="Embedding method name")
+    sdk_check.add_argument("--response-path", help="Optional dotted vector path, e.g. data.embedding")
+    sdk_check.add_argument("--factory-kwargs", default="{}", help="JSON object passed to the client factory")
+    sdk_check.add_argument("--output", type=Path, help="Optional JSON report path")
+
     args = parser.parse_args()
     if args.command == "demo":
         run_demo(args.input)
@@ -164,6 +173,23 @@ def main() -> None:
         sizes = [int(value.strip()) for value in args.sizes.split(",") if value.strip()]
         result = run_scale_benchmark(sizes, rounds=args.rounds, top_k=args.top_k)
         write_benchmark_report(result, json_path=args.output_json, markdown_path=args.output_md)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    elif args.command == "kylin-sdk-check":
+        factory_kwargs = json.loads(args.factory_kwargs)
+        if not isinstance(factory_kwargs, dict):
+            raise ValueError("--factory-kwargs must be a JSON object")
+        result = check_kylin_embedding(
+            KylinEmbeddingConfig(
+                module_name=args.module,
+                factory_name=args.factory,
+                method_name=args.method,
+                response_path=args.response_path,
+                factory_kwargs=factory_kwargs,
+            )
+        )
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

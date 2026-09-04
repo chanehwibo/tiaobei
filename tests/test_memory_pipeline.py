@@ -6,13 +6,20 @@ import json
 import sqlite3
 import sys
 import tempfile
+import types
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from os_agent_memory.embeddings import CallableEmbeddingProvider, HashEmbedding, KylinEmbeddingProvider
+from os_agent_memory.embeddings import (
+    CallableEmbeddingProvider,
+    HashEmbedding,
+    KylinEmbeddingConfig,
+    KylinEmbeddingProvider,
+    check_kylin_embedding,
+)
 from os_agent_memory.cli import run_evaluate
 from os_agent_memory.evaluation import (
     _forget_details,
@@ -407,6 +414,60 @@ class MemoryPipelineTest(unittest.TestCase):
         broken_provider = KylinEmbeddingProvider(object(), method_name="embed_query")
         with self.assertRaises(AttributeError):
             broken_provider.encode("报销流程")
+
+    def test_kylin_embedding_adapter_supports_nested_config_and_self_check(self) -> None:
+        class FakeClient:
+            def vectorize(self, text: str) -> dict[str, object]:
+                return {"payload": {"items": [{"dense": [len(text), 2.0, 1.0]}]}}
+
+        provider = KylinEmbeddingProvider(
+            FakeClient(),
+            method_name="vectorize",
+            response_path="payload.items.0.dense",
+        )
+        check = provider.self_check("test")
+        self.assertTrue(check["compatible"])
+        self.assertEqual(check["dimension"], 3)
+        self.assertEqual(check["normalized_norm"], 1.0)
+
+        bad = KylinEmbeddingProvider(
+            FakeClient(), method_name="vectorize", response_path="missing.vector"
+        ).self_check()
+        self.assertFalse(bad["compatible"])
+        self.assertEqual(bad["error_type"], "KeyError")
+
+    def test_kylin_embedding_check_loads_factory_and_hides_secret_values(self) -> None:
+        module_name = "fake_kylin_sdk_for_test"
+        module = types.ModuleType(module_name)
+
+        class FakeClient:
+            def embed(self, _text: str) -> dict[str, object]:
+                return {"data": {"embedding": [3.0, 4.0]}}
+
+        module.Client = lambda **_kwargs: FakeClient()
+        sys.modules[module_name] = module
+        try:
+            result = check_kylin_embedding(
+                KylinEmbeddingConfig(
+                    module_name=module_name,
+                    factory_name="Client",
+                    method_name="embed",
+                    response_path="data.embedding",
+                    factory_kwargs={"token": "must-not-be-reported"},
+                )
+            )
+        finally:
+            del sys.modules[module_name]
+
+        self.assertTrue(result["compatible"])
+        self.assertEqual(result["status"], "ready")
+        serialized = json.dumps(result, ensure_ascii=False)
+        self.assertIn("token", serialized)
+        self.assertNotIn("must-not-be-reported", serialized)
+
+        missing = check_kylin_embedding({"module_name": "sdk_that_does_not_exist_for_test"})
+        self.assertEqual(missing["status"], "unavailable")
+        self.assertFalse(missing["compatible"])
 
     def test_preference_extraction_and_versioning(self) -> None:
         store = MemoryStore()

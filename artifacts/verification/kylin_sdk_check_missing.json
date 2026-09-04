@@ -1,0 +1,13 @@
+{
+  "status": "unavailable",
+  "compatible": false,
+  "config": {
+    "module_name": "definitely_missing_kylin_sdk",
+    "factory_name": null,
+    "method_name": "encode",
+    "response_path": null,
+    "factory_kwarg_names": []
+  },
+  "error_type": "ModuleNotFoundError",
+  "error": "No module named 'definitely_missing_kylin_sdk'"
+}
