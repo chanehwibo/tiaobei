@@ -8,17 +8,17 @@ from .schemas import DataRecord, PreferenceMemory, SourceType, stable_id, utc_no
 class PreferenceExtractor:
     """Rule-based preference extractor used as a baseline for evaluation."""
 
-    OUTPUT_STYLE_RULES: tuple[tuple[str, tuple[str, ...]], ...] = (
-        ("brief", ("简洁", "少解释", "直接给结论", "不要展开")),
-        ("detailed", ("详细", "展开说明", "给出原因", "完整解释")),
-        ("table", ("表格", "列表对比", "用表")),
-        ("chinese", ("中文", "使用中文")),
-        ("step_by_step", ("分步骤", "步骤", "一步一步")),
+    OUTPUT_PREFERENCE_RULES: tuple[tuple[str, str, tuple[str, ...]], ...] = (
+        ("output.language", "zh-CN", ("中文", "使用中文")),
+        ("output.verbosity", "brief", ("简洁", "少解释", "直接给结论", "不要展开")),
+        ("output.verbosity", "detailed", ("详细", "展开说明", "给出原因", "完整解释")),
+        ("output.format", "table", ("表格", "列表对比", "用表")),
+        ("output.structure", "step_by_step", ("分步骤", "步骤", "一步一步")),
     )
-    SECURITY_RULES: tuple[tuple[str, tuple[str, ...]], ...] = (
-        ("local_only", ("本地处理", "不要上传", "离线", "端侧")),
-        ("redact_sensitive", ("脱敏", "过滤敏感", "隐私", "身份证", "手机号")),
-        ("confirm_before_execute", ("执行前确认", "先询问", "不要直接执行")),
+    SECURITY_RULES: tuple[tuple[str, str, tuple[str, ...]], ...] = (
+        ("security.processing", "local_only", ("本地处理", "不要上传", "离线", "端侧")),
+        ("security.redaction", "required", ("脱敏", "过滤敏感", "隐私", "身份证", "手机号")),
+        ("security.confirmation", "required", ("执行前确认", "先询问", "不要直接执行", "高风险命令前确认")),
     )
 
     def extract(self, records: list[DataRecord]) -> list[PreferenceMemory]:
@@ -31,12 +31,12 @@ class PreferenceExtractor:
     def _extract_output_style(self, records: list[DataRecord]) -> list[PreferenceMemory]:
         memories: list[PreferenceMemory] = []
         for record in records:
-            for value, keywords in self.OUTPUT_STYLE_RULES:
+            for key, value, keywords in self.OUTPUT_PREFERENCE_RULES:
                 if any(keyword in record.content for keyword in keywords):
                     memories.append(
                         self._build_memory(
                             record=record,
-                            key="output_style",
+                            key=key,
                             value=value,
                             confidence=0.78 + 0.1 * min(record.quality_score, 1.0),
                         )
@@ -46,12 +46,12 @@ class PreferenceExtractor:
     def _extract_security_policy(self, records: list[DataRecord]) -> list[PreferenceMemory]:
         memories: list[PreferenceMemory] = []
         for record in records:
-            for value, keywords in self.SECURITY_RULES:
+            for key, value, keywords in self.SECURITY_RULES:
                 if any(keyword in record.content for keyword in keywords):
                     memories.append(
                         self._build_memory(
                             record=record,
-                            key="security_policy",
+                            key=key,
                             value=value,
                             confidence=0.82 + 0.08 * min(record.quality_score, 1.0),
                         )
@@ -106,5 +106,10 @@ class PreferenceExtractor:
             scenes=[record.scene],
             evidence_ids=evidence_ids or [record.id],
             updated_at=utc_now(),
+            tenant_id=record.tenant_id,
+            valid_from=record.timestamp,
+            score_components={
+                "quality": round(record.quality_score, 3),
+                "authority": round(record.authority, 3),
+            },
         )
-

@@ -132,8 +132,13 @@ class MemoryPipelineTest(unittest.TestCase):
             store.upsert_preference(memory)
 
         keys = {key for _user_id, key in store.preferences.keys()}
-        self.assertIn("output_style", keys)
-        self.assertIn("security_policy", keys)
+        self.assertIn("output.language", keys)
+        self.assertIn("output.verbosity", keys)
+        self.assertIn("output.format", keys)
+        self.assertIn("output.structure", keys)
+        self.assertIn("security.processing", keys)
+        self.assertIn("security.redaction", keys)
+        self.assertIn("security.confirmation", keys)
         self.assertIn("preferred_tool:office_report", keys)
 
     def test_knowledge_search_and_forget(self) -> None:
@@ -200,7 +205,7 @@ class MemoryPipelineTest(unittest.TestCase):
         result = run_evaluation_suite(suite_path, top_k=3)
 
         details = result["details"]
-        self.assertEqual(len(details["preferences"]), 4)
+        self.assertEqual(len(details["preferences"]), 9)
         self.assertEqual(len(details["retrieval"]), 5)
         self.assertEqual(len(details["conflicts"]), 4)
         self.assertEqual(len(details["forget"]), 3)
@@ -211,6 +216,10 @@ class MemoryPipelineTest(unittest.TestCase):
 
         preference_by_key = {item["key"]: item for item in details["preferences"]}
         self.assertEqual(preference_by_key["preferred_tool:meeting_summary"]["predicted_value"], "meeting_minutes_parser")
+        self.assertEqual(preference_by_key["output.language"]["predicted_value"], "zh-CN")
+        self.assertEqual(preference_by_key["output.verbosity"]["predicted_value"], "brief")
+        self.assertEqual(preference_by_key["output.format"]["predicted_value"], "table")
+        self.assertEqual(preference_by_key["output.structure"]["predicted_value"], "step_by_step")
         self.assertTrue(preference_by_key["preferred_tool:meeting_summary"]["evidence_ids"])
 
         first_retrieval = details["retrieval"][0]

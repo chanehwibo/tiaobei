@@ -156,13 +156,38 @@
   "preference_labels": [
     {
       "user_id": "u-demo",
-      "key": "output_style",
+      "key": "output.language",
+      "value": "zh-CN"
+    },
+    {
+      "user_id": "u-demo",
+      "key": "output.verbosity",
+      "value": "brief"
+    },
+    {
+      "user_id": "u-demo",
+      "key": "output.format",
       "value": "table"
     },
     {
       "user_id": "u-demo",
-      "key": "security_policy",
-      "value": "redact_sensitive"
+      "key": "output.structure",
+      "value": "step_by_step"
+    },
+    {
+      "user_id": "u-demo",
+      "key": "security.processing",
+      "value": "local_only"
+    },
+    {
+      "user_id": "u-demo",
+      "key": "security.redaction",
+      "value": "required"
+    },
+    {
+      "user_id": "u-demo",
+      "key": "security.confirmation",
+      "value": "required"
     },
     {
       "user_id": "u-demo",
