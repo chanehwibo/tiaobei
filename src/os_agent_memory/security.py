@@ -39,6 +39,23 @@ class SensitiveFilter:
         "authorization",
         "cookie",
     }
+    RISK_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
+        (
+            "prompt_injection",
+            re.compile(
+                r"(?i)(ignore\s+(all\s+)?previous|override\s+(system|developer)|"
+                r"忽略.{0,8}(之前|以上|系统).{0,8}(指令|规则)|覆盖.{0,8}(系统|安全).{0,8}(指令|规则))"
+            ),
+        ),
+        (
+            "system_prompt_exfiltration",
+            re.compile(r"(?i)(reveal|show|print|泄露|显示|输出).{0,12}(system prompt|系统提示词|开发者指令)"),
+        ),
+        (
+            "forced_memory_write",
+            re.compile(r"(?i)(remember|store|记住|写入).{0,12}(forever|permanently|永久|长期记忆)"),
+        ),
+    )
 
     def detect(self, text: str) -> list[SensitiveHit]:
         hits: list[SensitiveHit] = []
@@ -82,3 +99,8 @@ class SensitiveFilter:
             redacted_items, hits = self.redact_structure(list(value))
             return tuple(redacted_items), hits
         return value, []
+
+    def assess_memory_risk(self, text: str) -> list[str]:
+        """Return non-sensitive risk labels for memory-poisoning controls."""
+
+        return [kind for kind, pattern in self.RISK_PATTERNS if pattern.search(text)]

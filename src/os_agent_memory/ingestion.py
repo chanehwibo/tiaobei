@@ -100,6 +100,9 @@ class DataIngestionPipeline:
             metadata["sensitive_hits"] = all_hit_kinds
         tool_status = self.normalize_tool_status(raw.get("tool_status", metadata.get("status")))
         authority = self.normalize_authority(raw.get("authority"), source_type, tool_status)
+        risk_flags = self.sensitive_filter.assess_memory_risk(content)
+        if risk_flags:
+            authority = min(authority, 0.2)
         privacy_level = str(raw.get("privacy_level", "internal")).strip().lower()
         if privacy_level not in {"public", "internal", "confidential", "restricted"}:
             raise ValueError(f"unsupported_privacy_level: {privacy_level!r}")
@@ -128,6 +131,7 @@ class DataIngestionPipeline:
             authority=authority,
             privacy_level=privacy_level,
             ttl_seconds=ttl_seconds,
+            risk_flags=risk_flags,
         )
 
     @staticmethod
