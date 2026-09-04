@@ -400,56 +400,81 @@ class MemoryStore:
         """Compatibility API that immediately applies a scoped soft-delete."""
 
         plan = self.plan_forget(instruction, tenant_id=tenant_id, user_id=user_id)
-        keywords = plan.matched_keywords
-        if not keywords:
-            return ForgetResult(
-                preference_count=0,
-                knowledge_count=0,
-                matched_keywords=[],
-                plan_id=plan.id,
-                confirmed=True,
-            )
+        return self.confirm_forget(plan.id)
+
+    def confirm_forget(self, plan_id: str) -> ForgetResult:
+        plan = self.pending_forget_plans.get(plan_id)
+        if plan is None:
+            raise KeyError(f"forget plan not found: {plan_id}")
+        if plan.confirmed:
+            raise ValueError("forget plan has already been confirmed")
+        if datetime.now(timezone.utc) >= self._parse_time(plan.expires_at):
+            del self.pending_forget_plans[plan_id]
+            raise ValueError("forget plan has expired")
 
         preference_count = 0
         for key, preference in list(self.preferences.items()):
             if preference.id not in plan.preference_ids:
                 continue
-            self.preferences[key] = PreferenceMemory(
-                    id=preference.id,
-                    user_id=preference.user_id,
-                    key=preference.key,
-                    value=preference.value,
-                    confidence=preference.confidence,
+            if plan.hard_delete:
+                del self.preferences[key]
+                self.preference_history = [
+                    item
+                    for item in self.preference_history
+                    if not (
+                        item.tenant_id == preference.tenant_id
+                        and item.user_id == preference.user_id
+                        and item.key == preference.key
+                    )
+                ]
+            else:
+                forgotten_at = utc_now()
+                closed = replace(preference, valid_to=forgotten_at, updated_at=forgotten_at)
+                self._replace_history_version(closed)
+                forgotten = replace(
+                    preference,
+                    id=stable_id("forgotten", preference.id, str(preference.version + 1)),
                     version=preference.version + 1,
-                    scenes=preference.scenes,
-                    evidence_ids=preference.evidence_ids,
-                    updated_at=utc_now(),
                     status=MemoryStatus.FORGOTTEN,
-                    tenant_id=preference.tenant_id,
-                    valid_from=preference.valid_from,
-                    valid_to=utc_now(),
-                    tier=preference.tier,
-                    score_components=dict(preference.score_components),
+                    valid_from=forgotten_at,
+                    valid_to=None,
+                    updated_at=forgotten_at,
                 )
+                self.preferences[key] = forgotten
+                self.preference_history.append(replace(forgotten))
             preference_count += 1
 
         knowledge_count = 0
-        for item in self.knowledge.values():
-            if item.id in plan.knowledge_ids:
+        for memory_id in plan.knowledge_ids:
+            item = self.knowledge.get(memory_id)
+            if item is None:
+                continue
+            self._remove_knowledge_index(memory_id)
+            if plan.hard_delete:
+                del self.knowledge[memory_id]
+            else:
                 item.status = MemoryStatus.FORGOTTEN
                 item.updated_at = utc_now()
-                knowledge_count += 1
+                item.embedding = []
+            knowledge_count += 1
 
         plan.confirmed = True
         return ForgetResult(
             preference_count=preference_count,
             knowledge_count=knowledge_count,
-            matched_keywords=keywords,
+            matched_keywords=list(plan.matched_keywords),
             plan_id=plan.id,
             confirmed=True,
             affected_preference_ids=list(plan.preference_ids),
             affected_knowledge_ids=list(plan.knowledge_ids),
         )
+
+    def cancel_forget(self, plan_id: str) -> bool:
+        plan = self.pending_forget_plans.get(plan_id)
+        if plan is None or plan.confirmed:
+            return False
+        del self.pending_forget_plans[plan_id]
+        return True
 
     def stats(self) -> dict[str, int]:
         active_preferences = sum(1 for item in self.preferences.values() if item.status == MemoryStatus.ACTIVE)
@@ -529,6 +554,15 @@ class MemoryStore:
         self._document_tokens[memory.id] = tokens
         for token in tokens:
             self._token_index.setdefault(token, set()).add(memory.id)
+
+    def _remove_knowledge_index(self, memory_id: str) -> None:
+        for token in self._document_tokens.pop(memory_id, set()):
+            bucket = self._token_index.get(token)
+            if bucket is None:
+                continue
+            bucket.discard(memory_id)
+            if not bucket:
+                del self._token_index[token]
 
     def _tokens_for(self, memory: KnowledgeMemory) -> set[str]:
         tokens = self._document_tokens.get(memory.id)

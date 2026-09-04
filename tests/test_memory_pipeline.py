@@ -545,6 +545,54 @@ class MemoryPipelineTest(unittest.TestCase):
         retained = [memory for memory in store.knowledge.values() if memory.id not in plan.knowledge_ids]
         self.assertTrue(all(memory.status == MemoryStatus.ACTIVE for memory in retained))
 
+    def test_forget_requires_preview_confirmation_and_syncs_index(self) -> None:
+        store = MemoryStore()
+        for memory in KnowledgeExtractor().extract(self.records):
+            store.upsert_knowledge(memory)
+        plan = store.plan_forget(
+            "删除报销模板相关记忆",
+            tenant_id="default",
+            user_id="u-demo",
+        )
+        self.assertFalse(plan.confirmed)
+        self.assertTrue(plan.knowledge_ids)
+        self.assertTrue(all(store.knowledge[memory_id].status != MemoryStatus.FORGOTTEN for memory_id in plan.knowledge_ids))
+
+        result = store.confirm_forget(plan.id)
+        self.assertTrue(result.confirmed)
+        self.assertEqual(result.knowledge_count, len(plan.knowledge_ids))
+        for memory_id in plan.knowledge_ids:
+            self.assertEqual(store.knowledge[memory_id].status, MemoryStatus.FORGOTTEN)
+            self.assertEqual(store.knowledge[memory_id].embedding, [])
+            self.assertNotIn(memory_id, store._document_tokens)
+        with self.assertRaises(ValueError):
+            store.confirm_forget(plan.id)
+
+    def test_hard_forget_removes_memory_and_can_cancel_preview(self) -> None:
+        store = MemoryStore()
+        for memory in KnowledgeExtractor().extract(self.records):
+            store.upsert_knowledge(memory)
+        cancelled = store.plan_forget(
+            "删除报销模板相关记忆",
+            tenant_id="default",
+            user_id="u-demo",
+            hard_delete=True,
+        )
+        self.assertTrue(store.cancel_forget(cancelled.id))
+        self.assertFalse(store.cancel_forget(cancelled.id))
+
+        plan = store.plan_forget(
+            "删除报销模板相关记忆",
+            tenant_id="default",
+            user_id="u-demo",
+            hard_delete=True,
+        )
+        target_ids = list(plan.knowledge_ids)
+        result = store.confirm_forget(plan.id)
+        self.assertEqual(result.knowledge_count, len(target_ids))
+        self.assertTrue(all(memory_id not in store.knowledge for memory_id in target_ids))
+        self.assertTrue(all(memory_id not in store._document_tokens for memory_id in target_ids))
+
     def test_knowledge_is_scoped_typed_and_risk_filtered(self) -> None:
         records = DataIngestionPipeline().ingest(
             [
