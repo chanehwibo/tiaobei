@@ -6,6 +6,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from .evaluation import run_evaluation_suite, run_smoke_evaluation
+from .benchmark import run_scale_benchmark, write_benchmark_report
 from .ingestion import DataIngestionPipeline
 from .knowledge import KnowledgeExtractor
 from .memory_store import MemoryStore
@@ -131,6 +132,13 @@ def main() -> None:
     serve_command.add_argument("--host", default="127.0.0.1", help="Bind address (default: localhost only)")
     serve_command.add_argument("--port", default=8765, type=int, help="HTTP port")
 
+    benchmark_command = subparsers.add_parser("benchmark", help="Run retrieval scale benchmarks")
+    benchmark_command.add_argument("--sizes", default="100,1000,5000,10000", help="Comma-separated record counts")
+    benchmark_command.add_argument("--rounds", default=30, type=int, help="Hot-query rounds per size")
+    benchmark_command.add_argument("--top-k", default=5, type=int, help="Number of retrieved results")
+    benchmark_command.add_argument("--output-json", required=True, type=Path, help="JSON report path")
+    benchmark_command.add_argument("--output-md", required=True, type=Path, help="Markdown report path")
+
     args = parser.parse_args()
     if args.command == "demo":
         run_demo(args.input)
@@ -152,6 +160,11 @@ def main() -> None:
             raw_records = service.ingestion.load_jsonl(args.input)
             service.ingest(raw_records)
         serve(service, host=args.host, port=args.port)
+    elif args.command == "benchmark":
+        sizes = [int(value.strip()) for value in args.sizes.split(",") if value.strip()]
+        result = run_scale_benchmark(sizes, rounds=args.rounds, top_k=args.top_k)
+        write_benchmark_report(result, json_path=args.output_json, markdown_path=args.output_md)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
