@@ -560,6 +560,8 @@ class MemoryPipelineTest(unittest.TestCase):
 
         result = store.confirm_forget(plan.id)
         self.assertTrue(result.confirmed)
+        self.assertIsNotNone(result.audit_id)
+        self.assertEqual(store.audit_receipt(result.audit_id).action, "memory_soft_delete")
         self.assertEqual(result.knowledge_count, len(plan.knowledge_ids))
         for memory_id in plan.knowledge_ids:
             self.assertEqual(store.knowledge[memory_id].status, MemoryStatus.FORGOTTEN)
@@ -592,6 +594,31 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertEqual(result.knowledge_count, len(target_ids))
         self.assertTrue(all(memory_id not in store.knowledge for memory_id in target_ids))
         self.assertTrue(all(memory_id not in store._document_tokens for memory_id in target_ids))
+
+    def test_forget_audit_receipt_contains_no_raw_instruction_or_content(self) -> None:
+        store = MemoryStore()
+        for memory in KnowledgeExtractor().extract(self.records):
+            store.upsert_knowledge(memory)
+        sensitive_instruction = "删除手机号13912345678相关记忆"
+        plan = store.plan_forget(
+            sensitive_instruction,
+            tenant_id="default",
+            user_id="u-demo",
+        )
+        result = store.confirm_forget(plan.id)
+        receipt = store.audit_receipt(result.audit_id)
+        serialized = json.dumps(
+            {
+                "id": receipt.id,
+                "action": receipt.action,
+                "target_ids": receipt.target_ids,
+                "details": receipt.details,
+            },
+            ensure_ascii=False,
+        )
+        self.assertNotIn("13912345678", serialized)
+        self.assertNotIn(sensitive_instruction, serialized)
+        self.assertIn("plan_id", receipt.details)
 
     def test_knowledge_is_scoped_typed_and_risk_filtered(self) -> None:
         records = DataIngestionPipeline().ingest(

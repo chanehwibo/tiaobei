@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 
 from .embeddings import EmbeddingProvider, HashEmbedding, cosine_similarity
 from .schemas import (
+    AuditEvent,
     ForgetPlan,
     ForgetResult,
     KnowledgeMemory,
@@ -54,6 +55,7 @@ class MemoryStore:
         self.knowledge: dict[str, KnowledgeMemory] = {}
         self.conflict_decisions: list[dict[str, object]] = []
         self.pending_forget_plans: dict[str, ForgetPlan] = {}
+        self.audit_events: list[AuditEvent] = []
         self._token_index: dict[str, set[str]] = {}
         self._document_tokens: dict[str, set[str]] = {}
 
@@ -459,6 +461,18 @@ class MemoryStore:
             knowledge_count += 1
 
         plan.confirmed = True
+        audit = self._append_audit(
+            action="memory_hard_delete" if plan.hard_delete else "memory_soft_delete",
+            tenant_id=plan.tenant_id,
+            user_id=plan.user_id,
+            target_ids=[*plan.preference_ids, *plan.knowledge_ids],
+            details={
+                "plan_id": plan.id,
+                "preference_count": preference_count,
+                "knowledge_count": knowledge_count,
+                "hard_delete": plan.hard_delete,
+            },
+        )
         return ForgetResult(
             preference_count=preference_count,
             knowledge_count=knowledge_count,
@@ -467,6 +481,7 @@ class MemoryStore:
             confirmed=True,
             affected_preference_ids=list(plan.preference_ids),
             affected_knowledge_ids=list(plan.knowledge_ids),
+            audit_id=audit.id,
         )
 
     def cancel_forget(self, plan_id: str) -> bool:
@@ -474,7 +489,20 @@ class MemoryStore:
         if plan is None or plan.confirmed:
             return False
         del self.pending_forget_plans[plan_id]
+        self._append_audit(
+            action="memory_forget_cancelled",
+            tenant_id=plan.tenant_id,
+            user_id=plan.user_id,
+            target_ids=[],
+            details={"plan_id": plan.id},
+        )
         return True
+
+    def audit_receipt(self, audit_id: str) -> AuditEvent:
+        event = next((item for item in self.audit_events if item.id == audit_id), None)
+        if event is None:
+            raise KeyError(f"audit event not found: {audit_id}")
+        return event
 
     def stats(self) -> dict[str, int]:
         active_preferences = sum(1 for item in self.preferences.values() if item.status == MemoryStatus.ACTIVE)
@@ -691,6 +719,28 @@ class MemoryStore:
                 raise ValueError("user_id is required when the tenant contains multiple users")
             user_id = next(iter(users), "default_user")
         return tenant_id, user_id
+
+    def _append_audit(
+        self,
+        *,
+        action: str,
+        tenant_id: str,
+        user_id: str | None,
+        target_ids: list[str],
+        details: dict[str, object],
+    ) -> AuditEvent:
+        created_at = utc_now()
+        audit = AuditEvent(
+            id=stable_id("audit", action, tenant_id, user_id or "", created_at, *sorted(target_ids)),
+            action=action,
+            tenant_id=tenant_id,
+            user_id=user_id,
+            target_ids=sorted(target_ids),
+            created_at=created_at,
+            details=dict(details),
+        )
+        self.audit_events.append(audit)
+        return audit
 
     def _matches_forget_request(self, haystack: str, keywords: list[str]) -> bool:
         phrase_keywords = [keyword for keyword in keywords if keyword not in self.FORGET_ATOMS]
