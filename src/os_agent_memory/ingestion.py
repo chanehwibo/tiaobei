@@ -93,9 +93,11 @@ class DataIngestionPipeline:
         raw_metadata = raw.get("metadata") or {}
         if not isinstance(raw_metadata, dict):
             raise ValueError("metadata must be an object")
-        metadata = dict(raw_metadata)
-        if sensitive_hits:
-            metadata["sensitive_hits"] = [hit.kind for hit in sensitive_hits]
+        redacted_metadata, metadata_hits = self.sensitive_filter.redact_structure(raw_metadata)
+        metadata = dict(redacted_metadata)
+        all_hit_kinds = sorted({hit.kind for hit in [*sensitive_hits, *metadata_hits]})
+        if all_hit_kinds:
+            metadata["sensitive_hits"] = all_hit_kinds
         tool_status = self.normalize_tool_status(raw.get("tool_status", metadata.get("status")))
         authority = self.normalize_authority(raw.get("authority"), source_type, tool_status)
         privacy_level = str(raw.get("privacy_level", "internal")).strip().lower()

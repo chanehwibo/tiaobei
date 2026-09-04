@@ -33,6 +33,24 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertNotIn("13912345678", combined)
         self.assertIn("[PHONE]", combined)
 
+    def test_nested_metadata_is_redacted_without_retaining_raw_secrets(self) -> None:
+        record = DataIngestionPipeline().normalize_record(
+            {
+                "content": "请处理这条包含完整元数据的有效工具结果。",
+                "metadata": {
+                    "contact": {"phone": "13912345678", "email": "demo@example.com"},
+                    "api_key": "top-secret-value-123456",
+                    "hosts": ["10.20.30.40"],
+                },
+            }
+        )
+        serialized = json.dumps(record.metadata, ensure_ascii=False)
+        self.assertNotIn("13912345678", serialized)
+        self.assertNotIn("demo@example.com", serialized)
+        self.assertNotIn("top-secret-value-123456", serialized)
+        self.assertNotIn("10.20.30.40", serialized)
+        self.assertIn("[SECRET]", serialized)
+
     def test_ingestion_isolates_invalid_records_and_deduplicates(self) -> None:
         pipeline = DataIngestionPipeline()
         batch = pipeline.ingest_with_report(
