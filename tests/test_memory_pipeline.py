@@ -3,6 +3,7 @@ from __future__ import annotations
 import contextlib
 import io
 import json
+import sqlite3
 import sys
 import tempfile
 import unittest
@@ -848,6 +849,78 @@ class MemoryPipelineTest(unittest.TestCase):
             {memory.title for memory in loaded.knowledge.values()},
         )
         self.assertTrue(loaded.search_knowledge("报销流程模板", top_k=3))
+
+    def test_sqlite_persists_vectors_scopes_and_audit_events(self) -> None:
+        store = MemoryStore()
+        for memory in KnowledgeExtractor().extract(self.records):
+            store.upsert_knowledge(memory)
+        plan = store.plan_forget(
+            "删除报销模板相关记忆",
+            tenant_id="default",
+            user_id="u-demo",
+        )
+        result = store.confirm_forget(plan.id)
+
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            db_path = Path(temporary_directory) / "memory.sqlite"
+            persistence = SQLiteMemoryPersistence(db_path)
+            persistence.save(store)
+            loaded = persistence.load()
+            with contextlib.closing(sqlite3.connect(db_path)) as connection:
+                schema_version = connection.execute("PRAGMA user_version").fetchone()[0]
+
+        self.assertEqual(schema_version, 2)
+        self.assertEqual(len(loaded.audit_events), 1)
+        self.assertEqual(loaded.audit_events[0].id, result.audit_id)
+        active_vectors = [
+            memory.embedding
+            for memory in loaded.knowledge.values()
+            if memory.status == MemoryStatus.ACTIVE
+        ]
+        self.assertTrue(active_vectors)
+        self.assertTrue(all(vector for vector in active_vectors))
+        self.assertTrue(all(memory.user_id == "u-demo" for memory in loaded.knowledge.values()))
+
+    def test_sqlite_migrates_legacy_knowledge_table(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            db_path = Path(temporary_directory) / "legacy.sqlite"
+            with contextlib.closing(sqlite3.connect(db_path)) as connection:
+                connection.execute(
+                    """
+                    CREATE TABLE knowledge (
+                        id TEXT PRIMARY KEY,
+                        title TEXT NOT NULL,
+                        content TEXT NOT NULL,
+                        tags TEXT NOT NULL,
+                        source_ids TEXT NOT NULL,
+                        version INTEGER NOT NULL,
+                        created_at TEXT NOT NULL,
+                        updated_at TEXT NOT NULL,
+                        status TEXT NOT NULL,
+                        conflict_with TEXT NOT NULL
+                    )
+                    """
+                )
+                connection.execute(
+                    """
+                    INSERT INTO knowledge VALUES
+                    ('legacy-id', '旧版模板', '模板：旧版报销模板包含金额字段。', '["template"]',
+                     '["legacy-source"]', 1, '2026-01-01T00:00:00+00:00',
+                     '2026-01-01T00:00:00+00:00', 'active', '[]')
+                    """
+                )
+                connection.commit()
+            loaded = SQLiteMemoryPersistence(db_path).load()
+            with contextlib.closing(sqlite3.connect(db_path)) as connection:
+                columns = {
+                    row[1] for row in connection.execute("PRAGMA table_info(knowledge)")
+                }
+
+        self.assertIn("tenant_id", columns)
+        self.assertIn("embedding", columns)
+        self.assertIn("legacy-id", loaded.knowledge)
+        self.assertEqual(loaded.knowledge["legacy-id"].tenant_id, "default")
+        self.assertTrue(loaded.knowledge["legacy-id"].embedding)
 
 
 if __name__ == "__main__":
