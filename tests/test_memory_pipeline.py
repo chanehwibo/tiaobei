@@ -16,6 +16,7 @@ from os_agent_memory.cli import run_evaluate
 from os_agent_memory.evaluation import run_evaluation_suite
 from os_agent_memory.ingestion import DataIngestionPipeline
 from os_agent_memory.knowledge import KnowledgeExtractor
+from os_agent_memory.lifecycle import ShortTermMemoryBuffer
 from os_agent_memory.memory_store import MemoryStore
 from os_agent_memory.persistence import SQLiteMemoryPersistence
 from os_agent_memory.preference import PreferenceExtractor
@@ -101,6 +102,45 @@ class MemoryPipelineTest(unittest.TestCase):
         )
         self.assertEqual(record.tool_status.value, "failed")
         self.assertEqual(record.authority, 0.15)
+
+    def test_short_term_memory_is_session_scoped_and_expires(self) -> None:
+        records = DataIngestionPipeline().ingest(
+            [
+                {
+                    "id": "short-a",
+                    "tenant_id": "tenant-a",
+                    "user_id": "user-a",
+                    "session_id": "session-a",
+                    "timestamp": "2026-01-01T00:00:00+00:00",
+                    "ttl_seconds": 60,
+                    "content": "当前会话中需要暂存的有效任务步骤。",
+                    "metadata": {"step": 1},
+                },
+                {
+                    "id": "short-b",
+                    "tenant_id": "tenant-a",
+                    "user_id": "user-a",
+                    "session_id": "session-b",
+                    "timestamp": "2026-01-01T00:00:00+00:00",
+                    "ttl_seconds": 120,
+                    "content": "另一个会话中需要暂存的有效任务步骤。",
+                    "metadata": {"step": 2},
+                },
+            ]
+        )
+        buffer = ShortTermMemoryBuffer()
+        for record in records:
+            buffer.add(record)
+
+        active = buffer.active(
+            tenant_id="tenant-a",
+            user_id="user-a",
+            session_id="session-a",
+            now="2026-01-01T00:00:30+00:00",
+        )
+        self.assertEqual([record.id for record in active], ["short-a"])
+        self.assertEqual(buffer.expire(now="2026-01-01T00:01:01+00:00"), ["short-a"])
+        self.assertEqual(len(buffer), 1)
 
     def test_failed_tool_is_not_selected_as_preference(self) -> None:
         pipeline = DataIngestionPipeline()
