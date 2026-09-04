@@ -16,12 +16,10 @@ from .schemas import KnowledgeMemory, MemoryStatus, PreferenceMemory, stable_id,
 def preference_accuracy(predicted: list[PreferenceMemory], labels: dict[tuple[str, str], str]) -> float:
     if not labels:
         return 0.0
-    correct = 0
     current = {(item.user_id, item.key): item.value for item in predicted}
-    for key, expected_value in labels.items():
-        if current.get(key) == expected_value:
-            correct += 1
-    return correct / len(labels)
+    correct = sum(1 for key, expected_value in labels.items() if current.get(key) == expected_value)
+    unexpected = len(set(current) - set(labels))
+    return correct / (len(labels) + unexpected)
 
 
 def recall_at_k(search_fn: Callable[[str, int], list[str]], queries: dict[str, set[str]], k: int = 5) -> float:
@@ -152,6 +150,22 @@ def _preference_details(
                 "passed": predicted_value == expected_value,
             }
         )
+    for user_id, key in sorted(set(current) - set(labels)):
+        memory = current[(user_id, key)]
+        details.append(
+            {
+                "user_id": user_id,
+                "key": key,
+                "expected_value": None,
+                "predicted_value": memory.value,
+                "confidence": memory.confidence,
+                "version": memory.version,
+                "scenes": memory.scenes,
+                "evidence_ids": memory.evidence_ids,
+                "unexpected_prediction": True,
+                "passed": False,
+            }
+        )
     return details
 
 
@@ -159,15 +173,28 @@ def _knowledge_retrieval_details(store: MemoryStore, queries: list[dict[str, Any
     details: list[dict[str, Any]] = []
     for item in queries:
         expected_titles = [str(title) for title in item.get("expected_titles", [])]
-        returned_titles = [result.title for result in store.search_knowledge(str(item["query"]), top_k=top_k)]
+        returned_titles = [
+            result.title
+            for result in store.search_knowledge(
+                str(item["query"]),
+                top_k=top_k,
+                min_score=float(item.get("min_score", 0.08)),
+            )
+        ]
         hit_titles = sorted(set(returned_titles) & set(expected_titles))
-        recall = len(hit_titles) / len(expected_titles) if expected_titles else 0.0
+        expected_empty = bool(item.get("expected_empty", not expected_titles))
+        recall = (
+            (1.0 if not returned_titles else 0.0)
+            if expected_empty
+            else len(hit_titles) / len(expected_titles)
+        )
         details.append(
             {
                 "query": str(item["query"]),
                 "expected_titles": expected_titles,
                 "returned_titles": returned_titles,
                 "hit_titles": hit_titles,
+                "expected_empty": expected_empty,
                 "recall": round(recall, 4),
                 "passed": recall >= 1.0,
             }
@@ -242,18 +269,31 @@ def _forget_details(raw_records: list[dict[str, Any]], cases: list[dict[str, Any
     details: list[dict[str, Any]] = []
     for case in cases:
         store = build_store_from_raw_records(raw_records)
-        result = store.forget(str(case["instruction"]), user_id=case.get("user_id"))
+        result = store.forget(
+            str(case["instruction"]),
+            user_id=case.get("user_id"),
+            tenant_id=case.get("tenant_id"),
+        )
         status_by_title = {memory.title: memory.status for memory in store.knowledge.values()}
+        title_by_id = {memory.id: memory.title for memory in store.knowledge.values()}
 
         expected_forgotten = [str(title) for title in case.get("expected_forgotten_titles", [])]
         expected_retained = [str(title) for title in case.get("expected_retained_titles", [])]
-        actual_forgotten = sorted(title for title, status in status_by_title.items() if status == MemoryStatus.FORGOTTEN)
+        # Only score memories changed by this operation. Conflict resolution may
+        # already have retired older knowledge before the forget request starts.
+        actual_forgotten = sorted(
+            title_by_id[memory_id]
+            for memory_id in result.affected_knowledge_ids
+            if memory_id in title_by_id
+        )
         missed_forgotten = [
             title for title in expected_forgotten if status_by_title.get(title) != MemoryStatus.FORGOTTEN
         ]
-        wrongly_forgotten = [
+        explicitly_wrong = [
             title for title in expected_retained if status_by_title.get(title) == MemoryStatus.FORGOTTEN
         ]
+        unexpected_forgotten = sorted(set(actual_forgotten) - set(expected_forgotten))
+        wrongly_forgotten = sorted(set(explicitly_wrong) | set(unexpected_forgotten))
         details.append(
             {
                 "instruction": str(case["instruction"]),
@@ -262,6 +302,7 @@ def _forget_details(raw_records: list[dict[str, Any]], cases: list[dict[str, Any
                 "expected_retained_titles": expected_retained,
                 "actual_forgotten_titles": actual_forgotten,
                 "missed_forgotten_titles": missed_forgotten,
+                "unexpected_forgotten_titles": unexpected_forgotten,
                 "wrongly_forgotten_titles": wrongly_forgotten,
                 "passed": not missed_forgotten and not wrongly_forgotten,
             }

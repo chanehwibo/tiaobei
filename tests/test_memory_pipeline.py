@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from os_agent_memory.embeddings import CallableEmbeddingProvider, HashEmbedding, KylinEmbeddingProvider
 from os_agent_memory.cli import run_evaluate
-from os_agent_memory.evaluation import run_evaluation_suite
+from os_agent_memory.evaluation import _forget_details, preference_accuracy, run_evaluation_suite
 from os_agent_memory.ingestion import DataIngestionPipeline
 from os_agent_memory.knowledge import KnowledgeExtractor
 from os_agent_memory.lifecycle import MemoryLifecycleManager, MediumTermMemory, ShortTermMemoryBuffer
@@ -736,7 +736,7 @@ class MemoryPipelineTest(unittest.TestCase):
 
         details = result["details"]
         self.assertEqual(len(details["preferences"]), 9)
-        self.assertEqual(len(details["retrieval"]), 5)
+        self.assertEqual(len(details["retrieval"]), 6)
         self.assertEqual(len(details["conflicts"]), 4)
         self.assertEqual(len(details["forget"]), 3)
         self.assertTrue(all(item["passed"] for item in details["preferences"]))
@@ -776,6 +776,36 @@ class MemoryPipelineTest(unittest.TestCase):
         meeting_forget = details["forget"][2]
         self.assertEqual(meeting_forget["matched_keywords"], ["会议纪要模板", "模板"])
         self.assertNotIn("报销邮件模板", meeting_forget["actual_forgotten_titles"])
+
+        no_answer = details["retrieval"][-1]
+        self.assertTrue(no_answer["expected_empty"])
+        self.assertEqual(no_answer["returned_titles"], [])
+        self.assertTrue(no_answer["passed"])
+
+    def test_metrics_penalize_extra_preferences_and_unapproved_deletions(self) -> None:
+        predicted = PreferenceExtractor().extract(self.records)
+        single_label = {("u-demo", "output.language"): "zh-CN"}
+        self.assertLess(preference_accuracy(predicted, single_label), 1.0)
+
+        expanded_records = json.loads(
+            (ROOT / "data" / "eval" / "office_memory_eval.json").read_text(encoding="utf-8")
+        )["records"]
+        forget_details = _forget_details(
+            expanded_records,
+            [
+                {
+                    "instruction": "删除模板相关记忆",
+                    "user_id": "u-demo",
+                    "expected_forgotten_titles": ["报销邮件模板"],
+                }
+            ],
+        )[0]
+        self.assertFalse(forget_details["passed"])
+        self.assertTrue(forget_details["unexpected_forgotten_titles"])
+        self.assertEqual(
+            forget_details["wrongly_forgotten_titles"],
+            forget_details["unexpected_forgotten_titles"],
+        )
 
     def test_conflict_auto_resolution_uses_authority_and_recency(self) -> None:
         timestamp = "2026-01-01T00:00:00+00:00"

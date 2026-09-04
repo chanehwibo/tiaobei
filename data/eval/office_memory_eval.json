@@ -232,6 +232,12 @@
       "expected_titles": [
         "会议待办责任规则"
       ]
+    },
+    {
+      "query": "量子芯片低温封装实验参数",
+      "expected_titles": [],
+      "expected_empty": true,
+      "min_score": 0.95
     }
   ],
   "conflict_cases": [
