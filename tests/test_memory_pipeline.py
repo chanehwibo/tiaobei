@@ -484,6 +484,20 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertTrue(conflicting_ids)
         self.assertTrue(all(store.knowledge[memory_id].status == MemoryStatus.FORGOTTEN for memory_id in conflicting_ids))
 
+    def test_pending_conflicts_are_hidden_from_normal_search(self) -> None:
+        store = MemoryStore()
+        for memory in KnowledgeExtractor().extract(self.records):
+            store.upsert_knowledge(memory)
+        pending = next(memory for memory in store.knowledge.values() if memory.status == MemoryStatus.CONFLICT_PENDING)
+
+        normal_ids = {result.memory_id for result in store.search_knowledge(pending.content, top_k=20)}
+        diagnostic_ids = {
+            result.memory_id
+            for result in store.search_knowledge(pending.content, top_k=20, include_pending=True)
+        }
+        self.assertNotIn(pending.id, normal_ids)
+        self.assertIn(pending.id, diagnostic_ids)
+
     def test_knowledge_conflict_resolution_can_merge_evidence(self) -> None:
         store = MemoryStore()
         for memory in KnowledgeExtractor().extract(self.records):

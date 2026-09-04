@@ -69,7 +69,9 @@ def build_store_from_raw_records(raw_records: list[dict[str, Any]]) -> MemorySto
     for memory in PreferenceExtractor().extract(records):
         store.upsert_preference(memory)
     for memory in KnowledgeExtractor().extract(records):
-        store.upsert_knowledge(memory)
+        result = store.upsert_knowledge(memory)
+        if result.status == MemoryStatus.CONFLICT_PENDING:
+            store.resolve_knowledge_conflict(result.id, strategy="auto")
     return store
 
 

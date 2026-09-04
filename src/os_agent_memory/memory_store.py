@@ -209,10 +209,19 @@ class MemoryStore:
         )
         return memory
 
-    def search_knowledge(self, query: str, top_k: int = 5) -> list[SearchResult]:
+    def search_knowledge(
+        self,
+        query: str,
+        top_k: int = 5,
+        *,
+        include_pending: bool = False,
+    ) -> list[SearchResult]:
         scored: list[SearchResult] = []
         for item in self.knowledge.values():
-            if item.status == MemoryStatus.FORGOTTEN:
+            allowed_statuses = {MemoryStatus.ACTIVE}
+            if include_pending:
+                allowed_statuses.add(MemoryStatus.CONFLICT_PENDING)
+            if item.status not in allowed_statuses:
                 continue
             score = self.embedding.similarity(query, f"{item.title} {item.content} {' '.join(item.tags)}")
             if score <= 0:
@@ -224,6 +233,7 @@ class MemoryStore:
                     title=item.title,
                     content=item.content,
                     tags=item.tags,
+                    status=item.status,
                 )
             )
         scored.sort(key=lambda result: result.score, reverse=True)
