@@ -16,7 +16,7 @@ from os_agent_memory.cli import run_evaluate
 from os_agent_memory.evaluation import run_evaluation_suite
 from os_agent_memory.ingestion import DataIngestionPipeline
 from os_agent_memory.knowledge import KnowledgeExtractor
-from os_agent_memory.lifecycle import ShortTermMemoryBuffer
+from os_agent_memory.lifecycle import MediumTermMemory, ShortTermMemoryBuffer
 from os_agent_memory.memory_store import MemoryStore
 from os_agent_memory.persistence import SQLiteMemoryPersistence
 from os_agent_memory.preference import PreferenceExtractor
@@ -141,6 +141,40 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertEqual([record.id for record in active], ["short-a"])
         self.assertEqual(buffer.expire(now="2026-01-01T00:01:01+00:00"), ["short-a"])
         self.assertEqual(len(buffer), 1)
+
+    def test_medium_term_memory_aggregates_repeated_evidence(self) -> None:
+        records = DataIngestionPipeline().ingest(
+            [
+                {
+                    "id": "medium-a",
+                    "tenant_id": "tenant-a",
+                    "user_id": "user-a",
+                    "source_type": "user_behavior",
+                    "scene": "office",
+                    "timestamp": "2026-01-01T00:00:00+00:00",
+                    "content": "用户再次选择表格展示报销明细。",
+                    "metadata": {"intent": "expense-format"},
+                },
+                {
+                    "id": "medium-b",
+                    "tenant_id": "tenant-a",
+                    "user_id": "user-a",
+                    "source_type": "manual_config",
+                    "scene": "office",
+                    "timestamp": "2026-01-02T00:00:00+00:00",
+                    "content": "用户明确配置报销明细使用表格。",
+                    "metadata": {"intent": "expense-format"},
+                },
+            ]
+        )
+        medium = MediumTermMemory()
+        clusters = medium.aggregate(records)
+        self.assertEqual(len(clusters), 1)
+        cluster = clusters[0]
+        self.assertEqual(cluster.occurrence_count, 2)
+        self.assertEqual(cluster.source_types, ["manual_config", "user_behavior"])
+        self.assertGreater(cluster.promotion_score, 0.6)
+        self.assertEqual(cluster.representative_content, records[1].content)
 
     def test_failed_tool_is_not_selected_as_preference(self) -> None:
         pipeline = DataIngestionPipeline()
