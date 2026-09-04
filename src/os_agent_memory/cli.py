@@ -80,8 +80,14 @@ def run_build_store(input_path: Path, output_path: Path) -> None:
     )
 
 
-def run_evaluate(suite_path: Path, top_k: int, summary_only: bool = False, output_path: Path | None = None) -> None:
-    result = run_evaluation_suite(suite_path, top_k=top_k)
+def run_evaluate(
+    suite_path: Path,
+    top_k: int,
+    summary_only: bool = False,
+    output_path: Path | None = None,
+    split: str | None = None,
+) -> None:
+    result = run_evaluation_suite(suite_path, top_k=top_k, split=split)
     if output_path is not None:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -93,6 +99,7 @@ def run_evaluate(suite_path: Path, top_k: int, summary_only: bool = False, outpu
 def _evaluation_summary(result: dict[str, object]) -> dict[str, object]:
     return {
         "suite": result["suite"],
+        "split": result["split"],
         "top_k": result["top_k"],
         "metrics": result["metrics"],
         "counts": result["counts"],
@@ -112,6 +119,7 @@ def main() -> None:
     evaluate.add_argument("--top-k", default=3, type=int, help="Number of results used for recall")
     evaluate.add_argument("--summary-only", action="store_true", help="Print only summary metrics and counts")
     evaluate.add_argument("--output", type=Path, help="Write full JSON evaluation report to this path")
+    evaluate.add_argument("--split", choices=("train", "dev", "test"), help="Evaluate only one dataset split")
 
     build_store_command = subparsers.add_parser("build-store", help="Build a SQLite memory store from JSONL events")
     build_store_command.add_argument("--input", required=True, type=Path, help="Path to JSONL event file")
@@ -127,7 +135,13 @@ def main() -> None:
     if args.command == "demo":
         run_demo(args.input)
     elif args.command == "evaluate":
-        run_evaluate(args.suite, top_k=args.top_k, summary_only=args.summary_only, output_path=args.output)
+        run_evaluate(
+            args.suite,
+            top_k=args.top_k,
+            summary_only=args.summary_only,
+            output_path=args.output,
+            split=args.split,
+        )
     elif args.command == "build-store":
         run_build_store(args.input, args.output)
     elif args.command == "serve":

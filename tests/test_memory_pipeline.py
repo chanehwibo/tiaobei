@@ -864,6 +864,31 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertEqual(store.knowledge[base.id].status, MemoryStatus.FORGOTTEN)
         self.assertEqual(store.conflict_decisions[-1]["strategy"], "accept_incoming")
 
+    def test_v2_evaluation_has_isolated_reproducible_splits(self) -> None:
+        suite_path = ROOT / "data" / "eval" / "office_memory_eval_v2.json"
+        raw_suite = json.loads(suite_path.read_text(encoding="utf-8"))
+        self.assertEqual(len(raw_suite["records"]), 120)
+        self.assertEqual(
+            {item["scene"] for item in raw_suite["records"] if item["split"] == "test"},
+            {
+                "general",
+                "office_report",
+                "meeting_summary",
+                "document_editing",
+                "file_management",
+                "system_security",
+                "email_writing",
+            },
+        )
+
+        result = run_evaluation_suite(suite_path, top_k=3, split="test")
+        self.assertEqual(result["split"], "test")
+        self.assertEqual(result["counts"]["records"], 40)
+        self.assertTrue(all(result["targets"].values()))
+        self.assertEqual(result["metrics"]["forget_misdelete_rate"], 0.0)
+        with self.assertRaises(ValueError):
+            run_evaluation_suite(suite_path, split="holdout")
+
     def test_evaluate_cli_can_write_full_report_and_print_summary(self) -> None:
         suite_path = ROOT / "data" / "eval" / "office_memory_eval.json"
         with tempfile.TemporaryDirectory() as temporary_directory:

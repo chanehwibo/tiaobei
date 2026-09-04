@@ -27,13 +27,32 @@ def precision_recall_f1(true_positive: int, false_positive: int, false_negative:
     return {"precision": precision, "recall": recall, "f1": f1}
 
 
-def preference_accuracy(predicted: list[PreferenceMemory], labels: dict[tuple[str, str], str]) -> float:
+def _normalized_preference_labels(
+    labels: dict[tuple[str, ...], str],
+) -> dict[tuple[str, str, str], str]:
+    normalized: dict[tuple[str, str, str], str] = {}
+    for key, value in labels.items():
+        if len(key) == 2:
+            user_id, preference_key = key
+            normalized[("default", user_id, preference_key)] = value
+        elif len(key) == 3:
+            tenant_id, user_id, preference_key = key
+            normalized[(tenant_id, user_id, preference_key)] = value
+        else:
+            raise ValueError("preference label keys must contain user/key or tenant/user/key")
+    return normalized
+
+
+def preference_accuracy(predicted: list[PreferenceMemory], labels: dict[tuple[str, ...], str]) -> float:
     if not labels:
         return 0.0
-    current = {(item.user_id, item.key): item.value for item in predicted}
-    correct = sum(1 for key, expected_value in labels.items() if current.get(key) == expected_value)
-    unexpected = len(set(current) - set(labels))
-    return correct / (len(labels) + unexpected)
+    normalized_labels = _normalized_preference_labels(labels)
+    current = {(item.tenant_id, item.user_id, item.key): item.value for item in predicted}
+    correct = sum(
+        1 for key, expected_value in normalized_labels.items() if current.get(key) == expected_value
+    )
+    unexpected = len(set(current) - set(normalized_labels))
+    return correct / (len(normalized_labels) + unexpected)
 
 
 def recall_at_k(search_fn: Callable[[str, int], list[str]], queries: dict[str, set[str]], k: int = 5) -> float:
@@ -65,11 +84,37 @@ def run_smoke_evaluation(store: MemoryStore) -> dict[str, float]:
     }
 
 
-def load_evaluation_suite(path: str | Path) -> dict[str, Any]:
+def load_evaluation_suite(path: str | Path, *, split: str | None = None) -> dict[str, Any]:
     with Path(path).open("r", encoding="utf-8") as file:
         suite = json.load(file)
     if not isinstance(suite.get("records"), list):
         raise ValueError("evaluation suite must contain a records list")
+    if split is not None:
+        available = {
+            str(item.get("split"))
+            for section in (
+                "records",
+                "preference_labels",
+                "retrieval_queries",
+                "conflict_cases",
+                "forget_cases",
+            )
+            for item in suite.get(section, [])
+            if item.get("split") is not None
+        }
+        if split not in available:
+            raise ValueError(f"unknown split {split!r}; available splits: {sorted(available)}")
+        suite = dict(suite)
+        for section in (
+            "records",
+            "preference_labels",
+            "retrieval_queries",
+            "conflict_cases",
+            "forget_cases",
+        ):
+            suite[section] = [
+                item for item in suite.get(section, []) if str(item.get("split")) == split
+            ]
     return suite
 
 
@@ -87,14 +132,14 @@ def build_store_from_raw_records(raw_records: list[dict[str, Any]]) -> MemorySto
     return store
 
 
-def run_evaluation_suite(path: str | Path, top_k: int = 3) -> dict[str, Any]:
+def run_evaluation_suite(path: str | Path, top_k: int = 3, *, split: str | None = None) -> dict[str, Any]:
     suite_path = Path(path)
-    suite = load_evaluation_suite(suite_path)
+    suite = load_evaluation_suite(suite_path, split=split)
     raw_records = suite["records"]
     store = build_store_from_raw_records(raw_records)
 
     preference_labels = {
-        (str(item["user_id"]), str(item["key"])): str(item["value"])
+        (str(item.get("tenant_id", "default")), str(item["user_id"]), str(item["key"])): str(item["value"])
         for item in suite.get("preference_labels", [])
     }
     retrieval_queries = suite.get("retrieval_queries", [])
@@ -118,7 +163,12 @@ def run_evaluation_suite(path: str | Path, top_k: int = 3) -> dict[str, Any]:
         "knowledge_mrr": round(retrieval_scores["mrr"], 4),
         "knowledge_ndcg_at_k": round(retrieval_scores["ndcg"], 4),
         "knowledge_search_latency_ms": round(
-            measure_latency_ms(lambda: store.search_knowledge("报销流程模板", top_k=top_k), rounds=20),
+            measure_latency_ms(
+                lambda: _representative_search(store, retrieval_queries, top_k),
+                rounds=20,
+            )
+            if retrieval_queries
+            else 0.0,
             3,
         ),
         "conflict_accuracy": round(_conflict_accuracy(conflict_cases), 4),
@@ -140,6 +190,7 @@ def run_evaluation_suite(path: str | Path, top_k: int = 3) -> dict[str, Any]:
     stats = store.stats()
     return {
         "suite": suite.get("name", suite_path.stem),
+        "split": split or "all",
         "top_k": top_k,
         "metrics": metrics,
         "counts": {
@@ -163,10 +214,14 @@ def _knowledge_recall_at_k(store: MemoryStore, queries: list[dict[str, Any]], to
 
 def _preference_scores(
     predicted: list[PreferenceMemory],
-    labels: dict[tuple[str, str], str],
+    labels: dict[tuple[str, ...], str],
 ) -> dict[str, float]:
-    predicted_set = {(item.user_id, item.key, item.value) for item in predicted}
-    label_set = {(user_id, key, value) for (user_id, key), value in labels.items()}
+    normalized_labels = _normalized_preference_labels(labels)
+    predicted_set = {(item.tenant_id, item.user_id, item.key, item.value) for item in predicted}
+    label_set = {
+        (tenant_id, user_id, key, value)
+        for (tenant_id, user_id, key), value in normalized_labels.items()
+    }
     true_positive = len(predicted_set & label_set)
     return precision_recall_f1(
         true_positive,
@@ -177,16 +232,18 @@ def _preference_scores(
 
 def _preference_details(
     predicted: list[PreferenceMemory],
-    labels: dict[tuple[str, str], str],
+    labels: dict[tuple[str, ...], str],
 ) -> list[dict[str, Any]]:
-    current = {(item.user_id, item.key): item for item in predicted}
+    normalized_labels = _normalized_preference_labels(labels)
+    current = {(item.tenant_id, item.user_id, item.key): item for item in predicted}
     details: list[dict[str, Any]] = []
-    for user_id, key in sorted(labels):
-        memory = current.get((user_id, key))
-        expected_value = labels[(user_id, key)]
+    for tenant_id, user_id, key in sorted(normalized_labels):
+        memory = current.get((tenant_id, user_id, key))
+        expected_value = normalized_labels[(tenant_id, user_id, key)]
         predicted_value = memory.value if memory else None
         details.append(
             {
+                "tenant_id": tenant_id,
                 "user_id": user_id,
                 "key": key,
                 "expected_value": expected_value,
@@ -198,10 +255,11 @@ def _preference_details(
                 "passed": predicted_value == expected_value,
             }
         )
-    for user_id, key in sorted(set(current) - set(labels)):
-        memory = current[(user_id, key)]
+    for tenant_id, user_id, key in sorted(set(current) - set(normalized_labels)):
+        memory = current[(tenant_id, user_id, key)]
         details.append(
             {
+                "tenant_id": tenant_id,
                 "user_id": user_id,
                 "key": key,
                 "expected_value": None,
@@ -227,6 +285,9 @@ def _knowledge_retrieval_details(store: MemoryStore, queries: list[dict[str, Any
                 str(item["query"]),
                 top_k=top_k,
                 min_score=float(item.get("min_score", 0.08)),
+                tenant_id=str(item["tenant_id"]) if item.get("tenant_id") is not None else None,
+                user_id=str(item["user_id"]) if item.get("user_id") is not None else None,
+                scene=str(item["scene"]) if item.get("scene") is not None else None,
             )
         ]
         hit_titles = sorted(set(returned_titles) & set(expected_titles))
@@ -256,6 +317,22 @@ def _knowledge_retrieval_details(store: MemoryStore, queries: list[dict[str, Any
             }
         )
     return details
+
+
+def _representative_search(
+    store: MemoryStore,
+    queries: list[dict[str, Any]],
+    top_k: int,
+) -> list[object]:
+    item = queries[0]
+    return store.search_knowledge(
+        str(item["query"]),
+        top_k=top_k,
+        min_score=float(item.get("min_score", 0.08)),
+        tenant_id=str(item["tenant_id"]) if item.get("tenant_id") is not None else None,
+        user_id=str(item["user_id"]) if item.get("user_id") is not None else None,
+        scene=str(item["scene"]) if item.get("scene") is not None else None,
+    )
 
 
 def _reciprocal_rank(returned: list[str], expected: list[str], expected_empty: bool) -> float:
