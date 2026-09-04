@@ -12,3 +12,5 @@ dist/
 *.sqlite-*
 data/eval/*_report.json
 reports/
+case_studies/private/
+case_studies/collected/
