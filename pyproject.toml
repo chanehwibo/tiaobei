@@ -1,0 +1,22 @@
+[project]
+name = "os-agent-memory-optimizer"
+version = "0.1.0"
+description = "Prototype for OS Agent preference and knowledge memory optimization on Kylin OS."
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+os-agent-memory = "os_agent_memory.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
