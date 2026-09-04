@@ -313,9 +313,7 @@
       "expected_base_status": "forgotten",
       "expected_incoming_status": "active",
       "expected_content_contains": [
-        "新版报销联系人信息必须删除手机号并脱敏。",
-        "旧版记忆",
-        "旧版报销联系人信息允许保留手机号用于后续联系。"
+        "新版报销联系人信息必须删除手机号并脱敏。"
       ]
     }
   ],

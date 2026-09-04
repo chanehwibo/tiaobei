@@ -268,7 +268,7 @@ def _forget_details(raw_records: list[dict[str, Any]], cases: list[dict[str, Any
 
 
 def _knowledge_from_case(item: dict[str, Any], memory_id: str) -> KnowledgeMemory:
-    timestamp = utc_now()
+    timestamp = str(item.get("valid_from") or utc_now())
     return KnowledgeMemory(
         id=memory_id,
         title=str(item["title"]),
@@ -278,6 +278,8 @@ def _knowledge_from_case(item: dict[str, Any], memory_id: str) -> KnowledgeMemor
         version=1,
         created_at=timestamp,
         updated_at=timestamp,
+        authority=float(item.get("authority", 0.5)),
+        valid_from=timestamp,
     )
 
 

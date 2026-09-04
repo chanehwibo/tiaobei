@@ -27,10 +27,15 @@ class MemoryStore:
     }
     CONTRADICTION_PAIRS: tuple[tuple[str, str], ...] = (
         ("允许", "禁止"),
+        ("允许", "不允许"),
+        ("可以", "不可以"),
+        ("必须", "无需"),
+        ("必填", "可选"),
         ("开启", "关闭"),
         ("保留", "删除"),
         ("上传", "不要上传"),
         ("详细", "简洁"),
+        ("本地", "云端"),
     )
 
     def __init__(self, embedding: EmbeddingProvider | None = None) -> None:
@@ -38,6 +43,7 @@ class MemoryStore:
         self.preferences: dict[tuple[str, str, str], PreferenceMemory] = {}
         self.preference_history: list[PreferenceMemory] = []
         self.knowledge: dict[str, KnowledgeMemory] = {}
+        self.conflict_decisions: list[dict[str, object]] = []
 
     def upsert_preference(self, memory: PreferenceMemory) -> PreferenceMemory:
         key = (memory.tenant_id, memory.user_id, memory.key)
@@ -167,6 +173,8 @@ class MemoryStore:
             raise KeyError(f"knowledge memory not found: {memory_id}")
 
         normalized_strategy = strategy.strip().lower()
+        if normalized_strategy in {"auto", "authority_recency"}:
+            normalized_strategy = self._automatic_conflict_strategy(memory)
         if normalized_strategy in {"accept_incoming", "accept_newer"}:
             for conflict_id in memory.conflict_with:
                 existing = self.knowledge.get(conflict_id)
@@ -191,6 +199,14 @@ class MemoryStore:
             )
 
         memory.updated_at = utc_now()
+        self.conflict_decisions.append(
+            {
+                "memory_id": memory.id,
+                "strategy": normalized_strategy,
+                "status": memory.status.value,
+                "resolved_at": memory.updated_at,
+            }
+        )
         return memory
 
     def search_knowledge(self, query: str, top_k: int = 5) -> list[SearchResult]:
@@ -320,17 +336,53 @@ class MemoryStore:
         conflicting_items = [
             self.knowledge[conflict_id] for conflict_id in memory.conflict_with if conflict_id in self.knowledge
         ]
-        for item in conflicting_items:
-            item.status = MemoryStatus.FORGOTTEN
-            item.updated_at = utc_now()
+        if not conflicting_items:
+            memory.status = MemoryStatus.ACTIVE
+            memory.conflict_with = []
+            return
 
-        previous_content = "\n".join(f"- {item.title}：{item.content}" for item in conflicting_items)
-        memory.content = f"{memory.content}\n旧版记忆：\n{previous_content}" if previous_content else memory.content
-        memory.tags = sorted(set(memory.tags).union(*(set(item.tags) for item in conflicting_items)))
-        memory.source_ids = sorted(set(memory.source_ids).union(*(set(item.source_ids) for item in conflicting_items)))
-        memory.version = max([memory.version, *(item.version for item in conflicting_items)], default=memory.version) + 1
-        memory.status = MemoryStatus.ACTIVE
+        candidates = [memory, *conflicting_items]
+        winner = max(candidates, key=self._knowledge_precedence)
+        combined_tags = sorted({tag for item in candidates for tag in item.tags})
+        combined_sources = sorted({source_id for item in candidates for source_id in item.source_ids})
+        next_version = max(item.version for item in candidates) + 1
+        for item in candidates:
+            if item is winner:
+                item.status = MemoryStatus.ACTIVE
+                item.conflict_with = []
+                item.tags = combined_tags
+                item.source_ids = combined_sources
+                item.version = next_version
+            else:
+                item.status = MemoryStatus.FORGOTTEN
+            item.updated_at = utc_now()
+        if winner is not memory:
+            memory.status = MemoryStatus.FORGOTTEN
         memory.conflict_with = []
+
+    def _automatic_conflict_strategy(self, memory: KnowledgeMemory) -> str:
+        existing = [
+            self.knowledge[conflict_id]
+            for conflict_id in memory.conflict_with
+            if conflict_id in self.knowledge
+        ]
+        if not existing:
+            return "keep_both"
+        strongest_existing = max(existing, key=self._knowledge_precedence)
+        incoming_rank = self._knowledge_precedence(memory)
+        existing_rank = self._knowledge_precedence(strongest_existing)
+        if memory.authority > strongest_existing.authority + 0.05:
+            return "accept_incoming"
+        if strongest_existing.authority > memory.authority + 0.05:
+            return "keep_existing"
+        if incoming_rank[1] > existing_rank[1]:
+            return "accept_incoming"
+        return "manual_review"
+
+    @staticmethod
+    def _knowledge_precedence(memory: KnowledgeMemory) -> tuple[float, str, int]:
+        effective_time = memory.valid_from or memory.updated_at or memory.created_at
+        return (memory.authority, effective_time, memory.version)
 
     def _extract_forget_keywords(self, instruction: str) -> list[str]:
         text = instruction.strip()

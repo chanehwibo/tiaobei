@@ -498,7 +498,8 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertEqual(resolved.status, MemoryStatus.ACTIVE)
         self.assertEqual(resolved.conflict_with, [])
         self.assertGreaterEqual(resolved.version, 2)
-        self.assertIn("旧版记忆", resolved.content)
+        self.assertNotIn("旧版记忆", resolved.content)
+        self.assertGreaterEqual(len(resolved.source_ids), 2)
         self.assertTrue(conflicting_ids)
         self.assertTrue(all(store.knowledge[memory_id].status == MemoryStatus.FORGOTTEN for memory_id in conflicting_ids))
 
@@ -548,7 +549,7 @@ class MemoryPipelineTest(unittest.TestCase):
 
         merge_conflict = details["conflicts"][3]
         self.assertEqual(merge_conflict["resolution_strategy"], "merge")
-        self.assertIn("旧版记忆", merge_conflict["resolved_content"])
+        self.assertNotIn("旧版记忆", merge_conflict["resolved_content"])
         self.assertTrue(merge_conflict["passed"])
 
         first_forget = details["forget"][0]
@@ -560,6 +561,43 @@ class MemoryPipelineTest(unittest.TestCase):
         meeting_forget = details["forget"][2]
         self.assertEqual(meeting_forget["matched_keywords"], ["会议纪要模板", "模板"])
         self.assertNotIn("报销邮件模板", meeting_forget["actual_forgotten_titles"])
+
+    def test_conflict_auto_resolution_uses_authority_and_recency(self) -> None:
+        timestamp = "2026-01-01T00:00:00+00:00"
+        store = MemoryStore()
+        base = KnowledgeExtractor().extract(
+            DataIngestionPipeline().ingest(
+                [
+                    {
+                        "id": "policy-old",
+                        "source_type": "user_behavior",
+                        "timestamp": timestamp,
+                        "content": "公司旧版报销流程规则允许先审批后补充票据。",
+                        "metadata": {"title": "报销流程规则"},
+                    }
+                ]
+            )
+        )[0]
+        incoming = KnowledgeExtractor().extract(
+            DataIngestionPipeline().ingest(
+                [
+                    {
+                        "id": "policy-new",
+                        "source_type": "manual_config",
+                        "timestamp": "2026-02-01T00:00:00+00:00",
+                        "content": "公司新版报销流程规则不允许先审批后补充票据。",
+                        "metadata": {"title": "报销流程规则更新"},
+                    }
+                ]
+            )
+        )[0]
+        store.upsert_knowledge(base)
+        store.upsert_knowledge(incoming)
+        self.assertEqual(incoming.status, MemoryStatus.CONFLICT_PENDING)
+        resolved = store.resolve_knowledge_conflict(incoming.id, strategy="auto")
+        self.assertEqual(resolved.status, MemoryStatus.ACTIVE)
+        self.assertEqual(store.knowledge[base.id].status, MemoryStatus.FORGOTTEN)
+        self.assertEqual(store.conflict_decisions[-1]["strategy"], "accept_incoming")
 
     def test_evaluate_cli_can_write_full_report_and_print_summary(self) -> None:
         suite_path = ROOT / "data" / "eval" / "office_memory_eval.json"
