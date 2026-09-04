@@ -7,6 +7,7 @@ from pathlib import Path
 
 from .evaluation import run_evaluation_suite, run_smoke_evaluation
 from .embeddings import KylinEmbeddingConfig, check_kylin_embedding
+from .compatibility import collect_compatibility_report, write_compatibility_report
 from .benchmark import run_scale_benchmark, write_benchmark_report
 from .ingestion import DataIngestionPipeline
 from .knowledge import KnowledgeExtractor
@@ -148,6 +149,15 @@ def main() -> None:
     sdk_check.add_argument("--factory-kwargs", default="{}", help="JSON object passed to the client factory")
     sdk_check.add_argument("--output", type=Path, help="Optional JSON report path")
 
+    compat_check = subparsers.add_parser("compat-check", help="Generate an OS and runtime compatibility report")
+    compat_check.add_argument("--workspace", default=Path.cwd(), type=Path, help="Writable project directory")
+    compat_check.add_argument("--sdk-module", help="Optional real embedding SDK module")
+    compat_check.add_argument("--sdk-factory", help="Optional SDK client factory")
+    compat_check.add_argument("--sdk-method", default="encode", help="SDK embedding method")
+    compat_check.add_argument("--sdk-response-path", help="Optional dotted vector response path")
+    compat_check.add_argument("--output-json", required=True, type=Path, help="JSON report path")
+    compat_check.add_argument("--output-md", required=True, type=Path, help="Markdown report path")
+
     args = parser.parse_args()
     if args.command == "demo":
         run_demo(args.input)
@@ -191,6 +201,22 @@ def main() -> None:
             args.output.parent.mkdir(parents=True, exist_ok=True)
             args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(result, ensure_ascii=False, indent=2))
+    elif args.command == "compat-check":
+        sdk_config = None
+        if args.sdk_module:
+            sdk_config = KylinEmbeddingConfig(
+                module_name=args.sdk_module,
+                factory_name=args.sdk_factory,
+                method_name=args.sdk_method,
+                response_path=args.sdk_response_path,
+            )
+        report = collect_compatibility_report(args.workspace, sdk_config=sdk_config)
+        write_compatibility_report(
+            report,
+            json_path=args.output_json,
+            markdown_path=args.output_md,
+        )
+        print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
