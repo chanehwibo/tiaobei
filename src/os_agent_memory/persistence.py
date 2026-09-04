@@ -66,7 +66,7 @@ class SQLiteMemoryPersistence:
                 """
             ):
                 memory = _preference_from_row(row)
-                store.preferences[(memory.user_id, memory.key)] = memory
+                store.preferences[(memory.tenant_id, memory.user_id, memory.key)] = memory
 
             for row in connection.execute(
                 """

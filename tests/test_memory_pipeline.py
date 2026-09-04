@@ -194,7 +194,7 @@ class MemoryPipelineTest(unittest.TestCase):
         for memory in preferences:
             store.upsert_preference(memory)
 
-        keys = {key for _user_id, key in store.preferences.keys()}
+        keys = {key for _tenant_id, _user_id, key in store.preferences.keys()}
         self.assertIn("output.language", keys)
         self.assertIn("output.verbosity", keys)
         self.assertIn("output.format", keys)
@@ -203,6 +203,70 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertIn("security.redaction", keys)
         self.assertIn("security.confirmation", keys)
         self.assertIn("preferred_tool:office_report", keys)
+
+    def test_preference_versions_are_scoped_and_queryable(self) -> None:
+        extractor = PreferenceExtractor()
+        store = MemoryStore()
+        first = extractor.extract(
+            DataIngestionPipeline().ingest(
+                [
+                    {
+                        "id": "v1",
+                        "tenant_id": "tenant-a",
+                        "user_id": "same-user",
+                        "source_type": "manual_config",
+                        "timestamp": "2026-01-01T09:00:00+08:00",
+                        "content": "请详细展开说明并给出原因。",
+                        "metadata": {"revision": 1},
+                    }
+                ]
+            )
+        )
+        second = extractor.extract(
+            DataIngestionPipeline().ingest(
+                [
+                    {
+                        "id": "v2",
+                        "tenant_id": "tenant-a",
+                        "user_id": "same-user",
+                        "source_type": "manual_config",
+                        "timestamp": "2026-02-01T09:00:00+08:00",
+                        "content": "现在改为简洁输出，直接给结论。",
+                        "metadata": {"revision": 2},
+                    }
+                ]
+            )
+        )
+        other_tenant = extractor.extract(
+            DataIngestionPipeline().ingest(
+                [
+                    {
+                        "id": "other",
+                        "tenant_id": "tenant-b",
+                        "user_id": "same-user",
+                        "source_type": "manual_config",
+                        "timestamp": "2026-02-01T09:00:00+08:00",
+                        "content": "请详细展开说明并给出原因。",
+                        "metadata": {"revision": 1},
+                    }
+                ]
+            )
+        )
+        for memory in [*first, *second, *other_tenant]:
+            store.upsert_preference(memory)
+
+        current = store.get_preference("tenant-a", "same-user", "output.verbosity")
+        version_one = store.get_preference("tenant-a", "same-user", "output.verbosity", version=1)
+        at_january = store.get_preference(
+            "tenant-a", "same-user", "output.verbosity", at_time="2026-01-15T00:00:00+00:00"
+        )
+        other = store.get_preference("tenant-b", "same-user", "output.verbosity")
+        self.assertEqual((current.value, current.version), ("brief", 2))
+        self.assertEqual(version_one.value, "detailed")
+        self.assertIsNotNone(version_one.valid_to)
+        self.assertEqual(at_january.value, "detailed")
+        self.assertEqual(other.value, "detailed")
+        self.assertEqual(len(store.preferences), 2)
 
     def test_knowledge_search_and_forget(self) -> None:
         store = MemoryStore()

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import re
 from collections import Counter
+from dataclasses import replace
+from datetime import datetime
 
 from .embeddings import EmbeddingProvider, HashEmbedding
 from .schemas import ForgetResult, KnowledgeMemory, MemoryStatus, PreferenceMemory, SearchResult, stable_id, utc_now
@@ -33,17 +35,22 @@ class MemoryStore:
 
     def __init__(self, embedding: EmbeddingProvider | None = None) -> None:
         self.embedding = embedding or HashEmbedding()
-        self.preferences: dict[tuple[str, str], PreferenceMemory] = {}
+        self.preferences: dict[tuple[str, str, str], PreferenceMemory] = {}
         self.preference_history: list[PreferenceMemory] = []
         self.knowledge: dict[str, KnowledgeMemory] = {}
 
     def upsert_preference(self, memory: PreferenceMemory) -> PreferenceMemory:
-        key = (memory.user_id, memory.key)
+        key = (memory.tenant_id, memory.user_id, memory.key)
         current = self.preferences.get(key)
+        if not memory.valid_from:
+            memory = replace(memory, valid_from=memory.updated_at)
         if current is None:
             self.preferences[key] = memory
-            self.preference_history.append(memory)
+            self.preference_history.append(replace(memory))
             return memory
+
+        if current.value != memory.value and self._is_older(memory.valid_from, current.valid_from):
+            return current
 
         merged_scenes = sorted(set(current.scenes + memory.scenes))
         merged_evidence = sorted(set(current.evidence_ids + memory.evidence_ids))
@@ -59,10 +66,29 @@ class MemoryStore:
                 evidence_ids=merged_evidence,
                 updated_at=utc_now(),
                 status=current.status,
+                tenant_id=current.tenant_id,
+                valid_from=current.valid_from,
+                valid_to=current.valid_to,
+                tier=current.tier,
+                score_components=self._merge_score_components(
+                    current.score_components,
+                    memory.score_components,
+                ),
             )
+            self._replace_history_version(updated)
         else:
+            change_time = memory.valid_from or memory.updated_at
+            closed_current = replace(current, valid_to=change_time, updated_at=utc_now())
+            self._replace_history_version(closed_current)
             updated = PreferenceMemory(
-                id=stable_id("preference", memory.user_id, memory.key, memory.value, str(current.version + 1)),
+                id=stable_id(
+                    "preference",
+                    memory.tenant_id,
+                    memory.user_id,
+                    memory.key,
+                    memory.value,
+                    str(current.version + 1),
+                ),
                 user_id=memory.user_id,
                 key=memory.key,
                 value=memory.value,
@@ -72,10 +98,60 @@ class MemoryStore:
                 evidence_ids=merged_evidence,
                 updated_at=utc_now(),
                 status=memory.status,
+                tenant_id=memory.tenant_id,
+                valid_from=change_time,
+                valid_to=None,
+                tier=memory.tier,
+                score_components=dict(memory.score_components),
             )
         self.preferences[key] = updated
-        self.preference_history.append(updated)
+        if not self.preference_history or self.preference_history[-1].id != updated.id:
+            self.preference_history.append(replace(updated))
         return updated
+
+    def get_preference(
+        self,
+        tenant_id: str,
+        user_id: str,
+        key: str,
+        *,
+        version: int | None = None,
+        at_time: str | None = None,
+    ) -> PreferenceMemory | None:
+        if version is None and at_time is None:
+            return self.preferences.get((tenant_id, user_id, key))
+        candidates = [
+            item
+            for item in self.preference_history
+            if item.tenant_id == tenant_id and item.user_id == user_id and item.key == key
+        ]
+        if version is not None:
+            return next((item for item in reversed(candidates) if item.version == version), None)
+        assert at_time is not None
+        point = self._parse_time(at_time)
+        for item in reversed(candidates):
+            starts_before = not item.valid_from or self._parse_time(item.valid_from) <= point
+            ends_after = item.valid_to is None or point < self._parse_time(item.valid_to)
+            if starts_before and ends_after:
+                return item
+        return None
+
+    def list_preferences(
+        self,
+        tenant_id: str,
+        user_id: str,
+        *,
+        scene: str | None = None,
+    ) -> list[PreferenceMemory]:
+        results = [
+            item
+            for (stored_tenant, stored_user, _key), item in self.preferences.items()
+            if stored_tenant == tenant_id
+            and stored_user == user_id
+            and item.status == MemoryStatus.ACTIVE
+            and (scene is None or not item.scenes or scene in item.scenes)
+        ]
+        return sorted(results, key=lambda item: item.key)
 
     def upsert_knowledge(self, memory: KnowledgeMemory) -> KnowledgeMemory:
         conflicts = self._find_conflicts(memory)
@@ -182,6 +258,42 @@ class MemoryStore:
             "knowledge": active_knowledge,
             "knowledge_conflicts": conflict_knowledge,
         }
+
+    def _replace_history_version(self, memory: PreferenceMemory) -> None:
+        for index in range(len(self.preference_history) - 1, -1, -1):
+            item = self.preference_history[index]
+            if (
+                item.tenant_id == memory.tenant_id
+                and item.user_id == memory.user_id
+                and item.key == memory.key
+                and item.version == memory.version
+            ):
+                self.preference_history[index] = replace(memory)
+                return
+        self.preference_history.append(replace(memory))
+
+    @staticmethod
+    def _merge_score_components(
+        current: dict[str, float],
+        incoming: dict[str, float],
+    ) -> dict[str, float]:
+        merged = dict(current)
+        for key, value in incoming.items():
+            if key in {"evidence_weight", "evidence_count"}:
+                merged[key] = round(merged.get(key, 0.0) + value, 4)
+            else:
+                merged[key] = max(merged.get(key, 0.0), value)
+        return merged
+
+    @staticmethod
+    def _parse_time(value: str) -> datetime:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+    @classmethod
+    def _is_older(cls, incoming: str, current: str) -> bool:
+        if not incoming or not current:
+            return False
+        return cls._parse_time(incoming) < cls._parse_time(current)
 
     def _find_conflicts(self, candidate: KnowledgeMemory) -> list[str]:
         conflicts: list[str] = []
