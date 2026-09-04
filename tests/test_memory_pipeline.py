@@ -22,13 +22,15 @@ from os_agent_memory.memory_store import MemoryStore
 from os_agent_memory.persistence import SQLiteMemoryPersistence
 from os_agent_memory.preference import PreferenceExtractor
 from os_agent_memory.schemas import MemoryStatus
+from os_agent_memory.service import MemoryService
 
 
 class MemoryPipelineTest(unittest.TestCase):
     def setUp(self) -> None:
         sample_path = ROOT / "data" / "samples" / "events.jsonl"
         ingestion = DataIngestionPipeline()
-        self.records = ingestion.ingest(ingestion.load_jsonl(sample_path))
+        self.raw_records = ingestion.load_jsonl(sample_path)
+        self.records = ingestion.ingest(self.raw_records)
 
     def test_sensitive_information_is_redacted(self) -> None:
         combined = "\n".join(record.content for record in self.records)
@@ -921,6 +923,65 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertIn("legacy-id", loaded.knowledge)
         self.assertEqual(loaded.knowledge["legacy-id"].tenant_id, "default")
         self.assertTrue(loaded.knowledge["legacy-id"].embedding)
+
+    def test_service_exposes_scoped_end_to_end_operations(self) -> None:
+        service = MemoryService()
+        tenant_a = [dict(record, tenant_id="tenant-a") for record in self.raw_records]
+        tenant_b = [
+            {
+                "id": "tenant-b-template",
+                "tenant_id": "tenant-b",
+                "user_id": "u-demo",
+                "scene": "office_report",
+                "source_type": "manual_config",
+                "timestamp": "2026-06-13T09:00:00+08:00",
+                "content": "模板：乙租户报销模板包含金额和发票字段。",
+                "metadata": {"title": "乙租户报销模板"},
+            }
+        ]
+
+        result = service.ingest([*tenant_a, *tenant_b], persist=False)
+        self.assertEqual(result["accepted_records"], 8)
+        self.assertEqual(result["rejected_records"], 0)
+        self.assertGreater(result["stats"]["knowledge"], 0)
+
+        preferences = service.preferences(tenant_id="tenant-a", user_id="u-demo")
+        self.assertIn("output.language", {item["key"] for item in preferences})
+        search = service.search(
+            "报销模板",
+            tenant_id="tenant-a",
+            user_id="u-demo",
+            top_k=10,
+        )
+        self.assertTrue(search)
+        self.assertNotIn("乙租户报销模板", {item["title"] for item in search})
+
+        conflicts = service.conflicts(tenant_id="tenant-a", user_id="u-demo")
+        self.assertEqual(len(conflicts), 1)
+        resolved = service.resolve_conflict(conflicts[0]["id"], strategy="auto", persist=False)
+        self.assertEqual(resolved["status"], "active")
+
+        preview = service.forget_preview(
+            "删除报销模板相关记忆",
+            tenant_id="tenant-a",
+            user_id="u-demo",
+        )
+        self.assertFalse(preview["confirmed"])
+        self.assertTrue(preview["knowledge_ids"])
+        confirmed = service.forget_confirm(preview["id"], persist=False)
+        self.assertTrue(confirmed["confirmed"])
+        self.assertIsNotNone(confirmed["audit_id"])
+        self.assertEqual(service.stats()["audit_events"], 1)
+
+    def test_service_persists_mutations_when_database_is_configured(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            database_path = Path(temporary_directory) / "service.sqlite"
+            service = MemoryService(database_path=database_path)
+            service.ingest(self.raw_records)
+            reloaded = MemoryService(database_path=database_path)
+
+        self.assertEqual(service.store.stats(), reloaded.store.stats())
+        self.assertTrue(reloaded.preferences(tenant_id="default", user_id="u-demo"))
 
 
 if __name__ == "__main__":
