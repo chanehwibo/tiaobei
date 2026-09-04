@@ -14,7 +14,12 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from os_agent_memory.embeddings import CallableEmbeddingProvider, HashEmbedding, KylinEmbeddingProvider
 from os_agent_memory.cli import run_evaluate
-from os_agent_memory.evaluation import _forget_details, preference_accuracy, run_evaluation_suite
+from os_agent_memory.evaluation import (
+    _forget_details,
+    precision_recall_f1,
+    preference_accuracy,
+    run_evaluation_suite,
+)
 from os_agent_memory.ingestion import DataIngestionPipeline
 from os_agent_memory.knowledge import KnowledgeExtractor
 from os_agent_memory.lifecycle import MemoryLifecycleManager, MediumTermMemory, ShortTermMemoryBuffer
@@ -728,7 +733,22 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertLessEqual(metrics["knowledge_search_latency_ms"], 500)
         self.assertEqual(metrics["conflict_accuracy"], 1.0)
         self.assertEqual(metrics["forget_accuracy"], 1.0)
+        self.assertEqual(metrics["preference_f1"], 1.0)
+        self.assertGreaterEqual(metrics["knowledge_precision_at_k"], 0.3)
+        self.assertGreaterEqual(metrics["knowledge_mrr"], 0.85)
+        self.assertGreaterEqual(metrics["knowledge_ndcg_at_k"], 0.85)
+        self.assertEqual(metrics["conflict_f1"], 1.0)
+        self.assertEqual(metrics["forget_f1"], 1.0)
+        self.assertEqual(metrics["forget_misdelete_rate"], 0.0)
         self.assertTrue(all(result["targets"].values()))
+
+    def test_precision_recall_f1_uses_micro_counts(self) -> None:
+        scores = precision_recall_f1(3, 1, 2)
+        self.assertEqual(scores["precision"], 0.75)
+        self.assertEqual(scores["recall"], 0.6)
+        self.assertAlmostEqual(scores["f1"], 2 / 3)
+        with self.assertRaises(ValueError):
+            precision_recall_f1(-1, 0, 0)
 
     def test_labeled_evaluation_suite_includes_case_details(self) -> None:
         suite_path = ROOT / "data" / "eval" / "office_memory_eval.json"

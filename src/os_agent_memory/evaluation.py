@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import time
 from collections.abc import Callable
 from pathlib import Path
@@ -11,6 +12,19 @@ from .knowledge import KnowledgeExtractor
 from .memory_store import MemoryStore
 from .preference import PreferenceExtractor
 from .schemas import KnowledgeMemory, MemoryStatus, PreferenceMemory, stable_id, utc_now
+
+
+def precision_recall_f1(true_positive: int, false_positive: int, false_negative: int) -> dict[str, float]:
+    """Return safe micro precision/recall/F1 values for count inputs."""
+
+    if min(true_positive, false_positive, false_negative) < 0:
+        raise ValueError("metric counts cannot be negative")
+    precision_denominator = true_positive + false_positive
+    recall_denominator = true_positive + false_negative
+    precision = true_positive / precision_denominator if precision_denominator else 1.0
+    recall = true_positive / recall_denominator if recall_denominator else 1.0
+    f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+    return {"precision": precision, "recall": recall, "f1": f1}
 
 
 def preference_accuracy(predicted: list[PreferenceMemory], labels: dict[tuple[str, str], str]) -> float:
@@ -87,21 +101,41 @@ def run_evaluation_suite(path: str | Path, top_k: int = 3) -> dict[str, Any]:
     conflict_cases = suite.get("conflict_cases", [])
     forget_cases = suite.get("forget_cases", [])
 
+    preference_scores = _preference_scores(list(store.preferences.values()), preference_labels)
+    retrieval_details = _knowledge_retrieval_details(store, retrieval_queries, top_k)
+    retrieval_scores = _retrieval_scores(retrieval_details)
+    conflict_details = _conflict_details(conflict_cases)
+    conflict_scores = _conflict_scores(conflict_details)
+    forget_details = _forget_details(raw_records, forget_cases)
+    forget_scores = _forget_scores(forget_details)
     metrics = {
         "preference_accuracy": round(preference_accuracy(list(store.preferences.values()), preference_labels), 4),
-        "knowledge_recall_at_k": round(_knowledge_recall_at_k(store, retrieval_queries, top_k), 4),
+        "preference_precision": round(preference_scores["precision"], 4),
+        "preference_recall": round(preference_scores["recall"], 4),
+        "preference_f1": round(preference_scores["f1"], 4),
+        "knowledge_precision_at_k": round(retrieval_scores["precision"], 4),
+        "knowledge_recall_at_k": round(retrieval_scores["recall"], 4),
+        "knowledge_mrr": round(retrieval_scores["mrr"], 4),
+        "knowledge_ndcg_at_k": round(retrieval_scores["ndcg"], 4),
         "knowledge_search_latency_ms": round(
             measure_latency_ms(lambda: store.search_knowledge("报销流程模板", top_k=top_k), rounds=20),
             3,
         ),
         "conflict_accuracy": round(_conflict_accuracy(conflict_cases), 4),
+        "conflict_precision": round(conflict_scores["precision"], 4),
+        "conflict_recall": round(conflict_scores["recall"], 4),
+        "conflict_f1": round(conflict_scores["f1"], 4),
         "forget_accuracy": round(_forget_accuracy(raw_records, forget_cases), 4),
+        "forget_precision": round(forget_scores["precision"], 4),
+        "forget_recall": round(forget_scores["recall"], 4),
+        "forget_f1": round(forget_scores["f1"], 4),
+        "forget_misdelete_rate": round(forget_scores["misdelete_rate"], 4),
     }
     details = {
         "preferences": _preference_details(list(store.preferences.values()), preference_labels),
-        "retrieval": _knowledge_retrieval_details(store, retrieval_queries, top_k),
-        "conflicts": _conflict_details(conflict_cases),
-        "forget": _forget_details(raw_records, forget_cases),
+        "retrieval": retrieval_details,
+        "conflicts": conflict_details,
+        "forget": forget_details,
     }
     stats = store.stats()
     return {
@@ -125,6 +159,20 @@ def _knowledge_recall_at_k(store: MemoryStore, queries: list[dict[str, Any]], to
         return 0.0
 
     return sum(item["recall"] for item in _knowledge_retrieval_details(store, queries, top_k)) / len(queries)
+
+
+def _preference_scores(
+    predicted: list[PreferenceMemory],
+    labels: dict[tuple[str, str], str],
+) -> dict[str, float]:
+    predicted_set = {(item.user_id, item.key, item.value) for item in predicted}
+    label_set = {(user_id, key, value) for (user_id, key), value in labels.items()}
+    true_positive = len(predicted_set & label_set)
+    return precision_recall_f1(
+        true_positive,
+        len(predicted_set - label_set),
+        len(label_set - predicted_set),
+    )
 
 
 def _preference_details(
@@ -195,11 +243,55 @@ def _knowledge_retrieval_details(store: MemoryStore, queries: list[dict[str, Any
                 "returned_titles": returned_titles,
                 "hit_titles": hit_titles,
                 "expected_empty": expected_empty,
+                "precision": round(
+                    (1.0 if not returned_titles else 0.0)
+                    if expected_empty
+                    else len(hit_titles) / len(returned_titles) if returned_titles else 0.0,
+                    4,
+                ),
                 "recall": round(recall, 4),
+                "reciprocal_rank": round(_reciprocal_rank(returned_titles, expected_titles, expected_empty), 4),
+                "ndcg": round(_ndcg(returned_titles, expected_titles, expected_empty), 4),
                 "passed": recall >= 1.0,
             }
         )
     return details
+
+
+def _reciprocal_rank(returned: list[str], expected: list[str], expected_empty: bool) -> float:
+    if expected_empty:
+        return 1.0 if not returned else 0.0
+    expected_set = set(expected)
+    for rank, title in enumerate(returned, start=1):
+        if title in expected_set:
+            return 1.0 / rank
+    return 0.0
+
+
+def _ndcg(returned: list[str], expected: list[str], expected_empty: bool) -> float:
+    if expected_empty:
+        return 1.0 if not returned else 0.0
+    expected_set = set(expected)
+    dcg = sum(
+        1.0 / math.log2(rank + 1)
+        for rank, title in enumerate(returned, start=1)
+        if title in expected_set
+    )
+    ideal_hits = min(len(expected_set), len(returned))
+    ideal_dcg = sum(1.0 / math.log2(rank + 1) for rank in range(1, ideal_hits + 1))
+    return dcg / ideal_dcg if ideal_dcg else 0.0
+
+
+def _retrieval_scores(details: list[dict[str, Any]]) -> dict[str, float]:
+    if not details:
+        return {"precision": 0.0, "recall": 0.0, "mrr": 0.0, "ndcg": 0.0}
+    count = len(details)
+    return {
+        "precision": sum(float(item["precision"]) for item in details) / count,
+        "recall": sum(float(item["recall"]) for item in details) / count,
+        "mrr": sum(float(item["reciprocal_rank"]) for item in details) / count,
+        "ndcg": sum(float(item["ndcg"]) for item in details) / count,
+    }
 
 
 def _conflict_accuracy(cases: list[dict[str, Any]]) -> float:
@@ -258,6 +350,19 @@ def _conflict_details(cases: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return details
 
 
+def _conflict_scores(details: list[dict[str, Any]]) -> dict[str, float]:
+    true_positive = sum(
+        1 for item in details if item["expected_conflict"] and item["actual_conflict"]
+    )
+    false_positive = sum(
+        1 for item in details if not item["expected_conflict"] and item["actual_conflict"]
+    )
+    false_negative = sum(
+        1 for item in details if item["expected_conflict"] and not item["actual_conflict"]
+    )
+    return precision_recall_f1(true_positive, false_positive, false_negative)
+
+
 def _forget_accuracy(raw_records: list[dict[str, Any]], cases: list[dict[str, Any]]) -> float:
     if not cases:
         return 0.0
@@ -308,6 +413,19 @@ def _forget_details(raw_records: list[dict[str, Any]], cases: list[dict[str, Any
             }
         )
     return details
+
+
+def _forget_scores(details: list[dict[str, Any]]) -> dict[str, float]:
+    true_positive = sum(
+        len(set(item["actual_forgotten_titles"]) & set(item["expected_forgotten_titles"]))
+        for item in details
+    )
+    false_positive = sum(len(item["unexpected_forgotten_titles"]) for item in details)
+    false_negative = sum(len(item["missed_forgotten_titles"]) for item in details)
+    scores = precision_recall_f1(true_positive, false_positive, false_negative)
+    deletion_count = true_positive + false_positive
+    scores["misdelete_rate"] = false_positive / deletion_count if deletion_count else 0.0
+    return scores
 
 
 def _knowledge_from_case(item: dict[str, Any], memory_id: str) -> KnowledgeMemory:

@@ -5,7 +5,25 @@
     "preference_accuracy": {
       "min": 0.85
     },
+    "preference_precision": {
+      "min": 0.85
+    },
+    "preference_recall": {
+      "min": 0.85
+    },
+    "preference_f1": {
+      "min": 0.85
+    },
+    "knowledge_precision_at_k": {
+      "min": 0.3
+    },
     "knowledge_recall_at_k": {
+      "min": 0.85
+    },
+    "knowledge_mrr": {
+      "min": 0.85
+    },
+    "knowledge_ndcg_at_k": {
       "min": 0.85
     },
     "knowledge_search_latency_ms": {
@@ -14,8 +32,17 @@
     "conflict_accuracy": {
       "min": 0.88
     },
+    "conflict_f1": {
+      "min": 0.88
+    },
     "forget_accuracy": {
       "min": 0.85
+    },
+    "forget_f1": {
+      "min": 0.85
+    },
+    "forget_misdelete_rate": {
+      "max": 0.0
     }
   },
   "records": [
