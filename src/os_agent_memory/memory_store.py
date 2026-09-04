@@ -3,10 +3,19 @@ from __future__ import annotations
 import re
 from collections import Counter
 from dataclasses import replace
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 from .embeddings import EmbeddingProvider, HashEmbedding, cosine_similarity
-from .schemas import ForgetResult, KnowledgeMemory, MemoryStatus, PreferenceMemory, SearchResult, stable_id, utc_now
+from .schemas import (
+    ForgetPlan,
+    ForgetResult,
+    KnowledgeMemory,
+    MemoryStatus,
+    PreferenceMemory,
+    SearchResult,
+    stable_id,
+    utc_now,
+)
 
 
 class MemoryStore:
@@ -44,6 +53,7 @@ class MemoryStore:
         self.preference_history: list[PreferenceMemory] = []
         self.knowledge: dict[str, KnowledgeMemory] = {}
         self.conflict_decisions: list[dict[str, object]] = []
+        self.pending_forget_plans: dict[str, ForgetPlan] = {}
         self._token_index: dict[str, set[str]] = {}
         self._document_tokens: dict[str, set[str]] = {}
 
@@ -322,18 +332,89 @@ class MemoryStore:
                 memory.embedding = self.embedding.encode(self._knowledge_text(memory))
             self._index_knowledge(memory)
 
-    def forget(self, instruction: str, user_id: str | None = None) -> ForgetResult:
+    def plan_forget(
+        self,
+        instruction: str,
+        *,
+        tenant_id: str | None = None,
+        user_id: str | None = None,
+        hard_delete: bool = False,
+        ttl_seconds: int = 300,
+    ) -> ForgetPlan:
+        if ttl_seconds <= 0:
+            raise ValueError("ttl_seconds must be positive")
         keywords = self._extract_forget_keywords(instruction)
+        tenant_id, user_id = self._resolve_forget_scope(tenant_id, user_id)
+        preference_ids = [
+            preference.id
+            for preference in self.preferences.values()
+            if preference.tenant_id == tenant_id
+            and preference.user_id == user_id
+            and preference.status == MemoryStatus.ACTIVE
+            and self._matches_forget_request(
+                f"{preference.key} {preference.value} {' '.join(preference.scenes)}",
+                keywords,
+            )
+        ]
+        knowledge_ids = [
+            item.id
+            for item in self.knowledge.values()
+            if item.tenant_id == tenant_id
+            and item.user_id == user_id
+            and item.status in {MemoryStatus.ACTIVE, MemoryStatus.CONFLICT_PENDING}
+            and self._matches_forget_request(
+                f"{item.title} {item.content} {' '.join(item.tags)}",
+                keywords,
+            )
+        ]
+        created = datetime.now(timezone.utc)
+        plan_id = stable_id(
+            "forget-plan",
+            tenant_id,
+            user_id,
+            instruction,
+            created.isoformat(timespec="microseconds"),
+        )
+        plan = ForgetPlan(
+            id=plan_id,
+            tenant_id=tenant_id,
+            user_id=user_id,
+            instruction=instruction,
+            matched_keywords=keywords,
+            preference_ids=sorted(preference_ids),
+            knowledge_ids=sorted(knowledge_ids),
+            created_at=created.isoformat(timespec="seconds"),
+            expires_at=(created + timedelta(seconds=ttl_seconds)).isoformat(timespec="seconds"),
+            hard_delete=hard_delete,
+        )
+        self.pending_forget_plans[plan.id] = plan
+        return plan
+
+    def forget(
+        self,
+        instruction: str,
+        user_id: str | None = None,
+        *,
+        tenant_id: str | None = None,
+    ) -> ForgetResult:
+        """Compatibility API that immediately applies a scoped soft-delete."""
+
+        plan = self.plan_forget(instruction, tenant_id=tenant_id, user_id=user_id)
+        keywords = plan.matched_keywords
         if not keywords:
-            return ForgetResult(preference_count=0, knowledge_count=0, matched_keywords=[])
+            return ForgetResult(
+                preference_count=0,
+                knowledge_count=0,
+                matched_keywords=[],
+                plan_id=plan.id,
+                confirmed=True,
+            )
 
         preference_count = 0
         for key, preference in list(self.preferences.items()):
-            if user_id and preference.user_id != user_id:
+            if preference.id not in plan.preference_ids:
                 continue
-            haystack = f"{preference.key} {preference.value} {' '.join(preference.scenes)}"
-            if self._matches_forget_request(haystack, keywords):
-                self.preferences[key] = PreferenceMemory(
+            self.preferences[key] = PreferenceMemory(
                     id=preference.id,
                     user_id=preference.user_id,
                     key=preference.key,
@@ -344,18 +425,31 @@ class MemoryStore:
                     evidence_ids=preference.evidence_ids,
                     updated_at=utc_now(),
                     status=MemoryStatus.FORGOTTEN,
+                    tenant_id=preference.tenant_id,
+                    valid_from=preference.valid_from,
+                    valid_to=utc_now(),
+                    tier=preference.tier,
+                    score_components=dict(preference.score_components),
                 )
-                preference_count += 1
+            preference_count += 1
 
         knowledge_count = 0
         for item in self.knowledge.values():
-            haystack = f"{item.title} {item.content} {' '.join(item.tags)}"
-            if self._matches_forget_request(haystack, keywords):
+            if item.id in plan.knowledge_ids:
                 item.status = MemoryStatus.FORGOTTEN
                 item.updated_at = utc_now()
                 knowledge_count += 1
 
-        return ForgetResult(preference_count=preference_count, knowledge_count=knowledge_count, matched_keywords=keywords)
+        plan.confirmed = True
+        return ForgetResult(
+            preference_count=preference_count,
+            knowledge_count=knowledge_count,
+            matched_keywords=keywords,
+            plan_id=plan.id,
+            confirmed=True,
+            affected_preference_ids=list(plan.preference_ids),
+            affected_knowledge_ids=list(plan.knowledge_ids),
+        )
 
     def stats(self) -> dict[str, int]:
         active_preferences = sum(1 for item in self.preferences.values() if item.status == MemoryStatus.ACTIVE)
@@ -536,6 +630,33 @@ class MemoryStore:
 
         counter = Counter(candidates)
         return [keyword for keyword, _count in counter.most_common(8)]
+
+    def _resolve_forget_scope(
+        self,
+        tenant_id: str | None,
+        user_id: str | None,
+    ) -> tuple[str, str]:
+        if tenant_id is None:
+            tenants = {
+                item.tenant_id for item in self.preferences.values()
+            } | {item.tenant_id for item in self.knowledge.values()}
+            if len(tenants) > 1:
+                raise ValueError("tenant_id is required when the store contains multiple tenants")
+            tenant_id = next(iter(tenants), "default")
+        if user_id is None:
+            users = {
+                item.user_id
+                for item in self.preferences.values()
+                if item.tenant_id == tenant_id
+            } | {
+                item.user_id
+                for item in self.knowledge.values()
+                if item.tenant_id == tenant_id and item.user_id != "*"
+            }
+            if len(users) > 1:
+                raise ValueError("user_id is required when the tenant contains multiple users")
+            user_id = next(iter(users), "default_user")
+        return tenant_id, user_id
 
     def _matches_forget_request(self, haystack: str, keywords: list[str]) -> bool:
         phrase_keywords = [keyword for keyword in keywords if keyword not in self.FORGET_ATOMS]

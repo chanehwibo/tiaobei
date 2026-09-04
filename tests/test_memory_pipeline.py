@@ -493,6 +493,58 @@ class MemoryPipelineTest(unittest.TestCase):
         forget_result = store.forget("删除报销模板相关记忆")
         self.assertGreaterEqual(forget_result.knowledge_count, 1)
 
+    def test_forget_plan_is_strictly_user_and_tenant_scoped(self) -> None:
+        records = DataIngestionPipeline().ingest(
+            [
+                {
+                    "id": "forget-a",
+                    "tenant_id": "tenant-a",
+                    "user_id": "user-a",
+                    "source_type": "manual_config",
+                    "content": "模板：甲用户报销模板包含金额和票据。",
+                    "metadata": {"title": "甲用户报销模板"},
+                },
+                {
+                    "id": "forget-b",
+                    "tenant_id": "tenant-a",
+                    "user_id": "user-b",
+                    "source_type": "manual_config",
+                    "content": "模板：乙用户报销模板包含金额和票据。",
+                    "metadata": {"title": "乙用户报销模板"},
+                },
+                {
+                    "id": "forget-c",
+                    "tenant_id": "tenant-b",
+                    "user_id": "user-a",
+                    "source_type": "manual_config",
+                    "content": "模板：其他租户报销模板包含金额和票据。",
+                    "metadata": {"title": "其他租户报销模板"},
+                },
+            ]
+        )
+        store = MemoryStore()
+        for memory in KnowledgeExtractor().extract(records):
+            store.upsert_knowledge(memory)
+
+        plan = store.plan_forget(
+            "删除报销模板相关记忆",
+            tenant_id="tenant-a",
+            user_id="user-a",
+        )
+        planned_titles = {store.knowledge[memory_id].title for memory_id in plan.knowledge_ids}
+        self.assertEqual(planned_titles, {"甲用户报销模板"})
+        self.assertTrue(all(memory.status == MemoryStatus.ACTIVE for memory in store.knowledge.values()))
+
+        result = store.forget(
+            "删除报销模板相关记忆",
+            tenant_id="tenant-a",
+            user_id="user-a",
+        )
+        self.assertEqual(result.knowledge_count, 1)
+        self.assertEqual(store.knowledge[plan.knowledge_ids[0]].status, MemoryStatus.FORGOTTEN)
+        retained = [memory for memory in store.knowledge.values() if memory.id not in plan.knowledge_ids]
+        self.assertTrue(all(memory.status == MemoryStatus.ACTIVE for memory in retained))
+
     def test_knowledge_is_scoped_typed_and_risk_filtered(self) -> None:
         records = DataIngestionPipeline().ingest(
             [
