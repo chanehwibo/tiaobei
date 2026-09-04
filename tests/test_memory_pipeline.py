@@ -102,6 +102,69 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertEqual(record.tool_status.value, "failed")
         self.assertEqual(record.authority, 0.15)
 
+    def test_failed_tool_is_not_selected_as_preference(self) -> None:
+        pipeline = DataIngestionPipeline()
+        records = pipeline.ingest(
+            [
+                {
+                    "id": "failed-1",
+                    "source_type": "tool_result",
+                    "user_id": "u",
+                    "scene": "office",
+                    "timestamp": "2026-01-03T09:00:00+08:00",
+                    "content": "失败工具返回了足够长但不可采用的结果。",
+                    "metadata": {"tool_name": "broken", "status": "failed"},
+                },
+                {
+                    "id": "failed-2",
+                    "source_type": "tool_result",
+                    "user_id": "u",
+                    "scene": "office",
+                    "timestamp": "2026-01-04T09:00:00+08:00",
+                    "content": "失败工具再次返回了足够长但不可采用的结果。",
+                    "metadata": {"tool_name": "broken", "status": "failed"},
+                },
+                {
+                    "id": "success",
+                    "source_type": "tool_result",
+                    "user_id": "u",
+                    "scene": "office",
+                    "timestamp": "2026-01-02T09:00:00+08:00",
+                    "content": "成功工具返回了可供用户采用的完整结果。",
+                    "metadata": {"tool_name": "working", "status": "succeeded"},
+                },
+            ]
+        )
+        preferences = PreferenceExtractor().extract(records)
+        tool = next(item for item in preferences if item.key == "preferred_tool:office")
+        self.assertEqual(tool.value, "working")
+
+    def test_preference_resolution_uses_event_time_not_input_order(self) -> None:
+        records = DataIngestionPipeline().ingest(
+            [
+                {
+                    "id": "new",
+                    "source_type": "manual_config",
+                    "user_id": "u",
+                    "timestamp": "2026-02-01T09:00:00+08:00",
+                    "content": "以后输出保持简洁，直接给结论。",
+                    "metadata": {"revision": 2},
+                },
+                {
+                    "id": "old",
+                    "source_type": "manual_config",
+                    "user_id": "u",
+                    "timestamp": "2025-01-01T09:00:00+08:00",
+                    "content": "以前要求详细展开说明并给出原因。",
+                    "metadata": {"revision": 1},
+                },
+            ]
+        )
+        preferences = PreferenceExtractor().extract(records)
+        verbosity = next(item for item in preferences if item.key == "output.verbosity")
+        self.assertEqual(verbosity.value, "brief")
+        self.assertIn("selection_margin", verbosity.score_components)
+
     def test_embedding_provider_contract(self) -> None:
         fallback = HashEmbedding()
         related_score = fallback.similarity("报销流程模板", "报销流程规则模板")

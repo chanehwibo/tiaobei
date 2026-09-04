@@ -39,6 +39,8 @@
       "content": "工具执行结果：使用 spreadsheet_parser 读取报销单，字段包括金额、日期、发票号。总结：旧版报销流程允许先提交审批后补充票据；报销流程步骤为收集票据、校验金额、生成表格、提交审批。",
       "metadata": {
         "tool_name": "spreadsheet_parser",
+        "status": "succeeded",
+        "user_selected": true,
         "intent": "expense_report",
         "title": "报销流程结构化总结"
       }
