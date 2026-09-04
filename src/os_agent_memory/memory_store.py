@@ -5,7 +5,7 @@ from collections import Counter
 from dataclasses import replace
 from datetime import datetime
 
-from .embeddings import EmbeddingProvider, HashEmbedding
+from .embeddings import EmbeddingProvider, HashEmbedding, cosine_similarity
 from .schemas import ForgetResult, KnowledgeMemory, MemoryStatus, PreferenceMemory, SearchResult, stable_id, utc_now
 
 
@@ -44,6 +44,8 @@ class MemoryStore:
         self.preference_history: list[PreferenceMemory] = []
         self.knowledge: dict[str, KnowledgeMemory] = {}
         self.conflict_decisions: list[dict[str, object]] = []
+        self._token_index: dict[str, set[str]] = {}
+        self._document_tokens: dict[str, set[str]] = {}
 
     def upsert_preference(self, memory: PreferenceMemory) -> PreferenceMemory:
         key = (memory.tenant_id, memory.user_id, memory.key)
@@ -160,11 +162,14 @@ class MemoryStore:
         return sorted(results, key=lambda item: item.key)
 
     def upsert_knowledge(self, memory: KnowledgeMemory) -> KnowledgeMemory:
+        if not memory.embedding:
+            memory.embedding = self.embedding.encode(self._knowledge_text(memory))
         conflicts = self._find_conflicts(memory)
         if conflicts:
             memory.status = MemoryStatus.CONFLICT_PENDING
             memory.conflict_with = conflicts
         self.knowledge[memory.id] = memory
+        self._index_knowledge(memory)
         return memory
 
     def resolve_knowledge_conflict(self, memory_id: str, strategy: str = "accept_incoming") -> KnowledgeMemory:
@@ -215,16 +220,50 @@ class MemoryStore:
         top_k: int = 5,
         *,
         include_pending: bool = False,
+        candidate_limit: int | None = None,
     ) -> list[SearchResult]:
+        if top_k <= 0:
+            raise ValueError("top_k must be positive")
+        query = query.strip()
+        if not query:
+            return []
+        if candidate_limit is None:
+            candidate_limit = max(64, top_k * 12)
+        if candidate_limit < top_k:
+            raise ValueError("candidate_limit must be greater than or equal to top_k")
+
+        allowed_statuses = {MemoryStatus.ACTIVE}
+        if include_pending:
+            allowed_statuses.add(MemoryStatus.CONFLICT_PENDING)
+        candidates = [item for item in self.knowledge.values() if item.status in allowed_statuses]
+        query_tokens = self._lexical_tokens(query)
+        lexical_scores = {
+            item.id: self._lexical_similarity(query_tokens, self._tokens_for(item))
+            for item in candidates
+        }
+        lexical_matches = [item for item in candidates if lexical_scores[item.id] > 0]
+        if lexical_matches:
+            candidates = sorted(
+                lexical_matches,
+                key=lambda item: (lexical_scores[item.id], item.authority, item.updated_at),
+                reverse=True,
+            )[:candidate_limit]
+        elif len(candidates) > candidate_limit:
+            candidates = sorted(
+                candidates,
+                key=lambda item: (item.authority, item.updated_at),
+                reverse=True,
+            )[:candidate_limit]
+
+        query_embedding = self.embedding.encode(query)
         scored: list[SearchResult] = []
-        for item in self.knowledge.values():
-            allowed_statuses = {MemoryStatus.ACTIVE}
-            if include_pending:
-                allowed_statuses.add(MemoryStatus.CONFLICT_PENDING)
-            if item.status not in allowed_statuses:
-                continue
-            score = self.embedding.similarity(query, f"{item.title} {item.content} {' '.join(item.tags)}")
-            if score <= 0:
+        for item in candidates:
+            if not item.embedding:
+                item.embedding = self.embedding.encode(self._knowledge_text(item))
+            semantic_score = cosine_similarity(query_embedding, item.embedding)
+            lexical_score = lexical_scores[item.id]
+            score = 0.65 * semantic_score + 0.3 * lexical_score + 0.05 * item.authority
+            if score <= 0.0:
                 continue
             scored.append(
                 SearchResult(
@@ -233,11 +272,21 @@ class MemoryStore:
                     title=item.title,
                     content=item.content,
                     tags=item.tags,
+                    lexical_score=round(lexical_score, 4),
+                    semantic_score=round(semantic_score, 4),
                     status=item.status,
                 )
             )
         scored.sort(key=lambda result: result.score, reverse=True)
         return scored[:top_k]
+
+    def rebuild_index(self) -> None:
+        self._token_index.clear()
+        self._document_tokens.clear()
+        for memory in self.knowledge.values():
+            if not memory.embedding:
+                memory.embedding = self.embedding.encode(self._knowledge_text(memory))
+            self._index_knowledge(memory)
 
     def forget(self, instruction: str, user_id: str | None = None) -> ForgetResult:
         keywords = self._extract_forget_keywords(instruction)
@@ -335,6 +384,49 @@ class MemoryStore:
             if self._has_contradiction(candidate.content, item.content):
                 conflicts.append(item.id)
         return conflicts
+
+    @staticmethod
+    def _knowledge_text(memory: KnowledgeMemory) -> str:
+        return f"{memory.title} {memory.content} {' '.join(memory.tags)} {memory.scene} {memory.knowledge_type}"
+
+    def _index_knowledge(self, memory: KnowledgeMemory) -> None:
+        old_tokens = self._document_tokens.get(memory.id, set())
+        for token in old_tokens:
+            bucket = self._token_index.get(token)
+            if bucket is not None:
+                bucket.discard(memory.id)
+                if not bucket:
+                    del self._token_index[token]
+        tokens = self._lexical_tokens(self._knowledge_text(memory))
+        self._document_tokens[memory.id] = tokens
+        for token in tokens:
+            self._token_index.setdefault(token, set()).add(memory.id)
+
+    def _tokens_for(self, memory: KnowledgeMemory) -> set[str]:
+        tokens = self._document_tokens.get(memory.id)
+        if tokens is None:
+            self._index_knowledge(memory)
+            tokens = self._document_tokens[memory.id]
+        return tokens
+
+    @staticmethod
+    def _lexical_tokens(text: str) -> set[str]:
+        normalized = text.lower()
+        tokens = set(re.findall(r"[a-z0-9_]+", normalized))
+        for segment in re.findall(r"[\u3400-\u9fff]+", normalized):
+            if len(segment) <= 4:
+                tokens.add(segment)
+            tokens.update(segment[index : index + 2] for index in range(max(len(segment) - 1, 0)))
+        return tokens
+
+    @staticmethod
+    def _lexical_similarity(left: set[str], right: set[str]) -> float:
+        if not left or not right:
+            return 0.0
+        intersection = len(left & right)
+        if not intersection:
+            return 0.0
+        return intersection / ((len(left) * len(right)) ** 0.5)
 
     def _has_contradiction(self, left: str, right: str) -> bool:
         for a, b in self.CONTRADICTION_PAIRS:

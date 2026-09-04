@@ -316,6 +316,32 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertEqual(provider.similarity("报销流程", "报销模板"), 1.0)
         self.assertEqual(provider.similarity("报销流程", "天气预报"), 0.0)
 
+    def test_search_encodes_query_once_and_reuses_document_vectors(self) -> None:
+        class CountingEmbedding(HashEmbedding):
+            def __init__(self) -> None:
+                super().__init__()
+                self.calls = 0
+
+            def encode(self, text: str) -> list[float]:
+                self.calls += 1
+                return super().encode(text)
+
+        embedding = CountingEmbedding()
+        store = MemoryStore(embedding=embedding)
+        for memory in KnowledgeExtractor().extract(self.records):
+            store.upsert_knowledge(memory)
+        calls_after_ingestion = embedding.calls
+        first = store.search_knowledge("报销流程模板", top_k=3)
+        calls_after_first_search = embedding.calls
+        second = store.search_knowledge("报销流程模板", top_k=3)
+
+        self.assertTrue(first)
+        self.assertEqual([item.memory_id for item in first], [item.memory_id for item in second])
+        self.assertEqual(calls_after_first_search - calls_after_ingestion, 1)
+        self.assertEqual(embedding.calls - calls_after_first_search, 1)
+        self.assertTrue(all(item.lexical_score >= 0 for item in first))
+        self.assertTrue(all(item.semantic_score >= 0 for item in first))
+
     def test_kylin_embedding_provider_adapter_contract(self) -> None:
         class FakeKylinClient:
             def embed_query(self, text: str) -> dict[str, list[float]]:

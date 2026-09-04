@@ -86,6 +86,8 @@ class SQLiteMemoryPersistence:
                 memory = _knowledge_from_row(row)
                 store.knowledge[memory.id] = memory
 
+        store.rebuild_index()
+
         return store
 
     @staticmethod
