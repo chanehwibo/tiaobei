@@ -1,10 +1,13 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timedelta, timezone
 from statistics import fmean
 
-from .schemas import DataRecord, stable_id
+from .knowledge import KnowledgeExtractor
+from .memory_store import MemoryStore
+from .preference import PreferenceExtractor
+from .schemas import DataRecord, MemoryStatus, MemoryTier, PromotionDecision, stable_id
 
 
 def _as_datetime(value: str | datetime | None) -> datetime:
@@ -124,6 +127,12 @@ class MediumTermMemory:
             raise KeyError(f"medium-term cluster not found: {cluster_id}")
         return self._build_cluster(cluster_id, records)
 
+    def records_for(self, cluster_id: str) -> list[DataRecord]:
+        records = self._records.get(cluster_id)
+        if not records:
+            raise KeyError(f"medium-term cluster not found: {cluster_id}")
+        return list(records)
+
     def clusters(self, *, tenant_id: str, user_id: str) -> list[MediumTermCluster]:
         return sorted(
             (
@@ -181,3 +190,126 @@ class MediumTermMemory:
             representative_content=representative.content,
             promotion_score=self._promotion_score(records),
         )
+
+
+class MemoryLifecycleManager:
+    """Connect short, medium and long-term memory with explainable gates."""
+
+    def __init__(
+        self,
+        store: MemoryStore | None = None,
+        *,
+        promotion_threshold: float = 0.65,
+        minimum_evidence: int = 2,
+    ) -> None:
+        if not 0.0 <= promotion_threshold <= 1.0:
+            raise ValueError("promotion_threshold must be between zero and one")
+        if minimum_evidence <= 0:
+            raise ValueError("minimum_evidence must be positive")
+        self.short_term = ShortTermMemoryBuffer()
+        self.medium_term = MediumTermMemory()
+        self.store = store or MemoryStore()
+        self.promotion_threshold = promotion_threshold
+        self.minimum_evidence = minimum_evidence
+        self.decisions: list[PromotionDecision] = []
+
+    def process(self, records: list[DataRecord]) -> list[PromotionDecision]:
+        for record in records:
+            self.short_term.add(record)
+        clusters = self.medium_term.aggregate(records)
+        return [self.promote(cluster.id) for cluster in clusters]
+
+    def evaluate(self, cluster_id: str) -> PromotionDecision:
+        cluster = self.medium_term.get(cluster_id)
+        reasons = [
+            f"promotion_score={cluster.promotion_score:.4f}",
+            f"evidence_count={cluster.occurrence_count}",
+            f"average_authority={cluster.average_authority:.4f}",
+        ]
+        accepted = True
+        if cluster.risk_flags:
+            accepted = False
+            reasons.append("rejected:risk_flags=" + ",".join(cluster.risk_flags))
+        if cluster.promotion_score < self.promotion_threshold:
+            accepted = False
+            reasons.append("rejected:score_below_threshold")
+        enough_evidence = cluster.occurrence_count >= self.minimum_evidence
+        explicit_authority = cluster.average_authority >= 0.9
+        if not enough_evidence and not explicit_authority:
+            accepted = False
+            reasons.append("rejected:insufficient_evidence")
+        if accepted:
+            reasons.append("accepted:promotion_gate_passed")
+        return PromotionDecision(
+            record_id=cluster_id,
+            from_tier=MemoryTier.MEDIUM,
+            to_tier=MemoryTier.LONG if accepted else None,
+            score=cluster.promotion_score,
+            accepted=accepted,
+            reasons=reasons,
+        )
+
+    def promote(self, cluster_id: str) -> PromotionDecision:
+        decision = self.evaluate(cluster_id)
+        if decision.accepted:
+            records = self.medium_term.records_for(cluster_id)
+            for preference in PreferenceExtractor().extract(records):
+                self.store.upsert_preference(replace(preference, tier=MemoryTier.LONG))
+            for knowledge in KnowledgeExtractor().extract(records):
+                self.store.upsert_knowledge(replace(knowledge, tier=MemoryTier.LONG))
+        self.decisions.append(decision)
+        return decision
+
+    def expire_long_term(
+        self,
+        *,
+        before: str | datetime,
+    ) -> list[str]:
+        cutoff = _as_datetime(before)
+        expired: list[str] = []
+        for key, preference in list(self.store.preferences.items()):
+            if preference.status != MemoryStatus.ACTIVE:
+                continue
+            timestamp = preference.valid_from or preference.updated_at
+            if _as_datetime(timestamp) < cutoff:
+                expired_memory = replace(
+                    preference,
+                    status=MemoryStatus.EXPIRED,
+                    valid_to=cutoff.isoformat(timespec="seconds"),
+                    updated_at=cutoff.isoformat(timespec="seconds"),
+                )
+                self.store.preferences[key] = expired_memory
+                self.store._replace_history_version(expired_memory)
+                expired.append(preference.id)
+        for knowledge in self.store.knowledge.values():
+            if knowledge.status != MemoryStatus.ACTIVE:
+                continue
+            timestamp = knowledge.valid_from or knowledge.updated_at
+            if _as_datetime(timestamp) < cutoff:
+                knowledge.status = MemoryStatus.EXPIRED
+                knowledge.valid_to = cutoff.isoformat(timespec="seconds")
+                knowledge.updated_at = cutoff.isoformat(timespec="seconds")
+                expired.append(knowledge.id)
+        return sorted(expired)
+
+    def demote_knowledge(self, memory_id: str, reason: str) -> None:
+        memory = self.store.knowledge.get(memory_id)
+        if memory is None:
+            raise KeyError(f"knowledge memory not found: {memory_id}")
+        memory.tier = MemoryTier.MEDIUM
+        memory.status = MemoryStatus.QUARANTINED
+        memory.updated_at = utc_now_iso()
+        self.decisions.append(
+            PromotionDecision(
+                record_id=memory_id,
+                from_tier=MemoryTier.LONG,
+                to_tier=MemoryTier.MEDIUM,
+                score=0.0,
+                accepted=False,
+                reasons=[f"demoted:{reason}"],
+            )
+        )
+
+
+def utc_now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
