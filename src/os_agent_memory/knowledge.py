@@ -21,19 +21,33 @@ class KnowledgeExtractor:
     def extract(self, records: list[DataRecord]) -> list[KnowledgeMemory]:
         memories: list[KnowledgeMemory] = []
         for record in records:
-            if not self._looks_like_knowledge(record.content):
+            if record.risk_flags or not self._looks_like_knowledge(record.content):
                 continue
             title = self._make_title(record)
+            tags = self._tag(record.content)
             memories.append(
                 KnowledgeMemory(
-                    id=stable_id("knowledge", title, record.content),
+                    id=stable_id(
+                        "knowledge",
+                        record.tenant_id,
+                        record.user_id,
+                        title,
+                        record.content,
+                    ),
                     title=title,
                     content=record.content,
-                    tags=self._tag(record.content),
+                    tags=tags,
                     source_ids=[record.id],
                     version=1,
                     created_at=utc_now(),
                     updated_at=utc_now(),
+                    tenant_id=record.tenant_id,
+                    user_id=record.user_id,
+                    knowledge_type=str(record.metadata.get("knowledge_type") or tags[0]),
+                    scene=record.scene,
+                    authority=record.authority,
+                    privacy_level=record.privacy_level,
+                    valid_from=record.timestamp,
                 )
             )
         return memories
@@ -58,4 +72,3 @@ class KnowledgeExtractor:
             if any(keyword in content for keyword in keywords):
                 tags.append(tag)
         return tags or ["general"]
-

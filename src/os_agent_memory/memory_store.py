@@ -300,6 +300,8 @@ class MemoryStore:
         for item in self.knowledge.values():
             if item.status == MemoryStatus.FORGOTTEN:
                 continue
+            if item.tenant_id != candidate.tenant_id or item.user_id != candidate.user_id:
+                continue
             title_similarity = self.embedding.similarity(candidate.title, item.title)
             shared_tags = set(candidate.tags) & set(item.tags)
             if title_similarity < 0.55 and not shared_tags:
