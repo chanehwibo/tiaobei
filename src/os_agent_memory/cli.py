@@ -11,6 +11,7 @@ from .knowledge import KnowledgeExtractor
 from .memory_store import MemoryStore
 from .persistence import SQLiteMemoryPersistence
 from .preference import PreferenceExtractor
+from .service import MemoryService
 
 
 def build_store(input_path: Path) -> MemoryStore:
@@ -116,6 +117,12 @@ def main() -> None:
     build_store_command.add_argument("--input", required=True, type=Path, help="Path to JSONL event file")
     build_store_command.add_argument("--output", required=True, type=Path, help="Path to SQLite output file")
 
+    serve_command = subparsers.add_parser("serve", help="Run the local browser demonstration dashboard")
+    serve_command.add_argument("--input", type=Path, help="Optional JSONL events loaded at startup")
+    serve_command.add_argument("--database", type=Path, help="Optional persistent SQLite database")
+    serve_command.add_argument("--host", default="127.0.0.1", help="Bind address (default: localhost only)")
+    serve_command.add_argument("--port", default=8765, type=int, help="HTTP port")
+
     args = parser.parse_args()
     if args.command == "demo":
         run_demo(args.input)
@@ -123,6 +130,14 @@ def main() -> None:
         run_evaluate(args.suite, top_k=args.top_k, summary_only=args.summary_only, output_path=args.output)
     elif args.command == "build-store":
         run_build_store(args.input, args.output)
+    elif args.command == "serve":
+        from .web_server import serve
+
+        service = MemoryService(database_path=args.database)
+        if args.input:
+            raw_records = service.ingestion.load_jsonl(args.input)
+            service.ingest(raw_records)
+        serve(service, host=args.host, port=args.port)
 
 
 if __name__ == "__main__":
