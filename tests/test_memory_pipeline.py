@@ -33,6 +33,45 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertNotIn("13912345678", combined)
         self.assertIn("[PHONE]", combined)
 
+    def test_ingestion_isolates_invalid_records_and_deduplicates(self) -> None:
+        pipeline = DataIngestionPipeline()
+        batch = pipeline.ingest_with_report(
+            [
+                {"id": "tiny", "content": "x"},
+                {"id": "bad-source", "source_type": "mystery", "content": "有效但来源错误的记录。"},
+                {
+                    "id": "valid",
+                    "source_type": "manual_config",
+                    "timestamp": "2026-06-13T09:00:00+08:00",
+                    "content": "这是一条可以进入系统的有效配置记录。",
+                    "metadata": {"kind": "test"},
+                },
+                {
+                    "id": "valid",
+                    "source_type": "manual_config",
+                    "timestamp": "2026-06-13T09:00:00+08:00",
+                    "content": "这是一条可以进入系统的有效配置记录。",
+                    "metadata": {"kind": "test"},
+                },
+            ]
+        )
+
+        self.assertEqual([record.id for record in batch.records], ["valid"])
+        self.assertEqual(batch.duplicate_count, 1)
+        self.assertEqual(batch.records[0].timestamp, "2026-06-13T01:00:00+00:00")
+        self.assertEqual(len(batch.issues), 2)
+
+    def test_failed_tool_receives_low_default_authority(self) -> None:
+        record = DataIngestionPipeline().normalize_record(
+            {
+                "source_type": "tool_result",
+                "content": "工具执行失败并返回了一条结构化错误记录。",
+                "metadata": {"status": "failed", "tool_name": "broken_tool"},
+            }
+        )
+        self.assertEqual(record.tool_status.value, "failed")
+        self.assertEqual(record.authority, 0.15)
+
     def test_embedding_provider_contract(self) -> None:
         fallback = HashEmbedding()
         related_score = fallback.similarity("报销流程模板", "报销流程规则模板")
