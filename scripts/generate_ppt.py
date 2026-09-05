@@ -318,7 +318,7 @@ def build_presentation() -> Presentation:
     add_textbox(slide, 0.75, 6.35, 11.8, 0.32, "合成小集上的 1.0 不能外推到开放真实数据", size=14, color=AMBER, bold=True, align=PP_ALIGN.CENTER)
 
     slide = base_slide(prs, "11  自动化与安全证据", "验证")
-    metric_card(slide, 0.8, 1.22, 3.2, "自动化测试", "54 项通过", "单元 + 集成 + E2E", GREEN)
+    metric_card(slide, 0.8, 1.22, 3.2, "自动化测试", "61 项通过", "单元 + 集成 + E2E", GREEN)
     metric_card(slide, 4.45, 1.22, 3.2, "规模覆盖", "100 → 10,000", "冷/热/资源/磁盘", BLUE)
     metric_card(slide, 8.1, 1.22, 3.2, "环境判定", "分层报告", "本地 ≠ 麒麟 ≠ SDK", AMBER)
     tests = ["跨租户/用户串读与误删", "提示注入与记忆污染", "失败工具偏好污染", "未决冲突普通检索隔离", "硬删除 SQLite 重载无残留", "嵌套凭证递归脱敏"]
@@ -334,7 +334,7 @@ def build_presentation() -> Presentation:
         ("3", "知识检索", "场景过滤与无答案"),
         ("4", "冲突治理", "待决隔离后自动/人工策略"),
         ("5", "安全遗忘", "预览影响范围，再确认删除"),
-        ("6", "评测证据", "test 指标、54 测试、10k 性能"),
+        ("6", "评测证据", "test 指标、61 测试、10k 性能"),
     ]
     for i, (number, title, body) in enumerate(demo_steps):
         y = 1.12 + i * 0.91
@@ -358,7 +358,7 @@ def build_presentation() -> Presentation:
     add_textbox(slide, 1.05, 1.25, 11.25, 0.75, "从“记住更多”走向“记得正确、找得快速、忘得安全”", size=29, color=WHITE, bold=True, align=PP_ALIGN.CENTER)
     conclusions = [
         ("正确", "多维偏好 + 权威/时效证据 + 冲突隔离", TEAL),
-        ("高效", "词法候选 + 向量缓存；10k 开发机 p99 73.445ms", BLUE),
+        ("高效", "词法候选 + 向量缓存；10k 开发机 p99 57.641ms", BLUE),
         ("安全", "递归脱敏 + 作用域 + 两阶段遗忘 + 隐私审计", AMBER),
     ]
     for i, (name, body, color) in enumerate(conclusions):

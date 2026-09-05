@@ -68,6 +68,7 @@ REQUIRED_LOCAL_FILES = (
     "THIRD_PARTY_NOTICES.md",
     "pyproject.toml",
     "deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx",
+    "deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx",
     "docs/09_技术方案正文.md",
     "docs/10_PPT逐页讲稿与答辩问答.md",
     "docs/11_演示视频分镜与录制检查表.md",
