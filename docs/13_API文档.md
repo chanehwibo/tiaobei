@@ -1,0 +1,160 @@
+# MemoryService 与本地 HTTP API
+
+## 1. 作用域和数据格式
+
+除 `/api/stats` 外，读取、冲突和遗忘接口均要求 `tenant_id`、`user_id` 或明确目标 ID。请求/响应使用 UTF-8 JSON。HTTP 请求体最大 1,000,000 字节；错误响应格式为：
+
+```json
+{"error": "错误原因"}
+```
+
+当前 API 用于 localhost 演示，没有身份认证。调用方传入的 tenant/user 必须由可信上层身份系统绑定，不能直接信任终端用户任意填写。
+
+## 2. Python 服务层
+
+```python
+from os_agent_memory.service import MemoryService
+
+service = MemoryService(database_path="artifacts/runtime/memory.sqlite")
+```
+
+### `ingest(raw_records, persist=True)`
+
+接收事件字典迭代器；返回 accepted/rejected/duplicate 数、结构化 issues、新偏好、新知识和 stats。配置数据库时默认原子保存完整状态。
+
+### `preferences(tenant_id, user_id, scene=None)`
+
+返回当前 active 偏好，按 key 排序。scene 存在时只返回全局或适用该场景的偏好。
+
+### `search(query, tenant_id, user_id, scene=None, top_k=5, min_score=0.08, include_pending=False)`
+
+返回带综合、词法、语义分数的知识列表。业务回答不得把 `include_pending` 设为 true；该选项仅用于冲突诊断。
+
+### `conflicts(tenant_id, user_id)` / `resolve_conflict(memory_id, strategy="auto")`
+
+列出待决冲突，或用 `auto`、`accept_incoming`、`keep_existing`、`keep_both`、`merge`、`manual_review` 处理指定知识。
+
+### `forget_preview(...)` / `forget_confirm(plan_id)`
+
+preview 参数：instruction、tenant_id、user_id、hard_delete=False、ttl_seconds=300。preview 零修改；confirm 才执行，并返回 affected IDs 和 audit_id。
+
+### `stats()`
+
+返回 active 偏好、版本数、active 知识、待决冲突、未确认遗忘计划、审计数和冲突决策数。
+
+## 3. HTTP 路由
+
+### `GET /`
+
+返回本地单页演示界面。
+
+### `GET /api/stats`
+
+成功 `200`：
+
+```json
+{
+  "preferences": 8,
+  "preference_versions": 8,
+  "knowledge": 5,
+  "knowledge_conflicts": 1,
+  "pending_forget_plans": 0,
+  "audit_events": 0,
+  "conflict_decisions": 0
+}
+```
+
+### `GET /api/preferences`
+
+查询参数：`tenant_id`、`user_id` 必填，`scene` 可选。
+
+```text
+GET /api/preferences?tenant_id=default&user_id=u-demo&scene=office_report
+```
+
+### `GET /api/conflicts`
+
+查询参数：`tenant_id`、`user_id` 必填。只返回 conflict_pending。
+
+### `POST /api/ingest`
+
+```json
+{
+  "records": [
+    {
+      "id": "evt-web-1",
+      "tenant_id": "default",
+      "user_id": "u-demo",
+      "session_id": "session-1",
+      "source_type": "manual_config",
+      "scene": "office_report",
+      "timestamp": "2026-09-05T09:00:00+08:00",
+      "content": "用户偏好：请使用中文并保持简洁。",
+      "metadata": {"title": "输出偏好"}
+    }
+  ]
+}
+```
+
+记录级错误不会让整批失败，详见响应 `issues`。
+
+### `POST /api/search`
+
+```json
+{
+  "query": "报销邮件模板",
+  "tenant_id": "default",
+  "user_id": "u-demo",
+  "scene": "office_report",
+  "top_k": 5,
+  "min_score": 0.08
+}
+```
+
+成功返回数组；低于阈值时返回空数组，不虚构答案。
+
+### `POST /api/conflicts/resolve`
+
+```json
+{"memory_id": "知识ID", "strategy": "auto"}
+```
+
+不存在目标返回 `400`；策略不支持返回 `400`。
+
+### `POST /api/forget/preview`
+
+```json
+{
+  "instruction": "删除报销模板相关记忆",
+  "tenant_id": "default",
+  "user_id": "u-demo",
+  "hard_delete": false
+}
+```
+
+响应含 `id`、`matched_keywords`、`preference_ids`、`knowledge_ids`、`expires_at`、`confirmed=false`。
+
+### `POST /api/forget/confirm`
+
+```json
+{"plan_id": "预览返回的计划ID"}
+```
+
+成功响应含 `confirmed=true`、affected IDs 和 audit_id。计划过期、已确认或不存在时拒绝。
+
+## 4. 状态码
+
+| 状态 | 含义 |
+| ---: | --- |
+| 200 | 请求成功，包括合法空结果 |
+| 400 | JSON、字段、参数、目标或策略错误 |
+| 404 | 路由不存在 |
+| 409 | 服务运行状态冲突 |
+
+## 5. 安全约束
+
+- 默认只监听 `127.0.0.1`。
+- 不把 include_pending 用于业务回答。
+- 硬删除前必须由 UI 或上层流程展示 preview 并取得明确确认。
+- API 响应可能包含内部目标 ID，不应记录到公开分析系统。
+- 若扩展到局域网，先完成认证授权、TLS、CSRF、防重放、限流和审计权限分级。
