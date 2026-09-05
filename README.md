@@ -65,3 +65,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\run_demo.ps1"
 - `scripts/run_demo.ps1` 可一键执行 demo、评测、报告生成、SQLite 构建和单元测试。
 - `EmbeddingProvider` 抽象已就位，当前使用 `HashEmbedding` 离线 fallback，也可用 `CallableEmbeddingProvider` 或 `KylinEmbeddingProvider` 包装后续 SDK 的向量接口。
 - `MemoryStore.resolve_knowledge_conflict()` 支持接受新版本、保留旧版本、保留双方、证据合并和人工确认队列等基础策略。
+
+## 许可证与发布边界
+
+项目原创代码以 MIT 许可证发布，详见 `LICENSE`。第三方依赖及数据素材边界见 `THIRD_PARTY_NOTICES.md`，个人信息、真实案例和赛事材料的公开限制见 `docs/16_原创性与隐私发布边界.md`。仓库中的合成数据与本机测试结果不能替代真实用户、真实麒麟环境或赛事平台验收。

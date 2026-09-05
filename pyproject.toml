@@ -2,8 +2,17 @@
 name = "os-agent-memory-optimizer"
 version = "0.1.0"
 description = "Prototype for OS Agent preference and knowledge memory optimization on Kylin OS."
+readme = "README.md"
 requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
 dependencies = []
+
+[project.optional-dependencies]
+deliverables = [
+  "python-docx>=1.2,<2",
+  "python-pptx>=1.0,<2",
+]
 
 [project.scripts]
 os-agent-memory = "os_agent_memory.cli:main"
