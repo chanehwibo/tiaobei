@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-09-05T00:29:24+00:00",
+  "generated_at_utc": "2026-09-05T00:51:11+00:00",
   "scope": "local_development_release_verification",
   "local_release_checks_passed": true,
   "competition_submission_ready": false,
@@ -26,7 +26,7 @@
     ],
     "returncode": 0,
     "passed": true,
-    "duration_ms": 127.089,
+    "duration_ms": 163.029,
     "output_tail": ""
   },
   "unit_tests": {
@@ -41,9 +41,9 @@
     ],
     "returncode": 0,
     "passed": true,
-    "duration_ms": 4198.473,
-    "output_tail": "n_is_flagged_and_downgraded) ... ok\ntest_search_encodes_query_once_and_reuses_document_vectors (test_memory_pipeline.MemoryPipelineTest.test_search_encodes_query_once_and_reuses_document_vectors) ... ok\ntest_search_requires_unambiguous_scope_and_can_abstain (test_memory_pipeline.MemoryPipelineTest.test_search_requires_unambiguous_scope_and_can_abstain) ... ok\ntest_sensitive_information_is_redacted (test_memory_pipeline.MemoryPipelineTest.test_sensitive_information_is_redacted) ... ok\ntest_service_exposes_scoped_end_to_end_operations (test_memory_pipeline.MemoryPipelineTest.test_service_exposes_scoped_end_to_end_operations) ... ok\ntest_service_persists_mutations_when_database_is_configured (test_memory_pipeline.MemoryPipelineTest.test_service_persists_mutations_when_database_is_configured) ... ok\ntest_short_term_memory_is_session_scoped_and_expires (test_memory_pipeline.MemoryPipelineTest.test_short_term_memory_is_session_scoped_and_expires) ... ok\ntest_sqlite_migrates_legacy_knowledge_table (test_memory_pipeline.MemoryPipelineTest.test_sqlite_migrates_legacy_knowledge_table) ... ok\ntest_sqlite_persistence_round_trip (test_memory_pipeline.MemoryPipelineTest.test_sqlite_persistence_round_trip) ... ok\ntest_sqlite_persists_vectors_scopes_and_audit_events (test_memory_pipeline.MemoryPipelineTest.test_sqlite_persists_vectors_scopes_and_audit_events) ... ok\ntest_v2_evaluation_has_isolated_reproducible_splits (test_memory_pipeline.MemoryPipelineTest.test_v2_evaluation_has_isolated_reproducible_splits) ... ok\ntest_complete_package_requires_external_materials (test_packaging.SubmissionPackagingTest.test_complete_package_requires_external_materials) ... ok\ntest_explicit_external_files_are_copied_and_hashed (test_packaging.SubmissionPackagingTest.test_explicit_external_files_are_copied_and_hashed) ... ok\ntest_incomplete_draft_is_labeled_and_privacy_bounded (test_packaging.SubmissionPackagingTest.test_incomplete_draft_is_labeled_and_privacy_bounded) ... ok\ntest_file_discovery_fallback_excludes_private_and_build_outputs (test_release_verification.ReleaseVerificationTest.test_file_discovery_fallback_excludes_private_and_build_outputs) ... ok\ntest_material_check_lists_missing_paths (test_release_verification.ReleaseVerificationTest.test_material_check_lists_missing_paths) ... ok\ntest_privacy_scan_reports_location_without_secret_value (test_release_verification.ReleaseVerificationTest.test_privacy_scan_reports_location_without_secret_value) ... ok\ntest_synthetic_test_fixture_is_classified_but_not_failed (test_release_verification.ReleaseVerificationTest.test_synthetic_test_fixture_is_classified_but_not_failed) ... ok\ntest_failed_tool_cannot_override_successful_user_selected_tool (test_security_adversarial.SecurityAdversarialTest.test_failed_tool_cannot_override_successful_user_selected_tool) ... ok\ntest_hard_delete_has_no_orphan_after_database_reload (test_security_adversarial.SecurityAdversarialTest.test_hard_delete_has_no_orphan_after_database_reload) ... ok\ntest_nested_credentials_are_redacted_before_any_extraction (test_security_adversarial.SecurityAdversarialTest.test_nested_credentials_are_redacted_before_any_extraction) ... ok\ntest_prompt_injection_is_neither_preference_nor_knowledge (test_security_adversarial.SecurityAdversarialTest.test_prompt_injection_is_neither_preference_nor_knowledge) ... ok\ntest_same_user_identifier_cannot_cross_tenant_search_or_forget (test_security_adversarial.SecurityAdversarialTest.test_same_user_identifier_cannot_cross_tenant_search_or_forget) ... ok\ntest_api_rejects_missing_scope (test_web_server.WebServerTest.test_api_rejects_missing_scope) ... ok\ntest_dashboard_and_read_apis_are_available (test_web_server.WebServerTest.test_dashboard_and_read_apis_are_available) ... ok\ntest_search_and_two_phase_forget_work_through_http (test_web_server.WebServerTest.test_search_and_two_phase_forget_work_through_http) ... ok\n\n----------------------------------------------------------------------\nRan 61 tests in 3.862s\n\nOK",
-    "tests_run": 61
+    "duration_ms": 5952.788,
+    "output_tail": "_document_vectors) ... ok\ntest_search_requires_unambiguous_scope_and_can_abstain (test_memory_pipeline.MemoryPipelineTest.test_search_requires_unambiguous_scope_and_can_abstain) ... ok\ntest_sensitive_information_is_redacted (test_memory_pipeline.MemoryPipelineTest.test_sensitive_information_is_redacted) ... ok\ntest_service_exposes_scoped_end_to_end_operations (test_memory_pipeline.MemoryPipelineTest.test_service_exposes_scoped_end_to_end_operations) ... ok\ntest_service_persists_mutations_when_database_is_configured (test_memory_pipeline.MemoryPipelineTest.test_service_persists_mutations_when_database_is_configured) ... ok\ntest_short_term_memory_is_session_scoped_and_expires (test_memory_pipeline.MemoryPipelineTest.test_short_term_memory_is_session_scoped_and_expires) ... ok\ntest_sqlite_migrates_legacy_knowledge_table (test_memory_pipeline.MemoryPipelineTest.test_sqlite_migrates_legacy_knowledge_table) ... ok\ntest_sqlite_persistence_round_trip (test_memory_pipeline.MemoryPipelineTest.test_sqlite_persistence_round_trip) ... ok\ntest_sqlite_persists_vectors_scopes_and_audit_events (test_memory_pipeline.MemoryPipelineTest.test_sqlite_persists_vectors_scopes_and_audit_events) ... ok\ntest_v2_evaluation_has_isolated_reproducible_splits (test_memory_pipeline.MemoryPipelineTest.test_v2_evaluation_has_isolated_reproducible_splits) ... ok\ntest_complete_package_requires_external_materials (test_packaging.SubmissionPackagingTest.test_complete_package_requires_external_materials) ... ok\ntest_explicit_external_files_are_copied_and_hashed (test_packaging.SubmissionPackagingTest.test_explicit_external_files_are_copied_and_hashed) ... ok\ntest_incomplete_draft_is_labeled_and_privacy_bounded (test_packaging.SubmissionPackagingTest.test_incomplete_draft_is_labeled_and_privacy_bounded) ... ok\ntest_file_discovery_fallback_excludes_private_and_build_outputs (test_release_verification.ReleaseVerificationTest.test_file_discovery_fallback_excludes_private_and_build_outputs) ... ok\ntest_fixture_directory_does_not_exempt_unknown_credentials (test_release_verification.ReleaseVerificationTest.test_fixture_directory_does_not_exempt_unknown_credentials) ... ok\ntest_material_check_lists_missing_paths (test_release_verification.ReleaseVerificationTest.test_material_check_lists_missing_paths) ... ok\ntest_privacy_scan_reports_location_without_secret_value (test_release_verification.ReleaseVerificationTest.test_privacy_scan_reports_location_without_secret_value) ... ok\ntest_synthetic_test_fixture_is_classified_but_not_failed (test_release_verification.ReleaseVerificationTest.test_synthetic_test_fixture_is_classified_but_not_failed) ... ok\ntest_failed_tool_cannot_override_successful_user_selected_tool (test_security_adversarial.SecurityAdversarialTest.test_failed_tool_cannot_override_successful_user_selected_tool) ... ok\ntest_hard_delete_has_no_orphan_after_database_reload (test_security_adversarial.SecurityAdversarialTest.test_hard_delete_has_no_orphan_after_database_reload) ... ok\ntest_nested_credentials_are_redacted_before_any_extraction (test_security_adversarial.SecurityAdversarialTest.test_nested_credentials_are_redacted_before_any_extraction) ... ok\ntest_prompt_injection_is_neither_preference_nor_knowledge (test_security_adversarial.SecurityAdversarialTest.test_prompt_injection_is_neither_preference_nor_knowledge) ... ok\ntest_same_user_identifier_cannot_cross_tenant_search_or_forget (test_security_adversarial.SecurityAdversarialTest.test_same_user_identifier_cannot_cross_tenant_search_or_forget) ... ok\ntest_api_rejects_missing_scope (test_web_server.WebServerTest.test_api_rejects_missing_scope) ... ok\ntest_dashboard_and_read_apis_are_available (test_web_server.WebServerTest.test_dashboard_and_read_apis_are_available) ... ok\ntest_search_and_two_phase_forget_work_through_http (test_web_server.WebServerTest.test_search_and_two_phase_forget_work_through_http) ... ok\n\n----------------------------------------------------------------------\nRan 65 tests in 5.560s\n\nOK",
+    "tests_run": 65
   },
   "evaluations": {
     "v1": {
@@ -58,7 +58,7 @@
         "knowledge_recall_at_k": 1.0,
         "knowledge_mrr": 0.9167,
         "knowledge_ndcg_at_k": 0.9385,
-        "knowledge_search_latency_ms": 0.131,
+        "knowledge_search_latency_ms": 0.132,
         "conflict_accuracy": 1.0,
         "conflict_precision": 1.0,
         "conflict_recall": 1.0,
@@ -98,7 +98,7 @@
         "knowledge_recall_at_k": 1.0,
         "knowledge_mrr": 1.0,
         "knowledge_ndcg_at_k": 1.0,
-        "knowledge_search_latency_ms": 0.082,
+        "knowledge_search_latency_ms": 0.138,
         "conflict_accuracy": 1.0,
         "conflict_precision": 1.0,
         "conflict_recall": 1.0,
@@ -124,7 +124,7 @@
   },
   "benchmark": {
     "benchmark": "hash_embedding_hybrid_retrieval",
-    "generated_at_utc": "2026-09-05T00:29:24+00:00",
+    "generated_at_utc": "2026-09-05T00:51:10+00:00",
     "environment": {
       "system": "Windows",
       "release": "10",
@@ -145,12 +145,12 @@
       {
         "records": 100,
         "top_k": 5,
-        "index_build_ms": 84.538,
-        "cold_query_ms": 4.299,
-        "hot_query_p50_ms": 4.671,
-        "hot_query_p95_ms": 5.055,
-        "hot_query_p99_ms": 5.408,
-        "throughput_qps": 215.27,
+        "index_build_ms": 94.781,
+        "cold_query_ms": 4.653,
+        "hot_query_p50_ms": 4.434,
+        "hot_query_p95_ms": 5.395,
+        "hot_query_p99_ms": 6.035,
+        "throughput_qps": 220.27,
         "peak_python_memory_mb": 1.782,
         "sqlite_disk_mb": 0.441,
         "returned_results": 5,
@@ -159,12 +159,12 @@
       {
         "records": 1000,
         "top_k": 5,
-        "index_build_ms": 889.624,
-        "cold_query_ms": 7.719,
-        "hot_query_p50_ms": 7.733,
-        "hot_query_p95_ms": 9.092,
-        "hot_query_p99_ms": 9.217,
-        "throughput_qps": 126.38,
+        "index_build_ms": 974.794,
+        "cold_query_ms": 9.092,
+        "hot_query_p50_ms": 9.057,
+        "hot_query_p95_ms": 11.038,
+        "hot_query_p99_ms": 12.398,
+        "throughput_qps": 107.08,
         "peak_python_memory_mb": 15.327,
         "sqlite_disk_mb": 4.039,
         "returned_results": 5,
@@ -173,12 +173,12 @@
       {
         "records": 5000,
         "top_k": 5,
-        "index_build_ms": 4413.426,
-        "cold_query_ms": 24.784,
-        "hot_query_p50_ms": 24.067,
-        "hot_query_p95_ms": 25.56,
-        "hot_query_p99_ms": 25.58,
-        "throughput_qps": 41.51,
+        "index_build_ms": 7463.104,
+        "cold_query_ms": 37.034,
+        "hot_query_p50_ms": 46.273,
+        "hot_query_p95_ms": 66.981,
+        "hot_query_p99_ms": 70.032,
+        "throughput_qps": 22.03,
         "peak_python_memory_mb": 90.723,
         "sqlite_disk_mb": 20.012,
         "returned_results": 5,
@@ -187,12 +187,12 @@
       {
         "records": 10000,
         "top_k": 5,
-        "index_build_ms": 9081.436,
-        "cold_query_ms": 45.801,
-        "hot_query_p50_ms": 48.935,
-        "hot_query_p95_ms": 54.433,
-        "hot_query_p99_ms": 57.641,
-        "throughput_qps": 20.39,
+        "index_build_ms": 16066.888,
+        "cold_query_ms": 87.62,
+        "hot_query_p50_ms": 80.604,
+        "hot_query_p95_ms": 107.486,
+        "hot_query_p99_ms": 112.732,
+        "throughput_qps": 12.14,
         "peak_python_memory_mb": 161.16,
         "sqlite_disk_mb": 39.977,
         "returned_results": 5,
@@ -302,6 +302,10 @@
         "present": true
       },
       {
+        "path": "deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx",
+        "present": true
+      },
+      {
         "path": "docs/09_技术方案正文.md",
         "present": true
       },
@@ -342,6 +346,10 @@
         "present": true
       },
       {
+        "path": "scripts/archive_submission.py",
+        "present": true
+      },
+      {
         "path": "scripts/run_demo.ps1",
         "present": true
       },
@@ -354,7 +362,7 @@
   },
   "privacy_scan": {
     "passed": true,
-    "scanned_text_files": 87,
+    "scanned_text_files": 86,
     "skipped_binary_or_large_files": 2,
     "unexpected_findings": [],
     "approved_synthetic_fixture_findings": [
@@ -377,6 +385,26 @@
         "path": "docs/11_演示视频分镜与录制检查表.md",
         "line": 73,
         "kind": "cn_phone"
+      },
+      {
+        "path": "scripts/verify_release.py",
+        "line": 66,
+        "kind": "email"
+      },
+      {
+        "path": "scripts/verify_release.py",
+        "line": 66,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "scripts/verify_release.py",
+        "line": 67,
+        "kind": "service_token"
+      },
+      {
+        "path": "scripts/verify_release.py",
+        "line": 67,
+        "kind": "email"
       },
       {
         "path": "tests/test_memory_pipeline.py",
@@ -464,11 +492,15 @@
   "external_blockers": [
     {
       "task": "I03",
-      "item": "真实银河麒麟桌面系统回归报告"
+      "item": "取得发榜单位真实 SDK、测试数据和指定系统版本"
     },
     {
       "task": "I04",
-      "item": "真实麒麟 embedding SDK 接入与基准"
+      "item": "真实银河麒麟系统上的 SDK、功能、性能和安装测试"
+    },
+    {
+      "task": "H06",
+      "item": "由独立评测者保管标签并执行盲测"
     },
     {
       "task": "J02",

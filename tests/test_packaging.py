@@ -37,6 +37,23 @@ class SubmissionPackagingTest(unittest.TestCase):
             status = (output / "PACKAGE_STATUS.md").read_text(encoding="utf-8")
             self.assertIn("禁止改名或宣称为完整正式包", status)
             self.assertTrue((output / "03_源代码与说明" / "project" / "src" / "os_agent_memory" / "service.py").is_file())
+            packaged_root = output / "03_源代码与说明" / "project"
+            for required in (
+                "submission/submission_manifest.json",
+                "docs/12_部署手册.md",
+                "docs/测试报告.md",
+                "artifacts/verification/final_verification.json",
+                "deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx",
+            ):
+                self.assertTrue((packaged_root / required).is_file(), required)
+            rebuilt = build_submission(
+                project_root=packaged_root,
+                output=Path(temporary) / "rebuilt",
+                manifest_path=packaged_root / "submission/submission_manifest.json",
+                external_files={},
+                allow_incomplete=True,
+            )
+            self.assertEqual(rebuilt["status"], "incomplete_draft")
 
             paths = [path.relative_to(output).as_posix().lower() for path in output.rglob("*") if path.is_file()]
             self.assertFalse(any("case_studies/private" in path for path in paths))

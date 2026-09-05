@@ -11,7 +11,7 @@
     "knowledge_recall_at_k": 1.0,
     "knowledge_mrr": 1.0,
     "knowledge_ndcg_at_k": 1.0,
-    "knowledge_search_latency_ms": 0.082,
+    "knowledge_search_latency_ms": 0.138,
     "conflict_accuracy": 1.0,
     "conflict_precision": 1.0,
     "conflict_recall": 1.0,

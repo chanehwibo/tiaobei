@@ -5,9 +5,9 @@
 ## 当前状态
 
 - 本地源码、合成评测、Windows 开发机性能、材料完整性和隐私扫描已通过自动化验收。
-- 当前自动化测试为 61 项，完整结果见 `artifacts/verification/final_verification.md`。
+- 当前自动化测试为 65 项，完整结果见 `artifacts/verification/final_verification.md`。
 - v2 数据集共 120 条合成事件，train/dev/test 各 40 条；test 分区偏好/冲突/遗忘 F1、Recall@3、MRR 和 nDCG@3 均为 1.0，Precision@3 为 0.9286。
-- Windows + HashEmbedding 开发机在 10,000 条知识下冷查询 45.801ms、热查询 p99 57.641ms。
+- Windows + HashEmbedding 开发机在 10,000 条知识下冷查询 87.620ms、热查询 p99 112.732ms。
 - 尚未取得真实银河麒麟系统、真实麒麟 embedding SDK、独立盲测、授权真实案例、最终视频和赛事流程回执，因此不能宣称赛题指定环境或全部交付已经达标。
 
 上列数值对应 2026-09-05 固定报告；重新运行时以新生成的 JSON 为准。

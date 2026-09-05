@@ -7,6 +7,7 @@ import hashlib
 import json
 import shutil
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -44,7 +45,7 @@ def sha256_file(path: Path) -> str:
 
 def _safe_relative(path_text: str) -> Path:
     path = Path(path_text)
-    if path.is_absolute() or ".." in path.parts:
+    if path.is_absolute() or path.drive or not path.parts or ".." in path.parts or ":" in path_text:
         raise PackagingError(f"清单路径必须是项目内相对路径: {path_text}")
     return path
 
@@ -58,6 +59,8 @@ def _is_blocked_public_file(path: Path) -> bool:
         or path.suffix.lower() in BLOCKED_SUFFIXES
         or generated_metadata
         or generated_report
+        or path.name.lower().startswith(".env")
+        or ".sqlite-" in path.name.lower()
     )
 
 
@@ -66,13 +69,28 @@ def _assert_safe_public_file(path: Path) -> None:
         raise PackagingError(f"公开打包清单包含禁止路径或后缀: {path}")
 
 
-def _copy_public_file(project_root: Path, source_text: str, target_root: Path) -> Path:
+def _assert_local_source(project_root: Path, source: Path) -> None:
+    if not source.resolve().is_relative_to(project_root):
+        raise PackagingError(f"公开来源越出项目目录: {source.name}")
+    for node in (source, *source.parents):
+        if node == project_root:
+            break
+        if node.is_symlink() or (hasattr(node, "is_junction") and node.is_junction()):
+            raise PackagingError(f"公开来源包含链接: {source.name}")
+
+
+def _copy_public_file(
+    project_root: Path, source_text: str, target_root: Path, *, preserve_path: bool = False
+) -> Path:
     relative = _safe_relative(source_text)
     _assert_safe_public_file(relative)
     source = project_root / relative
+    _assert_local_source(project_root, source)
     if not source.is_file():
         raise PackagingError(f"清单中的公开文件不存在: {relative.as_posix()}")
-    target = target_root / relative.name
+    target = target_root / (relative if preserve_path else relative.name)
+    if target.exists():
+        raise PackagingError(f"清单目标重复: {target.name}")
     target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source, target)
     return target
@@ -82,6 +100,7 @@ def _copy_public_tree(project_root: Path, source_text: str, target_root: Path) -
     relative = _safe_relative(source_text)
     _assert_safe_public_file(relative)
     source_root = project_root / relative
+    _assert_local_source(project_root, source_root)
     if not source_root.is_dir():
         raise PackagingError(f"清单中的公开目录不存在: {relative.as_posix()}")
     copied: list[Path] = []
@@ -89,7 +108,10 @@ def _copy_public_tree(project_root: Path, source_text: str, target_root: Path) -
         inner = source.relative_to(source_root)
         if _is_blocked_public_file(inner):
             continue
+        _assert_local_source(project_root, source)
         target = target_root / relative / inner
+        if target.exists():
+            raise PackagingError(f"清单目标重复: {target.name}")
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
         copied.append(target)
@@ -129,6 +151,14 @@ def build_submission(
     output = output.resolve()
     _validate_output(project_root, output)
     manifest = _load_manifest(manifest_path)
+    source_section = manifest["source_section"]
+    sections = [*manifest["public_sections"], source_section, *manifest["external_inputs"]]
+    for section in sections:
+        _safe_relative(section["target"])
+    for source_text in source_section["trees"]:
+        source_tree = (project_root / _safe_relative(source_text)).resolve()
+        if output.is_relative_to(source_tree):
+            raise PackagingError("输出目录不能位于被打包的源码目录内")
 
     missing: list[dict[str, str]] = []
     supplied: dict[str, Path] = {}
@@ -146,22 +176,21 @@ def build_submission(
         labels = "、".join(item["label"] for item in missing)
         raise PackagingError(f"缺少正式提交所需外部材料: {labels}")
 
-    temporary = output.with_name(f".{output.name}.building")
-    if temporary.exists():
-        raise PackagingError(f"检测到未清理的临时目录，请人工检查后处理: {temporary}")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    temporary = Path(tempfile.mkdtemp(prefix=f".{output.name}.building-", dir=output.parent)).resolve()
 
     copied: list[Path] = []
     try:
-        temporary.mkdir(parents=True)
         for section in manifest["public_sections"]:
             target_root = temporary / section["target"]
             for source_text in section["files"]:
                 copied.append(_copy_public_file(project_root, source_text, target_root))
 
-        source_section = manifest["source_section"]
         source_root = temporary / source_section["target"]
-        for source_text in source_section["files"] + source_section["docs"]:
-            copied.append(_copy_public_file(project_root, source_text, source_root))
+        mirrored_files = source_section["files"] + source_section.get("docs", [])
+        mirrored_files += [source for section in manifest["public_sections"] for source in section["files"]]
+        for source_text in sorted(set(mirrored_files)):
+            copied.append(_copy_public_file(project_root, source_text, source_root, preserve_path=True))
         for source_text in source_section["trees"]:
             copied.extend(_copy_public_tree(project_root, source_text, source_root))
 
@@ -170,6 +199,8 @@ def build_submission(
             if source is None:
                 continue
             target = temporary / item["target"] / source.name
+            if target.exists():
+                raise PackagingError(f"外部材料文件名重复，请分别命名: {source.name}")
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, target)
             copied.append(target)
@@ -210,7 +241,7 @@ def build_submission(
         temporary.rename(output)
         return report
     except Exception:
-        if temporary.exists():
+        if temporary.exists() and temporary.parent == output.parent and temporary != output:
             shutil.rmtree(temporary)
         raise
 

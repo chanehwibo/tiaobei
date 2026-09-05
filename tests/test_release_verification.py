@@ -44,6 +44,16 @@ class ReleaseVerificationTest(unittest.TestCase):
             self.assertFalse(result["passed"])
             self.assertEqual(result["missing"], ["LICENSE"])
 
+    def test_fixture_directory_does_not_exempt_unknown_credentials(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            fixture = root / "tests" / "unexpected.py"
+            fixture.parent.mkdir()
+            fixture.write_text("token='" + "ghp_" + "A" * 36 + "'", encoding="utf-8")
+            result = scan_sensitive_text(root, [fixture])
+            self.assertFalse(result["passed"])
+            self.assertEqual(result["unexpected_findings"][0]["kind"], "service_token")
+
     def test_file_discovery_fallback_excludes_private_and_build_outputs(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

@@ -6,6 +6,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -44,8 +45,8 @@ SENSITIVE_PATTERNS = {
     "private_key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "service_token": re.compile(r"(?:sk-[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{8,}|AKIA[0-9A-Z]{12,})"),
     "email": re.compile(r"(?<![\w.+-])[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}(?![\w.-])"),
-    "cn_phone": re.compile(r"(?<!\d)1[3-9]\d{9}(?!\d)"),
-    "cn_id": re.compile(r"(?<!\d)\d{17}[0-9Xx](?!\d)"),
+    "cn_phone": re.compile(r"(?<![A-Za-z0-9])1[3-9]\d{9}(?![A-Za-z0-9])"),
+    "cn_id": re.compile(r"(?<![A-Za-z0-9])\d{17}[0-9Xx](?![A-Za-z0-9])"),
 }
 SYNTHETIC_ALLOWLIST_PREFIXES = (
     "data/eval/",
@@ -59,6 +60,11 @@ SYNTHETIC_ALLOWLIST_FILES = {
     "docs/演示操作手册.md",
     "scripts/generate_eval_v2.py",
     "src/os_agent_memory/security.py",
+    "scripts/verify_release.py",
+}
+SYNTHETIC_VALUES = {
+    "13912345678", "demo@example.com", "person@example.com",
+    "real.person@example.org", "sk-secret-value-123456789",
 }
 REQUIRED_LOCAL_FILES = (
     "README.md",
@@ -79,12 +85,14 @@ REQUIRED_LOCAL_FILES = (
     "docs/16_原创性与隐私发布边界.md",
     "docs/测试报告.md",
     "scripts/build_submission.py",
+    "scripts/archive_submission.py",
     "scripts/run_demo.ps1",
     "submission/submission_manifest.json",
 )
 EXTERNAL_BLOCKERS = (
-    {"task": "I03", "item": "真实银河麒麟桌面系统回归报告"},
-    {"task": "I04", "item": "真实麒麟 embedding SDK 接入与基准"},
+    {"task": "I03", "item": "取得发榜单位真实 SDK、测试数据和指定系统版本"},
+    {"task": "I04", "item": "真实银河麒麟系统上的 SDK、功能、性能和安装测试"},
+    {"task": "H06", "item": "由独立评测者保管标签并执行盲测"},
     {"task": "J02", "item": "经授权、匿名化的真实应用案例"},
     {"task": "J07", "item": "人工录制并复核的最终演示视频"},
     {"task": "K05", "item": "发榜单位审核通过状态"},
@@ -117,14 +125,15 @@ def _run_command(command: list[str], *, cwd: Path, env: dict[str, str] | None = 
 
 
 def discover_public_files(project_root: Path) -> list[Path]:
-    command = ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"]
+    command = [shutil.which("git") or "git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"]
     try:
         completed = subprocess.run(command, cwd=project_root, capture_output=True, check=False)
     except OSError:
         completed = None
     if completed is not None and completed.returncode == 0:
-        values = completed.stdout.decode("utf-8", errors="replace").split("\0")
-        return sorted(project_root / Path(value) for value in values if value)
+        values = [value for value in completed.stdout.decode("utf-8", errors="replace").split("\0") if value]
+        if values:
+            return sorted(project_root / Path(value) for value in values)
     ignored_parts = {
         ".git",
         ".mypy_cache",
@@ -175,10 +184,12 @@ def scan_sensitive_text(project_root: Path, files: Iterable[Path] | None = None)
         approved = _is_approved_fixture(relative)
         for line_number, line in enumerate(text.splitlines(), start=1):
             for kind, pattern in SENSITIVE_PATTERNS.items():
-                if not pattern.search(line):
+                matches = list(pattern.finditer(line))
+                if not matches:
                     continue
                 finding = {"path": relative, "line": line_number, "kind": kind}
-                (fixtures if approved else unexpected).append(finding)
+                known_fixture = approved and all(match.group() in SYNTHETIC_VALUES for match in matches)
+                (fixtures if known_fixture else unexpected).append(finding)
     return {
         "passed": not unexpected,
         "scanned_text_files": scanned,

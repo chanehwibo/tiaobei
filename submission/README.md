@@ -31,4 +31,15 @@ python .\scripts\build_submission.py `
 
 目标目录必须不存在，脚本不会覆盖旧包。只有四类外部材料均存在时，状态才会是 `ready_for_manual_review`；该状态仍不等于平台审核或邮件发送成功。
 
+`03_源代码与说明/project/` 保留项目原有相对目录，包含测试依赖的文档、固定证据、可编辑材料和打包清单；解压后可独立运行测试并再次生成草案。外部材料的文件名不能重复。
+
 完成内容核验后，使用 K04 归档流程生成 SHA-256 清单。最终文件名、格式、大小和邮件主题必须以当届比赛通知为准。
+
+开发机草案归档示例：
+
+```powershell
+python .\scripts\archive_submission.py `
+  --staging ".\dist\competition_submission_draft" `
+  --archive ".\artifacts\release\OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip" `
+  --allow-incomplete
+```
