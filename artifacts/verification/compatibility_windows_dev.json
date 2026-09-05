@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-04T09:14:44+00:00",
+  "generated_at_utc": "2026-09-05T00:29:24+00:00",
   "operating_system": {
     "system": "Windows",
     "release": "10",
@@ -19,9 +19,9 @@
     "logical_cpu_count": 8,
     "physical_memory_gb": 15.771,
     "filesystem": {
-      "path": "C:\\Users\\CanhuiBao\\Desktop\\项目、活动、比赛\\挑战杯 揭榜挂帅\\os-agent-memory-optimizer",
+      "path": "C:\\Users\\CanhuiBao\\Desktop\\项目、活动、比赛\\挑战杯 揭榜挂帅\\os-agent-memory-optimizer\\artifacts\\verification",
       "writable": true,
-      "free_disk_gb": 179.428,
+      "free_disk_gb": 178.724,
       "error": null
     }
   },

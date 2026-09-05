@@ -22,6 +22,10 @@
         "artifacts/verification/compatibility_windows_dev.json",
         "artifacts/verification/compatibility_windows_dev.md",
         "artifacts/verification/kylin_sdk_check_missing.json",
+        "artifacts/verification/evaluation_v1_final.json",
+        "artifacts/verification/evaluation_v2_test_final.json",
+        "artifacts/verification/final_verification.json",
+        "artifacts/verification/final_verification.md",
         "artifacts/verification/performance_windows_dev.json",
         "artifacts/verification/performance_windows_dev.md"
       ]
