@@ -16,6 +16,7 @@ from .preference import PreferenceExtractor
 from .lifecycle import MemoryLifecycleManager
 from .schemas import DataRecord, SourceType, ToolStatus, ForgetPlan, IngestionIssue, stable_id
 from .provider_config import create_provider, provider_identity
+from .demo import DEMO_TENANT, DEMO_USER, scenario_records
 
 
 def to_primitive(value: Any) -> Any:
@@ -255,6 +256,44 @@ class MemoryService:
             raise ValueError("tenant_id and user_id must be non-empty strings")
         if target is None or (target.tenant_id, target.user_id) != (tenant_id, user_id):
             raise PermissionError("target is unavailable in this scope")
+
+    @synchronized
+    def overview(self, *, tenant_id: str, user_id: str):
+        def owned(item):
+            return (item.tenant_id, item.user_id) == (tenant_id, user_id)
+        knowledge = [to_primitive(item) for item in self.store.knowledge.values() if owned(item)]
+        for item in knowledge:
+            item.pop("embedding", None)
+        return {
+            "knowledge": knowledge,
+            "preferences": self.preferences(tenant_id=tenant_id, user_id=user_id),
+            "history": to_primitive([item for item in self.store.preference_history if owned(item)]),
+            "medium": to_primitive(self.lifecycle.medium_term.clusters(tenant_id=tenant_id, user_id=user_id)),
+        }
+
+    @atomic_mutation
+    def demo_scenario(self, name, *, reset=False):
+        if reset:
+            # This reserved namespace contains synthetic, disposable demonstration data only.
+            for key, item in list(self.store.knowledge.items()):
+                if item.tenant_id == DEMO_TENANT:
+                    self.store._remove_knowledge_index(key)
+                    del self.store.knowledge[key]
+            self.store.preferences = {k: v for k, v in self.store.preferences.items() if v.tenant_id != DEMO_TENANT}
+            self.store.preference_history = [v for v in self.store.preference_history if v.tenant_id != DEMO_TENANT]
+            self.lifecycle.medium_term._records = {k: v for k, v in self.lifecycle.medium_term._records.items()
+                                                    if v[0].tenant_id != DEMO_TENANT}
+            self.lifecycle.short_term._entries = {k: v for k, v in self.lifecycle.short_term._entries.items()
+                                                  if v.record.tenant_id != DEMO_TENANT}
+            for scenario in ("baseline", "preference", "conflict"):
+                for raw in scenario_records(scenario):
+                    self._seen_events.pop(stable_id(DEMO_TENANT, DEMO_USER, raw["id"]), None)
+            removed = {k for k, v in self.store.pending_forget_plans.items() if v.tenant_id == DEMO_TENANT}
+            self.store.pending_forget_plans = {k: v for k, v in self.store.pending_forget_plans.items() if k not in removed}
+            self._forget_results = {k: v for k, v in self._forget_results.items() if k not in removed}
+        result = self.ingest(scenario_records(name), persist=False)
+        self._save_if_requested(True)
+        return {"tenant_id": DEMO_TENANT, "user_id": DEMO_USER, "scene": "office", "result": result}
 
     @synchronized
     def save(self) -> None:

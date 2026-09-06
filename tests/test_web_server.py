@@ -113,6 +113,20 @@ class WebServerTest(unittest.TestCase):
         with self.assertRaises(PermissionError):
             self.service.resolve_conflict(item.id, tenant_id="other", user_id=item.user_id)
 
+    def test_scenarios_and_reset_preserve_other_tenants(self):
+        original_ids = set(self.service.store.knowledge)
+        self.post_json("/api/demo", {"name": "baseline", "reset": True})
+        self.post_json("/api/demo", {"name": "preference"})
+        self.post_json("/api/demo", {"name": "conflict"})
+        result = self.get_json("/api/overview?tenant_id=local-demo&user_id=presenter")
+        self.assertTrue(any(p["value"] == "detailed" for p in result["preferences"]))
+        self.assertTrue(any(k["status"] == "conflict_pending" for k in result["knowledge"]))
+        self.assertGreater(len(result["history"]), len(result["preferences"]))
+        self.post_json("/api/demo", {"name": "baseline", "reset": True})
+        reset = self.get_json("/api/overview?tenant_id=local-demo&user_id=presenter")
+        self.assertFalse(any(k["status"] == "conflict_pending" for k in reset["knowledge"]))
+        self.assertTrue(original_ids <= self.service.store.knowledge.keys())
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>端侧智能记忆优化演示台</title>
+<style>
+:root{font:16px/1.6 system-ui,"Microsoft YaHei",sans-serif;color:#183241;background:#edf3f5}
+*{box-sizing:border-box}body{margin:0}main{max-width:1200px;margin:auto;padding:32px 22px}
+h1{font-size:32px;margin:0}h2{font-size:20px;margin:0 0 12px}p{margin:8px 0;color:#506979}
+.tag{color:#126b62;font-weight:700;font-size:13px;letter-spacing:2px}.toolbar,.scope{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{background:#fff;border:1px solid #d7e2e8;border-radius:14px;padding:22px}
+button{background:#176b64;color:white;border:0;border-radius:7px;padding:10px 15px;cursor:pointer;font:inherit}
+button.secondary{background:#e4eeed;color:#174c49}button.danger{background:#a13745}button:disabled{opacity:.5;cursor:wait}
+input,select,textarea{border:1px solid #b7cbd4;border-radius:6px;padding:9px;font:inherit;max-width:100%}
+input{width:100%}.scope label{flex:1;min-width:160px}label{display:block;color:#506979}
+textarea{width:100%;min-height:120px}.entry{border-top:1px solid #e4ebee;padding:10px 0}.entry:first-child{border:0}
+.muted{font-size:13px;color:#627d8a}.badge{background:#edf5f3;color:#25665d;padding:2px 7px;border-radius:4px;font-size:13px}
+.row{display:flex;gap:10px;align-items:center;margin:12px 0}.row input{flex:1}.list{max-height:320px;overflow:auto}
+#notice{min-height:30px;margin:12px 0;color:#165e54}details{margin-top:14px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}main{padding:20px 12px}h1{font-size:25px}}
+</style></head>
+<body><main>
+<div class="tag">OS AGENT · 本地合成场景</div><h1>端侧智能记忆优化演示台</h1>
+<p>观察偏好如何变化、冲突如何处理，以及安全遗忘的影响范围。</p>
+<div class="toolbar">
+<button id="reset">恢复演示样例</button><button id="preference" class="secondary">场景一：偏好变化</button>
+<button id="conflict" class="secondary">场景二：规则冲突</button><button id="forget-demo" class="secondary">场景三：安全遗忘</button>
+</div>
+<p class="muted">“恢复演示样例”仅重置 local-demo 合成数据；其他租户数据保留。所有场景可离线操作。</p>
+<div class="scope"><label>租户<input id="tenant" value="default"></label><label>用户<input id="user" value="u-demo"></label>
+<label>场景<input id="scene" value="office_report"></label><button id="refresh" class="secondary">刷新</button></div>
+<div id="notice" role="status" aria-live="polite">正在加载当前作用域…</div>
+<div class="grid">
+<section class="card"><h2>偏好画像与变化记录</h2><div id="preferences" class="list"></div>
+<details><summary>查看版本历史</summary><div id="history" class="list"></div></details></section>
+<section class="card"><h2>知识检索</h2><label>输入问题<div class="row"><input id="query" value="报销流程模板"><button id="search">检索</button></div></label>
+<div id="results" class="list">请输入问题查看相关知识及匹配分数。</div></section>
+<section class="card"><h2>冲突前后对照</h2><div id="conflicts" class="list"></div>
+<label>待决记录<select id="conflict-id"></select></label><div class="row">
+<select id="strategy"><option value="auto">按权威度与时效决策</option><option value="accept_incoming">采用新规则</option><option value="keep_existing">保留原规则</option><option value="manual_review">继续人工复核</option></select>
+<button id="resolve">应用决策</button></div><div id="decision" class="muted"></div></section>
+<section class="card"><h2>安全遗忘</h2><label>遗忘指令<input id="instruction" value="删除报销相关记忆"></label>
+<div class="row"><button id="preview" class="secondary">预览影响范围</button><button id="confirm" class="danger" disabled>确认软删除</button></div>
+<div id="targets" class="list">先预览，核对标题和目标数量后再确认。</div></section>
+<section class="card"><h2>记忆状态</h2><div id="summary"></div><div id="knowledge" class="list"></div></section>
+<section class="card"><h2>多源接入</h2><p>支持手动配置、工具结果及行为事件。接入后显示晋升或拒绝原因。</p>
+<label>事件 JSON 数组<textarea id="records" spellcheck="false">[]</textarea></label><button id="ingest">校验并接入</button>
+<div id="ingest-result"></div><details><summary>技术详情</summary><pre id="technical"></pre></details></section>
+</div></main>
+<script>
+const el=id=>document.getElementById(id);
+const scope=()=>({tenant_id:el('tenant').value,user_id:el('user').value,scene:el('scene').value});
+const labels={'output.language':'输出语言','output.verbosity':'详略','output.format':'输出形式','output.structure':'组织方式'};
+const values={'zh-CN':'中文',brief:'简洁',detailed:'详细',table:'表格',step_by_step:'分步骤'};
+const states={active:'可用',conflict_pending:'待决冲突',forgotten:'已遗忘',expired:'已过期',quarantined:'已隔离'};
+let overview={knowledge:[],preferences:[],history:[],medium:[]}, plan=null;
+function node(tag,text,cls){const n=document.createElement(tag);n.textContent=text;if(cls)n.className=cls;return n}
+function entries(id,rows,render){const box=el(id);box.replaceChildren();if(!rows.length){box.append(node('p','暂无记录','muted'));return}rows.forEach(row=>{const item=node('div','','entry');render(item,row);box.append(item)})}
+async function api(path,body){const response=await fetch(path,{method:body?'POST':'GET',headers:{'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});const result=await response.json();if(!response.ok)throw new Error(result.error||'请求失败');return result}
+async function refresh(){overview=await api('/api/overview?'+new URLSearchParams(scope()));
+ entries('preferences',overview.preferences,(n,p)=>{n.append(node('strong',(labels[p.key]||p.key)+'：'+(values[p.value]||p.value)));n.append(node('div','版本 '+p.version+' · 证据 '+p.evidence_ids.length+' 条','muted'))});
+ entries('history',overview.history,(n,p)=>n.append(node('div','v'+p.version+' '+(labels[p.key]||p.key)+' → '+(values[p.value]||p.value))));
+ entries('knowledge',overview.knowledge,(n,k)=>{n.append(node('strong',k.title));n.append(node('span',' '+(states[k.status]||k.status),'badge'))});
+ const pending=overview.knowledge.filter(k=>k.status==='conflict_pending');el('conflict-id').replaceChildren();
+ entries('conflicts',pending,(n,k)=>{n.append(node('strong','待决：'+k.title),node('p',k.content));k.conflict_with.forEach(id=>{const old=overview.knowledge.find(x=>x.id===id);if(old)n.append(node('p','已有：'+old.content,'muted'))});const opt=node('option',k.title);opt.value=k.id;el('conflict-id').append(opt)});
+ el('summary').textContent='当前偏好 '+overview.preferences.length+' 项 · 知识 '+overview.knowledge.length+' 条 · 待决 '+pending.length+' 条 · 中期证据簇 '+overview.medium.length+' 个';
+}
+function bind(id,fn){el(id).onclick=async()=>{const b=el(id);b.disabled=true;try{await fn();}catch(e){el('notice').textContent=e.message}finally{b.disabled=id==='confirm'?!plan:false}}}
+async function scenario(name,reset=false){const result=await api('/api/demo',{name,reset});for(const key of ['tenant_id','user_id','scene'])el(({tenant_id:'tenant',user_id:'user',scene:'scene'})[key]).value=result[key];plan=null;el('confirm').disabled=true;el('targets').textContent='先预览影响范围。';await refresh();el('notice').textContent=reset?'演示样例已恢复。':'场景已接入，可查看变化及证据。'}
+bind('reset',()=>scenario('baseline',true));bind('preference',()=>scenario('preference'));bind('conflict',()=>scenario('conflict'));
+bind('refresh',async()=>{plan=null;el('confirm').disabled=true;await refresh();el('notice').textContent='当前作用域已刷新。'});
+bind('search',async()=>{const rows=await api('/api/search',{...scope(),query:el('query').value,top_k:3});entries('results',rows,(n,k)=>n.append(node('strong',k.title),node('p',k.content),node('span','匹配分数 '+k.score,'badge')));el('notice').textContent=rows.length?'已返回相关知识。':'当前记忆中没有足够相关的答案。'});
+bind('resolve',async()=>{const result=await api('/api/conflicts/resolve',{...scope(),memory_id:el('conflict-id').value,strategy:el('strategy').value});el('decision').textContent='决策后状态：'+(states[result.status]||result.status);await refresh();el('notice').textContent='冲突决策已保存。'});
+async function preview(){plan=await api('/api/forget/preview',{...scope(),instruction:el('instruction').value});const targets=overview.knowledge.filter(k=>plan.knowledge_ids.includes(k.id));entries('targets',targets,(n,k)=>n.append(node('strong',k.title),node('p',k.content)));el('targets').prepend(node('p','影响 '+plan.knowledge_ids.length+' 条知识、'+plan.preference_ids.length+' 项偏好；有效至 '+plan.expires_at));el('confirm').disabled=false;el('notice').textContent='预览已生成，请核对影响范围。'}
+bind('preview',preview);bind('forget-demo',async()=>{el('instruction').value='删除报销相关记忆';await preview()});
+bind('confirm',async()=>{if(!plan)throw new Error('请先生成预览');const result=await api('/api/forget/confirm',{...scope(),plan_id:plan.id});plan=null;el('targets').textContent='已软删除 '+result.knowledge_count+' 条知识；审计回执 '+result.audit_id;await refresh();el('notice').textContent='遗忘已保存，可重新检索核实。'});
+bind('ingest',async()=>{const result=await api('/api/ingest',{records:JSON.parse(el('records').value)});el('technical').textContent=JSON.stringify(result,null,2);el('ingest-result').textContent='接收 '+result.accepted_records+' 条，重复 '+result.duplicate_records+' 条，拒绝 '+result.rejected_records+' 条。';await refresh();el('notice').textContent='接入处理完成。'});
+refresh().then(()=>el('notice').textContent='已加载。首次演示可点击“恢复演示样例”。').catch(e=>el('notice').textContent=e.message);
+</script></body></html>
