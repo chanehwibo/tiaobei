@@ -27,6 +27,8 @@
         "artifacts/verification/round3/evaluation_v2_test_final.json",
         "artifacts/verification/round3/final_verification.json",
         "artifacts/verification/round3/final_verification.md",
+        "artifacts/verification/round3/delivery_acceptance.md",
+        "artifacts/verification/round3/delivery_checks.json",
         "artifacts/verification/round3/performance_windows_dev.json",
         "artifacts/verification/round3/performance_windows_dev.md",
         "docs/22_第三轮验收报告.md",

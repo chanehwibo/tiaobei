@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-06T13:48:23+00:00",
+  "package_status": "incomplete_draft",
+  "archive": "OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip",
+  "archive_bytes": 522260,
+  "archive_sha256": "e109ef0d9f501cdd9e203c48821cf1e8c17a413304a14cf13677964b3a240227",
+  "archive_read_only": true,
+  "content_file_count": 136,
+  "content_bytes": 1613346,
+  "content_manifest": "OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE_CONTENTS_SHA256.txt",
+  "archive_digest_file": "OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip.sha256",
+  "zip_integrity_verified": true,
+  "build_manifest_verified": true,
+  "missing_external": [
+    {
+      "key": "video",
+      "label": "人工复核后的最终演示视频"
+    },
+    {
+      "key": "registration_form",
+      "label": "与平台一致的盖章报名表"
+    },
+    {
+      "key": "real_case",
+      "label": "经授权且脱敏的真实应用案例证明"
+    },
+    {
+      "key": "kylin_report",
+      "label": "真实银河麒麟环境与SDK验证报告"
+    }
+  ],
+  "warning": "开发机不完整草案，不得作为全部完成的正式提交包。"
+}
