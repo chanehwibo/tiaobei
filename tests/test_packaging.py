@@ -42,7 +42,10 @@ class SubmissionPackagingTest(unittest.TestCase):
                 "submission/submission_manifest.json",
                 "docs/12_部署手册.md",
                 "docs/测试报告.md",
-                "artifacts/verification/final_verification.json",
+                "artifacts/verification/round2/final_verification.json",
+                "artifacts/verification/round2/evidence_summary.json",
+                "config/embedding.hash.json",
+                "src/os_agent_memory/dashboard.html",
                 "deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx",
             ):
                 self.assertTrue((packaged_root / required).is_file(), required)

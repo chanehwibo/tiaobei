@@ -1,0 +1,46 @@
+{
+  "generated_at_utc": "2026-09-06T09:32:21+00:00",
+  "operating_system": {
+    "system": "Windows",
+    "release": "10",
+    "version": "10.0.19045",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "os_release": {},
+    "is_galaxy_kylin": false
+  },
+  "runtime": {
+    "python": "3.14.3",
+    "implementation": "CPython",
+    "python_supported": true,
+    "machine": "AMD64",
+    "architecture_supported": true
+  },
+  "resources": {
+    "logical_cpu_count": 8,
+    "physical_memory_gb": 15.771,
+    "filesystem": {
+      "path": "C:\\Users\\CanhuiBao\\Desktop\\项目、活动、比赛\\挑战杯 揭榜挂帅\\os-agent-memory-optimizer\\artifacts\\verification\\round2",
+      "writable": true,
+      "free_disk_gb": 177.041,
+      "error": null
+    }
+  },
+  "sqlite": {
+    "version": "3.50.4",
+    "threadsafety": 3,
+    "fts5": true,
+    "json1": true,
+    "errors": []
+  },
+  "embedding_sdk": {
+    "status": "not_checked",
+    "compatible": false,
+    "reason": "No real SDK configuration supplied."
+  },
+  "verdict": {
+    "local_runtime_ready": true,
+    "real_galaxy_kylin_verified": false,
+    "real_embedding_sdk_verified": false,
+    "competition_environment_ready": false
+  }
+}

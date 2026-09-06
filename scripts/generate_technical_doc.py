@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 from pathlib import Path
 
@@ -141,7 +142,8 @@ def build_document(solution_path: Path, report_path: Path, output: Path) -> None
     _set_run_font(run, 16, True)
     meta = document.add_paragraph()
     meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run = meta.add_run("对应赛题：XA-202612\n生成日期：2026-09-05")
+    evidence = json.loads((PROJECT_ROOT / "artifacts/verification/round2/evidence_summary.json").read_text(encoding="utf-8"))
+    run = meta.add_run("对应赛题：XA-202612\n第二轮证据日期：" + evidence["generated_at_utc"][:10])
     _set_run_font(run, 11)
     boundary = document.add_paragraph()
     boundary.alignment = WD_ALIGN_PARAGRAPH.CENTER

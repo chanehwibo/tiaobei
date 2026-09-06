@@ -49,8 +49,8 @@ textarea{width:100%;min-height:120px}.entry{border-top:1px solid #e4ebee;padding
 <script>
 const el=id=>document.getElementById(id);
 const scope=()=>({tenant_id:el('tenant').value,user_id:el('user').value,scene:el('scene').value});
-const labels={'output.language':'输出语言','output.verbosity':'详略','output.format':'输出形式','output.structure':'组织方式'};
-const values={'zh-CN':'中文',brief:'简洁',detailed:'详细',table:'表格',step_by_step:'分步骤'};
+const labels={'output.language':'输出语言','output.verbosity':'详略','output.format':'输出形式','output.structure':'组织方式','security.processing':'处理位置','security.redaction':'敏感信息脱敏','security.confirmation':'执行确认','preferred_tool:office_report':'报表首选工具','preferred_tool:meeting_summary':'会议首选工具'};
+const values={'zh-CN':'中文',brief:'简洁',detailed:'详细',table:'表格',step_by_step:'分步骤',required:'必须',local_only:'仅本地',spreadsheet_parser:'表格解析器',meeting_minutes_parser:'会议纪要解析器'};
 const states={active:'可用',conflict_pending:'待决冲突',forgotten:'已遗忘',expired:'已过期',quarantined:'已隔离'};
 let overview={knowledge:[],preferences:[],history:[],medium:[]}, plan=null;
 function node(tag,text,cls){const n=document.createElement(tag);n.textContent=text;if(cls)n.className=cls;return n}

@@ -4,13 +4,13 @@
 
 ## 当前状态
 
-- 本地源码、合成评测、Windows 开发机性能、材料完整性和隐私扫描已通过自动化验收。
-- 当前自动化测试为 65 项，完整结果见 `artifacts/verification/final_verification.md`。
-- v2 数据集共 120 条合成事件，train/dev/test 各 40 条；test 分区偏好/冲突/遗忘 F1、Recall@3、MRR 和 nDCG@3 均为 1.0，Precision@3 为 0.9286。
-- Windows + HashEmbedding 开发机在 10,000 条知识下冷查询 87.620ms、热查询 p99 112.732ms。
-- 尚未取得真实银河麒麟系统、真实麒麟 embedding SDK、独立盲测、授权真实案例、最终视频和赛事流程回执，因此不能宣称赛题指定环境或全部交付已经达标。
-
-上列数值对应 2026-09-05 固定报告；重新运行时以新生成的 JSON 为准。
+- 第二轮本地 14 项整改的实现、验收与推送记录见 [第二轮清单](docs/17_第二轮整改清单.md)。
+- 自动化测试 86 项全部通过；工程检查、Python 3.10 语法、页面脚本和 wheel 构建通过。
+- v3 内部合成评测：42 事件、18 主题、54 查询，正文与模板族跨分区无重叠；dev 统一选择阈值 0.24。
+- 混合检索 test 正例 Recall@3 0.8333，无答案正确率 0.8333。两项 ≥0.85 的质量目标尚未全部满足，当前混合方案未稳定优于词法基线。
+- Windows + HashEmbedding、10,000 条：冷查询 96.972ms、热 p99 129.045ms；实际服务 1,000 条 HTTP 查询 p99 33.692ms。
+- [当前验收报告](docs/18_第二轮验收报告.md)与 PPT 共用 [证据摘要](artifacts/verification/round2/evidence_summary.json)。2026-09-05 归档为历史基线，旧 v1/v2 满分不能沿用。
+- 真实银河麒麟、SDK、独立盲测、授权案例、视频及赛事凭证仍缺失；当前为开发机交付草案。
 
 ## 能力概览
 
@@ -20,7 +20,7 @@
 - 词法候选召回、向量缓存和 embedding 重排；作用域不明确时拒答。
 - 知识冲突默认隔离，支持新旧版本选择、双方保留、证据合并与人工确认队列。
 - 自然语言遗忘的预览—确认两阶段协议、软/硬删除、索引同步和脱敏审计回执。
-- SQLite v2 持久化、服务层、本地 HTTP API 与浏览器仪表盘。
+- 增量 SQLite、持久化去重/阶段证据、失败回滚、服务层、本地 HTTP API 与场景仪表盘。
 - Precision/Recall/F1、Precision@K、Recall@K、MRR、nDCG、误删率、延迟与资源基准。
 
 ## 快速开始
@@ -59,11 +59,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\run_demo.ps1"
 
 ```powershell
 $env:PYTHONPATH="$PWD\src"
-python -m os_agent_memory.cli evaluate --suite ".\data\eval\office_memory_eval_v2.json" --split test --top-k 3 --summary-only
-python .\scripts\verify_release.py --sizes 100,1000,5000,10000 --rounds 30
+python scripts/evaluate_v3.py --embedding-config config/embedding.hash.json
+python .\scripts\verify_release.py --artifact-dir artifacts/runtime/verification --sizes 100,1000,5000,10000 --rounds 30
 ```
 
-固定证据位于 `artifacts/verification/`。完整验收会执行源码编译、全部测试、v1/v2 评测、性能基准、兼容性、演示预检、材料检查和隐私扫描，通常需几十秒。它明确区分 `local_release_checks_passed` 与 `competition_submission_ready`。
+第二轮固定证据位于 `artifacts/verification/round2/`。完整验收会执行源码编译、全部测试、v1/v2 评测、性能基准、兼容性、演示预检、材料检查和隐私扫描，通常需几十秒。它明确区分 `local_release_checks_passed` 与 `competition_submission_ready`。
 
 ## 提交包草案
 

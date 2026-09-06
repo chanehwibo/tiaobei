@@ -24,9 +24,11 @@ from os_agent_memory.benchmark import run_scale_benchmark, write_benchmark_repor
 from os_agent_memory.compatibility import collect_compatibility_report, write_compatibility_report
 from os_agent_memory.diagnostics import run_preflight
 from os_agent_memory.evaluation import run_evaluation_suite
+from os_agent_memory.experiments import evaluate_frozen, run_ablations
 
 
 TEXT_SUFFIXES = {
+    ".html", ".js", ".cjs",
     "",
     ".cfg",
     ".csv",
@@ -251,6 +253,11 @@ def run_release_verification(
     )
     _write_json(artifact_dir / "evaluation_v1_final.json", evaluation_v1)
     _write_json(artifact_dir / "evaluation_v2_test_final.json", evaluation_v2_test)
+    suite_v3 = json.loads((project_root / "data/eval/office_memory_eval_v3.json").read_text(encoding="utf-8"))
+    evaluation_v3 = evaluate_frozen(suite_v3)
+    ablations = run_ablations(suite_v3)
+    _write_json(artifact_dir / "evaluation_v3.json", evaluation_v3)
+    _write_json(artifact_dir / "ablations.json", ablations)
 
     benchmark = run_scale_benchmark(benchmark_sizes, rounds=benchmark_rounds, top_k=5)
     write_benchmark_report(
@@ -278,8 +285,11 @@ def run_release_verification(
     checks = {
         "compile": compile_result["passed"],
         "unit_tests": test_result["passed"],
-        "evaluation_v1_targets": _target_passed(evaluation_v1),
-        "evaluation_v2_test_targets": _target_passed(evaluation_v2_test),
+        "evaluation_protocol": (
+            evaluation_v3["configuration"]["selected_on"] == "dev"
+            and evaluation_v3["configuration"]["threshold"] == evaluation_v3["test"]["threshold"]
+            and all(not any(row.values()) for row in suite_v3["split_audit"].values())
+        ),
         "benchmark_500ms": benchmark["all_meet_500ms"],
         "local_preflight": preflight["ready_for_local_demo"],
         "materials": materials["passed"],
@@ -297,10 +307,15 @@ def run_release_verification(
         "scope": "local_development_release_verification",
         "local_release_checks_passed": local_passed,
         "competition_submission_ready": competition_ready,
+        "internal_quality_targets": {
+            "positive_recall_at_3_ge_085": evaluation_v3["test"]["positive_recall_at_3"] >= .85,
+            "no_answer_accuracy_ge_085": evaluation_v3["test"]["no_answer_accuracy"] >= .85,
+        },
         "checks": checks,
         "compile": compile_result,
         "unit_tests": test_result,
         "evaluations": {
+            "v3": evaluation_v3,
             "v1": {
                 "suite": evaluation_v1["suite"],
                 "split": evaluation_v1["split"],
@@ -328,7 +343,7 @@ def run_release_verification(
 
 def write_verification_report(result: dict[str, Any], *, json_path: Path, markdown_path: Path) -> None:
     _write_json(json_path, result)
-    metrics = result["evaluations"]["v2_test"]["metrics"]
+    metrics = result["evaluations"]["v3"]["test"]
     largest = result["benchmark"]["results"][-1]
     lines = [
         "# 最终本地验收报告",
@@ -338,10 +353,11 @@ def write_verification_report(result: dict[str, Any], *, json_path: Path, markdo
         f"- 本地发布检查：{'通过' if result['local_release_checks_passed'] else '不通过'}",
         f"- 赛事完整提交就绪：{'是' if result['competition_submission_ready'] else '否'}",
         f"- 自动化测试：{result['unit_tests']['tests_run']} 项，{'通过' if result['unit_tests']['passed'] else '失败'}",
-        f"- v2 test 偏好 F1：{metrics['preference_f1']:.4f}",
-        f"- v2 test 检索 Recall@3：{metrics['knowledge_recall_at_k']:.4f}",
-        f"- v2 test 冲突 F1：{metrics['conflict_f1']:.4f}",
-        f"- v2 test 遗忘 F1 / 误删率：{metrics['forget_f1']:.4f} / {metrics['forget_misdelete_rate']:.4f}",
+        f"- v3 test 正例 Recall@3：{metrics['positive_recall_at_3']:.4f}",
+        f"- v3 test 无答案正确率：{metrics['no_answer_accuracy']:.4f}",
+        f"- v3 test 平衡得分：{metrics['balanced_score']:.4f}",
+        f"- 内部质量目标全部满足：{all(result['internal_quality_targets'].values())}",
+        "- v1/v2 旧标签含单条低证据事件，门控后有目标未满足；保留原始结果，不能沿用旧版满分宣称。",
         f"- {largest['records']} 条开发机热查询 p99：{largest['hot_query_p99_ms']} ms",
         f"- 隐私扫描异常：{len(result['privacy_scan']['unexpected_findings'])} 项",
         "",

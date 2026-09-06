@@ -1,0 +1,325 @@
+{
+  "generated_at_utc": "2026-09-06T09:32:22+00:00",
+  "tests": 86,
+  "local_checks_passed": true,
+  "quality_targets": {
+    "positive_recall_at_3_ge_085": false,
+    "no_answer_accuracy_ge_085": false
+  },
+  "competition_ready": false,
+  "evaluation": {
+    "split": "test",
+    "mode": "hybrid",
+    "threshold": 0.24,
+    "cache": true,
+    "positive_recall_at_3": 0.8333,
+    "no_answer_accuracy": 0.8333,
+    "balanced_score": 0.8333,
+    "mean_latency_ms": 0.2369,
+    "query_phase_encode_calls": 18,
+    "rows": [
+      {
+        "id": "test-0-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "设备借还"
+        ],
+        "returned": [],
+        "recall": 0.0,
+        "empty_correct": null,
+        "precision": null,
+        "latency_ms": 0.3899
+      },
+      {
+        "id": "test-0-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "设备借还"
+        ],
+        "returned": [
+          "设备借还"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.263
+      },
+      {
+        "id": "test-0-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [],
+        "recall": null,
+        "empty_correct": true,
+        "precision": null,
+        "latency_ms": 0.2073
+      },
+      {
+        "id": "test-1-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "培训签到"
+        ],
+        "returned": [
+          "培训签到"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.1704
+      },
+      {
+        "id": "test-1-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "培训签到"
+        ],
+        "returned": [
+          "培训签到"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.193
+      },
+      {
+        "id": "test-1-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [],
+        "recall": null,
+        "empty_correct": true,
+        "precision": null,
+        "latency_ms": 0.181
+      },
+      {
+        "id": "test-2-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "版本发布"
+        ],
+        "returned": [],
+        "recall": 0.0,
+        "empty_correct": null,
+        "precision": null,
+        "latency_ms": 0.3258
+      },
+      {
+        "id": "test-2-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "版本发布"
+        ],
+        "returned": [
+          "版本发布"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.1734
+      },
+      {
+        "id": "test-2-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [
+          "版本发布"
+        ],
+        "recall": null,
+        "empty_correct": false,
+        "precision": 0.0,
+        "latency_ms": 0.2805
+      },
+      {
+        "id": "test-3-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "打印审计"
+        ],
+        "returned": [
+          "打印审计"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.2612
+      },
+      {
+        "id": "test-3-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "打印审计"
+        ],
+        "returned": [
+          "打印审计"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.2156
+      },
+      {
+        "id": "test-3-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [],
+        "recall": null,
+        "empty_correct": true,
+        "precision": null,
+        "latency_ms": 0.247
+      },
+      {
+        "id": "test-4-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "离职交接"
+        ],
+        "returned": [
+          "离职交接"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.2579
+      },
+      {
+        "id": "test-4-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "离职交接"
+        ],
+        "returned": [
+          "离职交接"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.2941
+      },
+      {
+        "id": "test-4-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [],
+        "recall": null,
+        "empty_correct": true,
+        "precision": null,
+        "latency_ms": 0.1955
+      },
+      {
+        "id": "test-5-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "工单升级"
+        ],
+        "returned": [
+          "工单升级"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.2439
+      },
+      {
+        "id": "test-5-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "工单升级"
+        ],
+        "returned": [
+          "工单升级"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.2012
+      },
+      {
+        "id": "test-5-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [],
+        "recall": null,
+        "empty_correct": true,
+        "precision": null,
+        "latency_ms": 0.1626
+      }
+    ]
+  },
+  "performance": {
+    "records": 10000,
+    "top_k": 5,
+    "index_build_ms": 11342.52,
+    "cold_query_ms": 96.972,
+    "hot_query_p50_ms": 102.955,
+    "hot_query_p95_ms": 124.385,
+    "hot_query_p99_ms": 129.045,
+    "throughput_qps": 9.51,
+    "peak_python_memory_mb": 178.782,
+    "sqlite_disk_mb": 39.984,
+    "returned_results": 5,
+    "meets_500ms": true
+  },
+  "service": {
+    "records": 1000,
+    "service_ingest_ms": 4152.665,
+    "single_add_ms": 300.196,
+    "restart_load_ms": 183.747,
+    "mixed_query_p50_ms": 6.841,
+    "mixed_query_p95_ms": 8.466,
+    "mixed_query_p99_ms": 8.707,
+    "http_query_p99_ms": 33.692,
+    "concurrent_operations": 33,
+    "concurrent_operations_per_second": 40.899,
+    "all_queries_nonempty": true,
+    "persisted_knowledge": 1004,
+    "sqlite_bytes": 5279744,
+    "retrieval_under_500ms": true
+  },
+  "dataset": {
+    "events": 42,
+    "topics": 18,
+    "queries": 54,
+    "test_queries": 18
+  },
+  "comparisons": [
+    {
+      "split": "test",
+      "mode": "lexical",
+      "threshold": 0.12,
+      "cache": true,
+      "positive_recall_at_3": 0.8333,
+      "no_answer_accuracy": 1.0,
+      "balanced_score": 0.9167,
+      "mean_latency_ms": 0.0398,
+      "query_phase_encode_calls": 0
+    },
+    {
+      "split": "test",
+      "mode": "semantic",
+      "threshold": 0.2,
+      "cache": true,
+      "positive_recall_at_3": 1.0,
+      "no_answer_accuracy": 0.5,
+      "balanced_score": 0.75,
+      "mean_latency_ms": 0.1833,
+      "query_phase_encode_calls": 18
+    },
+    {
+      "split": "test",
+      "mode": "hybrid",
+      "threshold": 0.24,
+      "cache": true,
+      "positive_recall_at_3": 0.8333,
+      "no_answer_accuracy": 0.8333,
+      "balanced_score": 0.8333,
+      "mean_latency_ms": 0.2681,
+      "query_phase_encode_calls": 18
+    }
+  ],
+  "source_sha256": {
+    "final_verification.json": "7f6a1e7ec830703c7710820f37214961e8c92345e1d308509961015774a4ea37",
+    "ablations.json": "21ddd0ac679514ec0cef449710d1e9e5c34278ebef4565c254a5b2b0fec6086c",
+    "round2_service_after.json": "b28f5a0bc123d15746779bfae012e14002121581dcde56715a50e6ad60664cdc"
+  }
+}

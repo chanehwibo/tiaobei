@@ -2,7 +2,7 @@
 
 ## 1. 作用域和数据格式
 
-除 `/api/stats` 外，读取、冲突和遗忘接口均要求 `tenant_id`、`user_id` 或明确目标 ID。请求/响应使用 UTF-8 JSON。HTTP 请求体最大 1,000,000 字节；错误响应格式为：
+作用域读取、冲突决策及遗忘确认均要求 tenant_id、user_id；修改接口还要求目标 ID。/api/stats 为全局开发统计，/api/demo 仅操作专属合成租户。请求/响应使用 UTF-8 JSON，HTTP 请求体最大 1,000,000 字节。
 
 ```json
 {"error": "错误原因"}
@@ -20,7 +20,7 @@ service = MemoryService(database_path="artifacts/runtime/memory.sqlite")
 
 ### `ingest(raw_records, persist=True)`
 
-接收事件字典迭代器；返回 accepted/rejected/duplicate 数、结构化 issues、新偏好、新知识和 stats。配置数据库时默认原子保存完整状态。
+接收事件字典迭代器；返回 accepted/rejected/duplicate 数、issues、偏好、知识、promotion_decisions 和 stats。单条低证据留在中期；跨请求与重启去重。配置数据库时增量原子提交，失败回滚服务状态。
 
 ### `preferences(tenant_id, user_id, scene=None)`
 
@@ -30,11 +30,11 @@ service = MemoryService(database_path="artifacts/runtime/memory.sqlite")
 
 返回带综合、词法、语义分数的知识列表。业务回答不得把 `include_pending` 设为 true；该选项仅用于冲突诊断。
 
-### `conflicts(tenant_id, user_id)` / `resolve_conflict(memory_id, strategy="auto")`
+### conflicts(tenant_id, user_id) / resolve_conflict(memory_id, tenant_id, user_id, strategy="auto")
 
 列出待决冲突，或用 `auto`、`accept_incoming`、`keep_existing`、`keep_both`、`merge`、`manual_review` 处理指定知识。
 
-### `forget_preview(...)` / `forget_confirm(plan_id)`
+### forget_preview(...) / forget_confirm(plan_id, tenant_id, user_id)
 
 preview 参数：instruction、tenant_id、user_id、hard_delete=False、ttl_seconds=300。preview 零修改；confirm 才执行，并返回 affected IDs 和 audit_id。
 
@@ -116,10 +116,10 @@ GET /api/preferences?tenant_id=default&user_id=u-demo&scene=office_report
 ### `POST /api/conflicts/resolve`
 
 ```json
-{"memory_id": "知识ID", "strategy": "auto"}
+{"memory_id": "知识ID", "tenant_id": "default", "user_id": "u-demo", "strategy": "auto"}
 ```
 
-不存在目标返回 `400`；策略不支持返回 `400`。
+目标不存在或不属于当前作用域返回 403；策略不支持返回 400。
 
 ### `POST /api/forget/preview`
 
@@ -137,10 +137,13 @@ GET /api/preferences?tenant_id=default&user_id=u-demo&scene=office_report
 ### `POST /api/forget/confirm`
 
 ```json
-{"plan_id": "预览返回的计划ID"}
+{"plan_id": "预览返回的计划ID", "tenant_id": "default", "user_id": "u-demo"}
 ```
 
-成功响应含 `confirmed=true`、affected IDs 和 audit_id。计划过期、已确认或不存在时拒绝。
+成功响应含 confirmed=true、affected IDs 和 audit_id。同作用域重复确认返回原回执；过期拒绝，错误作用域拒绝。回执可跨重启恢复。
+
+GET /api/overview?tenant_id=...&user_id=... 返回当前作用域偏好、版本历史、知识及中期簇。
+POST /api/demo 接收 {"name":"baseline","reset":true}；name 可为 baseline、preference、conflict。仅重置 local-demo 合成数据，其他租户保留。
 
 ## 4. 状态码
 
@@ -150,6 +153,8 @@ GET /api/preferences?tenant_id=default&user_id=u-demo&scene=office_report
 | 400 | JSON、字段、参数、目标或策略错误 |
 | 404 | 路由不存在 |
 | 409 | 服务运行状态冲突 |
+| 403 | 作用域不匹配或跨源写入 |
+| 503 | 持久化或调用超时失败 |
 
 ## 5. 安全约束
 

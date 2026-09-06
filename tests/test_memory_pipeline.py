@@ -784,24 +784,24 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertTrue(conflicting_ids)
         self.assertTrue(all(store.knowledge[memory_id].status == MemoryStatus.FORGOTTEN for memory_id in conflicting_ids))
 
-    def test_labeled_evaluation_suite_reaches_baseline_targets(self) -> None:
+    def test_legacy_suite_reports_lifecycle_policy_changes_without_hiding_misses(self) -> None:
         suite_path = ROOT / "data" / "eval" / "office_memory_eval.json"
         result = run_evaluation_suite(suite_path, top_k=3)
 
         metrics = result["metrics"]
-        self.assertEqual(metrics["preference_accuracy"], 1.0)
+        self.assertEqual(metrics["preference_accuracy"], round(7 / 9, 4))
         self.assertGreaterEqual(metrics["knowledge_recall_at_k"], 0.85)
         self.assertLessEqual(metrics["knowledge_search_latency_ms"], 500)
         self.assertEqual(metrics["conflict_accuracy"], 1.0)
         self.assertEqual(metrics["forget_accuracy"], 1.0)
-        self.assertEqual(metrics["preference_f1"], 1.0)
+        self.assertEqual(metrics["preference_f1"], 0.875)
         self.assertGreaterEqual(metrics["knowledge_precision_at_k"], 0.3)
         self.assertGreaterEqual(metrics["knowledge_mrr"], 0.85)
         self.assertGreaterEqual(metrics["knowledge_ndcg_at_k"], 0.85)
         self.assertEqual(metrics["conflict_f1"], 1.0)
         self.assertEqual(metrics["forget_f1"], 1.0)
         self.assertEqual(metrics["forget_misdelete_rate"], 0.0)
-        self.assertTrue(all(result["targets"].values()))
+        self.assertFalse(all(result["targets"].values()))
 
     def test_precision_recall_f1_uses_micro_counts(self) -> None:
         scores = precision_recall_f1(3, 1, 2)
@@ -820,7 +820,8 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertEqual(len(details["retrieval"]), 6)
         self.assertEqual(len(details["conflicts"]), 4)
         self.assertEqual(len(details["forget"]), 3)
-        self.assertTrue(all(item["passed"] for item in details["preferences"]))
+        missing = {item["key"] for item in details["preferences"] if not item["passed"]}
+        self.assertEqual(missing, {"output.format", "output.structure"})
         self.assertTrue(all(item["passed"] for item in details["retrieval"]))
         self.assertTrue(all(item["passed"] for item in details["conflicts"]))
         self.assertTrue(all(item["passed"] for item in details["forget"]))
@@ -829,8 +830,8 @@ class MemoryPipelineTest(unittest.TestCase):
         self.assertEqual(preference_by_key["preferred_tool:meeting_summary"]["predicted_value"], "meeting_minutes_parser")
         self.assertEqual(preference_by_key["output.language"]["predicted_value"], "zh-CN")
         self.assertEqual(preference_by_key["output.verbosity"]["predicted_value"], "brief")
-        self.assertEqual(preference_by_key["output.format"]["predicted_value"], "table")
-        self.assertEqual(preference_by_key["output.structure"]["predicted_value"], "step_by_step")
+        self.assertIsNone(preference_by_key["output.format"]["predicted_value"])
+        self.assertIsNone(preference_by_key["output.structure"]["predicted_value"])
         self.assertTrue(preference_by_key["preferred_tool:meeting_summary"]["evidence_ids"])
 
         first_retrieval = details["retrieval"][0]
@@ -945,7 +946,10 @@ class MemoryPipelineTest(unittest.TestCase):
         result = run_evaluation_suite(suite_path, top_k=3, split="test")
         self.assertEqual(result["split"], "test")
         self.assertEqual(result["counts"]["records"], 40)
-        self.assertTrue(all(result["targets"].values()))
+        # v2 contains single low-authority events. The actual service gate now
+        # rejects them, so the legacy label targets must remain visibly unmet.
+        self.assertFalse(result["targets"]["preference_f1"])
+        self.assertFalse(result["targets"]["knowledge_recall_at_k"])
         self.assertEqual(result["metrics"]["forget_misdelete_rate"], 0.0)
         with self.assertRaises(ValueError):
             run_evaluation_suite(suite_path, split="holdout")

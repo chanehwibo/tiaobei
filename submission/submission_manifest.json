@@ -20,16 +20,21 @@
         "docs/06_测试矩阵.md",
         "docs/07_银河麒麟适配说明.md",
         "docs/16_原创性与隐私发布边界.md",
-        "artifacts/verification/compatibility_windows_dev.json",
-        "artifacts/verification/compatibility_windows_dev.md",
+        "artifacts/verification/round2/compatibility_windows_dev.json",
+        "artifacts/verification/round2/compatibility_windows_dev.md",
         "artifacts/verification/kylin_sdk_check_missing.json",
-        "artifacts/verification/evaluation_v1_final.json",
-        "artifacts/verification/evaluation_v2_test_final.json",
-        "artifacts/verification/final_verification.json",
-        "artifacts/verification/final_verification.md",
-        "artifacts/verification/delivery_acceptance.md",
-        "artifacts/verification/performance_windows_dev.json",
-        "artifacts/verification/performance_windows_dev.md"
+        "artifacts/verification/round2/evaluation_v1_final.json",
+        "artifacts/verification/round2/evaluation_v2_test_final.json",
+        "artifacts/verification/round2/final_verification.json",
+        "artifacts/verification/round2/final_verification.md",
+        "artifacts/verification/round2/delivery_acceptance.md",
+        "artifacts/verification/round2/performance_windows_dev.json",
+        "artifacts/verification/round2/performance_windows_dev.md",
+        "docs/18_第二轮验收报告.md",
+        "artifacts/verification/round2_service_after.json",
+        "artifacts/verification/round2/evidence_summary.json",
+        "artifacts/verification/round2/evaluation_v3.json",
+        "artifacts/verification/round2/ablations.json"
       ]
     }
   ],
@@ -47,7 +52,10 @@
       "submission/README.md",
       "docs/05_整改任务总清单.md",
       "docs/08_演示快跑指南.md",
-      "docs/演示操作手册.md"
+      "docs/演示操作手册.md",
+      ".github/workflows/ci.yml",
+      "docs/17_第二轮整改清单.md",
+      "docs/19_第二轮运行交接.md"
     ],
     "trees": [
       "src/os_agent_memory",
@@ -55,7 +63,8 @@
       "scripts",
       "data/samples",
       "data/eval",
-      "case_studies/templates"
+      "case_studies/templates",
+      "config"
     ],
     "docs": [
       "docs/12_部署手册.md",

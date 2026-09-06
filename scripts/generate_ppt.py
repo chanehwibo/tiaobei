@@ -12,7 +12,8 @@ from pptx.util import Inches, Pt
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "deliverables" / "ppt" / "OS_Agent_记忆优化_答辩稿.pptx"
-PERFORMANCE = ROOT / "artifacts" / "verification" / "performance_windows_dev.json"
+PERFORMANCE = ROOT / "artifacts" / "verification" / "round2" / "performance_windows_dev.json"
+SUMMARY = ROOT / "artifacts" / "verification" / "round2" / "evidence_summary.json"
 
 NAVY = RGBColor(7, 17, 31)
 PANEL = RGBColor(17, 34, 53)
@@ -162,10 +163,13 @@ def add_title_slide(prs: Presentation):
     add_textbox(slide, 0.92, 3.65, 10.6, 0.85, "有作用域 · 有证据 · 有生命周期 · 可冲突治理 · 可安全遗忘", size=20, color=MUTED)
     add_box(slide, 0.92, 5.35, 3.2, 0.7, "核心原型与开发机验证完成", fill=PANEL_2, line=TEAL, color=TEAL, size=14)
     add_box(slide, 4.35, 5.35, 3.2, 0.7, "真实麒麟 + SDK 待验收", fill=PANEL_2, line=AMBER, color=AMBER, size=14)
-    add_textbox(slide, 0.92, 6.65, 11.4, 0.35, "答辩稿 v1.0  ·  2026-09-05", size=12, color=MUTED)
+    evidence = json.loads(SUMMARY.read_text(encoding="utf-8"))
+    add_textbox(slide, 0.92, 6.65, 11.4, 0.35, "第二轮开发机答辩稿 · " + evidence["generated_at_utc"][:10], size=12, color=MUTED)
 
 
 def build_presentation() -> Presentation:
+    evidence = json.loads(SUMMARY.read_text(encoding="utf-8"))
+    evaluation = evidence["evaluation"]
     performance = json.loads(PERFORMANCE.read_text(encoding="utf-8"))
     perf_10k = next(item for item in performance["results"] if item["records"] == 10000)
     prs = Presentation()
@@ -308,17 +312,17 @@ def build_presentation() -> Presentation:
     add_box(slide, 1.45, 6.08, 10.45, 0.58, "默认监听 127.0.0.1；当前界面用于本地演示，不冒充生产级服务", fill=PANEL_2, line=AMBER, color=AMBER, size=14)
 
     slide = base_slide(prs, "10  评测体系：开始惩罚“多报、误删、乱答”", "评测")
-    metric_card(slide, 0.65, 1.25, 2.85, "偏好 F1", "1.0000", "test 分区", TEAL)
-    metric_card(slide, 3.7, 1.25, 2.85, "检索 P@3 / R@3", "0.9286 / 1.0", "含空答案", BLUE)
-    metric_card(slide, 6.75, 1.25, 2.85, "MRR / nDCG@3", "1.0 / 1.0", "排序质量", GREEN)
-    metric_card(slide, 9.8, 1.25, 2.85, "遗忘 F1 / 误删", "1.0 / 0", "完整授权集", AMBER)
-    add_textbox(slide, 0.75, 3.18, 5.8, 0.45, "120 条可重复生成的合成事件", size=22, color=WHITE, bold=True)
-    bullet_list(slide, ["train / dev / test 各 40 条", "6 类核心办公/系统场景 + 噪声", "失败工具、注入、冲突、隐私、跨用户反例"], 0.75, 3.72, 5.8, 2.2, size=15)
+    metric_card(slide, 0.65, 1.25, 2.85, "正例 Recall@3", f"{evaluation['positive_recall_at_3']:.4f}", "v3 test · 12 正例", TEAL)
+    metric_card(slide, 3.7, 1.25, 2.85, "无答案正确率", f"{evaluation['no_answer_accuracy']:.4f}", "v3 test · 6 无答案", BLUE)
+    metric_card(slide, 6.75, 1.25, 2.85, "平衡得分", f"{evaluation['balanced_score']:.4f}", "召回与拒答平均", GREEN)
+    metric_card(slide, 9.8, 1.25, 2.85, "质量目标", "尚未全满足", "两项分别 ≥ 0.85", AMBER)
+    add_textbox(slide, 0.75, 3.18, 5.8, 0.45, "42 事件 · 18 主题 · 54 查询", size=22, color=WHITE, bold=True)
+    bullet_list(slide, ["正文/模板族跨分区交集为零", f"统一阈值 {evaluation['threshold']} 仅由 dev 选择", "词法/向量/混合对照：不宣称全面领先"], 0.75, 3.72, 5.8, 2.2, size=15)
     add_box(slide, 7.0, 3.2, 5.55, 2.4, "公开 test 标签\n= 冻结回归分区\n≠ 第三方独立盲测", fill=PANEL, line=RED, color=RED, size=22)
     add_textbox(slide, 0.75, 6.35, 11.8, 0.32, "合成小集上的 1.0 不能外推到开放真实数据", size=14, color=AMBER, bold=True, align=PP_ALIGN.CENTER)
 
     slide = base_slide(prs, "11  自动化与安全证据", "验证")
-    metric_card(slide, 0.8, 1.22, 3.2, "自动化测试", "65 项通过", "单元 + 集成 + E2E", GREEN)
+    metric_card(slide, 0.8, 1.22, 3.2, "自动化测试", f"{evidence['tests']} 项通过", "单元 + 集成 + E2E", GREEN)
     metric_card(slide, 4.45, 1.22, 3.2, "规模覆盖", "100 → 10,000", "冷/热/资源/磁盘", BLUE)
     metric_card(slide, 8.1, 1.22, 3.2, "环境判定", "分层报告", "本地 ≠ 麒麟 ≠ SDK", AMBER)
     tests = ["跨租户/用户串读与误删", "提示注入与记忆污染", "失败工具偏好污染", "未决冲突普通检索隔离", "硬删除 SQLite 重载无残留", "嵌套凭证递归脱敏"]
@@ -334,7 +338,7 @@ def build_presentation() -> Presentation:
         ("3", "知识检索", "场景过滤与无答案"),
         ("4", "冲突治理", "待决隔离后自动/人工策略"),
         ("5", "安全遗忘", "预览影响范围，再确认删除"),
-        ("6", "评测证据", "test 指标、65 测试、10k 性能"),
+        ("6", "评测证据", f"v3 对照、{evidence['tests']} 测试、10k 性能"),
     ]
     for i, (number, title, body) in enumerate(demo_steps):
         y = 1.12 + i * 0.91
@@ -344,7 +348,7 @@ def build_presentation() -> Presentation:
     add_box(slide, 3.2, 6.45, 6.95, 0.4, "一键脚本：scripts/run_demo.ps1", fill=PANEL_2, line=BLUE, color=BLUE, size=13)
 
     slide = base_slide(prs, "13  证据边界与最后一公里", "计划")
-    completed = ["核心原型", "SQLite v2", "服务/API/Web", "120 条分区集", "10k 开发机基准", "安全测试"]
+    completed = ["统一生命周期门控", "增量事务与失败回滚", "服务/API/场景演示", "v3 隔离分区与对照", "10k 检索 + 实际服务负载", "作用域与重启安全测试"]
     pending = ["真实 Kylin SDK", "真实银河麒麟", "独立盲测", "知情同意案例", "最终视频", "平台/邮件回执"]
     add_textbox(slide, 0.8, 1.15, 5.65, 0.45, "已完成（代码与开发机证据）", size=20, color=GREEN, bold=True)
     add_textbox(slide, 6.95, 1.15, 5.55, 0.45, "必须人工/外部完成", size=20, color=AMBER, bold=True)
@@ -358,7 +362,7 @@ def build_presentation() -> Presentation:
     add_textbox(slide, 1.05, 1.25, 11.25, 0.75, "从“记住更多”走向“记得正确、找得快速、忘得安全”", size=29, color=WHITE, bold=True, align=PP_ALIGN.CENTER)
     conclusions = [
         ("正确", "多维偏好 + 权威/时效证据 + 冲突隔离", TEAL),
-        ("高效", "词法候选 + 向量缓存；10k 开发机 p99 112.732ms", BLUE),
+        ("高效", f"候选合并 + 向量缓存；10k 开发机 p99 {perf_10k['hot_query_p99_ms']}ms", BLUE),
         ("安全", "递归脱敏 + 作用域 + 两阶段遗忘 + 隐私审计", AMBER),
     ]
     for i, (name, body, color) in enumerate(conclusions):
