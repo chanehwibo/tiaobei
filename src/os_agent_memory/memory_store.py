@@ -239,7 +239,10 @@ class MemoryStore:
         min_score: float = 0.08,
         include_shared: bool = True,
         now: str | None = None,
+        retrieval_mode: str = "hybrid",
     ) -> list[SearchResult]:
+        if retrieval_mode not in {"hybrid", "lexical", "semantic"}:
+            raise ValueError("unknown retrieval_mode")
         if top_k <= 0:
             raise ValueError("top_k must be positive")
         query = query.strip()
@@ -273,27 +276,31 @@ class MemoryStore:
             for item in candidates
         }
         lexical_matches = [item for item in candidates if lexical_scores[item.id] > 0]
-        if lexical_matches:
+        if lexical_matches and retrieval_mode != "semantic":
             candidates = sorted(
                 lexical_matches,
                 key=lambda item: (lexical_scores[item.id], item.authority, item.updated_at),
                 reverse=True,
             )[:candidate_limit]
-        elif len(candidates) > candidate_limit:
+        elif len(candidates) > candidate_limit and retrieval_mode != "semantic":
             candidates = sorted(
                 candidates,
                 key=lambda item: (item.authority, item.updated_at),
                 reverse=True,
             )[:candidate_limit]
 
-        query_embedding = self.embedding.encode(query)
+        query_embedding = self.embedding.encode(query) if retrieval_mode != "lexical" else []
         scored: list[SearchResult] = []
         for item in candidates:
-            if not item.embedding:
+            if not item.embedding and retrieval_mode != "lexical":
                 item.embedding = self.embedding.encode(self._knowledge_text(item))
-            semantic_score = cosine_similarity(query_embedding, item.embedding)
+            semantic_score = cosine_similarity(query_embedding, item.embedding) if query_embedding else 0.0
             lexical_score = lexical_scores[item.id]
             score = 0.65 * semantic_score + 0.3 * lexical_score + 0.05 * item.authority
+            if retrieval_mode == "lexical":
+                score = lexical_score
+            elif retrieval_mode == "semantic":
+                score = semantic_score
             if score < min_score:
                 continue
             scored.append(

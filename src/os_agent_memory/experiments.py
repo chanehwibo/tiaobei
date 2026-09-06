@@ -7,6 +7,9 @@ from pathlib import Path
 from time import perf_counter
 
 from .evaluation import build_store_from_raw_records
+from .ingestion import DataIngestionPipeline
+from .preference import PreferenceExtractor
+from .service import MemoryService
 
 
 def split_rows(suite, section, split):
@@ -15,6 +18,16 @@ def split_rows(suite, section, split):
 
 def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, include_pending=False):
     store = build_store_from_raw_records(split_rows(suite, "records", split))
+    underlying = store.embedding
+    class CountingProvider:
+        calls = 0
+        def encode(self, text):
+            self.calls += 1
+            return underlying.encode(text)
+        def similarity(self, left, right):
+            return underlying.similarity(left, right)
+    provider = CountingProvider()
+    store.embedding = provider
     rows = []
     for query in split_rows(suite, "retrieval_queries", split):
         if not cache:
@@ -48,6 +61,7 @@ def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, inclu
         "no_answer_accuracy": round(empty_accuracy, 4),
         "balanced_score": round((positive_recall + empty_accuracy) / 2, 4),
         "mean_latency_ms": round(sum(row["latency_ms"] for row in rows) / max(len(rows), 1), 4),
+        "query_phase_encode_calls": provider.calls,
         "rows": rows,
     }
 
@@ -78,3 +92,47 @@ def write_json(path, value):
     target = Path(path)
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def run_ablations(suite):
+    comparisons = []
+    for mode in ("lexical", "semantic", "hybrid"):
+        config = select_threshold(suite, mode=mode)
+        trial = retrieval_trial(suite, "test", config["threshold"], mode=mode)
+        comparisons.append({"configuration": config, "result": trial})
+    threshold = comparisons[-1]["configuration"]["threshold"]
+    uncached = retrieval_trial(suite, "test", threshold, cache=False)
+    raw = []
+    for index, (content, timestamp) in enumerate((
+        ("偏好：输出保持简洁，直接给结论。", "2025-01-01T00:00:00+00:00"),
+        ("用户偏好：今后需要详细说明并给出原因。", "2026-01-01T00:00:00+00:00"),
+    )):
+        raw.append({"id": f"decay-{index}", "source_type": "manual_config",
+                    "content": content, "timestamp": timestamp})
+    records = DataIngestionPipeline().ingest(raw)
+    decay = []
+    for half_life in (30.0, None):
+        predicted = {p.key: p.value for p in PreferenceExtractor(half_life_days=half_life).extract(records)}
+        decay.append({"half_life_days": half_life, "prediction": predicted.get("output.verbosity"),
+                      "expected": "detailed", "passed": predicted.get("output.verbosity") == "detailed"})
+    service = MemoryService()
+    service.ingest([{
+        "id": f"policy-{i}", "source_type": "manual_config", "user_id": "ablation",
+        "content": content, "timestamp": "2026-01-01T00:00:00+00:00",
+        "metadata": {"title": "移动介质安全流程"},
+    } for i, content in enumerate((
+        "移动介质安全流程允许使用外部存储设备，完成检查并保存审计记录。",
+        "移动介质安全流程禁止使用外部存储设备，完成检查并保存审计记录。",
+    ))], persist=False)
+    pending = {k for k, v in service.store.knowledge.items() if v.status.value == "conflict_pending"}
+    isolation = []
+    for include in (False, True):
+        results = service.store.search_knowledge("移动介质安全流程", tenant_id="default",
+                                                user_id="ablation", include_pending=include)
+        isolation.append({"include_pending": include,
+                          "pending_returned": len(pending & {r.memory_id for r in results})})
+    return {"independent_blind": False, "retrieval_comparisons": comparisons,
+            "without_cache": uncached, "decay_probe": decay, "conflict_isolation_probe": isolation,
+            "limitations": ["Single-factor diagnostic probes are not broad effectiveness estimates.",
+                            "Both decay settings may pass: report ties without claiming improvement.",
+                            "Timing is descriptive; encode-call counts measure cache work directly."]}

@@ -9,6 +9,11 @@ from .schemas import DataRecord, PreferenceMemory, SourceType, ToolStatus, stabl
 class PreferenceExtractor:
     """Rule-based preference extractor used as a baseline for evaluation."""
 
+    def __init__(self, *, half_life_days: float | None = 30.0):
+        if half_life_days is not None and half_life_days <= 0:
+            raise ValueError("half_life_days must be positive")
+        self.half_life_days = half_life_days
+
     OUTPUT_PREFERENCE_RULES: tuple[tuple[str, str, tuple[str, ...]], ...] = (
         ("output.language", "zh-CN", ("中文", "使用中文")),
         ("output.verbosity", "brief", ("简洁", "少解释", "直接给结论", "不要展开")),
@@ -219,7 +224,7 @@ class PreferenceExtractor:
     def _record_score(self, record: DataRecord, reference_time: datetime) -> tuple[float, dict[str, float]]:
         event_time = self._parse_timestamp(record.timestamp)
         age_days = max((reference_time - event_time).total_seconds() / 86400.0, 0.0)
-        recency = 0.5 ** (age_days / 30.0)
+        recency = 0.5 ** (age_days / self.half_life_days) if self.half_life_days else 1.0
         explicitness = {
             SourceType.MANUAL_CONFIG: 1.0,
             SourceType.USER_BEHAVIOR: 0.8,

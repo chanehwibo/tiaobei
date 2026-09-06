@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 from generate_eval_v3 import generate, audit_splits
-from os_agent_memory.experiments import select_threshold, evaluate_frozen
+from os_agent_memory.experiments import select_threshold, evaluate_frozen, run_ablations
 
 
 class SplitIsolationTest(unittest.TestCase):
@@ -34,3 +34,12 @@ class SplitIsolationTest(unittest.TestCase):
         self.assertEqual(first, select_threshold(suite))
         report = evaluate_frozen(suite)
         self.assertEqual(report["test"]["threshold"], first["threshold"])
+
+    def test_ablation_preserves_cache_results_and_exposes_pending_conflicts(self):
+        report = run_ablations(generate())
+        cached = report["retrieval_comparisons"][-1]["result"]
+        uncached = report["without_cache"]
+        self.assertEqual([r["returned"] for r in cached["rows"]], [r["returned"] for r in uncached["rows"]])
+        self.assertLess(cached["query_phase_encode_calls"], uncached["query_phase_encode_calls"])
+        self.assertEqual(report["conflict_isolation_probe"][0]["pending_returned"], 0)
+        self.assertGreater(report["conflict_isolation_probe"][1]["pending_returned"], 0)
