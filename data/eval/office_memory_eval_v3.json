@@ -1,0 +1,1413 @@
+{
+  "name": "office_memory_eval_v3",
+  "provenance": {
+    "type": "synthetic",
+    "independent_blind": false
+  },
+  "split_policy": "Different topics, authored text and template families per split; labels public.",
+  "records": [
+    {
+      "id": "train-0-0",
+      "split": "train",
+      "template_family": "train-procedure-0",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:00:00+00:00",
+      "content": "票据验真流程：扫描发票二维码，匹配税号，异常票据转人工审核。",
+      "metadata": {
+        "title": "票据验真",
+        "topic": "票据验真"
+      }
+    },
+    {
+      "id": "train-0-1",
+      "split": "train",
+      "template_family": "train-procedure-0",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:00:00+00:00",
+      "content": "票据验真流程：扫描发票二维码，匹配税号，异常票据转人工审核。",
+      "metadata": {
+        "title": "票据验真",
+        "topic": "票据验真"
+      }
+    },
+    {
+      "id": "train-1-0",
+      "split": "train",
+      "template_family": "train-procedure-1",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:01:00+00:00",
+      "content": "会议预约步骤：选择空闲会议室，发送日历邀请，参会人确认后锁定时段。",
+      "metadata": {
+        "title": "会议预约",
+        "topic": "会议预约"
+      }
+    },
+    {
+      "id": "train-1-1",
+      "split": "train",
+      "template_family": "train-procedure-1",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:01:00+00:00",
+      "content": "会议预约步骤：选择空闲会议室，发送日历邀请，参会人确认后锁定时段。",
+      "metadata": {
+        "title": "会议预约",
+        "topic": "会议预约"
+      }
+    },
+    {
+      "id": "train-2-0",
+      "split": "train",
+      "template_family": "train-procedure-2",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:02:00+00:00",
+      "content": "字体配置模板：正文使用宋体，标题采用黑体，保存为公文样式。",
+      "metadata": {
+        "title": "字体配置",
+        "topic": "字体配置"
+      }
+    },
+    {
+      "id": "train-2-1",
+      "split": "train",
+      "template_family": "train-procedure-2",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:02:00+00:00",
+      "content": "字体配置模板：正文使用宋体，标题采用黑体，保存为公文样式。",
+      "metadata": {
+        "title": "字体配置",
+        "topic": "字体配置"
+      }
+    },
+    {
+      "id": "train-3-0",
+      "split": "train",
+      "template_family": "train-procedure-3",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:03:00+00:00",
+      "content": "文件归档流程：依据年度分类，计算文件校验值，复制到归档磁盘。",
+      "metadata": {
+        "title": "文件归档",
+        "topic": "文件归档"
+      }
+    },
+    {
+      "id": "train-3-1",
+      "split": "train",
+      "template_family": "train-procedure-3",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:03:00+00:00",
+      "content": "文件归档流程：依据年度分类，计算文件校验值，复制到归档磁盘。",
+      "metadata": {
+        "title": "文件归档",
+        "topic": "文件归档"
+      }
+    },
+    {
+      "id": "train-4-0",
+      "split": "train",
+      "template_family": "train-procedure-4",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:04:00+00:00",
+      "content": "密码轮换步骤：验证旧凭据，生成独立口令，注销旧登录会话。",
+      "metadata": {
+        "title": "密码轮换",
+        "topic": "密码轮换"
+      }
+    },
+    {
+      "id": "train-4-1",
+      "split": "train",
+      "template_family": "train-procedure-4",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:04:00+00:00",
+      "content": "密码轮换步骤：验证旧凭据，生成独立口令，注销旧登录会话。",
+      "metadata": {
+        "title": "密码轮换",
+        "topic": "密码轮换"
+      }
+    },
+    {
+      "id": "train-5-0",
+      "split": "train",
+      "template_family": "train-procedure-5",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:05:00+00:00",
+      "content": "客户答复模板：明确问题编号，列出解决进展，约定下一次反馈日期。",
+      "metadata": {
+        "title": "客户答复",
+        "topic": "客户答复"
+      }
+    },
+    {
+      "id": "train-5-1",
+      "split": "train",
+      "template_family": "train-procedure-5",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:05:00+00:00",
+      "content": "客户答复模板：明确问题编号，列出解决进展，约定下一次反馈日期。",
+      "metadata": {
+        "title": "客户答复",
+        "topic": "客户答复"
+      }
+    },
+    {
+      "id": "train-preference",
+      "split": "train",
+      "template_family": "train-preference",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "source_type": "manual_config",
+      "timestamp": "2026-01-02T00:00:00+00:00",
+      "scene": "office",
+      "content": "偏好设置：请用中文输出，保持简洁，输出格式用表格。",
+      "metadata": {
+        "title": "偏好"
+      }
+    },
+    {
+      "id": "train-private",
+      "split": "train",
+      "template_family": "train-private",
+      "tenant_id": "v3-train",
+      "user_id": "someone-else",
+      "source_type": "manual_config",
+      "timestamp": "2026-01-02T00:00:00+00:00",
+      "scene": "office",
+      "content": "票据验真流程：扫描发票二维码，匹配税号，异常票据转人工审核。 私有补充：客户答复由专人处理。",
+      "metadata": {
+        "title": "票据验真私有补充"
+      }
+    },
+    {
+      "id": "dev-0-0",
+      "split": "dev",
+      "template_family": "dev-procedure-0",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:00:00+00:00",
+      "content": "办理差旅预借需要行程单和预算明细。流程在财务核准额度后安排付款。",
+      "metadata": {
+        "title": "差旅预借",
+        "topic": "差旅预借"
+      }
+    },
+    {
+      "id": "dev-0-1",
+      "split": "dev",
+      "template_family": "dev-procedure-0",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:00:00+00:00",
+      "content": "办理差旅预借需要行程单和预算明细。流程在财务核准额度后安排付款。",
+      "metadata": {
+        "title": "差旅预借",
+        "topic": "差旅预借"
+      }
+    },
+    {
+      "id": "dev-1-0",
+      "split": "dev",
+      "template_family": "dev-procedure-1",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:01:00+00:00",
+      "content": "访客登记流程要求前台核实预约单位；临时通行证当天离场时交还。",
+      "metadata": {
+        "title": "访客登记",
+        "topic": "访客登记"
+      }
+    },
+    {
+      "id": "dev-1-1",
+      "split": "dev",
+      "template_family": "dev-procedure-1",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:01:00+00:00",
+      "content": "访客登记流程要求前台核实预约单位；临时通行证当天离场时交还。",
+      "metadata": {
+        "title": "访客登记",
+        "topic": "访客登记"
+      }
+    },
+    {
+      "id": "dev-2-0",
+      "split": "dev",
+      "template_family": "dev-procedure-2",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:02:00+00:00",
+      "content": "印章申请步骤由经办人登记文件份数，部门负责人签字后交印章保管员操作。",
+      "metadata": {
+        "title": "印章申请",
+        "topic": "印章申请"
+      }
+    },
+    {
+      "id": "dev-2-1",
+      "split": "dev",
+      "template_family": "dev-procedure-2",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:02:00+00:00",
+      "content": "印章申请步骤由经办人登记文件份数，部门负责人签字后交印章保管员操作。",
+      "metadata": {
+        "title": "印章申请",
+        "topic": "印章申请"
+      }
+    },
+    {
+      "id": "dev-3-0",
+      "split": "dev",
+      "template_family": "dev-procedure-3",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:03:00+00:00",
+      "content": "备份恢复流程以最近通过完整性检查的快照为准，恢复后抽查目录和文件大小。",
+      "metadata": {
+        "title": "备份恢复",
+        "topic": "备份恢复"
+      }
+    },
+    {
+      "id": "dev-3-1",
+      "split": "dev",
+      "template_family": "dev-procedure-3",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:03:00+00:00",
+      "content": "备份恢复流程以最近通过完整性检查的快照为准，恢复后抽查目录和文件大小。",
+      "metadata": {
+        "title": "备份恢复",
+        "topic": "备份恢复"
+      }
+    },
+    {
+      "id": "dev-4-0",
+      "split": "dev",
+      "template_family": "dev-procedure-4",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:04:00+00:00",
+      "content": "补丁验证流程仅在测试终端执行。重启两次且应用自检通过后才纳入发布候选。",
+      "metadata": {
+        "title": "补丁验证",
+        "topic": "补丁验证"
+      }
+    },
+    {
+      "id": "dev-4-1",
+      "split": "dev",
+      "template_family": "dev-procedure-4",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:04:00+00:00",
+      "content": "补丁验证流程仅在测试终端执行。重启两次且应用自检通过后才纳入发布候选。",
+      "metadata": {
+        "title": "补丁验证",
+        "topic": "补丁验证"
+      }
+    },
+    {
+      "id": "dev-5-0",
+      "split": "dev",
+      "template_family": "dev-procedure-5",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:05:00+00:00",
+      "content": "合同续期模板记录原合同编号、服务变更和续期起止日，双方确认后留存副本。",
+      "metadata": {
+        "title": "合同续期",
+        "topic": "合同续期"
+      }
+    },
+    {
+      "id": "dev-5-1",
+      "split": "dev",
+      "template_family": "dev-procedure-5",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:05:00+00:00",
+      "content": "合同续期模板记录原合同编号、服务变更和续期起止日，双方确认后留存副本。",
+      "metadata": {
+        "title": "合同续期",
+        "topic": "合同续期"
+      }
+    },
+    {
+      "id": "dev-preference",
+      "split": "dev",
+      "template_family": "dev-preference",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "source_type": "manual_config",
+      "timestamp": "2026-01-02T00:00:00+00:00",
+      "scene": "office",
+      "content": "我的输出偏好为简体中文，结果保持简洁，并用表格显示。",
+      "metadata": {
+        "title": "偏好"
+      }
+    },
+    {
+      "id": "dev-private",
+      "split": "dev",
+      "template_family": "dev-private",
+      "tenant_id": "v3-dev",
+      "user_id": "someone-else",
+      "source_type": "manual_config",
+      "timestamp": "2026-01-02T00:00:00+00:00",
+      "scene": "office",
+      "content": "办理差旅预借需要行程单和预算明细。流程在财务核准额度后安排付款。 私有补充：合同续期由专人处理。",
+      "metadata": {
+        "title": "差旅预借私有补充"
+      }
+    },
+    {
+      "id": "test-0-0",
+      "split": "test",
+      "template_family": "test-procedure-0",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:00:00+00:00",
+      "content": "设备借还流程设借出与归还两张清单：借出登记资产编号，归还核验配件是否齐全。",
+      "metadata": {
+        "title": "设备借还",
+        "topic": "设备借还"
+      }
+    },
+    {
+      "id": "test-0-1",
+      "split": "test",
+      "template_family": "test-procedure-0",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:00:00+00:00",
+      "content": "设备借还流程设借出与归还两张清单：借出登记资产编号，归还核验配件是否齐全。",
+      "metadata": {
+        "title": "设备借还",
+        "topic": "设备借还"
+      }
+    },
+    {
+      "id": "test-1-0",
+      "split": "test",
+      "template_family": "test-procedure-1",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:01:00+00:00",
+      "content": "培训签到流程采用名单核销。迟到人员补填到场时间，结束后导出实际出勤名单。",
+      "metadata": {
+        "title": "培训签到",
+        "topic": "培训签到"
+      }
+    },
+    {
+      "id": "test-1-1",
+      "split": "test",
+      "template_family": "test-procedure-1",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:01:00+00:00",
+      "content": "培训签到流程采用名单核销。迟到人员补填到场时间，结束后导出实际出勤名单。",
+      "metadata": {
+        "title": "培训签到",
+        "topic": "培训签到"
+      }
+    },
+    {
+      "id": "test-2-0",
+      "split": "test",
+      "template_family": "test-procedure-2",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:02:00+00:00",
+      "content": "版本发布流程分审批与执行两个阶段。审批记录构建摘要，执行完成记录回退版本号。",
+      "metadata": {
+        "title": "版本发布",
+        "topic": "版本发布"
+      }
+    },
+    {
+      "id": "test-2-1",
+      "split": "test",
+      "template_family": "test-procedure-2",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:02:00+00:00",
+      "content": "版本发布流程分审批与执行两个阶段。审批记录构建摘要，执行完成记录回退版本号。",
+      "metadata": {
+        "title": "版本发布",
+        "topic": "版本发布"
+      }
+    },
+    {
+      "id": "test-3-0",
+      "split": "test",
+      "template_family": "test-procedure-3",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:03:00+00:00",
+      "content": "打印审计流程记录作业页数及终端编号；涉密作业由登记人员领取并签收。",
+      "metadata": {
+        "title": "打印审计",
+        "topic": "打印审计"
+      }
+    },
+    {
+      "id": "test-3-1",
+      "split": "test",
+      "template_family": "test-procedure-3",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:03:00+00:00",
+      "content": "打印审计流程记录作业页数及终端编号；涉密作业由登记人员领取并签收。",
+      "metadata": {
+        "title": "打印审计",
+        "topic": "打印审计"
+      }
+    },
+    {
+      "id": "test-4-0",
+      "split": "test",
+      "template_family": "test-procedure-4",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:04:00+00:00",
+      "content": "离职交接流程的验收条件为资料移交、账号关闭与资产清点均已确认，缺项退回补办。",
+      "metadata": {
+        "title": "离职交接",
+        "topic": "离职交接"
+      }
+    },
+    {
+      "id": "test-4-1",
+      "split": "test",
+      "template_family": "test-procedure-4",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:04:00+00:00",
+      "content": "离职交接流程的验收条件为资料移交、账号关闭与资产清点均已确认，缺项退回补办。",
+      "metadata": {
+        "title": "离职交接",
+        "topic": "离职交接"
+      }
+    },
+    {
+      "id": "test-5-0",
+      "split": "test",
+      "template_family": "test-procedure-5",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T00:05:00+00:00",
+      "content": "工单升级流程规定响应超时转二线支持；升级单附故障时间线和已执行诊断结果。",
+      "metadata": {
+        "title": "工单升级",
+        "topic": "工单升级"
+      }
+    },
+    {
+      "id": "test-5-1",
+      "split": "test",
+      "template_family": "test-procedure-5",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "tool_result",
+      "tool_status": "succeeded",
+      "scene": "office",
+      "authority": 0.8,
+      "timestamp": "2026-01-01T01:05:00+00:00",
+      "content": "工单升级流程规定响应超时转二线支持；升级单附故障时间线和已执行诊断结果。",
+      "metadata": {
+        "title": "工单升级",
+        "topic": "工单升级"
+      }
+    },
+    {
+      "id": "test-preference",
+      "split": "test",
+      "template_family": "test-preference",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "source_type": "manual_config",
+      "timestamp": "2026-01-02T00:00:00+00:00",
+      "scene": "office",
+      "content": "输出请使用中文并保持简洁；我选择用表格呈现结果。",
+      "metadata": {
+        "title": "偏好"
+      }
+    },
+    {
+      "id": "test-private",
+      "split": "test",
+      "template_family": "test-private",
+      "tenant_id": "v3-test",
+      "user_id": "someone-else",
+      "source_type": "manual_config",
+      "timestamp": "2026-01-02T00:00:00+00:00",
+      "scene": "office",
+      "content": "设备借还流程设借出与归还两张清单：借出登记资产编号，归还核验配件是否齐全。 私有补充：工单升级由专人处理。",
+      "metadata": {
+        "title": "设备借还私有补充"
+      }
+    }
+  ],
+  "retrieval_queries": [
+    {
+      "id": "train-0-paraphrase",
+      "split": "train",
+      "query": "发票二维码税号如何校验",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "票据验真"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "train-0-keyword",
+      "split": "train",
+      "query": "票据验真流程",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "票据验真"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "train-0-unanswerable",
+      "split": "train",
+      "query": "火星岩石成分",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "train-1-paraphrase",
+      "split": "train",
+      "query": "空闲会议室日历邀请",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "会议预约"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "train-1-keyword",
+      "split": "train",
+      "query": "会议预约步骤",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "会议预约"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "train-1-unanswerable",
+      "split": "train",
+      "query": "会议室装修预算",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "train-2-paraphrase",
+      "split": "train",
+      "query": "正文宋体标题黑体样式",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "字体配置"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "train-2-keyword",
+      "split": "train",
+      "query": "字体配置模板",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "字体配置"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "train-2-unanswerable",
+      "split": "train",
+      "query": "字体版权采购价格",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "train-3-paraphrase",
+      "split": "train",
+      "query": "年度分类校验值归档",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "文件归档"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "train-3-keyword",
+      "split": "train",
+      "query": "文件归档流程",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "文件归档"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "train-3-unanswerable",
+      "split": "train",
+      "query": "归档设备市场售价",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "train-4-paraphrase",
+      "split": "train",
+      "query": "旧凭据独立口令注销",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "密码轮换"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "train-4-keyword",
+      "split": "train",
+      "query": "密码轮换步骤",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "密码轮换"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "train-4-unanswerable",
+      "split": "train",
+      "query": "密码管理器排行榜",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "train-5-paraphrase",
+      "split": "train",
+      "query": "问题编号解决进展反馈",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "客户答复"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "train-5-keyword",
+      "split": "train",
+      "query": "客户答复模板",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [
+        "客户答复"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "train-5-unanswerable",
+      "split": "train",
+      "query": "客户股票投资建议",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "dev-0-paraphrase",
+      "split": "dev",
+      "query": "预借款要带哪些行程预算材料",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "差旅预借"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "dev-0-keyword",
+      "split": "dev",
+      "query": "差旅预借财务付款流程",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "差旅预借"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "dev-0-unanswerable",
+      "split": "dev",
+      "query": "差旅报销汇率预测",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "dev-1-paraphrase",
+      "split": "dev",
+      "query": "来访人员通行证何时交还",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "访客登记"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "dev-1-keyword",
+      "split": "dev",
+      "query": "访客登记离场通行证",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "访客登记"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "dev-1-unanswerable",
+      "split": "dev",
+      "query": "访客酒店住宿折扣",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "dev-2-paraphrase",
+      "split": "dev",
+      "query": "盖章文件份数负责人签字",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "印章申请"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "dev-2-keyword",
+      "split": "dev",
+      "query": "印章申请保管员操作步骤",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "印章申请"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "dev-2-unanswerable",
+      "split": "dev",
+      "query": "印章雕刻店铺地址",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "dev-3-paraphrase",
+      "split": "dev",
+      "query": "快照完整性通过后如何还原",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "备份恢复"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "dev-3-keyword",
+      "split": "dev",
+      "query": "备份恢复抽查目录大小",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "备份恢复"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "dev-3-unanswerable",
+      "split": "dev",
+      "query": "备份云服务优惠码",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "dev-4-paraphrase",
+      "split": "dev",
+      "query": "测试终端重启应用自检",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "补丁验证"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "dev-4-keyword",
+      "split": "dev",
+      "query": "补丁验证发布候选流程",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "补丁验证"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "dev-4-unanswerable",
+      "split": "dev",
+      "query": "补丁漏洞利用代码",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "dev-5-paraphrase",
+      "split": "dev",
+      "query": "延长合同需要登记哪些日期",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "合同续期"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "dev-5-keyword",
+      "split": "dev",
+      "query": "合同续期服务变更副本",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [
+        "合同续期"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "dev-5-unanswerable",
+      "split": "dev",
+      "query": "合同律师联系方式",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "test-0-paraphrase",
+      "split": "test",
+      "query": "借出的电脑归还时检查什么",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "设备借还"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "test-0-keyword",
+      "split": "test",
+      "query": "设备借还资产编号配件清单",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "设备借还"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "test-0-unanswerable",
+      "split": "test",
+      "query": "设备二手交易行情",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "test-1-paraphrase",
+      "split": "test",
+      "query": "培训迟到如何补填到场",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "培训签到"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "test-1-keyword",
+      "split": "test",
+      "query": "培训签到实际出勤导出",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "培训签到"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "test-1-unanswerable",
+      "split": "test",
+      "query": "培训讲师出场费用",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "test-2-paraphrase",
+      "split": "test",
+      "query": "上线后要记录哪个回退编号",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "版本发布"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "test-2-keyword",
+      "split": "test",
+      "query": "版本发布审批构建摘要",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "版本发布"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "test-2-unanswerable",
+      "split": "test",
+      "query": "版本产品商业定价",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "test-3-paraphrase",
+      "split": "test",
+      "query": "涉密打印作业如何领取签收",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "打印审计"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "test-3-keyword",
+      "split": "test",
+      "query": "打印审计页数终端编号",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "打印审计"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "test-3-unanswerable",
+      "split": "test",
+      "query": "打印机墨盒购物优惠",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "test-4-paraphrase",
+      "split": "test",
+      "query": "员工离开前账号资料资产怎样验收",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "离职交接"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "test-4-keyword",
+      "split": "test",
+      "query": "离职交接缺项退回流程",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "离职交接"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "test-4-unanswerable",
+      "split": "test",
+      "query": "离职劳动赔偿判决",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "test-5-paraphrase",
+      "split": "test",
+      "query": "超时工单转二线要附什么",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "工单升级"
+      ],
+      "expected_empty": false,
+      "difficulty": "paraphrase"
+    },
+    {
+      "id": "test-5-keyword",
+      "split": "test",
+      "query": "工单升级故障时间线诊断",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [
+        "工单升级"
+      ],
+      "expected_empty": false,
+      "difficulty": "keyword"
+    },
+    {
+      "id": "test-5-unanswerable",
+      "split": "test",
+      "query": "工单软件行业排名",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "expected_titles": [],
+      "expected_empty": true,
+      "difficulty": "unanswerable"
+    }
+  ],
+  "preference_labels": [
+    {
+      "split": "train",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "key": "output.language",
+      "value": "zh-CN"
+    },
+    {
+      "split": "train",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "key": "output.verbosity",
+      "value": "brief"
+    },
+    {
+      "split": "train",
+      "tenant_id": "v3-train",
+      "user_id": "operator",
+      "key": "output.format",
+      "value": "table"
+    },
+    {
+      "split": "dev",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "key": "output.language",
+      "value": "zh-CN"
+    },
+    {
+      "split": "dev",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "key": "output.verbosity",
+      "value": "brief"
+    },
+    {
+      "split": "dev",
+      "tenant_id": "v3-dev",
+      "user_id": "operator",
+      "key": "output.format",
+      "value": "table"
+    },
+    {
+      "split": "test",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "key": "output.language",
+      "value": "zh-CN"
+    },
+    {
+      "split": "test",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "key": "output.verbosity",
+      "value": "brief"
+    },
+    {
+      "split": "test",
+      "tenant_id": "v3-test",
+      "user_id": "operator",
+      "key": "output.format",
+      "value": "table"
+    }
+  ],
+  "conflict_cases": [],
+  "forget_cases": [],
+  "targets": {
+    "knowledge_recall_at_k": {
+      "min": 0.85
+    },
+    "forget_misdelete_rate": {
+      "max": 0
+    }
+  },
+  "limitations": [
+    "42 input events, 18 topics, 54 queries only; not statistical proof of generalization.",
+    "Conflict/forget adversarial behavior is evaluated separately, not as empty-case accuracy."
+  ],
+  "split_audit": {
+    "train/dev": {
+      "shared_content": 0,
+      "shared_template_families": 0
+    },
+    "train/test": {
+      "shared_content": 0,
+      "shared_template_families": 0
+    },
+    "dev/test": {
+      "shared_content": 0,
+      "shared_template_families": 0
+    }
+  }
+}
