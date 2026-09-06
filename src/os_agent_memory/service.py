@@ -4,6 +4,9 @@ from dataclasses import asdict, is_dataclass
 from enum import Enum
 from pathlib import Path
 from typing import Any, Iterable
+from copy import deepcopy
+from functools import wraps
+from threading import RLock
 
 from .ingestion import DataIngestionPipeline
 from .knowledge import KnowledgeExtractor
@@ -27,6 +30,35 @@ def to_primitive(value: Any) -> Any:
     return value
 
 
+def synchronized(method):
+    @wraps(method)
+    def wrapped(self, *args, **kwargs):
+        with self._lock:
+            return method(self, *args, **kwargs)
+    return wrapped
+
+
+def atomic_mutation(method):
+    """Serialize state transitions and restore all mutable state on failure."""
+    @wraps(method)
+    def wrapped(self, *args, **kwargs):
+        with self._lock:
+            state = deepcopy({k: v for k, v in vars(self.store).items() if k != "embedding"})
+            lifecycle = deepcopy({k: v for k, v in vars(self.lifecycle).items() if k != "store"})
+            ingestion = deepcopy(self.ingestion)
+            try:
+                return method(self, *args, **kwargs)
+            except Exception:
+                provider = self.store.embedding
+                vars(self.store).clear()
+                vars(self.store).update(state, embedding=provider)
+                vars(self.lifecycle).clear()
+                vars(self.lifecycle).update(lifecycle, store=self.store)
+                self.ingestion = ingestion
+                raise
+    return wrapped
+
+
 class MemoryService:
     """Stable application boundary for memory management clients."""
 
@@ -36,6 +68,7 @@ class MemoryService:
         *,
         database_path: str | Path | None = None,
     ) -> None:
+        self._lock = RLock()
         self.persistence = SQLiteMemoryPersistence(database_path) if database_path else None
         if store is not None:
             self.store = store
@@ -48,6 +81,7 @@ class MemoryService:
         self.knowledge_extractor = KnowledgeExtractor()
         self.lifecycle = MemoryLifecycleManager(self.store)
 
+    @atomic_mutation
     def ingest(self, raw_records: Iterable[dict[str, Any]], *, persist: bool = True) -> dict[str, Any]:
         batch = self.ingestion.ingest_with_report(raw_records)
         decisions = self.lifecycle.process(batch.records)
@@ -70,9 +104,11 @@ class MemoryService:
             }
         )
 
+    @synchronized
     def preferences(self, *, tenant_id: str, user_id: str, scene: str | None = None) -> list[dict[str, Any]]:
         return to_primitive(self.store.list_preferences(tenant_id, user_id, scene=scene))
 
+    @synchronized
     def search(
         self,
         query: str,
@@ -95,6 +131,7 @@ class MemoryService:
         )
         return to_primitive(results)
 
+    @synchronized
     def conflicts(self, *, tenant_id: str, user_id: str) -> list[dict[str, Any]]:
         pending = [
             memory
@@ -105,6 +142,7 @@ class MemoryService:
         ]
         return to_primitive(sorted(pending, key=lambda item: (item.updated_at, item.id), reverse=True))
 
+    @atomic_mutation
     def resolve_conflict(
         self,
         memory_id: str,
@@ -116,6 +154,7 @@ class MemoryService:
         self._save_if_requested(persist)
         return to_primitive(resolved)
 
+    @synchronized
     def forget_preview(
         self,
         instruction: str,
@@ -134,11 +173,13 @@ class MemoryService:
         )
         return to_primitive(plan)
 
+    @atomic_mutation
     def forget_confirm(self, plan_id: str, *, persist: bool = True) -> dict[str, Any]:
         result = self.store.confirm_forget(plan_id)
         self._save_if_requested(persist)
         return to_primitive(result)
 
+    @synchronized
     def stats(self) -> dict[str, Any]:
         return {
             **self.store.stats(),
@@ -149,6 +190,7 @@ class MemoryService:
             "conflict_decisions": len(self.store.conflict_decisions),
         }
 
+    @synchronized
     def save(self) -> None:
         if self.persistence is None:
             raise RuntimeError("database_path was not configured")

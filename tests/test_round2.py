@@ -3,6 +3,7 @@ from __future__ import annotations
 import sys
 import unittest
 import tempfile
+from unittest.mock import Mock
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
@@ -77,3 +78,28 @@ class DeletedIndexTest(unittest.TestCase):
             self.assertFalse(item.embedding)
             self.assertNotIn(item.id, store._document_tokens)
             self.assertFalse(store.search_knowledge("报销", tenant_id="test", user_id="alice"))
+
+
+class TransactionTest(unittest.TestCase):
+    def test_failed_ingestion_rolls_back_memory_and_lifecycle(self):
+        service = MemoryService()
+        service.persistence = Mock()
+        service.persistence.save.side_effect = OSError("simulated disk failure")
+        with self.assertRaises(OSError):
+            service.ingest([event(authority=0.95)])
+        self.assertFalse(service.store.knowledge)
+        self.assertFalse(service.lifecycle.medium_term.clusters(tenant_id="test", user_id="alice"))
+
+    def test_failed_delete_is_retryable_and_does_not_consume_plan(self):
+        service = MemoryService()
+        service.ingest([event(authority=0.95)], persist=False)
+        plan = service.forget_preview("删除报销相关记忆", tenant_id="test", user_id="alice")
+        service.persistence = Mock()
+        service.persistence.save.side_effect = OSError("simulated disk failure")
+        with self.assertRaises(OSError):
+            service.forget_confirm(plan["id"])
+        self.assertFalse(service.store.pending_forget_plans[plan["id"]].confirmed)
+        self.assertFalse(service.store.audit_events)
+        self.assertTrue(service.search("报销", tenant_id="test", user_id="alice"))
+        service.persistence.save.side_effect = None
+        self.assertTrue(service.forget_confirm(plan["id"])["confirmed"])
