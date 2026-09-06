@@ -7,6 +7,7 @@ from typing import Any
 from urllib.parse import parse_qs, urlparse
 
 from .service import MemoryService
+from .memory_store import MemoryStore
 
 
 MAX_REQUEST_BYTES = 1_000_000
@@ -79,7 +80,7 @@ def create_server(
                         user_id=self._required(body, "user_id"),
                         scene=str(body.get("scene") or "") or None,
                         top_k=int(body.get("top_k", 5)),
-                        min_score=float(body.get("min_score", 0.08)),
+                        min_score=float(body.get("min_score", MemoryStore.DEFAULT_MIN_SCORE)),
                     )
                 elif parsed.path == "/api/conflicts/resolve":
                     result = service.resolve_conflict(

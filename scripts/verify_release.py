@@ -290,6 +290,7 @@ def run_release_verification(
             and evaluation_v3["configuration"]["threshold"] == evaluation_v3["test"]["threshold"]
             and all(not any(row.values()) for row in suite_v3["split_audit"].values())
         ),
+        "internal_quality_85": all(evaluation_v3["quality_targets"].values()),
         "benchmark_500ms": benchmark["all_meet_500ms"],
         "local_preflight": preflight["ready_for_local_demo"],
         "materials": materials["passed"],
@@ -307,10 +308,7 @@ def run_release_verification(
         "scope": "local_development_release_verification",
         "local_release_checks_passed": local_passed,
         "competition_submission_ready": competition_ready,
-        "internal_quality_targets": {
-            "positive_recall_at_3_ge_085": evaluation_v3["test"]["positive_recall_at_3"] >= .85,
-            "no_answer_accuracy_ge_085": evaluation_v3["test"]["no_answer_accuracy"] >= .85,
-        },
+        "internal_quality_targets": evaluation_v3["quality_targets"],
         "checks": checks,
         "compile": compile_result,
         "unit_tests": test_result,

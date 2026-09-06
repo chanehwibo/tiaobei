@@ -6,10 +6,34 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 from generate_eval_v3 import generate, audit_splits
-from os_agent_memory.experiments import select_threshold, evaluate_frozen, run_ablations
+from os_agent_memory.experiments import select_threshold, evaluate_frozen, run_ablations, quality_targets
+from os_agent_memory.memory_store import MemoryStore
+from os_agent_memory.evaluation import build_store_from_raw_records
+from os_agent_memory.experiments import split_rows
 
 
 class SplitIsolationTest(unittest.TestCase):
+    def test_fixed_suite_meets_both_targets_and_deployed_threshold_matches_dev(self):
+        suite = generate()
+        report = evaluate_frozen(suite)
+        self.assertTrue(all(report["quality_targets"].values()), report["test"])
+        self.assertEqual(report["test"]["positive_queries"], 12)
+        self.assertEqual(report["test"]["no_answer_queries"], 6)
+        self.assertEqual(report["configuration"]["threshold"], MemoryStore.DEFAULT_MIN_SCORE)
+        store = build_store_from_raw_records(split_rows(suite, "records", "test"))
+        for query, row in zip(split_rows(suite, "retrieval_queries", "test"), report["test"]["rows"]):
+            hits = store.search_knowledge(query["query"], tenant_id=query["tenant_id"], user_id=query["user_id"], top_k=3)
+            self.assertEqual([hit.title for hit in hits], row["returned"])
+
+    def test_quality_gate_requires_both_metrics_and_nonempty_classes(self):
+        trial = {"positive_queries": 12, "no_answer_queries": 6,
+                 "positive_recall_at_3": .85, "no_answer_accuracy": .85}
+        self.assertTrue(all(quality_targets(trial).values()))
+        for field in ("positive_recall_at_3", "no_answer_accuracy"):
+            self.assertFalse(all(quality_targets({**trial, field: .8499}).values()))
+        self.assertFalse(all(quality_targets({**trial, "positive_queries": 0}).values()))
+        self.assertFalse(all(quality_targets({**trial, "no_answer_queries": 0}).values()))
+
     def test_content_and_template_isolation_and_query_balance(self):
         suite = generate()
         self.assertEqual(suite, generate())

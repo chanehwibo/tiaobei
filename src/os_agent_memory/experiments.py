@@ -57,6 +57,9 @@ def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, inclu
     empty_accuracy = sum(negatives) / len(negatives) if negatives else 0
     return {
         "split": split, "mode": mode, "threshold": threshold, "cache": cache,
+        "positive_queries": len(positives), "no_answer_queries": len(negatives),
+        "positive_queries_fully_recalled": sum(value == 1 for value in positives),
+        "no_answer_correct": sum(negatives),
         "positive_recall_at_3": round(positive_recall, 4),
         "no_answer_accuracy": round(empty_accuracy, 4),
         "balanced_score": round((positive_recall + empty_accuracy) / 2, 4),
@@ -68,23 +71,52 @@ def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, inclu
 
 def select_threshold(suite, *, mode="hybrid", embedding_config=None):
     # Does not inspect test records, queries or labels.
-    trials = [retrieval_trial(suite, "dev", value / 100, mode=mode, embedding_config=embedding_config) for value in range(8, 81, 4)]
-    best = max(trials, key=lambda row: (row["balanced_score"], row["positive_recall_at_3"], row["threshold"]))
+    trials = [retrieval_trial(suite, "dev", value / 100, mode=mode, embedding_config=embedding_config) for value in range(8, 81)]
+    def objective(row):
+        return (row["balanced_score"], min(row["positive_recall_at_3"], row["no_answer_accuracy"]),
+                row["positive_recall_at_3"])
+    optimum = max(map(objective, trials))
+    feasible = [trial for trial in trials if all(quality_targets(trial).values())]
+    accepted = feasible or [trial for trial in trials if objective(trial) == optimum]
+    accepted_thresholds = {trial["threshold"] for trial in accepted}
+    # Maximise distance to a failing operating point within the dev-only region
+    # satisfying BOTH targets. If infeasible, retain the best balanced fallback.
+    plateaus = []
+    for trial in trials:
+        if trial["threshold"] in accepted_thresholds:
+            if not plateaus or trial["threshold"] - plateaus[-1][-1] > .010001:
+                plateaus.append([])
+            plateaus[-1].append(trial["threshold"])
+    plateau = max(plateaus, key=len)
+    threshold = round((plateau[0] + plateau[-1]) / 2, 4)
     dev = {section: split_rows(suite, section, "dev") for section in ("records", "retrieval_queries")}
     digest = hashlib.sha256(json.dumps(dev, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
     return {
-        "selected_on": "dev", "mode": mode, "threshold": best["threshold"],
-        "dev_sha256": digest, "selection": "balanced positive recall and no-answer accuracy",
+        "selected_on": "dev", "mode": mode, "threshold": threshold,
+        "scoring_version": "hybrid-cjk-character-v1",
+        "dev_operating_region": [plateau[0], plateau[-1]],
+        "dev_targets_feasible": bool(feasible), "minimum_per_metric": .85,
+        "dev_sha256": digest, "selection": "widest dev region meeting both 85% targets, midpoint; balanced fallback if infeasible",
         "trials": [{k: v for k, v in trial.items() if k not in {"rows", "mean_latency_ms"}} for trial in trials],
     }
 
 
 def evaluate_frozen(suite, *, embedding_config=None):
     config = select_threshold(suite, embedding_config=embedding_config)
+    trial = retrieval_trial(suite, "test", config["threshold"], embedding_config=embedding_config)
     return {
         "dataset": suite["name"], "independent_blind": False, "configuration": config,
-        "test": retrieval_trial(suite, "test", config["threshold"], embedding_config=embedding_config),
+        "dataset_sha256": hashlib.sha256(json.dumps(suite, ensure_ascii=False, sort_keys=True).encode()).hexdigest(),
+        "test": trial, "quality_targets": quality_targets(trial),
         "limitations": suite.get("limitations", []),
+    }
+
+
+def quality_targets(trial):
+    # Both classes must be present; an empty evaluation cannot pass.
+    return {
+        "positive_recall_at_3_ge_085": trial.get("positive_queries", 0) > 0 and trial["positive_recall_at_3"] >= .85,
+        "no_answer_accuracy_ge_085": trial.get("no_answer_queries", 0) > 0 and trial["no_answer_accuracy"] >= .85,
     }
 
 

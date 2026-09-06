@@ -22,6 +22,9 @@ from .schemas import (
 class MemoryStore:
     """In-memory store for prototype preference and knowledge memory."""
 
+    # Frozen on v3 dev, not test; recalibrate for a different SDK/domain.
+    DEFAULT_MIN_SCORE = 0.265
+
     FORGET_ATOMS = {
         "报销",
         "模板",
@@ -247,7 +250,7 @@ class MemoryStore:
         tenant_id: str | None = None,
         user_id: str | None = None,
         scene: str | None = None,
-        min_score: float = 0.08,
+        min_score: float = DEFAULT_MIN_SCORE,
         include_shared: bool = True,
         now: str | None = None,
         retrieval_mode: str = "hybrid",

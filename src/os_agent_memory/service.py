@@ -151,7 +151,7 @@ class MemoryService:
         user_id: str,
         scene: str | None = None,
         top_k: int = 5,
-        min_score: float = 0.08,
+        min_score: float = MemoryStore.DEFAULT_MIN_SCORE,
         include_pending: bool = False,
     ) -> list[dict[str, Any]]:
         results = self.store.search_knowledge(
