@@ -5,11 +5,11 @@
 ## 当前状态
 
 - 第二轮本地 14 项整改的实现、验收与推送记录见 [第二轮清单](docs/17_第二轮整改清单.md)。
-- 自动化测试 86 项全部通过；工程检查、Python 3.10 语法、页面脚本和 wheel 构建通过。
-- v3 内部合成评测：42 事件、18 主题、54 查询，正文与模板族跨分区无重叠；dev 统一选择阈值 0.24。
-- 混合检索 test 正例 Recall@3 0.8333，无答案正确率 0.8333。两项 ≥0.85 的质量目标尚未全部满足，当前混合方案未稳定优于词法基线。
-- Windows + HashEmbedding、10,000 条：冷查询 96.972ms、热 p99 129.045ms；实际服务 1,000 条 HTTP 查询 p99 33.692ms。
-- [当前验收报告](docs/18_第二轮验收报告.md)与 PPT 共用 [证据摘要](artifacts/verification/round2/evidence_summary.json)。2026-09-05 归档为历史基线，旧 v1/v2 满分不能沿用。
+- 第三轮 [质量提升清单](docs/21_第三轮质量提升清单.md)：自动化测试 91 项通过，两项内部质量门槛均已达到。
+- v3 内部合成评测：42 事件、18 主题、54 查询；数据和标签未改，dev 可用区间中心统一阈值 0.265，已同步服务与 HTTP 默认入口。
+- 混合检索 test 正例 Recall@3 **91.67%（11/12）**，无答案正确率 **100%（6/6）**；两项均 ≥85%。测试集曾被开发者多次接触，属于小样本内部回归，不是盲测或真实场景准确率。
+- Windows + HashEmbedding、10,000 条：冷查询 246.796ms、热 p99 362.265ms；实际服务 1,000 条 HTTP 查询 p99 32.438ms。新增汉字索引增加延迟与内存，仍满足本次 500ms 门槛。
+- [当前验收报告](docs/22_第三轮验收报告.md)与 PPT 共用 [证据摘要](artifacts/verification/round3/evidence_summary.json)。第二轮及此前归档保留为历史，旧 v1/v2 满分不能沿用。
 - 真实银河麒麟、SDK、独立盲测、授权案例、视频及赛事凭证仍缺失；当前为开发机交付草案。
 
 ## 能力概览
@@ -59,11 +59,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\run_demo.ps1"
 
 ```powershell
 $env:PYTHONPATH="$PWD\src"
-python scripts/evaluate_v3.py --embedding-config config/embedding.hash.json
+python scripts/evaluate_v3.py --require-quality --embedding-config config/embedding.hash.json
 python .\scripts\verify_release.py --artifact-dir artifacts/runtime/verification --sizes 100,1000,5000,10000 --rounds 30
 ```
 
-第二轮固定证据位于 `artifacts/verification/round2/`。完整验收会执行源码编译、全部测试、v1/v2 评测、性能基准、兼容性、演示预检、材料检查和隐私扫描，通常需几十秒。它明确区分 `local_release_checks_passed` 与 `competition_submission_ready`。
+当前固定证据位于 `artifacts/verification/round3/`。完整验收会执行源码编译、全部测试、v1/v2 诊断、v3 两项 85% 门槛、消融、性能、兼容性、演示预检、材料检查和隐私扫描，通常需数分钟。它明确区分 `local_release_checks_passed` 与 `competition_submission_ready`；任一质量目标未达标时返回非零退出码。真实 SDK/新领域需重新校准，0.265 不保证通用。
 
 ## 提交包草案
 
@@ -90,7 +90,7 @@ tests/                   单元、集成、HTTP E2E、安全与打包测试
 ## 文档入口
 
 - 技术方案：`docs/09_技术方案正文.md`
-- 测试与证据：`docs/测试报告.md`、`artifacts/verification/final_verification.md`
+- 测试与证据：`docs/测试报告.md`、`artifacts/verification/round3/final_verification.md`
 - 快速演示：`docs/08_演示快跑指南.md`、`docs/演示操作手册.md`
 - 部署与复现：`docs/12_部署手册.md`、`docs/14_可复现指南.md`
 - API 与模块：`docs/13_API文档.md`、`docs/15_源代码模块说明.md`

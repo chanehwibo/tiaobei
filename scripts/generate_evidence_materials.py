@@ -6,13 +6,13 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EVIDENCE = ROOT / "artifacts/verification/round2"
+EVIDENCE = ROOT / "artifacts/verification/round3"
 
 
 def generate():
     verification = json.loads((EVIDENCE / "final_verification.json").read_text(encoding="utf-8"))
     ablations = json.loads((EVIDENCE / "ablations.json").read_text(encoding="utf-8"))
-    workload = json.loads((ROOT / "artifacts/verification/round2_service_after.json").read_text(encoding="utf-8"))
+    workload = json.loads((EVIDENCE / "service_workload.json").read_text(encoding="utf-8"))
     largest = verification["benchmark"]["results"][-1]
     summary = {
         "generated_at_utc": verification["generated_at_utc"], "tests": verification["unit_tests"]["tests_run"],
@@ -26,12 +26,12 @@ def generate():
                         for row in ablations["retrieval_comparisons"]],
         "source_sha256": {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                            for path in (EVIDENCE / "final_verification.json", EVIDENCE / "ablations.json",
-                                        ROOT / "artifacts/verification/round2_service_after.json")},
+                                        EVIDENCE / "service_workload.json")},
     }
     (EVIDENCE / "evidence_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     result = summary["evaluation"]
     lines = [
-        "# 第二轮本地工程与评测报告",
+        "# 第三轮本地质量验收报告",
         "",
         f"固定证据生成时间（UTC）：{summary['generated_at_utc']}。本报告与 PPT 共用 evidence_summary.json。",
         "",
@@ -41,7 +41,7 @@ def generate():
         f"- 内部质量目标全部满足：{all(summary['quality_targets'].values())}；正式赛事就绪：{summary['competition_ready']}。",
         "- 真实 SDK、麒麟、盲测、授权案例、视频和赛事凭证仍未取得；本轮仅验收本地任务。",
         "",
-        "## 第二轮实质改造",
+        "## 已具备的工程能力与本轮改造",
         "",
         "服务、CLI 与评测统一经过生命周期门槛；检索检查有效期；软删除重启后不恢复向量；",
         "持久化失败回滚内存、阶段证据和确认状态。SQLite 按主键增量写入，跨请求/重启去重，",
@@ -49,6 +49,10 @@ def generate():
         "词法倒排候选与近似语义候选合并，冲突补数字、条件、场景判断。",
         "embedding 配置贯穿服务、评测与基准，模型版本/维度变化时重建缓存，限制超时调用。",
         "界面新增合成场景、偏好历史、冲突前后对照、目标预览与演示租户恢复。",
+        "本轮新增正文汉字倒排与精确覆盖分数；中文混合评分为向量 0.25、二字词法 0.25、汉字 0.45、权威度 0.05。",
+        "汉字仅取标题与正文，不取元数据；独立向量候选仍保留。无中文证据时沿用原混合评分。",
+        "dev 网格步长 0.01，取两项均 ≥85% 的最宽连续区间中心；若不可行，报告失败并保留平衡分回退。",
+        "统一阈值已同步服务和 HTTP 默认入口；CI 与完整发布验收均检查两项 85% 门槛。",
         "",
         "## 数据与协议",
         "",
@@ -68,8 +72,11 @@ def generate():
     lines += [
         "",
         "平衡得分为正例召回与无答案正确率的平均值，各模式分别在 dev 定阈值。",
-        "当前混合方案没有稳定胜过词法基线，不应宣称算法全面领先。语义候选覆盖更广，但也引入干扰。",
-        "质量目标仍为两项各 ≥0.85；未达目标如实保留，不通过降低门槛把结果标绿。",
+        "本次混合结果在这份小样本内部回归上改善，不代表开放域或真实 SDK 全面领先。",
+        f"质量目标两项各 ≥0.85，本次全部满足：{all(summary['quality_targets'].values())}。",
+        f"正例完整召回 {result['positive_queries_fully_recalled']}/{result['positive_queries']}；无答案正确 {result['no_answer_correct']}/{result['no_answer_queries']}。",
+        "首次 0.225 阈值复测得到 11/12 与 5/6，保留 calibration_first_probe.json；之后按 dev 可用区间 0.22–0.31 冻结中心 0.265。",
+        "数据、标签和分母未改变；test 被重复接触，本次属于开发者内部回归，不能称为盲测。",
         "缓存消融统计编码次数并核对返回结果一致；衰减诊断出现持平也保留，单一诊断不等于统计提升。",
         "旧 v1/v2 标签包含一次性低证据：门控后存在漏报和目标未满足，旧版 1.0 不再作为当前成绩。",
         "",
@@ -93,6 +100,7 @@ def generate():
         "",
         "实际服务负载使用 4 线程混合读写，检查重启后记录数与查询非空；非空不等于检索准确。",
         "p99 为少量采样经验值，不是生产 SLA。当前事务为单进程串行写，增量落盘仍需比较当前状态，",
+        "相较第二轮 10k 热查询 p99 129.045ms、峰值 178.782MB，本轮增加汉字索引后延迟与内存均上升；质量达标不意味着性能也提升。",
         "回滚快照有内存成本；多个进程同时写同一数据库尚不支持。",
         "",
         "## 复现与证据",
@@ -101,12 +109,12 @@ def generate():
         "python -S -m unittest discover -s tests -v",
         "python scripts/check_source.py",
         "node scripts/check_dashboard.cjs",
-        "python scripts/evaluate_v3.py --embedding-config config/embedding.hash.json",
+        "python scripts/evaluate_v3.py --require-quality --embedding-config config/embedding.hash.json",
         "python scripts/benchmark_service.py --sizes 100,1000 --rounds 30",
         "python scripts/verify_release.py --artifact-dir artifacts/runtime/verification --sizes 100,1000,5000,10000 --rounds 30",
         chr(96) * 3,
         "",
-        "固定证据：artifacts/verification/round2/；服务基准：round2_service_after.json。",
+        "固定证据：artifacts/verification/round3/；服务基准：service_workload.json。第二轮目录保留为历史。",
         "CI 配置覆盖 Windows/Linux 与 Python 3.10/3.14；配置存在不等于所有远端任务已通过，以 GitHub Actions 实际结果为准。",
         "Python 3.10 语法检查及本机完整测试、wheel 构建独立记录。",
         "",
@@ -123,7 +131,7 @@ def generate():
         "",
     ]
     report = "\n".join(lines)
-    for path in (ROOT / "docs/18_第二轮验收报告.md", ROOT / "docs/测试报告.md"):
+    for path in (ROOT / "docs/22_第三轮验收报告.md", ROOT / "docs/测试报告.md"):
         path.write_text(report, encoding="utf-8")
     return summary
 

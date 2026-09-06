@@ -12,8 +12,8 @@ from pptx.util import Inches, Pt
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "deliverables" / "ppt" / "OS_Agent_记忆优化_答辩稿.pptx"
-PERFORMANCE = ROOT / "artifacts" / "verification" / "round2" / "performance_windows_dev.json"
-SUMMARY = ROOT / "artifacts" / "verification" / "round2" / "evidence_summary.json"
+PERFORMANCE = ROOT / "artifacts" / "verification" / "round3" / "performance_windows_dev.json"
+SUMMARY = ROOT / "artifacts" / "verification" / "round3" / "evidence_summary.json"
 
 NAVY = RGBColor(7, 17, 31)
 PANEL = RGBColor(17, 34, 53)
@@ -164,7 +164,7 @@ def add_title_slide(prs: Presentation):
     add_box(slide, 0.92, 5.35, 3.2, 0.7, "核心原型与开发机验证完成", fill=PANEL_2, line=TEAL, color=TEAL, size=14)
     add_box(slide, 4.35, 5.35, 3.2, 0.7, "真实麒麟 + SDK 待验收", fill=PANEL_2, line=AMBER, color=AMBER, size=14)
     evidence = json.loads(SUMMARY.read_text(encoding="utf-8"))
-    add_textbox(slide, 0.92, 6.65, 11.4, 0.35, "第二轮开发机答辩稿 · " + evidence["generated_at_utc"][:10], size=12, color=MUTED)
+    add_textbox(slide, 0.92, 6.65, 11.4, 0.35, "第三轮开发机答辩稿 · " + evidence["generated_at_utc"][:10], size=12, color=MUTED)
 
 
 def build_presentation() -> Presentation:
@@ -265,13 +265,13 @@ def build_presentation() -> Presentation:
     add_box(slide, 1.7, 5.82, 9.9, 0.68, "核心原则：未决知识宁可不回答，也不把冲突建议交给 OS Agent 执行", fill=PANEL_2, line=RED, color=WHITE, size=17)
 
     slide = base_slide(prs, "07  高效检索：候选召回 + 向量缓存 + 无答案", "检索")
-    steps = ["作用域过滤", "词法候选", "查询向量 ×1", "语义重排", "阈值/空答案"]
+    steps = ["作用域过滤", "多路候选", "查询向量 ×1", "多粒度重排", "阈值/空答案"]
     for i, step in enumerate(steps):
         x = 0.55 + i * 2.58
         add_box(slide, x, 1.55, 2.2, 0.82, step, fill=PANEL, line=TEAL if i % 2 else BLUE, size=14)
         if i < len(steps) - 1:
             add_line(slide, x + 2.2, 1.96, x + 2.52, 1.96)
-    add_box(slide, 1.0, 3.05, 11.35, 0.92, "score = 0.65 × semantic + 0.30 × lexical + 0.05 × authority", fill=PANEL_2, line=TEAL, size=21)
+    add_box(slide, 1.0, 3.05, 11.35, 0.92, "中文：0.25 向量 + 0.25 词法 + 0.45 汉字覆盖 + 0.05 权威度", fill=PANEL_2, line=TEAL, size=20)
     metric_card(slide, 1.05, 4.65, 3.35, "10,000 条冷查询", f"{perf_10k['cold_query_ms']} ms", "Windows / HashEmbedding", BLUE)
     metric_card(slide, 4.98, 4.65, 3.35, "10,000 条热 p99", f"{perf_10k['hot_query_p99_ms']} ms", "门槛：≤ 500ms", TEAL)
     metric_card(slide, 8.91, 4.65, 3.35, "SQLite 体积", f"{perf_10k['sqlite_disk_mb']} MB", "含缓存向量", AMBER)
@@ -315,7 +315,8 @@ def build_presentation() -> Presentation:
     metric_card(slide, 0.65, 1.25, 2.85, "正例 Recall@3", f"{evaluation['positive_recall_at_3']:.4f}", "v3 test · 12 正例", TEAL)
     metric_card(slide, 3.7, 1.25, 2.85, "无答案正确率", f"{evaluation['no_answer_accuracy']:.4f}", "v3 test · 6 无答案", BLUE)
     metric_card(slide, 6.75, 1.25, 2.85, "平衡得分", f"{evaluation['balanced_score']:.4f}", "召回与拒答平均", GREEN)
-    metric_card(slide, 9.8, 1.25, 2.85, "质量目标", "尚未全满足", "两项分别 ≥ 0.85", AMBER)
+    quality_passed = all(evidence["quality_targets"].values())
+    metric_card(slide, 9.8, 1.25, 2.85, "内部质量目标", "两项已满足" if quality_passed else "尚未全满足", "两项分别 ≥ 0.85", TEAL if quality_passed else AMBER)
     add_textbox(slide, 0.75, 3.18, 5.8, 0.45, "42 事件 · 18 主题 · 54 查询", size=22, color=WHITE, bold=True)
     bullet_list(slide, ["正文/模板族跨分区交集为零", f"统一阈值 {evaluation['threshold']} 仅由 dev 选择", "词法/向量/混合对照：不宣称全面领先"], 0.75, 3.72, 5.8, 2.2, size=15)
     add_box(slide, 7.0, 3.2, 5.55, 2.4, "公开 test 标签\n= 冻结回归分区\n≠ 第三方独立盲测", fill=PANEL, line=RED, color=RED, size=22)

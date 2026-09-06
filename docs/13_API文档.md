@@ -26,7 +26,7 @@ service = MemoryService(database_path="artifacts/runtime/memory.sqlite")
 
 返回当前 active 偏好，按 key 排序。scene 存在时只返回全局或适用该场景的偏好。
 
-### `search(query, tenant_id, user_id, scene=None, top_k=5, min_score=0.08, include_pending=False)`
+### `search(query, tenant_id, user_id, scene=None, top_k=5, min_score=0.265, include_pending=False)`
 
 返回带综合、词法、语义分数的知识列表。业务回答不得把 `include_pending` 设为 true；该选项仅用于冲突诊断。
 
@@ -107,11 +107,13 @@ GET /api/preferences?tenant_id=default&user_id=u-demo&scene=office_report
   "user_id": "u-demo",
   "scene": "office_report",
   "top_k": 5,
-  "min_score": 0.08
+  "min_score": 0.265
 }
 ```
 
 成功返回数组；低于阈值时返回空数组，不虚构答案。
+
+默认阈值 0.265 仅按 v3 dev 校准，服务/HTTP 与内部评测一致；更换 SDK 或领域需重新校准。结果额外包含 character_score：标题及正文的汉字集合余弦覆盖值，不是置信概率。
 
 ### `POST /api/conflicts/resolve`
 
