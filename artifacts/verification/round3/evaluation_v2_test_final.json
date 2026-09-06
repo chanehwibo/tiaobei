@@ -1,0 +1,400 @@
+{
+  "suite": "office_memory_eval_v2",
+  "split": "test",
+  "top_k": 3,
+  "metrics": {
+    "preference_accuracy": 0.4615,
+    "preference_precision": 1.0,
+    "preference_recall": 0.4615,
+    "preference_f1": 0.6316,
+    "knowledge_precision_at_k": 0.2143,
+    "knowledge_recall_at_k": 0.2857,
+    "knowledge_mrr": 0.2857,
+    "knowledge_ndcg_at_k": 0.2857,
+    "knowledge_search_latency_ms": 0.241,
+    "conflict_accuracy": 1.0,
+    "conflict_precision": 1.0,
+    "conflict_recall": 1.0,
+    "conflict_f1": 1.0,
+    "forget_accuracy": 0.0,
+    "forget_precision": 1.0,
+    "forget_recall": 0.0,
+    "forget_f1": 0.0,
+    "forget_misdelete_rate": 0.0
+  },
+  "counts": {
+    "records": 40,
+    "preferences": 6,
+    "preference_versions": 6,
+    "knowledge": 3,
+    "knowledge_conflicts": 0
+  },
+  "details": {
+    "preferences": [
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "output.format",
+        "expected_value": "table",
+        "predicted_value": null,
+        "confidence": null,
+        "version": null,
+        "scenes": [],
+        "evidence_ids": [],
+        "passed": false
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "output.language",
+        "expected_value": "zh-CN",
+        "predicted_value": "zh-CN",
+        "confidence": 0.988,
+        "version": 1,
+        "scenes": [
+          "general"
+        ],
+        "evidence_ids": [
+          "test-preference"
+        ],
+        "passed": true
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "output.structure",
+        "expected_value": "step_by_step",
+        "predicted_value": null,
+        "confidence": null,
+        "version": null,
+        "scenes": [],
+        "evidence_ids": [],
+        "passed": false
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "output.verbosity",
+        "expected_value": "brief",
+        "predicted_value": "brief",
+        "confidence": 0.988,
+        "version": 1,
+        "scenes": [
+          "general"
+        ],
+        "evidence_ids": [
+          "test-preference"
+        ],
+        "passed": true
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "preferred_tool:document_editing",
+        "expected_value": "document_formatter",
+        "predicted_value": null,
+        "confidence": null,
+        "version": null,
+        "scenes": [],
+        "evidence_ids": [],
+        "passed": false
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "preferred_tool:email_writing",
+        "expected_value": "mail_drafter",
+        "predicted_value": null,
+        "confidence": null,
+        "version": null,
+        "scenes": [],
+        "evidence_ids": [],
+        "passed": false
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "preferred_tool:file_management",
+        "expected_value": "archive_manager",
+        "predicted_value": null,
+        "confidence": null,
+        "version": null,
+        "scenes": [],
+        "evidence_ids": [],
+        "passed": false
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "preferred_tool:meeting_summary",
+        "expected_value": "meeting_minutes_parser",
+        "predicted_value": null,
+        "confidence": null,
+        "version": null,
+        "scenes": [],
+        "evidence_ids": [],
+        "passed": false
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "preferred_tool:office_report",
+        "expected_value": "spreadsheet_parser",
+        "predicted_value": "spreadsheet_parser",
+        "confidence": 0.99,
+        "version": 1,
+        "scenes": [
+          "office_report"
+        ],
+        "evidence_ids": [
+          "test-office_report"
+        ],
+        "passed": true
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "preferred_tool:system_security",
+        "expected_value": "security_inspector",
+        "predicted_value": null,
+        "confidence": null,
+        "version": null,
+        "scenes": [],
+        "evidence_ids": [],
+        "passed": false
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "security.confirmation",
+        "expected_value": "required",
+        "predicted_value": "required",
+        "confidence": 0.988,
+        "version": 1,
+        "scenes": [
+          "general"
+        ],
+        "evidence_ids": [
+          "test-preference"
+        ],
+        "passed": true
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "security.processing",
+        "expected_value": "local_only",
+        "predicted_value": "local_only",
+        "confidence": 0.988,
+        "version": 1,
+        "scenes": [
+          "general"
+        ],
+        "evidence_ids": [
+          "test-preference"
+        ],
+        "passed": true
+      },
+      {
+        "tenant_id": "eval-test",
+        "user_id": "user-test",
+        "key": "security.redaction",
+        "expected_value": "required",
+        "predicted_value": "required",
+        "confidence": 0.988,
+        "version": 1,
+        "scenes": [
+          "general"
+        ],
+        "evidence_ids": [
+          "test-preference"
+        ],
+        "passed": true
+      }
+    ],
+    "retrieval": [
+      {
+        "query": "出差费用报销票据审批模板",
+        "expected_titles": [
+          "差旅报销流程模板（test）"
+        ],
+        "returned_titles": [
+          "差旅报销流程模板（test）",
+          "工具执行失败：bad_parser 未能读取报销表格，流程中止并..."
+        ],
+        "hit_titles": [
+          "差旅报销流程模板（test）"
+        ],
+        "expected_empty": false,
+        "precision": 0.5,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0,
+        "passed": true
+      },
+      {
+        "query": "研发例会责任人截止日期纪要",
+        "expected_titles": [
+          "研发周会纪要模板（test）"
+        ],
+        "returned_titles": [],
+        "hit_titles": [],
+        "expected_empty": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg": 0.0,
+        "passed": false
+      },
+      {
+        "query": "正式文件标题字体页码排版",
+        "expected_titles": [
+          "公文排版步骤（test）"
+        ],
+        "returned_titles": [],
+        "hit_titles": [],
+        "expected_empty": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg": 0.0,
+        "passed": false
+      },
+      {
+        "query": "项目资料分类校验归档",
+        "expected_titles": [
+          "项目归档流程（test）"
+        ],
+        "returned_titles": [],
+        "hit_titles": [],
+        "expected_empty": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg": 0.0,
+        "passed": false
+      },
+      {
+        "query": "终端安全处置流程 异常登录审计",
+        "expected_titles": [
+          "终端安全处置流程（test）"
+        ],
+        "returned_titles": [],
+        "hit_titles": [],
+        "expected_empty": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg": 0.0,
+        "passed": false
+      },
+      {
+        "query": "客户来信答复负责人完成时间",
+        "expected_titles": [
+          "客户邮件回复模板（test）"
+        ],
+        "returned_titles": [],
+        "hit_titles": [],
+        "expected_empty": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg": 0.0,
+        "passed": false
+      },
+      {
+        "query": "火星样本返回舱核热参数",
+        "expected_titles": [],
+        "returned_titles": [],
+        "hit_titles": [],
+        "expected_empty": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0,
+        "passed": true
+      }
+    ],
+    "conflicts": [
+      {
+        "id": "test-conflict-positive",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "conflict_with_count": 1,
+        "resolution_strategy": "auto",
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "resolved_status": "active",
+        "resolved_content": "新版终端安全规则禁止接入未经登记的移动存储设备。",
+        "passed": true
+      },
+      {
+        "id": "test-conflict-negative",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "conflict_with_count": 0,
+        "resolution_strategy": null,
+        "base_status": "active",
+        "incoming_status": "active",
+        "resolved_status": null,
+        "resolved_content": "公文模板可以增加附件说明和联系人字段。",
+        "passed": true
+      }
+    ],
+    "forget": [
+      {
+        "instruction": "删除客户邮件回复模板（test）相关记忆",
+        "matched_keywords": [
+          "客户邮件回复模板（test）",
+          "模板"
+        ],
+        "expected_forgotten_titles": [
+          "客户邮件回复模板（test）"
+        ],
+        "expected_retained_titles": [
+          "差旅报销流程模板（test）",
+          "研发周会纪要模板（test）"
+        ],
+        "actual_forgotten_titles": [],
+        "missed_forgotten_titles": [
+          "客户邮件回复模板（test）"
+        ],
+        "unexpected_forgotten_titles": [],
+        "wrongly_forgotten_titles": [],
+        "passed": false
+      },
+      {
+        "instruction": "删除终端安全处置流程（test）相关记忆",
+        "matched_keywords": [
+          "终端安全处置流程（test）",
+          "安全",
+          "流程"
+        ],
+        "expected_forgotten_titles": [
+          "终端安全处置流程（test）"
+        ],
+        "expected_retained_titles": [
+          "项目归档流程（test）"
+        ],
+        "actual_forgotten_titles": [],
+        "missed_forgotten_titles": [
+          "终端安全处置流程（test）"
+        ],
+        "unexpected_forgotten_titles": [],
+        "wrongly_forgotten_titles": [],
+        "passed": false
+      }
+    ]
+  },
+  "targets": {
+    "preference_f1": false,
+    "knowledge_precision_at_k": false,
+    "knowledge_recall_at_k": false,
+    "knowledge_mrr": false,
+    "knowledge_ndcg_at_k": false,
+    "knowledge_search_latency_ms": true,
+    "conflict_f1": true,
+    "forget_f1": false,
+    "forget_misdelete_rate": true
+  }
+}

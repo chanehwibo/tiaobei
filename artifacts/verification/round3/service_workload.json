@@ -1,0 +1,47 @@
+{
+  "environment": {
+    "system": "Windows",
+    "python": "3.14.3"
+  },
+  "rounds": 30,
+  "results": [
+    {
+      "records": 100,
+      "service_ingest_ms": 194.493,
+      "single_add_ms": 50.869,
+      "restart_load_ms": 36.737,
+      "mixed_query_p50_ms": 3.137,
+      "mixed_query_p95_ms": 3.873,
+      "mixed_query_p99_ms": 3.975,
+      "http_query_p99_ms": 22.705,
+      "concurrent_operations": 33,
+      "concurrent_operations_per_second": 151.258,
+      "all_queries_nonempty": true,
+      "persisted_knowledge": 104,
+      "sqlite_bytes": 593920,
+      "retrieval_under_500ms": true
+    },
+    {
+      "records": 1000,
+      "service_ingest_ms": 4478.732,
+      "single_add_ms": 325.806,
+      "restart_load_ms": 235.462,
+      "mixed_query_p50_ms": 10.608,
+      "mixed_query_p95_ms": 12.288,
+      "mixed_query_p99_ms": 12.898,
+      "http_query_p99_ms": 32.438,
+      "concurrent_operations": 33,
+      "concurrent_operations_per_second": 32.627,
+      "all_queries_nonempty": true,
+      "persisted_knowledge": 1004,
+      "sqlite_bytes": 5279744,
+      "retrieval_under_500ms": true
+    }
+  ],
+  "method": "MemoryService ingestion including lifecycle, conflict detection and SQLite commit; diverse queries; restart; 4 threads mixed reads/writes; localhost HTTP",
+  "limitations": [
+    "Developer machine only; no real Kylin SDK evidence.",
+    "Service API is a single-process serialized writer; cross-process writers are unsupported.",
+    "Small samples describe this workload; p99 is empirical, not a production SLA."
+  ]
+}
