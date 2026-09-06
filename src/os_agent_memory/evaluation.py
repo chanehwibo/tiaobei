@@ -119,8 +119,8 @@ def load_evaluation_suite(path: str | Path, *, split: str | None = None) -> dict
     return suite
 
 
-def build_store_from_raw_records(raw_records: list[dict[str, Any]]) -> MemoryStore:
-    service = MemoryService()
+def build_store_from_raw_records(raw_records: list[dict[str, Any]], *, embedding_config=None) -> MemoryStore:
+    service = MemoryService(embedding_config=embedding_config)
     service.ingest(raw_records, persist=False)
     for item in list(service.store.knowledge.values()):
         if item.status == MemoryStatus.CONFLICT_PENDING:
@@ -128,11 +128,11 @@ def build_store_from_raw_records(raw_records: list[dict[str, Any]]) -> MemorySto
     return service.store
 
 
-def run_evaluation_suite(path: str | Path, top_k: int = 3, *, split: str | None = None) -> dict[str, Any]:
+def run_evaluation_suite(path: str | Path, top_k: int = 3, *, split: str | None = None, embedding_config=None) -> dict[str, Any]:
     suite_path = Path(path)
     suite = load_evaluation_suite(suite_path, split=split)
     raw_records = suite["records"]
-    store = build_store_from_raw_records(raw_records)
+    store = build_store_from_raw_records(raw_records, embedding_config=embedding_config)
 
     preference_labels = {
         (str(item.get("tenant_id", "default")), str(item["user_id"]), str(item["key"])): str(item["value"])

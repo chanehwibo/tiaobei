@@ -18,8 +18,8 @@ from .preference import PreferenceExtractor
 from .service import MemoryService
 
 
-def build_store(input_path: Path) -> MemoryStore:
-    service = MemoryService()
+def build_store(input_path: Path, embedding_config=None) -> MemoryStore:
+    service = MemoryService(embedding_config=embedding_config)
     service.ingest(service.ingestion.load_jsonl(input_path), persist=False)
     return service.store
 
@@ -58,8 +58,8 @@ def run_demo(input_path: Path) -> None:
     print(json.dumps(run_smoke_evaluation(store), ensure_ascii=False, indent=2))
 
 
-def run_build_store(input_path: Path, output_path: Path) -> None:
-    store = build_store(input_path)
+def run_build_store(input_path: Path, output_path: Path, embedding_config=None) -> None:
+    store = build_store(input_path, embedding_config)
     SQLiteMemoryPersistence(output_path).save(store)
     print(
         json.dumps(
@@ -79,8 +79,9 @@ def run_evaluate(
     summary_only: bool = False,
     output_path: Path | None = None,
     split: str | None = None,
+    embedding_config=None,
 ) -> None:
-    result = run_evaluation_suite(suite_path, top_k=top_k, split=split)
+    result = run_evaluation_suite(suite_path, top_k=top_k, split=split, embedding_config=embedding_config)
     if output_path is not None:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -156,6 +157,8 @@ def main() -> None:
     doctor.add_argument("--port", default=8765, type=int)
     doctor.add_argument("--sdk-module", help="Optional real Kylin SDK module")
 
+    for command in (evaluate, build_store_command, serve_command, benchmark_command):
+        command.add_argument("--embedding-config", type=Path)
     args = parser.parse_args()
     if args.command == "demo":
         run_demo(args.input)
@@ -166,20 +169,21 @@ def main() -> None:
             summary_only=args.summary_only,
             output_path=args.output,
             split=args.split,
+            embedding_config=args.embedding_config,
         )
     elif args.command == "build-store":
-        run_build_store(args.input, args.output)
+        run_build_store(args.input, args.output, args.embedding_config)
     elif args.command == "serve":
         from .web_server import serve
 
-        service = MemoryService(database_path=args.database)
+        service = MemoryService(database_path=args.database, embedding_config=args.embedding_config)
         if args.input:
             raw_records = service.ingestion.load_jsonl(args.input)
             service.ingest(raw_records)
         serve(service, host=args.host, port=args.port)
     elif args.command == "benchmark":
         sizes = [int(value.strip()) for value in args.sizes.split(",") if value.strip()]
-        result = run_scale_benchmark(sizes, rounds=args.rounds, top_k=args.top_k)
+        result = run_scale_benchmark(sizes, rounds=args.rounds, top_k=args.top_k, embedding_config=args.embedding_config)
         write_benchmark_report(result, json_path=args.output_json, markdown_path=args.output_md)
         print(json.dumps(result, ensure_ascii=False, indent=2))
     elif args.command == "kylin-sdk-check":

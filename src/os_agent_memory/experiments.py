@@ -16,8 +16,8 @@ def split_rows(suite, section, split):
     return [row for row in suite.get(section, []) if row["split"] == split]
 
 
-def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, include_pending=False):
-    store = build_store_from_raw_records(split_rows(suite, "records", split))
+def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, include_pending=False, embedding_config=None):
+    store = build_store_from_raw_records(split_rows(suite, "records", split), embedding_config=embedding_config)
     underlying = store.embedding
     class CountingProvider:
         calls = 0
@@ -66,9 +66,9 @@ def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, inclu
     }
 
 
-def select_threshold(suite, *, mode="hybrid"):
+def select_threshold(suite, *, mode="hybrid", embedding_config=None):
     # Does not inspect test records, queries or labels.
-    trials = [retrieval_trial(suite, "dev", value / 100, mode=mode) for value in range(8, 81, 4)]
+    trials = [retrieval_trial(suite, "dev", value / 100, mode=mode, embedding_config=embedding_config) for value in range(8, 81, 4)]
     best = max(trials, key=lambda row: (row["balanced_score"], row["positive_recall_at_3"], row["threshold"]))
     dev = {section: split_rows(suite, section, "dev") for section in ("records", "retrieval_queries")}
     digest = hashlib.sha256(json.dumps(dev, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
@@ -79,11 +79,11 @@ def select_threshold(suite, *, mode="hybrid"):
     }
 
 
-def evaluate_frozen(suite):
-    config = select_threshold(suite)
+def evaluate_frozen(suite, *, embedding_config=None):
+    config = select_threshold(suite, embedding_config=embedding_config)
     return {
         "dataset": suite["name"], "independent_blind": False, "configuration": config,
-        "test": retrieval_trial(suite, "test", config["threshold"]),
+        "test": retrieval_trial(suite, "test", config["threshold"], embedding_config=embedding_config),
         "limitations": suite.get("limitations", []),
     }
 

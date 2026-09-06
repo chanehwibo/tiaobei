@@ -1,0 +1,10 @@
+{
+  "provider": "kylin",
+  "model_version": "replace-with-actual-model-version",
+  "dimensions": 768,
+  "timeout_seconds": 10,
+  "sdk": {
+    "module_name": "replace_with_actual_sdk_module",
+    "method_name": "encode"
+  }
+}

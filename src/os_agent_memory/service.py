@@ -15,6 +15,7 @@ from .persistence import SQLiteMemoryPersistence
 from .preference import PreferenceExtractor
 from .lifecycle import MemoryLifecycleManager
 from .schemas import DataRecord, SourceType, ToolStatus, ForgetPlan, IngestionIssue, stable_id
+from .provider_config import create_provider, provider_identity
 
 
 def to_primitive(value: Any) -> Any:
@@ -70,15 +71,16 @@ class MemoryService:
         store: MemoryStore | None = None,
         *,
         database_path: str | Path | None = None,
+        embedding_config=None,
     ) -> None:
         self._lock = RLock()
         self.persistence = SQLiteMemoryPersistence(database_path) if database_path else None
         if store is not None:
             self.store = store
         elif self.persistence is not None:
-            self.store = self.persistence.load()
+            self.store = self.persistence.load(embedding=create_provider(embedding_config))
         else:
-            self.store = MemoryStore()
+            self.store = MemoryStore(embedding=create_provider(embedding_config))
         self.ingestion = DataIngestionPipeline()
         self.preference_extractor = PreferenceExtractor()
         self.knowledge_extractor = KnowledgeExtractor()
@@ -262,6 +264,7 @@ class MemoryService:
 
     def _save_if_requested(self, persist: bool) -> None:
         self.store.runtime_state = {
+            "embedding_identity": provider_identity(self.store.embedding),
             "seen_events": self._seen_events, "forget_results": self._forget_results,
             "lifecycle_records": [to_primitive(record) for records in self.lifecycle.medium_term._records.values()
                                   for record in records],

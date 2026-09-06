@@ -8,6 +8,7 @@ from pathlib import Path
 from .embeddings import EmbeddingProvider
 from .memory_store import MemoryStore
 from .schemas import AuditEvent, KnowledgeMemory, MemoryStatus, MemoryTier, PreferenceMemory
+from .provider_config import provider_identity
 
 
 SCHEMA_VERSION = 2
@@ -20,6 +21,7 @@ class SQLiteMemoryPersistence:
         self.path = Path(path)
 
     def save(self, store: MemoryStore) -> None:
+        store.runtime_state["embedding_identity"] = provider_identity(store.embedding)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with closing(sqlite3.connect(self.path)) as connection:
             self._initialize(connection)
@@ -154,6 +156,14 @@ class SQLiteMemoryPersistence:
             store.runtime_state = {key: json.loads(payload) for key, payload in
                                    connection.execute("SELECT key, payload FROM runtime_state")}
 
+        if store.runtime_state.get("embedding_identity") != provider_identity(store.embedding):
+            for memory in store.knowledge.values():
+                memory.embedding = []
+        else:
+            expected = getattr(store.embedding, "dimensions", None)
+            for memory in store.knowledge.values():
+                if expected is not None and len(memory.embedding) != expected:
+                    memory.embedding = []
         store.rebuild_index()
         return store
 

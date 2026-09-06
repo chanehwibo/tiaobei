@@ -14,6 +14,7 @@ from typing import Iterable
 from .memory_store import MemoryStore
 from .persistence import SQLiteMemoryPersistence
 from .schemas import KnowledgeMemory, stable_id
+from .provider_config import create_provider, provider_identity
 
 
 def _percentile(values: list[float], quantile: float) -> float:
@@ -52,6 +53,7 @@ def run_scale_benchmark(
     *,
     rounds: int = 30,
     top_k: int = 5,
+    embedding_config=None,
 ) -> dict[str, object]:
     normalized_sizes = [int(size) for size in sizes]
     if not normalized_sizes or any(size <= 0 for size in normalized_sizes):
@@ -62,7 +64,7 @@ def run_scale_benchmark(
     rows: list[dict[str, object]] = []
     for size in normalized_sizes:
         tracemalloc.start()
-        store = MemoryStore()
+        store = MemoryStore(embedding=create_provider(embedding_config))
         start = time.perf_counter()
         for index in range(size):
             memory = _benchmark_memory(index)
@@ -114,7 +116,7 @@ def run_scale_benchmark(
         )
 
     return {
-        "benchmark": "hash_embedding_hybrid_retrieval",
+        "benchmark": "hash_embedding_hybrid_retrieval" if embedding_config is None else "configured_hybrid_retrieval",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "environment": {
             "system": platform.system(),
@@ -122,7 +124,7 @@ def run_scale_benchmark(
             "machine": platform.machine(),
             "python": platform.python_version(),
             "kylin_os": False,
-            "embedding_provider": "HashEmbedding",
+            "embedding_provider": provider_identity(store.embedding),
         },
         "method": {
             "rounds_per_size": rounds,

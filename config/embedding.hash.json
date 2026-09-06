@@ -1,0 +1,5 @@
+{
+  "provider": "hash",
+  "dimensions": 256,
+  "ngram": 2
+}
