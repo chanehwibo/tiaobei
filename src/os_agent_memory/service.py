@@ -178,9 +178,13 @@ class MemoryService:
         self,
         memory_id: str,
         *,
+        tenant_id: str,
+        user_id: str,
         strategy: str = "auto",
         persist: bool = True,
     ) -> dict[str, Any]:
+        memory = self.store.knowledge.get(memory_id)
+        self._check_owner(memory, tenant_id, user_id)
         resolved = self.store.resolve_knowledge_conflict(memory_id, strategy=strategy)
         self._save_if_requested(persist)
         return to_primitive(resolved)
@@ -205,7 +209,8 @@ class MemoryService:
         return to_primitive(plan)
 
     @atomic_mutation
-    def forget_confirm(self, plan_id: str, *, persist: bool = True) -> dict[str, Any]:
+    def forget_confirm(self, plan_id: str, *, tenant_id: str, user_id: str, persist: bool = True) -> dict[str, Any]:
+        self._check_owner(self.store.pending_forget_plans.get(plan_id), tenant_id, user_id)
         if plan_id in self._forget_results:
             return deepcopy(self._forget_results[plan_id])
         plan = self.store.pending_forget_plans.get(plan_id)
@@ -240,6 +245,14 @@ class MemoryService:
             "audit_events": len(self.store.audit_events),
             "conflict_decisions": len(self.store.conflict_decisions),
         }
+
+    @staticmethod
+    def _check_owner(target, tenant_id, user_id):
+        if (not isinstance(tenant_id, str) or not tenant_id.strip()
+                or not isinstance(user_id, str) or not user_id.strip()):
+            raise ValueError("tenant_id and user_id must be non-empty strings")
+        if target is None or (target.tenant_id, target.user_id) != (tenant_id, user_id):
+            raise PermissionError("target is unavailable in this scope")
 
     @synchronized
     def save(self) -> None:

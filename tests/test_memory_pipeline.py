@@ -1094,7 +1094,7 @@ class MemoryPipelineTest(unittest.TestCase):
 
         conflicts = service.conflicts(tenant_id="tenant-a", user_id="u-demo")
         self.assertEqual(len(conflicts), 1)
-        resolved = service.resolve_conflict(conflicts[0]["id"], strategy="auto", persist=False)
+        resolved = service.resolve_conflict(conflicts[0]["id"], tenant_id="tenant-a", user_id="u-demo", strategy="auto", persist=False)
         self.assertEqual(resolved["status"], "active")
 
         preview = service.forget_preview(
@@ -1104,7 +1104,7 @@ class MemoryPipelineTest(unittest.TestCase):
         )
         self.assertFalse(preview["confirmed"])
         self.assertTrue(preview["knowledge_ids"])
-        confirmed = service.forget_confirm(preview["id"], persist=False)
+        confirmed = service.forget_confirm(preview["id"], tenant_id="tenant-a", user_id="u-demo", persist=False)
         self.assertTrue(confirmed["confirmed"])
         self.assertIsNotNone(confirmed["audit_id"])
         self.assertEqual(service.stats()["audit_events"], 1)

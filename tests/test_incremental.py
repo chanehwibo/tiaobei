@@ -22,10 +22,10 @@ class IncrementalPersistenceTest(unittest.TestCase):
             newer = {**record, "id": "second", "timestamp": "2026-01-02T00:00:00+00:00"}
             self.assertTrue(service.ingest([newer])["knowledge"])
             plan = service.forget_preview("删除task00001相关记忆", tenant_id="load", user_id="operator")
-            receipt = service.forget_confirm(plan["id"])
+            receipt = service.forget_confirm(plan["id"], tenant_id="load", user_id="operator")
             self.assertGreater(receipt["knowledge_count"], 0)
             reloaded = MemoryService(database_path=path)
-            self.assertEqual(reloaded.forget_confirm(plan["id"]), receipt)
+            self.assertEqual(reloaded.forget_confirm(plan["id"], tenant_id="load", user_id="operator"), receipt)
             self.assertFalse(reloaded.lifecycle.medium_term.clusters(tenant_id="load", user_id="operator"))
             self.assertEqual(reloaded.ingest([record])["duplicate_records"], 1)
             self.assertFalse(reloaded.search("task00001", tenant_id="load", user_id="operator"))

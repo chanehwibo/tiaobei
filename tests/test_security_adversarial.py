@@ -70,7 +70,7 @@ class SecurityAdversarialTest(unittest.TestCase):
             tenant_id="tenant-a",
             user_id="same-user",
         )
-        service.forget_confirm(plan["id"], persist=False)
+        service.forget_confirm(plan["id"], tenant_id="tenant-a", user_id="same-user", persist=False)
         tenant_b = service.search(
             "乙租户应急流程",
             tenant_id="tenant-b",
@@ -157,7 +157,7 @@ class SecurityAdversarialTest(unittest.TestCase):
                 hard_delete=True,
             )
             deleted_ids = set(preview["knowledge_ids"])
-            service.forget_confirm(preview["id"])
+            service.forget_confirm(preview["id"], tenant_id="tenant", user_id="user")
             reloaded = MemoryService(database_path=database)
 
         self.assertTrue(deleted_ids)

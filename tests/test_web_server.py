@@ -80,7 +80,7 @@ class WebServerTest(unittest.TestCase):
             },
         )
         self.assertTrue(preview["knowledge_ids"])
-        confirmed = self.post_json("/api/forget/confirm", {"plan_id": preview["id"]})
+        confirmed = self.post_json("/api/forget/confirm", {"plan_id": preview["id"], "tenant_id": "default", "user_id": "u-demo"})
         self.assertTrue(confirmed["confirmed"])
 
     def test_api_rejects_missing_scope(self) -> None:
@@ -96,6 +96,22 @@ class WebServerTest(unittest.TestCase):
         payload = json.loads(caught.exception.read().decode("utf-8"))
         caught.exception.close()
         self.assertIn("tenant_id is required", payload["error"])
+
+    def test_confirm_rejects_another_user_and_null_scope(self):
+        preview = self.post_json("/api/forget/preview", {
+            "instruction": "删除报销模板相关记忆", "tenant_id": "default", "user_id": "u-demo"})
+        for user, status in (("attacker", 403), (None, 400)):
+            with self.assertRaises(HTTPError) as caught:
+                self.post_json("/api/forget/confirm", {
+                    "plan_id": preview["id"], "tenant_id": "default", "user_id": user})
+            self.assertEqual(caught.exception.code, status)
+            caught.exception.close()
+        self.assertFalse(self.service.store.pending_forget_plans[preview["id"]].confirmed)
+
+    def test_conflict_resolution_rejects_wrong_scope(self):
+        item = next(iter(self.service.store.knowledge.values()))
+        with self.assertRaises(PermissionError):
+            self.service.resolve_conflict(item.id, tenant_id="other", user_id=item.user_id)
 
 
 if __name__ == "__main__":

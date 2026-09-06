@@ -66,7 +66,7 @@ class DeletedIndexTest(unittest.TestCase):
         service = MemoryService()
         service.ingest([event(authority=0.95)], persist=False)
         plan = service.forget_preview("删除报销相关记忆", tenant_id="test", user_id="alice")
-        service.forget_confirm(plan["id"], persist=False)
+        service.forget_confirm(plan["id"], tenant_id="test", user_id="alice", persist=False)
         service.store.rebuild_index()
         with tempfile.TemporaryDirectory() as folder:
             persistence = SQLiteMemoryPersistence(Path(folder) / "memory.sqlite")
@@ -97,9 +97,9 @@ class TransactionTest(unittest.TestCase):
         service.persistence = Mock()
         service.persistence.save.side_effect = OSError("simulated disk failure")
         with self.assertRaises(OSError):
-            service.forget_confirm(plan["id"])
+            service.forget_confirm(plan["id"], tenant_id="test", user_id="alice")
         self.assertFalse(service.store.pending_forget_plans[plan["id"]].confirmed)
         self.assertFalse(service.store.audit_events)
         self.assertTrue(service.search("报销", tenant_id="test", user_id="alice"))
         service.persistence.save.side_effect = None
-        self.assertTrue(service.forget_confirm(plan["id"])["confirmed"])
+        self.assertTrue(service.forget_confirm(plan["id"], tenant_id="test", user_id="alice")["confirmed"])

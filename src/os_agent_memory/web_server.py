@@ -65,9 +65,9 @@ async function refreshAll(){try{const s=await api('/api/stats');el('metrics').in
 async function ingest(){try{show('ingest-output',await api('/api/ingest',{method:'POST',body:JSON.stringify({records:JSON.parse(el('records').value)})}));refreshAll()}catch(e){show('ingest-output',{error:e.message})}}
 async function search(){try{show('search-output',await api('/api/search',{method:'POST',body:JSON.stringify({...scope(),query:el('query').value,top_k:5})}))}catch(e){show('search-output',{error:e.message})}}
 async function loadConflicts(){try{const q=new URLSearchParams(scope());const data=await api('/api/conflicts?'+q);show('conflict-output',data);if(data[0])el('conflict-id').value=data[0].id}catch(e){show('conflict-output',{error:e.message})}}
-async function resolveConflict(){try{show('conflict-output',await api('/api/conflicts/resolve',{method:'POST',body:JSON.stringify({memory_id:el('conflict-id').value,strategy:el('strategy').value})}));refreshAll()}catch(e){show('conflict-output',{error:e.message})}}
+async function resolveConflict(){try{show('conflict-output',await api('/api/conflicts/resolve',{method:'POST',body:JSON.stringify({...scope(),memory_id:el('conflict-id').value,strategy:el('strategy').value})}));refreshAll()}catch(e){show('conflict-output',{error:e.message})}}
 async function previewForget(){try{const data=await api('/api/forget/preview',{method:'POST',body:JSON.stringify({...scope(),instruction:el('forget-text').value})});el('plan-id').value=data.id;show('forget-output',data)}catch(e){show('forget-output',{error:e.message})}}
-async function confirmForget(){try{show('forget-output',await api('/api/forget/confirm',{method:'POST',body:JSON.stringify({plan_id:el('plan-id').value})}));refreshAll()}catch(e){show('forget-output',{error:e.message})}}
+async function confirmForget(){try{show('forget-output',await api('/api/forget/confirm',{method:'POST',body:JSON.stringify({...scope(),plan_id:el('plan-id').value})}));refreshAll()}catch(e){show('forget-output',{error:e.message})}}
 refreshAll();
 </script></body></html>"""
 
@@ -112,6 +112,9 @@ def create_server(
             parsed = urlparse(self.path)
             try:
                 body = self._read_json()
+                origin = self.headers.get("Origin")
+                if origin and origin != "http://" + self.headers.get("Host", ""):
+                    raise PermissionError("cross-origin mutation is forbidden")
                 if parsed.path == "/api/ingest":
                     records = body.get("records")
                     if not isinstance(records, list):
@@ -129,9 +132,13 @@ def create_server(
                 elif parsed.path == "/api/conflicts/resolve":
                     result = service.resolve_conflict(
                         self._required(body, "memory_id"),
+                        tenant_id=self._required(body, "tenant_id"),
+                        user_id=self._required(body, "user_id"),
                         strategy=str(body.get("strategy", "auto")),
                     )
                 elif parsed.path == "/api/forget/preview":
+                    if not isinstance(body.get("hard_delete", False), bool):
+                        raise ValueError("hard_delete must be boolean")
                     result = service.forget_preview(
                         self._required(body, "instruction"),
                         tenant_id=self._required(body, "tenant_id"),
@@ -139,13 +146,19 @@ def create_server(
                         hard_delete=bool(body.get("hard_delete", False)),
                     )
                 elif parsed.path == "/api/forget/confirm":
-                    result = service.forget_confirm(self._required(body, "plan_id"))
+                    result = service.forget_confirm(self._required(body, "plan_id"),
+                                                    tenant_id=self._required(body, "tenant_id"),
+                                                    user_id=self._required(body, "user_id"))
                 else:
                     self._send_json({"error": "not_found"}, HTTPStatus.NOT_FOUND)
                     return
                 self._send_json(result)
             except (json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
                 self._send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+            except PermissionError as exc:
+                self._send_json({"error": str(exc)}, HTTPStatus.FORBIDDEN)
+            except OSError:
+                self._send_json({"error": "storage operation failed"}, HTTPStatus.SERVICE_UNAVAILABLE)
             except RuntimeError as exc:
                 self._send_json({"error": str(exc)}, HTTPStatus.CONFLICT)
 
@@ -181,10 +194,10 @@ def create_server(
 
         @staticmethod
         def _required(payload: dict[str, Any], key: str) -> str:
-            value = str(payload.get(key, "")).strip()
-            if not value:
+            value = payload.get(key)
+            if not isinstance(value, str) or not value.strip():
                 raise ValueError(f"{key} is required")
-            return value
+            return value.strip()
 
     return ThreadingHTTPServer((host, port), MemoryRequestHandler)
 
