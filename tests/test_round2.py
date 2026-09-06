@@ -34,7 +34,7 @@ class LifecycleIntegrationTest(unittest.TestCase):
     def test_distinct_repeated_evidence_promotes_across_requests(self):
         service = MemoryService()
         service.ingest([event("one", 0.8)], persist=False)
-        result = service.ingest([event("two", 0.8)], persist=False)
+        result = service.ingest([{**event("two", 0.8), "timestamp": "2026-01-01T00:00:01+00:00"}], persist=False)
         self.assertTrue(result["promotion_decisions"][0]["accepted"])
         self.assertTrue(service.search("报销", tenant_id="test", user_id="alice"))
 

@@ -60,6 +60,7 @@ class MemoryStore:
         self._document_tokens: dict[str, set[str]] = {}
         self._vector_index: dict[tuple[int, bool], set[str]] = {}
         self._vector_keys: dict[str, set[tuple[int, bool]]] = {}
+        self.runtime_state: dict[str, object] = {}
 
     def upsert_preference(self, memory: PreferenceMemory) -> PreferenceMemory:
         key = (memory.tenant_id, memory.user_id, memory.key)
@@ -176,6 +177,12 @@ class MemoryStore:
         return sorted(results, key=lambda item: item.key)
 
     def upsert_knowledge(self, memory: KnowledgeMemory) -> KnowledgeMemory:
+        current = self.knowledge.get(memory.id)
+        if current is not None and current.content == memory.content:
+            current.source_ids = sorted(set(current.source_ids + memory.source_ids))
+            current.authority = max(current.authority, memory.authority)
+            self._index_knowledge(current)
+            return current
         if not memory.embedding:
             memory.embedding = self.embedding.encode(self._knowledge_text(memory))
         conflicts = self._find_conflicts(memory)

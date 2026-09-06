@@ -24,15 +24,8 @@ class SQLiteMemoryPersistence:
         with closing(sqlite3.connect(self.path)) as connection:
             self._initialize(connection)
             with connection:
-                for table in (
-                    "preferences",
-                    "preference_history",
-                    "knowledge",
-                    "audit_events",
-                    "conflict_decisions",
-                ):
-                    connection.execute(f"DELETE FROM {table}")
-                connection.executemany(
+                self._sync(
+                    connection,
                     """
                     INSERT INTO preferences
                     (tenant_id, user_id, key, id, value, confidence, version, scenes, evidence_ids,
@@ -41,7 +34,8 @@ class SQLiteMemoryPersistence:
                     """,
                     [_preference_row(memory) for memory in store.preferences.values()],
                 )
-                connection.executemany(
+                self._sync(
+                    connection,
                     """
                     INSERT INTO preference_history
                     (row_order, tenant_id, user_id, key, id, value, confidence, version, scenes,
@@ -53,7 +47,8 @@ class SQLiteMemoryPersistence:
                         for index, memory in enumerate(store.preference_history, start=1)
                     ],
                 )
-                connection.executemany(
+                self._sync(
+                    connection,
                     """
                     INSERT INTO knowledge
                     (id, title, content, tags, source_ids, version, created_at, updated_at, status,
@@ -63,7 +58,8 @@ class SQLiteMemoryPersistence:
                     """,
                     [_knowledge_row(memory) for memory in store.knowledge.values()],
                 )
-                connection.executemany(
+                self._sync(
+                    connection,
                     """
                     INSERT INTO audit_events
                     (row_order, id, action, tenant_id, user_id, target_ids, created_at, details)
@@ -74,13 +70,37 @@ class SQLiteMemoryPersistence:
                         for index, event in enumerate(store.audit_events, start=1)
                     ],
                 )
-                connection.executemany(
+                self._sync(
+                    connection,
                     "INSERT INTO conflict_decisions (row_order, payload) VALUES (?, ?)",
                     [
                         (index, json.dumps(decision, ensure_ascii=False, sort_keys=True))
                         for index, decision in enumerate(store.conflict_decisions, start=1)
                     ],
                 )
+                self._sync(connection, "INSERT INTO runtime_state (key, payload) VALUES (?, ?)",
+                           [(key, _json(value)) for key, value in getattr(store, "runtime_state", {}).items()])
+
+    @staticmethod
+    def _sync(connection, insert_sql, rows):
+        """Compare primary-key rows; write only changed rows inside the transaction."""
+        import re
+        match = re.search(r"INSERT INTO (\w+)\s*\(([^)]+)\)", insert_sql)
+        table, fields = match.groups()
+        columns = [field.strip() for field in fields.split(",")]
+        primary = sorted((row for row in connection.execute(f"PRAGMA table_info({table})") if row[5]),
+                         key=lambda row: row[5])
+        indices = [columns.index(row[1]) for row in primary]
+        old = {tuple(row[i] for i in indices): row
+               for row in connection.execute(f"SELECT {','.join(columns)} FROM {table}")}
+        current = {tuple(row[i] for i in indices): tuple(row) for row in rows}
+        where = " AND ".join(f"{columns[i]}=?" for i in indices)
+        for key in old.keys() - current.keys():
+            connection.execute(f"DELETE FROM {table} WHERE {where}", key)
+        changed = [row for key, row in current.items() if old.get(key) != row]
+        conflict_keys = ",".join(columns[i] for i in indices)
+        assignments = ",".join(f"{name}=excluded.{name}" for name in columns if columns.index(name) not in indices)
+        connection.executemany(insert_sql + f" ON CONFLICT ({conflict_keys}) DO UPDATE SET {assignments}", changed)
 
     def load(self, embedding: EmbeddingProvider | None = None) -> MemoryStore:
         store = MemoryStore(embedding=embedding)
@@ -131,6 +151,8 @@ class SQLiteMemoryPersistence:
                 "SELECT payload FROM conflict_decisions ORDER BY row_order"
             ):
                 store.conflict_decisions.append(json.loads(str(payload)))
+            store.runtime_state = {key: json.loads(payload) for key, payload in
+                                   connection.execute("SELECT key, payload FROM runtime_state")}
 
         store.rebuild_index()
         return store
@@ -195,6 +217,7 @@ class SQLiteMemoryPersistence:
 
     @staticmethod
     def _create_current_tables(connection: sqlite3.Connection) -> None:
+        connection.execute("CREATE TABLE IF NOT EXISTS runtime_state (key TEXT PRIMARY KEY, payload TEXT NOT NULL)")
         connection.execute(
             """
             CREATE TABLE IF NOT EXISTS preferences (

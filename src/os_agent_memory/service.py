@@ -14,6 +14,7 @@ from .memory_store import MemoryStore
 from .persistence import SQLiteMemoryPersistence
 from .preference import PreferenceExtractor
 from .lifecycle import MemoryLifecycleManager
+from .schemas import DataRecord, SourceType, ToolStatus, ForgetPlan, IngestionIssue, stable_id
 
 
 def to_primitive(value: Any) -> Any:
@@ -46,6 +47,7 @@ def atomic_mutation(method):
             state = deepcopy({k: v for k, v in vars(self.store).items() if k != "embedding"})
             lifecycle = deepcopy({k: v for k, v in vars(self.lifecycle).items() if k != "store"})
             ingestion = deepcopy(self.ingestion)
+            seen, receipts = deepcopy((self._seen_events, self._forget_results))
             try:
                 return method(self, *args, **kwargs)
             except Exception:
@@ -55,6 +57,7 @@ def atomic_mutation(method):
                 vars(self.lifecycle).clear()
                 vars(self.lifecycle).update(lifecycle, store=self.store)
                 self.ingestion = ingestion
+                self._seen_events, self._forget_results = seen, receipts
                 raise
     return wrapped
 
@@ -80,10 +83,38 @@ class MemoryService:
         self.preference_extractor = PreferenceExtractor()
         self.knowledge_extractor = KnowledgeExtractor()
         self.lifecycle = MemoryLifecycleManager(self.store)
+        state = self.store.runtime_state
+        self._seen_events = dict(state.get("seen_events", {}))
+        self._forget_results = dict(state.get("forget_results", {}))
+        for raw in state.get("lifecycle_records", []):
+            record = DataRecord(**{**raw, "source_type": SourceType(raw["source_type"]),
+                                  "tool_status": ToolStatus(raw["tool_status"])})
+            self.lifecycle.short_term.add(record)
+            self.lifecycle.medium_term.add(record)
+        self.lifecycle.short_term.expire()
+        self.store.pending_forget_plans = {
+            raw["id"]: ForgetPlan(**raw) for raw in state.get("pending_plans", [])
+        }
 
     @atomic_mutation
     def ingest(self, raw_records: Iterable[dict[str, Any]], *, persist: bool = True) -> dict[str, Any]:
         batch = self.ingestion.ingest_with_report(raw_records)
+        fresh = []
+        fingerprints = set(self._seen_events.values())
+        for record in batch.records:
+            key = stable_id(record.tenant_id, record.user_id, record.id)
+            fingerprint = stable_id(record.tenant_id, record.user_id, record.scene,
+                                    record.source_type.value, record.timestamp, record.content)
+            if key in self._seen_events or fingerprint in fingerprints:
+                if key in self._seen_events and self._seen_events[key] != fingerprint:
+                    batch.issues.append(IngestionIssue(index=0, record_id=record.id, reason="event_id_conflict"))
+                else:
+                    batch.duplicate_count += 1
+                continue
+            self._seen_events[key] = fingerprint
+            fingerprints.add(fingerprint)
+            fresh.append(record)
+        batch.records = fresh
         decisions = self.lifecycle.process(batch.records)
         evidence_ids = {record.id for record in batch.records}
         preferences = [item for item in self.store.preferences.values()
@@ -175,7 +206,27 @@ class MemoryService:
 
     @atomic_mutation
     def forget_confirm(self, plan_id: str, *, persist: bool = True) -> dict[str, Any]:
+        if plan_id in self._forget_results:
+            return deepcopy(self._forget_results[plan_id])
+        plan = self.store.pending_forget_plans.get(plan_id)
+        if plan is None:
+            raise KeyError("forget plan not found")
+        sources = {source for key in plan.knowledge_ids if key in self.store.knowledge
+                   for source in self.store.knowledge[key].source_ids}
+        sources.update(source for item in self.store.preferences.values() if item.id in plan.preference_ids
+                       for source in item.evidence_ids)
         result = self.store.confirm_forget(plan_id)
+        for key, records in list(self.lifecycle.medium_term._records.items()):
+            remaining = [r for r in records if not (
+                r.tenant_id == plan.tenant_id and r.user_id == plan.user_id and r.id in sources)]
+            if remaining:
+                self.lifecycle.medium_term._records[key] = remaining
+            else:
+                del self.lifecycle.medium_term._records[key]
+        for key, entry in list(self.lifecycle.short_term._entries.items()):
+            if entry.record.tenant_id == plan.tenant_id and entry.record.user_id == plan.user_id and entry.record.id in sources:
+                del self.lifecycle.short_term._entries[key]
+        self._forget_results[plan_id] = to_primitive(result)
         self._save_if_requested(persist)
         return to_primitive(result)
 
@@ -194,8 +245,15 @@ class MemoryService:
     def save(self) -> None:
         if self.persistence is None:
             raise RuntimeError("database_path was not configured")
-        self.persistence.save(self.store)
+        self._save_if_requested(True)
 
     def _save_if_requested(self, persist: bool) -> None:
+        self.store.runtime_state = {
+            "seen_events": self._seen_events, "forget_results": self._forget_results,
+            "lifecycle_records": [to_primitive(record) for records in self.lifecycle.medium_term._records.values()
+                                  for record in records],
+            "pending_plans": [{**to_primitive(plan), "instruction": ""}
+                              for plan in self.store.pending_forget_plans.values()],
+        }
         if persist and self.persistence is not None:
             self.persistence.save(self.store)
