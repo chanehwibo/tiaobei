@@ -1,0 +1,36 @@
+import sys
+import unittest
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from os_agent_memory.memory_store import MemoryStore
+from os_agent_memory.schemas import KnowledgeMemory
+
+
+def memory(identifier, content, scene="office"):
+    return KnowledgeMemory(id=identifier, title=identifier, content=content, tags=["policy"],
+                           source_ids=[identifier], version=1, created_at="2026-01-01T00:00:00+00:00",
+                           updated_at="2026-01-01T00:00:00+00:00", scene=scene)
+
+
+class RetrievalHardCaseTest(unittest.TestCase):
+    def test_semantic_candidate_survives_unrelated_lexical_match(self):
+        class Provider:
+            def encode(self, text):
+                return [1.0, 0.0] if "automobile" in text or "汽车" in text else [0.0, 1.0]
+            def similarity(self, left, right):
+                return 0.0
+        store = MemoryStore(embedding=Provider())
+        store.upsert_knowledge(memory("target", "汽车的维护记录"))
+        store.upsert_knowledge(memory("distractor", "maintenance of plants"))
+        result = store.search_knowledge("automobile maintenance", top_k=1)
+        self.assertEqual(result[0].memory_id, "target")
+
+    def test_numeric_conditions_and_scene_boundaries(self):
+        store = MemoryStore()
+        self.assertTrue(store._has_contradiction("审批时限为3天。", "审批时限为5天。"))
+        self.assertFalse(store._has_contradiction("审批时限为3天。", "归档时限为5天。"))
+        self.assertFalse(store._has_contradiction("如果已授权，允许读取文件。", "如果未授权，禁止读取文件。"))
+        self.assertFalse(store._has_contradiction("允许读取文件，禁止上传文件。", "允许读取文件，禁止上传文件。"))
+        store.upsert_knowledge(memory("first", "流程允许读取归档文件并保留审计。", "personal"))
+        second = store.upsert_knowledge(memory("second", "流程禁止读取归档文件并保留审计。", "restricted"))
+        self.assertEqual(second.status.value, "active")

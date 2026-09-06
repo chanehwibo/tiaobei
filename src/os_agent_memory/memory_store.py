@@ -58,6 +58,8 @@ class MemoryStore:
         self.audit_events: list[AuditEvent] = []
         self._token_index: dict[str, set[str]] = {}
         self._document_tokens: dict[str, set[str]] = {}
+        self._vector_index: dict[tuple[int, bool], set[str]] = {}
+        self._vector_keys: dict[str, set[tuple[int, bool]]] = {}
 
     def upsert_preference(self, memory: PreferenceMemory) -> PreferenceMemory:
         key = (memory.tenant_id, memory.user_id, memory.key)
@@ -271,11 +273,15 @@ class MemoryStore:
             and (scene is None or item.scene in {scene, "default", "global"})
         ]
         query_tokens = self._lexical_tokens(query)
+        query_embedding = self.embedding.encode(query) if retrieval_mode != "lexical" else []
+        eligible = {item.id: item for item in candidates}
+        lexical_ids = set().union(*(self._token_index.get(token, set()) for token in query_tokens)) if query_tokens else set()
+        lexical_ids &= eligible.keys()
         lexical_scores = {
-            item.id: self._lexical_similarity(query_tokens, self._tokens_for(item))
-            for item in candidates
+            key: self._lexical_similarity(query_tokens, self._tokens_for(eligible[key]))
+            for key in lexical_ids
         }
-        lexical_matches = [item for item in candidates if lexical_scores[item.id] > 0]
+        lexical_matches = [eligible[key] for key in lexical_ids]
         if lexical_matches and retrieval_mode != "semantic":
             candidates = sorted(
                 lexical_matches,
@@ -289,13 +295,23 @@ class MemoryStore:
                 reverse=True,
             )[:candidate_limit]
 
-        query_embedding = self.embedding.encode(query) if retrieval_mode != "lexical" else []
+        # Union lexical candidates with an independent approximate semantic path.
+        # Top signed dimensions are cheap postings; exact reranking follows.
+        if retrieval_mode == "hybrid":
+            votes = Counter()
+            for key in self._projection_keys(query_embedding):
+                votes.update(self._vector_index.get(key, set()) & eligible.keys())
+            semantic_ids = sorted(votes, key=lambda key: (-votes[key], key))[:candidate_limit]
+            candidates = list({item.id: item for item in [
+                *candidates, *(eligible[key] for key in semantic_ids)
+            ]}.values())
+
         scored: list[SearchResult] = []
         for item in candidates:
             if not item.embedding and retrieval_mode != "lexical":
                 item.embedding = self.embedding.encode(self._knowledge_text(item))
             semantic_score = cosine_similarity(query_embedding, item.embedding) if query_embedding else 0.0
-            lexical_score = lexical_scores[item.id]
+            lexical_score = lexical_scores.get(item.id, 0.0)
             score = 0.65 * semantic_score + 0.3 * lexical_score + 0.05 * item.authority
             if retrieval_mode == "lexical":
                 score = lexical_score
@@ -315,7 +331,7 @@ class MemoryStore:
                     status=item.status,
                 )
             )
-        scored.sort(key=lambda result: result.score, reverse=True)
+        scored.sort(key=lambda result: (-result.score, result.memory_id))
         return scored[:top_k]
 
     def expire_knowledge(self, *, now: str | None = None) -> list[str]:
@@ -353,6 +369,8 @@ class MemoryStore:
     def rebuild_index(self) -> None:
         self._token_index.clear()
         self._document_tokens.clear()
+        self._vector_index.clear()
+        self._vector_keys.clear()
         for memory in self.knowledge.values():
             if memory.status not in {MemoryStatus.ACTIVE, MemoryStatus.CONFLICT_PENDING}:
                 memory.embedding = []
@@ -581,16 +599,18 @@ class MemoryStore:
     def _find_conflicts(self, candidate: KnowledgeMemory) -> list[str]:
         conflicts: list[str] = []
         for item in self.knowledge.values():
-            if item.status == MemoryStatus.FORGOTTEN:
+            if item.id == candidate.id or item.status not in {MemoryStatus.ACTIVE, MemoryStatus.CONFLICT_PENDING}:
                 continue
             if item.tenant_id != candidate.tenant_id or item.user_id != candidate.user_id:
                 continue
-            title_similarity = self.embedding.similarity(candidate.title, item.title)
-            shared_tags = set(candidate.tags) & set(item.tags)
-            if title_similarity < 0.55 and not shared_tags:
+            if item.scene != candidate.scene and not {item.scene, candidate.scene} & {"default", "global"}:
                 continue
-            if self._has_contradiction(candidate.content, item.content):
-                conflicts.append(item.id)
+            if not self._has_contradiction(candidate.content, item.content):
+                continue
+            shared_tags = set(candidate.tags) & set(item.tags)
+            if not shared_tags and self.embedding.similarity(candidate.title, item.title) < 0.55:
+                continue
+            conflicts.append(item.id)
         return conflicts
 
     @staticmethod
@@ -613,8 +633,24 @@ class MemoryStore:
         self._document_tokens[memory.id] = tokens
         for token in tokens:
             self._token_index.setdefault(token, set()).add(memory.id)
+        for key in self._vector_keys.pop(memory.id, set()):
+            self._vector_index[key].discard(memory.id)
+        keys = self._projection_keys(memory.embedding)
+        self._vector_keys[memory.id] = keys
+        for key in keys:
+            self._vector_index.setdefault(key, set()).add(memory.id)
+
+    @staticmethod
+    def _projection_keys(vector) -> set[tuple[int, bool]]:
+        dimensions = sorted(range(len(vector)), key=lambda i: (-abs(vector[i]), i))[:8]
+        return {(i, vector[i] >= 0) for i in dimensions if vector[i]}
 
     def _remove_knowledge_index(self, memory_id: str) -> None:
+        for key in self._vector_keys.pop(memory_id, set()):
+            bucket = self._vector_index.get(key, set())
+            bucket.discard(memory_id)
+            if not bucket:
+                self._vector_index.pop(key, None)
         for token in self._document_tokens.pop(memory_id, set()):
             bucket = self._token_index.get(token)
             if bucket is None:
@@ -650,9 +686,26 @@ class MemoryStore:
         return intersection / ((len(left) * len(right)) ** 0.5)
 
     def _has_contradiction(self, left: str, right: str) -> bool:
+        if left == right:
+            return False
+        # Distinct explicit preconditions must not be collapsed into one rule.
+        conditions = [re.search(r"(?:如果|仅在|当)([^，,；;。]+)", text) for text in (left, right)]
+        if all(conditions) and conditions[0].group(1) != conditions[1].group(1):
+            return False
+        numeric = r"([0-9]+(?:\.[0-9]+)?)(天|小时|元|次|%)"
+        normalize_rule = lambda text: re.sub(r"旧版|新版|更新|旧|新|\s", "", text)
+        if re.search(numeric, left) and re.search(numeric, right):
+            if (re.sub(numeric, r"#\2", normalize_rule(left)) ==
+                    re.sub(numeric, r"#\2", normalize_rule(right))):
+                if re.findall(numeric, left) != re.findall(numeric, right):
+                    return True
         for a, b in self.CONTRADICTION_PAIRS:
-            if (a in left and b in right) or (b in left and a in right):
-                return True
+            for first, second in ((left, right), (right, left)):
+                if a in first and b in second and b not in first:
+                    first_tokens = self._lexical_tokens(normalize_rule(first.replace(a, "")))
+                    second_tokens = self._lexical_tokens(normalize_rule(second.replace(b, "")))
+                    if self._lexical_similarity(first_tokens, second_tokens) >= 0.35:
+                        return True
         return False
 
     def _merge_conflicts(self, memory: KnowledgeMemory) -> None:
