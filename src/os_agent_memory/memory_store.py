@@ -238,6 +238,7 @@ class MemoryStore:
         scene: str | None = None,
         min_score: float = 0.08,
         include_shared: bool = True,
+        now: str | None = None,
     ) -> list[SearchResult]:
         if top_k <= 0:
             raise ValueError("top_k must be positive")
@@ -251,6 +252,8 @@ class MemoryStore:
         if not 0.0 <= min_score <= 1.0:
             raise ValueError("min_score must be between zero and one")
 
+        point = self._parse_time(now or utc_now())
+        self.expire_knowledge(now=point.isoformat())
         allowed_statuses = {MemoryStatus.ACTIVE}
         if include_pending:
             allowed_statuses.add(MemoryStatus.CONFLICT_PENDING)
@@ -259,6 +262,7 @@ class MemoryStore:
             item
             for item in self.knowledge.values()
             if item.status in allowed_statuses
+            and (not item.valid_from or self._parse_time(item.valid_from) <= point)
             and item.tenant_id == tenant_id
             and (item.user_id == user_id or (include_shared and item.user_id == "*"))
             and (scene is None or item.scene in {scene, "default", "global"})
@@ -306,6 +310,19 @@ class MemoryStore:
             )
         scored.sort(key=lambda result: result.score, reverse=True)
         return scored[:top_k]
+
+    def expire_knowledge(self, *, now: str | None = None) -> list[str]:
+        """Close expired active/pending records and remove their retrieval data."""
+        point = self._parse_time(now or utc_now())
+        expired = []
+        for item in self.knowledge.values():
+            if (item.status in {MemoryStatus.ACTIVE, MemoryStatus.CONFLICT_PENDING}
+                    and item.valid_to and self._parse_time(item.valid_to) <= point):
+                item.status = MemoryStatus.EXPIRED
+                item.embedding = []
+                self._remove_knowledge_index(item.id)
+                expired.append(item.id)
+        return sorted(expired)
 
     def _resolve_search_scope(
         self,

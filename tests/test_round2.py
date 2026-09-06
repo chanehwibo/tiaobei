@@ -35,6 +35,23 @@ class LifecycleIntegrationTest(unittest.TestCase):
         self.assertTrue(result["promotion_decisions"][0]["accepted"])
         self.assertTrue(service.search("报销", tenant_id="test", user_id="alice"))
 
+
+class ValidityTest(unittest.TestCase):
+    def test_validity_is_start_inclusive_end_exclusive_and_cleans_index(self):
+        service = MemoryService()
+        service.ingest([event(authority=0.95)], persist=False)
+        item = next(iter(service.store.knowledge.values()))
+        item.valid_from = "2026-01-02T00:00:00+00:00"
+        item.valid_to = "2026-01-03T00:00:00+00:00"
+        def query(now):
+            return service.store.search_knowledge("报销", tenant_id="test", user_id="alice", now=now)
+        self.assertFalse(query("2026-01-01T00:00:00+00:00"))
+        self.assertTrue(query(item.valid_from))
+        self.assertFalse(query(item.valid_to))
+        self.assertEqual(item.status.value, "expired")
+        self.assertFalse(item.embedding)
+        self.assertNotIn(item.id, service.store._document_tokens)
+
     def test_explicit_high_authority_configuration_promotes(self):
         service = MemoryService()
         result = service.ingest([event(authority=0.95)], persist=False)
