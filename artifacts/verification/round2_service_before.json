@@ -1,0 +1,31 @@
+{
+  "environment": {
+    "system": "Windows",
+    "python": "3.14.3"
+  },
+  "rounds": 12,
+  "results": [
+    {
+      "records": 100,
+      "service_ingest_ms": 757.786,
+      "single_add_ms": 49.73,
+      "restart_load_ms": 18.434,
+      "mixed_query_p50_ms": 1.171,
+      "mixed_query_p95_ms": 1.276,
+      "mixed_query_p99_ms": 1.276,
+      "http_query_p99_ms": 16.777,
+      "concurrent_operations": 15,
+      "concurrent_operations_per_second": 97.264,
+      "all_queries_nonempty": true,
+      "persisted_knowledge": 104,
+      "sqlite_bytes": 471040,
+      "retrieval_under_500ms": true
+    }
+  ],
+  "method": "MemoryService ingestion including lifecycle, conflict detection and SQLite commit; diverse queries; restart; 4 threads mixed reads/writes; localhost HTTP",
+  "limitations": [
+    "Developer machine only; no real Kylin SDK evidence.",
+    "Service API is a single-process serialized writer; cross-process writers are unsupported.",
+    "Small samples describe this workload; p99 is empirical, not a production SLA."
+  ]
+}
