@@ -58,6 +58,8 @@ class MemoryStore:
         self.audit_events: list[AuditEvent] = []
         self._token_index: dict[str, set[str]] = {}
         self._document_tokens: dict[str, set[str]] = {}
+        self._character_index: dict[str, set[str]] = {}
+        self._document_characters: dict[str, set[str]] = {}
         self._vector_index: dict[tuple[int, bool], set[str]] = {}
         self._vector_keys: dict[str, set[tuple[int, bool]]] = {}
         self.runtime_state: dict[str, object] = {}
@@ -280,6 +282,9 @@ class MemoryStore:
             and (scene is None or item.scene in {scene, "default", "global"})
         ]
         query_tokens = self._lexical_tokens(query)
+        query_characters = self._chinese_characters(query)
+        if not query_tokens and not query_characters:
+            return []
         query_embedding = self.embedding.encode(query) if retrieval_mode != "lexical" else []
         eligible = {item.id: item for item in candidates}
         lexical_ids = set().union(*(self._token_index.get(token, set()) for token in query_tokens)) if query_tokens else set()
@@ -289,6 +294,13 @@ class MemoryStore:
             for key in lexical_ids
         }
         lexical_matches = [eligible[key] for key in lexical_ids]
+        character_scores = {}
+        if retrieval_mode == "hybrid" and query_characters:
+            character_ids = set().union(*(self._character_index.get(c, set()) for c in query_characters))
+            character_scores = {
+                key: self._lexical_similarity(query_characters, self._document_characters[key])
+                for key in character_ids & eligible.keys()
+            }
         if lexical_matches and retrieval_mode != "semantic":
             candidates = sorted(
                 lexical_matches,
@@ -309,8 +321,10 @@ class MemoryStore:
             for key in self._projection_keys(query_embedding):
                 votes.update(self._vector_index.get(key, set()) & eligible.keys())
             semantic_ids = sorted(votes, key=lambda key: (-votes[key], key))[:candidate_limit]
+            character_ids = sorted(character_scores, key=lambda key: (-character_scores[key], key))[:candidate_limit]
             candidates = list({item.id: item for item in [
-                *candidates, *(eligible[key] for key in semantic_ids)
+                *candidates, *(eligible[key] for key in semantic_ids),
+                *(eligible[key] for key in character_ids)
             ]}.values())
 
         scored: list[SearchResult] = []
@@ -320,6 +334,12 @@ class MemoryStore:
             semantic_score = cosine_similarity(query_embedding, item.embedding) if query_embedding else 0.0
             lexical_score = lexical_scores.get(item.id, 0.0)
             score = 0.65 * semantic_score + 0.3 * lexical_score + 0.05 * item.authority
+            character_score = character_scores.get(item.id, 0.0)
+            if retrieval_mode == "hybrid" and query_characters and self._document_characters.get(item.id):
+                # Exact character evidence complements Chinese bigrams. Hash
+                # collisions alone should not dominate short paraphrase ranking.
+                score = (0.25 * semantic_score + 0.25 * lexical_score
+                         + 0.45 * character_score + 0.05 * item.authority)
             if retrieval_mode == "lexical":
                 score = lexical_score
             elif retrieval_mode == "semantic":
@@ -335,6 +355,7 @@ class MemoryStore:
                     tags=item.tags,
                     lexical_score=round(lexical_score, 4),
                     semantic_score=round(semantic_score, 4),
+                    character_score=round(character_score, 4),
                     status=item.status,
                 )
             )
@@ -376,6 +397,8 @@ class MemoryStore:
     def rebuild_index(self) -> None:
         self._token_index.clear()
         self._document_tokens.clear()
+        self._character_index.clear()
+        self._document_characters.clear()
         self._vector_index.clear()
         self._vector_keys.clear()
         for memory in self.knowledge.values():
@@ -629,6 +652,11 @@ class MemoryStore:
             self._remove_knowledge_index(memory.id)
             memory.embedding = []
             return
+        self._remove_character_index(memory.id)
+        characters = self._chinese_characters(f"{memory.title} {memory.content}")
+        self._document_characters[memory.id] = characters
+        for character in characters:
+            self._character_index.setdefault(character, set()).add(memory.id)
         old_tokens = self._document_tokens.get(memory.id, set())
         for token in old_tokens:
             bucket = self._token_index.get(token)
@@ -653,6 +681,7 @@ class MemoryStore:
         return {(i, vector[i] >= 0) for i in dimensions if vector[i]}
 
     def _remove_knowledge_index(self, memory_id: str) -> None:
+        self._remove_character_index(memory_id)
         for key in self._vector_keys.pop(memory_id, set()):
             bucket = self._vector_index.get(key, set())
             bucket.discard(memory_id)
@@ -665,6 +694,17 @@ class MemoryStore:
             bucket.discard(memory_id)
             if not bucket:
                 del self._token_index[token]
+
+    @staticmethod
+    def _chinese_characters(text: str) -> set[str]:
+        return set(re.findall(r"[\u3400-\u9fff]", text))
+
+    def _remove_character_index(self, memory_id: str) -> None:
+        for character in self._document_characters.pop(memory_id, set()):
+            bucket = self._character_index.get(character, set())
+            bucket.discard(memory_id)
+            if not bucket:
+                self._character_index.pop(character, None)
 
     def _tokens_for(self, memory: KnowledgeMemory) -> set[str]:
         tokens = self._document_tokens.get(memory.id)

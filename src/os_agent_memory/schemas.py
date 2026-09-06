@@ -118,6 +118,7 @@ class SearchResult:
     lexical_score: float = 0.0
     semantic_score: float = 0.0
     status: MemoryStatus = MemoryStatus.ACTIVE
+    character_score: float = 0.0
 
 
 @dataclass(slots=True)

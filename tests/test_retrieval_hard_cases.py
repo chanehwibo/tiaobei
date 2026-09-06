@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from os_agent_memory.memory_store import MemoryStore
-from os_agent_memory.schemas import KnowledgeMemory
+from os_agent_memory.schemas import KnowledgeMemory, MemoryStatus
 
 
 def memory(identifier, content, scene="office"):
@@ -13,6 +13,42 @@ def memory(identifier, content, scene="office"):
 
 
 class RetrievalHardCaseTest(unittest.TestCase):
+    def test_character_candidates_without_shared_bigrams(self):
+        class UninformativeProvider:
+            def encode(self, text):
+                return [0.0, 1.0] if "记录" in text else [1.0, 0.0]
+        store = MemoryStore(embedding=UninformativeProvider())
+        store.upsert_knowledge(memory("target", "甲乙丙丁记录"))
+        store.upsert_knowledge(memory("distractor", "无关事项"))
+        hits = store.search_knowledge("丁丙乙甲", candidate_limit=1, top_k=1, min_score=.2)
+        self.assertEqual(hits[0].memory_id, "target")
+        self.assertEqual(hits[0].lexical_score, 0)
+        self.assertGreater(hits[0].character_score, .8)
+
+    def test_character_index_replacement_deletion_and_rebuild(self):
+        store = MemoryStore()
+        store.upsert_knowledge(memory("one", "甲乙丙丁记录"))
+        store.upsert_knowledge(memory("one", "春夏秋冬资料"))
+        self.assertNotIn("甲", store._character_index)
+        store.knowledge["one"].status = MemoryStatus.FORGOTTEN
+        store.rebuild_index()
+        self.assertEqual(store._character_index, {})
+        self.assertEqual(store._document_characters, {})
+        self.assertEqual(store.search_knowledge("春夏资料"), [])
+
+    def test_metadata_and_invisible_owners_do_not_supply_character_evidence(self):
+        store = MemoryStore()
+        item = memory("public", "天气晴朗")
+        item.tags = ["工资薪酬"]
+        store.upsert_knowledge(item)
+        private = memory("private", "工资薪酬")
+        private.user_id = "another-user"
+        store.upsert_knowledge(private)
+        hits = store.search_knowledge("工资薪酬", tenant_id="default", user_id=item.user_id, min_score=0)
+        self.assertTrue(all(hit.memory_id != "private" for hit in hits))
+        self.assertTrue(all(hit.character_score == 0 for hit in hits))
+        self.assertEqual(store.search_knowledge("  !!! ", tenant_id="default", user_id=item.user_id), [])
+
     def test_semantic_candidate_survives_unrelated_lexical_match(self):
         class Provider:
             def encode(self, text):
