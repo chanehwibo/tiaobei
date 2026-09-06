@@ -10,6 +10,7 @@ from .knowledge import KnowledgeExtractor
 from .memory_store import MemoryStore
 from .persistence import SQLiteMemoryPersistence
 from .preference import PreferenceExtractor
+from .lifecycle import MemoryLifecycleManager
 
 
 def to_primitive(value: Any) -> Any:
@@ -45,17 +46,16 @@ class MemoryService:
         self.ingestion = DataIngestionPipeline()
         self.preference_extractor = PreferenceExtractor()
         self.knowledge_extractor = KnowledgeExtractor()
+        self.lifecycle = MemoryLifecycleManager(self.store)
 
     def ingest(self, raw_records: Iterable[dict[str, Any]], *, persist: bool = True) -> dict[str, Any]:
         batch = self.ingestion.ingest_with_report(raw_records)
-        preferences = [
-            self.store.upsert_preference(memory)
-            for memory in self.preference_extractor.extract(batch.records)
-        ]
-        knowledge = [
-            self.store.upsert_knowledge(memory)
-            for memory in self.knowledge_extractor.extract(batch.records)
-        ]
+        decisions = self.lifecycle.process(batch.records)
+        evidence_ids = {record.id for record in batch.records}
+        preferences = [item for item in self.store.preferences.values()
+                       if evidence_ids.intersection(item.evidence_ids)]
+        knowledge = [item for item in self.store.knowledge.values()
+                     if evidence_ids.intersection(item.source_ids)]
         self._save_if_requested(persist)
         return to_primitive(
             {
@@ -65,6 +65,7 @@ class MemoryService:
                 "issues": batch.issues,
                 "preferences": preferences,
                 "knowledge": knowledge,
+                "promotion_decisions": decisions,
                 "stats": self.store.stats(),
             }
         )

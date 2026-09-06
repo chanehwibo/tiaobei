@@ -12,6 +12,7 @@ from .knowledge import KnowledgeExtractor
 from .memory_store import MemoryStore
 from .preference import PreferenceExtractor
 from .schemas import KnowledgeMemory, MemoryStatus, PreferenceMemory, stable_id, utc_now
+from .service import MemoryService
 
 
 def precision_recall_f1(true_positive: int, false_positive: int, false_negative: int) -> dict[str, float]:
@@ -119,17 +120,12 @@ def load_evaluation_suite(path: str | Path, *, split: str | None = None) -> dict
 
 
 def build_store_from_raw_records(raw_records: list[dict[str, Any]]) -> MemoryStore:
-    ingestion = DataIngestionPipeline()
-    records = ingestion.ingest(raw_records)
-
-    store = MemoryStore()
-    for memory in PreferenceExtractor().extract(records):
-        store.upsert_preference(memory)
-    for memory in KnowledgeExtractor().extract(records):
-        result = store.upsert_knowledge(memory)
-        if result.status == MemoryStatus.CONFLICT_PENDING:
-            store.resolve_knowledge_conflict(result.id, strategy="auto")
-    return store
+    service = MemoryService()
+    service.ingest(raw_records, persist=False)
+    for item in list(service.store.knowledge.values()):
+        if item.status == MemoryStatus.CONFLICT_PENDING:
+            service.store.resolve_knowledge_conflict(item.id, strategy="auto")
+    return service.store
 
 
 def run_evaluation_suite(path: str | Path, top_k: int = 3, *, split: str | None = None) -> dict[str, Any]:

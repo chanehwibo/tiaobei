@@ -19,20 +19,9 @@ from .service import MemoryService
 
 
 def build_store(input_path: Path) -> MemoryStore:
-    ingestion = DataIngestionPipeline()
-    raw_records = ingestion.load_jsonl(input_path)
-    records = ingestion.ingest(raw_records)
-
-    preference_extractor = PreferenceExtractor()
-    knowledge_extractor = KnowledgeExtractor()
-    store = MemoryStore()
-
-    for memory in preference_extractor.extract(records):
-        store.upsert_preference(memory)
-    for memory in knowledge_extractor.extract(records):
-        store.upsert_knowledge(memory)
-
-    return store
+    service = MemoryService()
+    service.ingest(service.ingestion.load_jsonl(input_path), persist=False)
+    return service.store
 
 
 def run_demo(input_path: Path) -> None:
