@@ -347,6 +347,9 @@ class MemoryStore:
         self._token_index.clear()
         self._document_tokens.clear()
         for memory in self.knowledge.values():
+            if memory.status not in {MemoryStatus.ACTIVE, MemoryStatus.CONFLICT_PENDING}:
+                memory.embedding = []
+                continue
             if not memory.embedding:
                 memory.embedding = self.embedding.encode(self._knowledge_text(memory))
             self._index_knowledge(memory)
@@ -588,6 +591,10 @@ class MemoryStore:
         return f"{memory.title} {memory.content} {' '.join(memory.tags)} {memory.scene} {memory.knowledge_type}"
 
     def _index_knowledge(self, memory: KnowledgeMemory) -> None:
+        if memory.status not in {MemoryStatus.ACTIVE, MemoryStatus.CONFLICT_PENDING}:
+            self._remove_knowledge_index(memory.id)
+            memory.embedding = []
+            return
         old_tokens = self._document_tokens.get(memory.id, set())
         for token in old_tokens:
             bucket = self._token_index.get(token)

@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import sys
 import unittest
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from os_agent_memory.service import MemoryService
 from os_agent_memory.evaluation import build_store_from_raw_records
+from os_agent_memory.persistence import SQLiteMemoryPersistence
 
 
 def event(identifier="probe", authority=0.4):
@@ -56,3 +58,22 @@ class ValidityTest(unittest.TestCase):
         service = MemoryService()
         result = service.ingest([event(authority=0.95)], persist=False)
         self.assertTrue(result["promotion_decisions"][0]["accepted"])
+
+
+class DeletedIndexTest(unittest.TestCase):
+    def test_deleted_vectors_stay_absent_after_rebuild_and_reload(self):
+        service = MemoryService()
+        service.ingest([event(authority=0.95)], persist=False)
+        plan = service.forget_preview("删除报销相关记忆", tenant_id="test", user_id="alice")
+        service.forget_confirm(plan["id"], persist=False)
+        service.store.rebuild_index()
+        with tempfile.TemporaryDirectory() as folder:
+            persistence = SQLiteMemoryPersistence(Path(folder) / "memory.sqlite")
+            persistence.save(service.store)
+            loaded = persistence.load()
+        for store in (service.store, loaded):
+            item = next(iter(store.knowledge.values()))
+            self.assertEqual(item.status.value, "forgotten")
+            self.assertFalse(item.embedding)
+            self.assertNotIn(item.id, store._document_tokens)
+            self.assertFalse(store.search_knowledge("报销", tenant_id="test", user_id="alice"))
