@@ -1,0 +1,434 @@
+{
+  "dataset": "office_memory_eval_v3",
+  "independent_blind": false,
+  "configuration": {
+    "selected_on": "dev",
+    "mode": "hybrid",
+    "threshold": 0.16,
+    "dev_sha256": "edecece202519146804fc0e85e86fac4cb293d45c927780ed26b9e01bcf4671f",
+    "selection": "balanced positive recall and no-answer accuracy",
+    "trials": [
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.08,
+        "cache": true,
+        "positive_recall_at_3": 1.0,
+        "no_answer_accuracy": 0.0,
+        "balanced_score": 0.5
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.12,
+        "cache": true,
+        "positive_recall_at_3": 1.0,
+        "no_answer_accuracy": 0.1667,
+        "balanced_score": 0.5833
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.16,
+        "cache": true,
+        "positive_recall_at_3": 1.0,
+        "no_answer_accuracy": 0.8333,
+        "balanced_score": 0.9167
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.2,
+        "cache": true,
+        "positive_recall_at_3": 0.8333,
+        "no_answer_accuracy": 0.8333,
+        "balanced_score": 0.8333
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.24,
+        "cache": true,
+        "positive_recall_at_3": 0.8333,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.9167
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.28,
+        "cache": true,
+        "positive_recall_at_3": 0.75,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.875
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.32,
+        "cache": true,
+        "positive_recall_at_3": 0.6667,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.8333
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.36,
+        "cache": true,
+        "positive_recall_at_3": 0.5833,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.7917
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.4,
+        "cache": true,
+        "positive_recall_at_3": 0.3333,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.6667
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.44,
+        "cache": true,
+        "positive_recall_at_3": 0.1667,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.5833
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.48,
+        "cache": true,
+        "positive_recall_at_3": 0.0833,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.5417
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.52,
+        "cache": true,
+        "positive_recall_at_3": 0.0,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.5
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.56,
+        "cache": true,
+        "positive_recall_at_3": 0.0,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.5
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.6,
+        "cache": true,
+        "positive_recall_at_3": 0.0,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.5
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.64,
+        "cache": true,
+        "positive_recall_at_3": 0.0,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.5
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.68,
+        "cache": true,
+        "positive_recall_at_3": 0.0,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.5
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.72,
+        "cache": true,
+        "positive_recall_at_3": 0.0,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.5
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.76,
+        "cache": true,
+        "positive_recall_at_3": 0.0,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.5
+      },
+      {
+        "split": "dev",
+        "mode": "hybrid",
+        "threshold": 0.8,
+        "cache": true,
+        "positive_recall_at_3": 0.0,
+        "no_answer_accuracy": 1.0,
+        "balanced_score": 0.5
+      }
+    ]
+  },
+  "test": {
+    "split": "test",
+    "mode": "hybrid",
+    "threshold": 0.16,
+    "cache": true,
+    "positive_recall_at_3": 1.0,
+    "no_answer_accuracy": 0.8333,
+    "balanced_score": 0.9167,
+    "mean_latency_ms": 0.1337,
+    "rows": [
+      {
+        "id": "test-0-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "设备借还"
+        ],
+        "returned": [
+          "设备借还"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.136
+      },
+      {
+        "id": "test-0-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "设备借还"
+        ],
+        "returned": [
+          "设备借还"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.1719
+      },
+      {
+        "id": "test-0-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [],
+        "recall": null,
+        "empty_correct": true,
+        "precision": null,
+        "latency_ms": 0.1058
+      },
+      {
+        "id": "test-1-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "培训签到"
+        ],
+        "returned": [
+          "培训签到"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.113
+      },
+      {
+        "id": "test-1-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "培训签到"
+        ],
+        "returned": [
+          "培训签到"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.1118
+      },
+      {
+        "id": "test-1-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [],
+        "recall": null,
+        "empty_correct": true,
+        "precision": null,
+        "latency_ms": 0.1061
+      },
+      {
+        "id": "test-2-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "版本发布"
+        ],
+        "returned": [
+          "打印审计",
+          "版本发布",
+          "设备借还"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 0.3333333333333333,
+        "latency_ms": 0.1705
+      },
+      {
+        "id": "test-2-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "版本发布"
+        ],
+        "returned": [
+          "版本发布"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.1124
+      },
+      {
+        "id": "test-2-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [
+          "版本发布"
+        ],
+        "recall": null,
+        "empty_correct": false,
+        "precision": 0.0,
+        "latency_ms": 0.1064
+      },
+      {
+        "id": "test-3-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "打印审计"
+        ],
+        "returned": [
+          "打印审计"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.1326
+      },
+      {
+        "id": "test-3-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "打印审计"
+        ],
+        "returned": [
+          "打印审计",
+          "设备借还"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 0.5,
+        "latency_ms": 0.1432
+      },
+      {
+        "id": "test-3-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [],
+        "recall": null,
+        "empty_correct": true,
+        "precision": null,
+        "latency_ms": 0.1089
+      },
+      {
+        "id": "test-4-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "离职交接"
+        ],
+        "returned": [
+          "离职交接"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.1635
+      },
+      {
+        "id": "test-4-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "离职交接"
+        ],
+        "returned": [
+          "离职交接",
+          "设备借还"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 0.5,
+        "latency_ms": 0.2505
+      },
+      {
+        "id": "test-4-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [],
+        "recall": null,
+        "empty_correct": true,
+        "precision": null,
+        "latency_ms": 0.1083
+      },
+      {
+        "id": "test-5-paraphrase",
+        "difficulty": "paraphrase",
+        "expected": [
+          "工单升级"
+        ],
+        "returned": [
+          "工单升级"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.1178
+      },
+      {
+        "id": "test-5-keyword",
+        "difficulty": "keyword",
+        "expected": [
+          "工单升级"
+        ],
+        "returned": [
+          "工单升级"
+        ],
+        "recall": 1.0,
+        "empty_correct": null,
+        "precision": 1.0,
+        "latency_ms": 0.1423
+      },
+      {
+        "id": "test-5-unanswerable",
+        "difficulty": "unanswerable",
+        "expected": [],
+        "returned": [],
+        "recall": null,
+        "empty_correct": true,
+        "precision": null,
+        "latency_ms": 0.1058
+      }
+    ]
+  },
+  "limitations": [
+    "42 input events, 18 topics, 54 queries only; not statistical proof of generalization.",
+    "Conflict/forget adversarial behavior is evaluated separately, not as empty-case accuracy."
+  ]
+}

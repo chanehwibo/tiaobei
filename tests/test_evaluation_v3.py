@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 from generate_eval_v3 import generate, audit_splits
+from os_agent_memory.experiments import select_threshold, evaluate_frozen
 
 
 class SplitIsolationTest(unittest.TestCase):
@@ -23,3 +24,13 @@ class SplitIsolationTest(unittest.TestCase):
         suite = generate()
         suite["records"][-1]["content"] = suite["records"][0]["content"]
         self.assertGreater(audit_splits(suite)["train/test"]["shared_content"], 0)
+
+    def test_threshold_selection_does_not_use_test_labels(self):
+        suite = generate()
+        first = select_threshold(suite)
+        for query in suite["retrieval_queries"]:
+            if query["split"] == "test":
+                query["expected_titles"] = ["changed-test-label"]
+        self.assertEqual(first, select_threshold(suite))
+        report = evaluate_frozen(suite)
+        self.assertEqual(report["test"]["threshold"], first["threshold"])
