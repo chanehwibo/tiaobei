@@ -1,0 +1,10 @@
+kylin-ai-vector-engine 1.2.0.1-0k0.11
+libkylin-coreai-embedding:amd64 1.2.0.0-0k0.3
+libkylin-ondevice-embedding-engine:amd64 1.2.0.0-0k0.10
+libkylin-ondevice-image-embedding-engine 
+libkylin-ondevice-text-embedding-engine 
+libkysdk-coreai-speech0:amd64 1.1.0.1-0k0.4
+libkysdk-coreai-vision0:amd64 1.1.0.1-0k0.4
+libkysdk-vector-engine-client:amd64 1.2.0.0-0k0.7
+open-vm-tools 
+open-vm-tools-dev 

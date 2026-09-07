@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-07T15:55:22+00:00",
+  "scope": "c05_current_windows_installed_v11_public_source_identity_not_official_certification",
+  "passed": true,
+  "current_source_v11_verified": true,
+  "current_source_dual_environment_complete": true,
+  "competition_ready": false,
+  "comparisons": {
+    "raw_sha256": {
+      "compared_public_files": 95,
+      "differences": {
+        "windows": [],
+        "kylin": [],
+        "worktree": []
+      },
+      "passed": true,
+      "excluded_generated_outputs": {
+        "windows": {
+          "data/eval/latest_report.json": "348773598960b54cd4db2fe4cadc897e2b19323d30f7a74ad467ce2ff713a4ac"
+        },
+        "kylin": {},
+        "worktree": {
+          "data/eval/latest_report.json": "348773598960b54cd4db2fe4cadc897e2b19323d30f7a74ad467ce2ff713a4ac"
+        }
+      }
+    },
+    "lf_sha256": {
+      "compared_public_files": 95,
+      "differences": {
+        "windows": [],
+        "kylin": [],
+        "worktree": []
+      },
+      "passed": true,
+      "excluded_generated_outputs": {
+        "windows": {
+          "data/eval/latest_report.json": "6a1311ec373368e5eb53a9268be0ddbd48f4756c0f6c56cd7f45ac47ae73db4d"
+        },
+        "kylin": {},
+        "worktree": {
+          "data/eval/latest_report.json": "6a1311ec373368e5eb53a9268be0ddbd48f4756c0f6c56cd7f45ac47ae73db4d"
+        }
+      }
+    }
+  },
+  "excluded_generated_output_reason": "Only the Git-ignored and package-blocked historical latest_report.json is excluded. No executable source, test, configuration, or frozen label is excluded.",
+  "request_gates": {
+    "windows": {
+      "passed": true,
+      "checks": {
+        "five_numeric_targets": true,
+        "required_safety_checks": true,
+        "frozen_dataset": true,
+        "frozen_request_counts": true,
+        "frozen_retrieval_configuration": true,
+        "honest_evidence_scope": true,
+        "distinct_request_rows": true,
+        "denominators_match_rows": true,
+        "summary_matches_details": true,
+        "aggregates_match_request_rows": true
+      },
+      "rubric": {
+        "metrics": {
+          "preference_accuracy": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 68,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "knowledge_recall": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "conflict_accuracy": {
+            "value": 1.0,
+            "target": 0.88,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "retrieval_p95_ms": {
+            "value": 105.00189987942576,
+            "target": 500.0,
+            "operator": "le",
+            "requests": 80,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "sensitive_f1": {
+            "value": 1.0,
+            "target": 0.9,
+            "operator": "ge",
+            "requests": 50,
+            "minimum_requests": 50,
+            "passed": true
+          }
+        },
+        "all_targets_met": true,
+        "scope": "developer_held_measurements_not_official_certification"
+      },
+      "scope": "frozen_public_synthetic_regression_not_independent_blind_or_official_certification"
+    },
+    "kylin": {
+      "passed": true,
+      "checks": {
+        "five_numeric_targets": true,
+        "required_safety_checks": true,
+        "frozen_dataset": true,
+        "frozen_request_counts": true,
+        "frozen_retrieval_configuration": true,
+        "honest_evidence_scope": true,
+        "distinct_request_rows": true,
+        "denominators_match_rows": true,
+        "summary_matches_details": true,
+        "aggregates_match_request_rows": true
+      },
+      "rubric": {
+        "metrics": {
+          "preference_accuracy": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 68,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "knowledge_recall": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "conflict_accuracy": {
+            "value": 1.0,
+            "target": 0.88,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "retrieval_p95_ms": {
+            "value": 127.14514899994356,
+            "target": 500.0,
+            "operator": "le",
+            "requests": 80,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "sensitive_f1": {
+            "value": 1.0,
+            "target": 0.9,
+            "operator": "ge",
+            "requests": 50,
+            "minimum_requests": 50,
+            "passed": true
+          }
+        },
+        "all_targets_met": true,
+        "scope": "developer_held_measurements_not_official_certification"
+      },
+      "scope": "frozen_public_synthetic_regression_not_independent_blind_or_official_certification"
+    }
+  },
+  "metrics": {
+    "windows": {
+      "preference_accuracy": 1.0,
+      "knowledge_recall": 1.0,
+      "conflict_accuracy": 1.0,
+      "retrieval_p95_ms": 105.00189987942576,
+      "sensitive_f1": 1.0
+    },
+    "kylin": {
+      "preference_accuracy": 1.0,
+      "knowledge_recall": 1.0,
+      "conflict_accuracy": 1.0,
+      "retrieval_p95_ms": 127.14514899994356,
+      "sensitive_f1": 1.0
+    }
+  },
+  "observation_counts": {
+    "windows": {
+      "preference_accuracy": 68,
+      "knowledge_recall": 60,
+      "conflict_accuracy": 60,
+      "retrieval_p95_ms": 80,
+      "sensitive_f1": 50
+    },
+    "kylin": {
+      "preference_accuracy": 68,
+      "knowledge_recall": 60,
+      "conflict_accuracy": 60,
+      "retrieval_p95_ms": 80,
+      "sensitive_f1": 50
+    }
+  },
+  "unit_tests": {
+    "windows": {
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "passed": true,
+      "error_type": null,
+      "duration_ms": 28287.105,
+      "output_tail": "attributes_and_existing_lifecycle_gate) ... ok\ntest_negation_verbs_and_last_explicit_correction (test_preference_alignment.PreferenceAlignmentTest.test_negation_verbs_and_last_explicit_correction) ... ok\ntest_reaffirmed_explicit_setting_rejects_out_of_order_change (test_preference_alignment.PreferenceAlignmentTest.test_reaffirmed_explicit_setting_rejects_out_of_order_change) ... ok\ntest_dimension_change_invalidates_persisted_cache (test_provider_config.ProviderConfigTest.test_dimension_change_invalidates_persisted_cache) ... ok\ntest_invalid_vector_fails_and_timeout_does_not_spawn_unbounded_workers (test_provider_config.ProviderConfigTest.test_invalid_vector_fails_and_timeout_does_not_spawn_unbounded_workers) ... ok\ntest_archives_are_scanned_without_extraction (test_release_verification.ReleaseVerificationTest.test_archives_are_scanned_without_extraction) ... ok\ntest_failed_or_completed_release_runs_cannot_be_overwritten (test_release_verification.ReleaseVerificationTest.test_failed_or_completed_release_runs_cannot_be_overwritten) ... ok\ntest_file_discovery_fallback_excludes_private_and_build_outputs (test_release_verification.ReleaseVerificationTest.test_file_discovery_fallback_excludes_private_and_build_outputs) ... ok\ntest_fixture_directory_does_not_exempt_unknown_credentials (test_release_verification.ReleaseVerificationTest.test_fixture_directory_does_not_exempt_unknown_credentials) ... ok\ntest_large_logs_are_scanned_past_the_former_limit (test_release_verification.ReleaseVerificationTest.test_large_logs_are_scanned_past_the_former_limit) ... ok\ntest_material_check_lists_missing_paths (test_release_verification.ReleaseVerificationTest.test_material_check_lists_missing_paths) ... ok\ntest_office_metadata_and_external_relationships_are_not_ignored (test_release_verification.ReleaseVerificationTest.test_office_metadata_and_external_relationships_are_not_ignored) ... ok\ntest_office_split_run_credentials_are_scanned (test_release_verification.ReleaseVerificationTest.test_office_split_run_credentials_are_scanned) ... ok\ntest_privacy_scan_reports_location_without_secret_value (test_release_verification.ReleaseVerificationTest.test_privacy_scan_reports_location_without_secret_value) ... ok\ntest_root_relationships_and_new_default_author_metadata_are_rejected (test_release_verification.ReleaseVerificationTest.test_root_relationships_and_new_default_author_metadata_are_rejected) ... ok\ntest_subprocess_failures_preserve_available_output (test_release_verification.ReleaseVerificationTest.test_subprocess_failures_preserve_available_output) ... ok\ntest_synthetic_test_fixture_is_classified_but_not_failed (test_release_verification.ReleaseVerificationTest.test_synthetic_test_fixture_is_classified_but_not_failed) ... ok\ntest_unknown_binary_media_is_explicitly_left_for_review (test_release_verification.ReleaseVerificationTest.test_unknown_binary_media_is_explicitly_left_for_review) ... ok\ntest_unsafe_archive_entries_fail_closed (test_release_verification.ReleaseVerificationTest.test_unsafe_archive_entries_fail_closed) ... ok\ntest_utf16_logs_and_unreadable_text_fail_closed (test_release_verification.ReleaseVerificationTest.test_utf16_logs_and_unreadable_text_fail_closed) ... ok\ntest_cli_fails_nonzero_and_retains_failed_report (test_request_contract.RequestContractTest.test_cli_fails_nonzero_and_retains_failed_report) ... ok\ntest_empty_missing_or_false_safety_does_not_pass (test_request_contract.RequestContractTest.test_empty_missing_or_false_safety_does_not_pass) ... ok\ntest_frozen_bytes_and_known_report (test_request_contract.RequestContractTest.test_frozen_bytes_and_known_report) ... ok\ntest_frozen_scope_configuration_and_counts_are_enforced (test_request_contract.RequestContractTest.test_frozen_scope_configuration_and_counts_are_enforced) ... ok\ntest_numeric_gate_does_not_trust_boolean_claim (test_request_contract.RequestContractTest.test_numeric_gate_does_not_trust_boolean_claim) ... ok\ntest_repeated_and_missing_rows_or_changed_numerators_fail (test_request_contract.RequestContractTest.test_repeated_and_missing_rows_or_changed_numerators_fail) ... ok\ntest_row_measurements_cannot_disagree_with_green_summaries (test_request_contract.RequestContractTest.test_row_measurements_cannot_disagree_with_green_summaries) ... ok\ntest_denominators_are_requests_and_reject_duplicate_inputs (test_request_evaluation.RequestEvaluationTest.test_denominators_are_requests_and_reject_duplicate_inputs) ... ok\ntest_duplicate_effective_scope_is_rejected (test_request_evaluation.RequestEvaluationTest.test_duplicate_effective_scope_is_rejected) ... ok\ntest_extra_slots_fail_whole_request (test_request_evaluation.RequestEvaluationTest.test_extra_slots_fail_whole_request) ... ok\ntest_ingestion_failure_is_reported_without_changing_query_denominator (test_request_evaluation.RequestEvaluationTest.test_ingestion_failure_is_reported_without_changing_query_denominator) ... ok\ntest_sensitive_scores_entities_not_just_positive_requests (test_request_evaluation.RequestEvaluationTest.test_sensitive_scores_entities_not_just_positive_requests) ... ok\ntest_weak_temporary_preference_is_not_durable (test_request_evaluation.RequestEvaluationTest.test_weak_temporary_preference_is_not_durable) ... ok\ntest_cjk_adjacent_credentials_and_repeated_entities (test_request_quality.RequestQualityTest.test_cjk_adjacent_credentials_and_repeated_entities) ... ok\ntest_credential_owns_embedded_email_and_private_key_body (test_request_quality.RequestQualityTest.test_credential_owns_embedded_email_and_private_key_body) ... ok\ntest_field_name_substrings_and_placeholders_are_not_credentials (test_request_quality.RequestQualityTest.test_field_name_substrings_and_placeholders_are_not_credentials) ... ok\ntest_frozen_sensitive_entities_and_zero_leaks (test_request_quality.RequestQualityTest.test_frozen_sensitive_entities_and_zero_leaks) ... ok\ntest_overlapping_id_and_bank_patterns_produce_one_entity (test_request_quality.RequestQualityTest.test_overlapping_id_and_bank_patterns_produce_one_entity) ... ok\ntest_reusable_rules_obey_production_lifecycle_and_risk_gate (test_request_quality.RequestQualityTest.test_reusable_rules_obey_production_lifecycle_and_risk_gate) ... ok\ntest_character_candidates_without_shared_bigrams (test_retrieval_hard_cases.RetrievalHardCaseTest.test_character_candidates_without_shared_bigrams) ... ok\ntest_character_index_replacement_deletion_and_rebuild (test_retrieval_hard_cases.RetrievalHardCaseTest.test_character_index_replacement_deletion_and_rebuild) ... ok\ntest_metadata_and_invisible_owners_do_not_supply_character_evidence (test_retrieval_hard_cases.RetrievalHardCaseTest.test_metadata_and_invisible_owners_do_not_supply_character_evidence) ... ok\ntest_numeric_conditions_and_scene_boundaries (test_retrieval_hard_cases.RetrievalHardCaseTest.test_numeric_conditions_and_scene_boundaries) ... ok\ntest_semantic_candidate_survives_unrelated_lexical_match (test_retrieval_hard_cases.RetrievalHardCaseTest.test_semantic_candidate_survives_unrelated_lexical_match) ... ok\ntest_deleted_vectors_stay_absent_after_rebuild_and_reload (test_round2.DeletedIndexTest.test_deleted_vectors_stay_absent_after_rebuild_and_reload) ... ok\ntest_distinct_repeated_evidence_promotes_across_requests (test_round2.LifecycleIntegrationTest.test_distinct_repeated_evidence_promotes_across_requests) ... ok\ntest_service_and_evaluation_reject_single_weak_event (test_round2.LifecycleIntegrationTest.test_service_and_evaluation_reject_single_weak_event) ... ok\ntest_failed_delete_is_retryable_and_does_not_consume_plan (test_round2.TransactionTest.test_failed_delete_is_retryable_and_does_not_consume_plan) ... ok\ntest_failed_ingestion_rolls_back_memory_and_lifecycle (test_round2.TransactionTest.test_failed_ingestion_rolls_back_memory_and_lifecycle) ... ok\ntest_explicit_high_authority_configuration_promotes (test_round2.ValidityTest.test_explicit_high_authority_configuration_promotes) ... ok\ntest_validity_is_start_inclusive_end_exclusive_and_cleans_index (test_round2.ValidityTest.test_validity_is_start_inclusive_end_exclusive_and_cleans_index) ... ok\ntest_failed_tool_cannot_override_successful_user_selected_tool (test_security_adversarial.SecurityAdversarialTest.test_failed_tool_cannot_override_successful_user_selected_tool) ... ok\ntest_hard_delete_has_no_orphan_after_database_reload (test_security_adversarial.SecurityAdversarialTest.test_hard_delete_has_no_orphan_after_database_reload) ... ok\ntest_nested_credentials_are_redacted_before_any_extraction (test_security_adversarial.SecurityAdversarialTest.test_nested_credentials_are_redacted_before_any_extraction) ... ok\ntest_prompt_injection_is_neither_preference_nor_knowledge (test_security_adversarial.SecurityAdversarialTest.test_prompt_injection_is_neither_preference_nor_knowledge) ... ok\ntest_same_user_identifier_cannot_cross_tenant_search_or_forget (test_security_adversarial.SecurityAdversarialTest.test_same_user_identifier_cannot_cross_tenant_search_or_forget) ... ok\ntest_api_rejects_missing_scope (test_web_server.WebServerTest.test_api_rejects_missing_scope) ... ok\ntest_confirm_rejects_another_user_and_null_scope (test_web_server.WebServerTest.test_confirm_rejects_another_user_and_null_scope) ... ok\ntest_conflict_resolution_rejects_wrong_scope (test_web_server.WebServerTest.test_conflict_resolution_rejects_wrong_scope) ... ok\ntest_dashboard_and_read_apis_are_available (test_web_server.WebServerTest.test_dashboard_and_read_apis_are_available) ... ok\ntest_scenarios_and_reset_preserve_other_tenants (test_web_server.WebServerTest.test_scenarios_and_reset_preserve_other_tenants) ... ok\ntest_search_and_two_phase_forget_work_through_http (test_web_server.WebServerTest.test_search_and_two_phase_forget_work_through_http) ... ok\ntest_real_ingest_restart_http_and_concurrent_writes (test_workload.ServiceWorkloadTest.test_real_ingest_restart_http_and_concurrent_writes) ... ok\n\n----------------------------------------------------------------------\nRan 166 tests in 27.540s\n\nOK",
+      "tests_run": 166
+    },
+    "kylin": {
+      "tests_run": 166,
+      "passed": true,
+      "duration_seconds": 19.306
+    }
+  },
+  "reference_reports": {
+    "artifacts/verification/round5/resume/windows/final_verification.json": "f973846648801a8ceed0af8e06a8178ec469f496483d89941df416d0852b64a0",
+    "artifacts/verification/round5/resume/kylin/kylin_vm.json": "ef7ec43bba9d29ece3eb1977dcf0ad84a6f8892b293424c29e46ff188318cc5a",
+    "artifacts/verification/round5/resume/v11_import_privacy.json": "e7e39086912c1b2dd433b97432a925b65d76cbdda8e8f3f398b4d4a2a8ace118",
+    "artifacts/verification/round5/resume/windows/requests.json": "2d8b4862e866c8c615c0f9f4077c07e5bcfa0c01f790fadbce79e6e992611c65",
+    "artifacts/verification/round5/resume/kylin/requests.json": "65e4c35afa636e1e91f755cf0387d16c2131ede0b402ca574dd20a80330abe02"
+  },
+  "transfer": {
+    "tar_sha256": "fda16f07efa1e2631d918a013c2fb442d72e06498b3dcf720490b3f6733f4859",
+    "iso_sha256": "36939ad58ac975b9a014db8d73f72d9cbe59609ec46ebd3fb018135d99e2a7f8",
+    "public_file_count": 316,
+    "source_and_office_files_compared": 97,
+    "guest_source_differences": [],
+    "guest_and_decoded_evidence_tar_sha256": "be2d0c46b0624a41520f93f1d057609b6d1fb5d09325aeb71b32623e2f6dd6ed",
+    "serial_offset_before_export": 8,
+    "evidence_files": [
+      {
+        "path": "action_framework.log",
+        "bytes": 2734,
+        "sha256": "14ab0c908b00ad14c0653fddeb2a62432b382d4ba9708298abf17edce2f29e9c",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "actions.json",
+        "bytes": 13740,
+        "sha256": "fdbcc15bbd1c06d10f8164933487adf291f7082e93698268bff69952aca1fc6c",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "installed_sdk_packages.log",
+        "bytes": 395,
+        "sha256": "7f2b3138570599f6064578366780449b3551dd8d1e5ca38931374fbfa940bcc3",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "kylin_vm.json",
+        "bytes": 27312,
+        "sha256": "ef7ec43bba9d29ece3eb1977dcf0ad84a6f8892b293424c29e46ff188318cc5a",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "native-sdk.json",
+        "bytes": 1114,
+        "sha256": "7f7a0664cf461e63ad3eb0cb13a06af0e070efb7a2596274e40b8733465308d9",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "native_sdk.log",
+        "bytes": 1006,
+        "sha256": "16c6fbc7086d131d90aa3ed83441b4650022c2da34c0438f6c37b2205620997d",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "official.json",
+        "bytes": 17791,
+        "sha256": "365927564d24ecb67da31bf7a0c70485386776dd0e0a23385e6844c89dada4e6",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "official_diagnostics.log",
+        "bytes": 327,
+        "sha256": "8fca905129fba96f635fa67b0aa9dc28bfbeb4d8b3fd5c0f6cd98c9313db4d43",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "request_metrics.log",
+        "bytes": 2331,
+        "sha256": "6db9b23db151e3bd7d304b1af8d11cd117430817cd1d2ffd9465ec8f4f846bda",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "requests.json",
+        "bytes": 95547,
+        "sha256": "65e4c35afa636e1e91f755cf0387d16c2131ede0b402ca574dd20a80330abe02",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "retrieval_v3.log",
+        "bytes": 326,
+        "sha256": "1fac98084f655f2a4c995bc2b9dcbb537b16a16340dc413d3d42e5a4ee0b5b02",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "root_filesystem.log",
+        "bytes": 111,
+        "sha256": "c7fdc5d855e6c49c9288588764398601f1815fe93f676399c742ef013cd8fc31",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "source_check.log",
+        "bytes": 55,
+        "sha256": "b730bd97e229704d738f79a0c4cd7cdbd37a213087a6d4b4d5911c9c41f52a27",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "unit_tests.log",
+        "bytes": 26108,
+        "sha256": "f4a96ba66480a963b27a8ac7e203a4746dc17bb7db652f4b265af3c6e6591667",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "virtualization.log",
+        "bytes": 7,
+        "sha256": "982a698aea678befdb27602825fb9a5d38d744f0a6e59585e48381010d52766b",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      }
+    ]
+  },
+  "dataset_sha256": "51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98",
+  "sealed_archives": [
+    {
+      "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "e109ef0d9f501cdd9e203c48821cf1e8c17a413304a14cf13677964b3a240227",
+      "matches_sealed_sidecar": true
+    },
+    {
+      "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "3eedda8e6416fa29be160fd1bacb9f3adc4c68ea955c5c8bcdf2e9ffb0ce0716",
+      "matches_sealed_sidecar": true
+    },
+    {
+      "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip",
+      "sha256": "6bce17e442630fa5a3d2e45aef502f2896d8ae3ca1f91c9ce1be586526478da1",
+      "matches_sealed_sidecar": true
+    },
+    {
+      "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "631ecbf2045d1bd3a42d5205a564be72007b649cd8cdd4a106b0b16bfeba7e35",
+      "matches_sealed_sidecar": true
+    }
+  ],
+  "checks": {
+    "windows_all_14_release_checks_passed": true,
+    "windows_all_166_tests_passed": true,
+    "v11_all_166_tests_passed": true,
+    "v11_all_six_core_checks_passed": true,
+    "installed_v11_actually_verified": true,
+    "sources_unchanged_during_both_runs": true,
+    "current_95_files_match_both_environments": true,
+    "both_frozen_request_gates_passed": true,
+    "frozen_dataset_unchanged": true,
+    "transfer_sources_and_office_match_current": true,
+    "transfer_identity_matches_guest_observation": true,
+    "export_identity_matches_guest_observation": true,
+    "all_15_evidence_files_byte_identical": true,
+    "import_privacy_passed_for_exact_evidence": true,
+    "four_historical_archives_unchanged": true,
+    "visually_accepted_office_unchanged": true,
+    "no_native_or_official_acceptance_substitution": true
+  },
+  "remaining": "C05C new incomplete package and independent extraction/checkout acceptance; C04/R09 remote HEAD and actual new CI; X01-X05 external evidence."
+}

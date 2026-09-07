@@ -1,0 +1,100 @@
+{
+  "passed": true,
+  "scanned_text_files": 15,
+  "scanned_office_documents": 0,
+  "scanned_zip_archives": 0,
+  "skipped_binary_or_large_files": 0,
+  "manual_review_required": [],
+  "unexpected_findings": [],
+  "approved_synthetic_fixture_findings": [],
+  "approved_legacy_template_metadata": [],
+  "policy": "文本逐行扫描，无2MiB跳过；ZIP递归扫描有128MiB及层数上限，超限失败；Office扫描XML/元数据/拆分文本。只记录位置和类型，不记录敏感原文。媒体无OCR，须单独人工复核。",
+  "binary_review": {
+    "method": "Every residual member, including nested ZIP/Office members, is compared byte-for-byte to the installed library default template with a pinned SHA256.",
+    "resolved_default_template_members": 0,
+    "unresolved_members": [],
+    "members": [],
+    "scope": "Exact default template bytes only; no OCR claim for arbitrary media or future participant documents."
+  },
+  "public_inventory": [
+    {
+      "path": "c05-evidence/action_framework.log",
+      "bytes": 2734,
+      "sha256": "14ab0c908b00ad14c0653fddeb2a62432b382d4ba9708298abf17edce2f29e9c"
+    },
+    {
+      "path": "c05-evidence/actions.json",
+      "bytes": 13740,
+      "sha256": "fdbcc15bbd1c06d10f8164933487adf291f7082e93698268bff69952aca1fc6c"
+    },
+    {
+      "path": "c05-evidence/installed_sdk_packages.log",
+      "bytes": 395,
+      "sha256": "7f2b3138570599f6064578366780449b3551dd8d1e5ca38931374fbfa940bcc3"
+    },
+    {
+      "path": "c05-evidence/kylin_vm.json",
+      "bytes": 27312,
+      "sha256": "ef7ec43bba9d29ece3eb1977dcf0ad84a6f8892b293424c29e46ff188318cc5a"
+    },
+    {
+      "path": "c05-evidence/native-sdk.json",
+      "bytes": 1114,
+      "sha256": "7f7a0664cf461e63ad3eb0cb13a06af0e070efb7a2596274e40b8733465308d9"
+    },
+    {
+      "path": "c05-evidence/native_sdk.log",
+      "bytes": 1006,
+      "sha256": "16c6fbc7086d131d90aa3ed83441b4650022c2da34c0438f6c37b2205620997d"
+    },
+    {
+      "path": "c05-evidence/official.json",
+      "bytes": 17791,
+      "sha256": "365927564d24ecb67da31bf7a0c70485386776dd0e0a23385e6844c89dada4e6"
+    },
+    {
+      "path": "c05-evidence/official_diagnostics.log",
+      "bytes": 327,
+      "sha256": "8fca905129fba96f635fa67b0aa9dc28bfbeb4d8b3fd5c0f6cd98c9313db4d43"
+    },
+    {
+      "path": "c05-evidence/request_metrics.log",
+      "bytes": 2331,
+      "sha256": "6db9b23db151e3bd7d304b1af8d11cd117430817cd1d2ffd9465ec8f4f846bda"
+    },
+    {
+      "path": "c05-evidence/requests.json",
+      "bytes": 95547,
+      "sha256": "65e4c35afa636e1e91f755cf0387d16c2131ede0b402ca574dd20a80330abe02"
+    },
+    {
+      "path": "c05-evidence/retrieval_v3.log",
+      "bytes": 326,
+      "sha256": "1fac98084f655f2a4c995bc2b9dcbb537b16a16340dc413d3d42e5a4ee0b5b02"
+    },
+    {
+      "path": "c05-evidence/root_filesystem.log",
+      "bytes": 111,
+      "sha256": "c7fdc5d855e6c49c9288588764398601f1815fe93f676399c742ef013cd8fc31"
+    },
+    {
+      "path": "c05-evidence/source_check.log",
+      "bytes": 55,
+      "sha256": "b730bd97e229704d738f79a0c4cd7cdbd37a213087a6d4b4d5911c9c41f52a27"
+    },
+    {
+      "path": "c05-evidence/unit_tests.log",
+      "bytes": 26108,
+      "sha256": "f4a96ba66480a963b27a8ac7e203a4746dc17bb7db652f4b265af3c6e6591667"
+    },
+    {
+      "path": "c05-evidence/virtualization.log",
+      "bytes": 7,
+      "sha256": "982a698aea678befdb27602825fb9a5d38d744f0a6e59585e48381010d52766b"
+    }
+  ],
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-07T15:47:47+00:00",
+  "scope": "privacy_local_release_audit_not_official_certification",
+  "competition_ready": false
+}
