@@ -1,0 +1,25 @@
+{
+  "metrics": {
+    "preference_accuracy": 1.0,
+    "knowledge_recall": 1.0,
+    "conflict_accuracy": 1.0,
+    "retrieval_p95_ms": 124.85049100001788,
+    "sensitive_f1": 1.0
+  },
+  "observation_counts": {
+    "preference_accuracy": 68,
+    "knowledge_recall": 60,
+    "conflict_accuracy": 60,
+    "retrieval_p95_ms": 80,
+    "sensitive_f1": 50
+  },
+  "safety_checks": {
+    "durable_preferences": true,
+    "knowledge_ingestion": true,
+    "no_scope_leaks": true,
+    "no_answer_85": true,
+    "no_redaction_leaks": true
+  },
+  "all_targets_met": true,
+  "official_validation_ready": false
+}
