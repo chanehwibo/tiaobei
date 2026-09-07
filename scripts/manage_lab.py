@@ -16,12 +16,14 @@ import venv
 
 MARKER = ".tiaobei-lab.json"
 FOLDERS = ("python", "vm", "iso", "cache", "runs", "sdk-source")
+ISO_NAME = "Kylin-Desktop-V11-2603-Release-20260228-X86_64.iso"
+ISO_SHA256 = "9d00c0c605e023aa879d895e3aa430d1dfd3eafded6273cf297bc1874f9a29c4"
 
 
 def checked_root(root, *, require_marker=True):
     raw = Path(root).absolute()
     for path in (raw, *raw.parents):
-        if path.exists() and (path.is_symlink() or getattr(path.lstat(), "st_file_attributes", 0) & 0x400):
+        if path.is_symlink() or (path.exists() and getattr(path.lstat(), "st_file_attributes", 0) & 0x400):
             raise ValueError("lab path contains a link/reparse point")
     resolved = raw.resolve()
     if resolved.name != "TiaobeiLab" or resolved in (Path.home().resolve(), Path.cwd().resolve(), Path(resolved.anchor)):
@@ -93,12 +95,37 @@ def retire(root, confirmation):
     return {"retired_to": str(target), "recoverable": True}
 
 
+def attach_iso(root):
+    """Attach only the pinned public trial image to the powered-off owned VM."""
+    root = checked_root(root)
+    inventory(root)
+    iso = root / "iso" / ISO_NAME
+    digest = hashlib.sha256()
+    with iso.open("rb") as stream:
+        for block in iter(lambda: stream.read(8 * 1024 * 1024), b""):
+            digest.update(block)
+    if digest.hexdigest() != ISO_SHA256:
+        raise ValueError("official ISO checksum mismatch")
+    vmx = root / "vm" / "kylin-v11.vmx"
+    original = vmx.read_text(encoding="utf-8")
+    if 'ethernet0.present = "FALSE"' not in original or 'scsi0:0.fileName = "system.vmdk"' not in original:
+        raise ValueError("VM configuration changed; manual review required")
+    if "sata0" in original:
+        raise ValueError("CD configuration already exists; refusing overwrite")
+    additions = '\n'.join(('sata0.present = "TRUE"', 'sata0:0.present = "TRUE"',
+        'sata0:0.deviceType = "cdrom-image"', f'sata0:0.fileName = "{iso.as_posix()}"',
+        'sata0:0.startConnected = "TRUE"', 'bios.bootOrder = "cdrom,hdd"', ''))
+    vmx.write_text(original + additions, encoding="utf-8")
+    return {"iso_sha256": digest.hexdigest(), "attached": True, "vm_started": False}
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=("prepare", "status", "retire"))
+    parser.add_argument("action", choices=("prepare", "status", "retire", "attach-iso"))
     parser.add_argument("--root", type=Path, default=Path.home() / "TiaobeiLab")
     parser.add_argument("--confirm", default="")
     args = parser.parse_args()
     result = (prepare(args.root) if args.action == "prepare" else
-              retire(args.root, args.confirm) if args.action == "retire" else inventory(args.root))
+              retire(args.root, args.confirm) if args.action == "retire" else
+              attach_iso(args.root) if args.action == "attach-iso" else inventory(args.root))
     print(json.dumps(result, ensure_ascii=False, indent=2))
