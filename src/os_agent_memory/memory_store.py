@@ -80,6 +80,12 @@ class MemoryStore:
         if current.value != memory.value and self._is_older(memory.valid_from, current.valid_from):
             return current
 
+        if current.value != memory.value and current.score_components.get("explicitness") == 1.0:
+            if (memory.score_components.get("explicitness") != 1.0
+                    or memory.score_components.get("explicit_event_time", 0.0)
+                    < current.score_components.get("explicit_event_time", 0.0)):
+                return current
+
         merged_scenes = sorted(set(current.scenes + memory.scenes))
         merged_evidence = sorted(set(current.evidence_ids + memory.evidence_ids))
         if current.value == memory.value:

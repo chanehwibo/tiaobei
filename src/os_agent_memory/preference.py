@@ -8,7 +8,7 @@ from .schemas import DataRecord, PreferenceMemory, SourceType, ToolStatus, stabl
 
 
 class PreferenceExtractor:
-    """Rule-based preference extractor used as a baseline for evaluation."""
+    """Conservative rule extraction with explicit-setting precedence."""
 
     def __init__(self, *, half_life_days: float | None = 30.0):
         if half_life_days is not None and half_life_days <= 0:
@@ -16,21 +16,35 @@ class PreferenceExtractor:
         self.half_life_days = half_life_days
 
     OUTPUT_PREFERENCE_RULES: tuple[tuple[str, str, tuple[str, ...]], ...] = (
-        ("output.language", "zh-CN", ("中文", "使用中文")),
-        ("output.language", "en", ("英文", "英语")),
-        ("output.verbosity", "brief", ("简洁", "少解释", "直接给结论", "不要展开")),
-        ("output.verbosity", "detailed", ("详细", "展开说明", "给出原因", "完整解释")),
-        ("output.format", "table", ("表格", "列表对比", "用表")),
+        ("output.language", "zh-CN", ("中文", "汉语", "Chinese")),
+        ("output.language", "en", ("英文", "英语", "English")),
+        ("output.verbosity", "brief", ("简洁", "简短", "精简", "少解释", "直接给结论", "不要展开",
+                                       "不要长篇大论", "concise", "brief", "briefly")),
+        ("output.verbosity", "detailed", ("详细", "展开说明", "给出原因", "完整解释", "detailed", "in detail")),
+        ("output.format", "table", ("表格", "列表对比", "table")),
         ("output.format", "json", ("JSON",)),
         ("output.format", "markdown", ("Markdown",)),
-        ("output.format", "plain_text", ("纯文本",)),
-        ("output.structure", "step_by_step", ("分步骤", "步骤", "一步一步")),
+        ("output.format", "plain_text", ("纯文本", "plain text")),
+        ("output.structure", "step_by_step", ("分步骤", "步骤", "一步一步", "逐步", "step by step")),
     )
     SECURITY_RULES: tuple[tuple[str, str, tuple[str, ...]], ...] = (
-        ("security.processing", "local_only", ("本地处理", "不要上传", "离线", "端侧")),
-        ("security.redaction", "required", ("脱敏", "过滤敏感", "隐私", "身份证", "手机号")),
-        ("security.confirmation", "required", ("执行前确认", "先询问", "不要直接执行", "高风险命令前确认")),
+        ("security.processing", "local_only", ("本地处理", "本机处理", "本地完成", "不要上传", "不上传",
+                                               "离线", "端侧", "offline", "locally", "local only")),
+        ("security.redaction", "required", ("脱敏", "过滤敏感", "redact", "mask sensitive")),
+        ("security.confirmation", "required", ("执行前确认", "先询问", "不要直接执行", "高风险命令前确认",
+                                                "ask before", "confirm before")),
     )
+    CLAUSE_BREAK = re.compile(r"[，。；;,.!?！？\n]")
+    INTENT = re.compile(
+        r"请|要求|希望|偏好|喜欢|选择|选用|采用|改成|改用|改为|换成|使用|用|保持|需要|必须|应当|尽量|"
+        r"回答|回复|输出|内容要|分析要|直接给结论|少解释|分步骤|一步一步|逐步|只在|仅在|"
+        r"执行前|命令前|先询问|不要|不上传|"
+        r"\b(?:please|prefer|respond|answer|reply|use|be|provide|explain|must|always|never|redact|ask|confirm)\b",
+        re.IGNORECASE,
+    )
+    NEGATION = re.compile(r"不要|不想|不需要|不再|禁止|避免|别|不用|不使用|不喜欢|不希望|取消|"
+                          r"\b(?:do not|don't|never|not|no)\b", re.IGNORECASE)
+    CORRECTION = re.compile(r"改为|改用|换成|而是|还是|但(?:是)?|instead", re.IGNORECASE)
 
     def extract(self, records: list[DataRecord]) -> list[PreferenceMemory]:
         if not records:
@@ -78,8 +92,9 @@ class PreferenceExtractor:
             if record.source_type not in allowed_sources or record.risk_flags:
                 continue
             selected = {}
+            content = self._unquoted_text(record.content)
             for key, value, keywords in rules:
-                positions = self._positive_positions(record.content, keywords)
+                positions = self._positive_positions(content, keywords)
                 if positions and (key not in selected or max(positions) > selected[key][0]):
                     selected[key] = (max(positions), value)
             for key, (_position, value) in selected.items():
@@ -165,16 +180,13 @@ class PreferenceExtractor:
                 value: sum(item.confidence for item in evidence)
                 for value, evidence in values.items()
             }
-            winning_value = max(
-                totals,
-                key=lambda value: (
-                    totals[value],
-                    max(item.valid_from for item in values[value]),
-                    value,
-                ),
-            )
+            explicit = [item for evidence in values.values() for item in evidence
+                        if item.score_components.get("explicitness") == 1.0]
+            latest_explicit = max(explicit, key=lambda item: (item.valid_from, item.confidence, item.value)) if explicit else None
+            winning_value = latest_explicit.value if latest_explicit else max(
+                totals, key=lambda value: (totals[value], max(item.valid_from for item in values[value]), value))
             evidence = values[winning_value]
-            representative = max(evidence, key=lambda item: item.valid_from)
+            representative = latest_explicit or max(evidence, key=lambda item: item.valid_from)
             total_weight = sum(totals.values())
             margin = totals[winning_value] / max(total_weight, 1e-9)
             mean_score = totals[winning_value] / len(evidence)
@@ -196,6 +208,8 @@ class PreferenceExtractor:
                         "evidence_weight": round(totals[winning_value], 4),
                         "selection_margin": round(margin, 4),
                         "evidence_count": float(len(evidence)),
+                        "explicitness": representative.score_components.get("explicitness", 0.0),
+                        "explicit_event_time": representative.score_components.get("explicit_event_time", 0.0),
                     },
                 )
             )
@@ -254,6 +268,7 @@ class PreferenceExtractor:
             "authority": round(record.authority, 4),
             "recency": round(recency, 4),
             "explicitness": round(explicitness, 4),
+            "explicit_event_time": event_time.timestamp() if record.source_type == SourceType.MANUAL_CONFIG else 0.0,
         }
 
     @staticmethod
@@ -261,14 +276,32 @@ class PreferenceExtractor:
         return bool(PreferenceExtractor._positive_positions(content, keywords))
 
     @staticmethod
-    def _positive_positions(content: str, keywords: tuple[str, ...]) -> list[int]:
+    def _unquoted_text(content: str) -> str:
+        quoted = r'["“][^"”]*["”]|‘[^’]*’|`[^`]*`|(?:引用|原文)(?:一句话)?[：:][^。；\n]*'
+        return re.sub(quoted, lambda match: " " * len(match.group()), content)
+
+    @classmethod
+    def _positive_positions(cls, content: str, keywords: tuple[str, ...]) -> list[int]:
         positions = []
         normalized = content.casefold()
-        negative = re.compile(r"(?:不要|不想|不需要|不再|禁止|避免|别|不用|不使用|不喜欢|取消)"
-                              r"(?:再|继续|采用|使用|用|输出|提供|做成|生成|给我|给出|以|了|的)?\s*$")
         for keyword in keywords:
-            for match in re.finditer(re.escape(keyword.casefold()), normalized):
-                prefix = re.split(r"[，。；;,!?！？\n]", normalized[max(0, match.start() - 16):match.start()])[-1]
-                if keyword.startswith(("不要", "不", "禁止")) or not negative.search(prefix):
-                    positions.append(match.start())
+            pattern = re.escape(keyword.casefold())
+            if keyword.isascii():
+                pattern = r"(?<![a-z0-9_])" + pattern + r"(?![a-z0-9_])"
+            for match in re.finditer(pattern, normalized):
+                prefix = cls.CLAUSE_BREAK.split(normalized[:match.start()])[-1]
+                suffix = cls.CLAUSE_BREAK.split(normalized[match.end():])[0]
+                clause = prefix + match.group() + suffix
+                if not cls.INTENT.search(clause):
+                    continue
+                if re.search(r"(?:他|她|他们|文档|文章)(?:更|都)?喜欢|(?:标题|日志)(?:为|是|包含)|"
+                             r"什么是|\bwhat (?:is|are)\b", clause):
+                    continue
+                # A format discussed as the subject of an explanation is not an output instruction.
+                if re.search(r"(?:解释|讨论|介绍|比较)(?!.*(?:用|采用)).*$", prefix):
+                    continue
+                negatives = list(cls.NEGATION.finditer(prefix))
+                if negatives and not cls.CORRECTION.search(prefix[negatives[-1].end():]):
+                    continue
+                positions.append(match.start())
         return positions
