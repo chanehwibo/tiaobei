@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from .embeddings import KylinEmbeddingConfig, check_kylin_embedding
+from .official_contract import environment_identity
 
 
 def _os_release() -> dict[str, str]:
@@ -111,7 +112,8 @@ def collect_compatibility_report(
             release.get("PRETTY_NAME", ""),
         ]
     ).lower()
-    is_kylin = any(marker in identity for marker in ("kylin", "neokylin", "银河麒麟", "中标麒麟"))
+    verified_identity = environment_identity(platform.system(), release)
+    is_kylin = verified_identity["is_galaxy_kylin"]
     machine = platform.machine()
     architecture_supported = machine.lower() in {
         "amd64",
@@ -134,7 +136,7 @@ def collect_compatibility_report(
         and filesystem["writable"]
         and sqlite["fts5"]
     )
-    competition_ready = bool(local_ready and is_kylin and sdk.get("compatible"))
+    competition_ready = bool(local_ready and verified_identity["is_required_v11"])
     return {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "operating_system": {
@@ -144,6 +146,7 @@ def collect_compatibility_report(
             "platform": platform.platform(),
             "os_release": release,
             "is_galaxy_kylin": is_kylin,
+            "is_required_v11": verified_identity["is_required_v11"],
         },
         "runtime": {
             "python": platform.python_version(),
@@ -162,7 +165,9 @@ def collect_compatibility_report(
         "verdict": {
             "local_runtime_ready": local_ready,
             "real_galaxy_kylin_verified": is_kylin,
+            "required_v11_verified": verified_identity["is_required_v11"],
             "real_embedding_sdk_verified": bool(sdk.get("compatible")),
+            "sdk_is_recommended_not_mandatory": True,
             "competition_environment_ready": competition_ready,
         },
     }
@@ -195,6 +200,7 @@ def write_compatibility_report(
         "| --- | --- |",
         f"| 操作系统 | {os_info['platform']} |",
         f"| 银河麒麟识别 | {'是' if os_info['is_galaxy_kylin'] else '否'} |",
+        f"| 强制 V11 版本 | {os_info.get('is_required_v11', False)} |",
         f"| CPU 架构 | {runtime['machine']} |",
         f"| Python | {runtime['python']} |",
         f"| SQLite | {sqlite['version']} |",
@@ -212,7 +218,7 @@ def write_compatibility_report(
         f"- 真实 embedding SDK：{'已验证' if verdict['real_embedding_sdk_verified'] else '未验证'}",
         f"- 赛题指定环境整体就绪：{'是' if verdict['competition_environment_ready'] else '否'}",
         "",
-        "> 只有最后一项为“是”时，才可把本报告作为赛题指定环境通过证据。",
+        "> V11 是硬性要求，SDK 是推荐项；环境就绪不等于赛事提交或虚拟机获得认可。",
         "",
     ]
     markdown_target.write_text("\n".join(lines), encoding="utf-8")
