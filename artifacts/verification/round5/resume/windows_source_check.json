@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-07T15:11:54+00:00",
+  "scope": "current_windows_acceptance_and_explicit_r08_v11_source_delta_not_new_v11_acceptance",
+  "competition_ready": false,
+  "current_source_v11_verified": false,
+  "current_source_dual_environment_complete": false,
+  "windows_metrics": {
+    "preference_accuracy": 1.0,
+    "knowledge_recall": 1.0,
+    "conflict_accuracy": 1.0,
+    "retrieval_p95_ms": 105.00189987942576,
+    "sensitive_f1": 1.0
+  },
+  "windows_counts": {
+    "preference_accuracy": 68,
+    "knowledge_recall": 60,
+    "conflict_accuracy": 60,
+    "retrieval_p95_ms": 80,
+    "sensitive_f1": 50
+  },
+  "request_gate": {
+    "passed": true,
+    "checks": {
+      "five_numeric_targets": true,
+      "required_safety_checks": true,
+      "frozen_dataset": true,
+      "frozen_request_counts": true,
+      "frozen_retrieval_configuration": true,
+      "honest_evidence_scope": true,
+      "distinct_request_rows": true,
+      "denominators_match_rows": true,
+      "summary_matches_details": true,
+      "aggregates_match_request_rows": true
+    },
+    "rubric": {
+      "metrics": {
+        "preference_accuracy": {
+          "value": 1.0,
+          "target": 0.85,
+          "operator": "ge",
+          "requests": 68,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "knowledge_recall": {
+          "value": 1.0,
+          "target": 0.85,
+          "operator": "ge",
+          "requests": 60,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "conflict_accuracy": {
+          "value": 1.0,
+          "target": 0.88,
+          "operator": "ge",
+          "requests": 60,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "retrieval_p95_ms": {
+          "value": 105.00189987942576,
+          "target": 500.0,
+          "operator": "le",
+          "requests": 80,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "sensitive_f1": {
+          "value": 1.0,
+          "target": 0.9,
+          "operator": "ge",
+          "requests": 50,
+          "minimum_requests": 50,
+          "passed": true
+        }
+      },
+      "all_targets_met": true,
+      "scope": "developer_held_measurements_not_official_certification"
+    },
+    "scope": "frozen_public_synthetic_regression_not_independent_blind_or_official_certification"
+  },
+  "comparisons": {
+    "raw_sha256": {
+      "compared_public_files": 95,
+      "windows_current_differences": [],
+      "r08_v11_differences": [
+        {
+          "path": "scripts/generate_technical_doc.py",
+          "r08": "d3e42cf25fa018d833eb726f035f1894a58486838fe35e5703d3d7c705eaf314",
+          "current": "e8fcd7865c976f7e548b97ec9ad8ca3ff74de00e10caecb426d24a7887a2e6af"
+        },
+        {
+          "path": "tests/test_deliverables.py",
+          "r08": "983a2fdf6eb6fea994c1c3c05d5ce9da1f04e52afea059598ed0b066783f6285",
+          "current": "558ee98535b4b3a43f9ff982229538f9ac2f32a04770d5e2b7702304e5be07e3"
+        }
+      ],
+      "same_inventory_as_r08": true,
+      "excluded_generated_outputs": {
+        "windows": {
+          "data/eval/latest_report.json": "348773598960b54cd4db2fe4cadc897e2b19323d30f7a74ad467ce2ff713a4ac"
+        },
+        "worktree": {
+          "data/eval/latest_report.json": "348773598960b54cd4db2fe4cadc897e2b19323d30f7a74ad467ce2ff713a4ac"
+        }
+      }
+    },
+    "lf_sha256": {
+      "compared_public_files": 95,
+      "windows_current_differences": [],
+      "r08_v11_differences": [
+        {
+          "path": "scripts/generate_technical_doc.py",
+          "r08": "d3e42cf25fa018d833eb726f035f1894a58486838fe35e5703d3d7c705eaf314",
+          "current": "e8fcd7865c976f7e548b97ec9ad8ca3ff74de00e10caecb426d24a7887a2e6af"
+        },
+        {
+          "path": "tests/test_deliverables.py",
+          "r08": "983a2fdf6eb6fea994c1c3c05d5ce9da1f04e52afea059598ed0b066783f6285",
+          "current": "558ee98535b4b3a43f9ff982229538f9ac2f32a04770d5e2b7702304e5be07e3"
+        }
+      ],
+      "same_inventory_as_r08": true,
+      "excluded_generated_outputs": {
+        "windows": {
+          "data/eval/latest_report.json": "6a1311ec373368e5eb53a9268be0ddbd48f4756c0f6c56cd7f45ac47ae73db4d"
+        },
+        "worktree": {
+          "data/eval/latest_report.json": "6a1311ec373368e5eb53a9268be0ddbd48f4756c0f6c56cd7f45ac47ae73db4d"
+        }
+      }
+    }
+  },
+  "reference_reports": {
+    "artifacts/verification/round5/resume/windows/final_verification.json": "f973846648801a8ceed0af8e06a8178ec469f496483d89941df416d0852b64a0",
+    "artifacts/verification/round5/resume/windows/requests.json": "2d8b4862e866c8c615c0f9f4077c07e5bcfa0c01f790fadbce79e6e992611c65",
+    "artifacts/verification/round5/kylin_final/kylin_vm.json": "22457136c1c7127ae63c0052f6ddd29acda1ba7f69a7528dfe133a7f4510bb65"
+  },
+  "transfer": {
+    "tar_sha256": "fda16f07efa1e2631d918a013c2fb442d72e06498b3dcf720490b3f6733f4859",
+    "iso_sha256": "36939ad58ac975b9a014db8d73f72d9cbe59609ec46ebd3fb018135d99e2a7f8",
+    "public_file_count": 316,
+    "source_and_office_files_compared": 97,
+    "differences": [],
+    "executed_in_guest": false
+  },
+  "sealed_archives": [
+    {
+      "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "e109ef0d9f501cdd9e203c48821cf1e8c17a413304a14cf13677964b3a240227",
+      "matches_sealed_sidecar": true
+    },
+    {
+      "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "3eedda8e6416fa29be160fd1bacb9f3adc4c68ea955c5c8bcdf2e9ffb0ce0716",
+      "matches_sealed_sidecar": true
+    },
+    {
+      "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip",
+      "sha256": "6bce17e442630fa5a3d2e45aef502f2896d8ae3ca1f91c9ce1be586526478da1",
+      "matches_sealed_sidecar": true
+    },
+    {
+      "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "631ecbf2045d1bd3a42d5205a564be72007b649cd8cdd4a106b0b16bfeba7e35",
+      "matches_sealed_sidecar": true
+    }
+  ],
+  "excluded_generated_output_reason": "Only latest_report.json is excluded; it is a historical generated output ignored by Git and explicitly blocked by the existing packaging allowlist.",
+  "checks": {
+    "windows_release_passed": true,
+    "all_14_windows_checks_passed": true,
+    "all_166_tests_passed": true,
+    "frozen_request_gate_passed": true,
+    "windows_sources_unchanged": true,
+    "current_sources_match_windows_measurement": true,
+    "only_document_generator_and_tests_differ_from_r08": true,
+    "transfer_sources_and_office_match_current": true,
+    "four_sealed_archives_unchanged": true,
+    "no_formal_readiness_claim": true
+  },
+  "passed": true,
+  "remaining": "Fresh V11 execution and immutable dual-environment package acceptance remain pending."
+}
