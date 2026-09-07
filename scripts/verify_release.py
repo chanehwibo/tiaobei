@@ -62,12 +62,15 @@ SYNTHETIC_ALLOWLIST_FILES = {
     "docs/11_演示视频分镜与录制检查表.md",
     "docs/演示操作手册.md",
     "scripts/generate_eval_v2.py",
+    "scripts/generate_request_suite.py",
     "src/os_agent_memory/security.py",
     "scripts/verify_release.py",
 }
 SYNTHETIC_VALUES = {
     "13912345678", "demo@example.com", "person@example.com",
     "real.person@example.org", "sk-secret-value-123456789",
+    # Public synthetic checksum example used by request_regression_v1, not participant data.
+    "11010519491231002X",
 }
 REQUIRED_LOCAL_FILES = (
     "README.md",
