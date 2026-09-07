@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-07T13:59:05+00:00",
+  "scope": "complete_powershell_demo_no_server_not_video_or_official_certification",
+  "competition_ready": false,
+  "attempt": 2,
+  "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run_demo.ps1 -NoServer -PythonCommand <LAB_PYTHON> -ReportPath <FRESH_PRIVATE_RUN>/legacy_v2.json -RequestReportPath <FRESH_PRIVATE_RUN>/requests.json -StorePath <FRESH_PRIVATE_RUN>/memory.sqlite",
+  "exit_code": 0,
+  "error_type": null,
+  "elapsed_seconds": 34.55026729987003,
+  "tests_run": 164,
+  "steps": [
+    "Preflight",
+    "Sample memory pipeline",
+    "Legacy v2 diagnostic (not a release gate)",
+    "Frozen request quality gate",
+    "Build SQLite v2 store",
+    "Automated tests"
+  ],
+  "metrics": {
+    "preference_accuracy": 1.0,
+    "knowledge_recall": 1.0,
+    "conflict_accuracy": 1.0,
+    "retrieval_p95_ms": 68.33579996600747,
+    "sensitive_f1": 1.0
+  },
+  "observation_counts": {
+    "preference_accuracy": 68,
+    "knowledge_recall": 60,
+    "conflict_accuracy": 60,
+    "retrieval_p95_ms": 80,
+    "sensitive_f1": 50
+  },
+  "dataset": {
+    "name": "public_request_regression_v1",
+    "sha256": "51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98",
+    "provenance": {
+      "type": "developer_authored_synthetic",
+      "human_data": false,
+      "independent_blind": false,
+      "labels_frozen_before_algorithm_changes": true,
+      "limitations": "Public labels; repeated development evaluation is regression, not blind validation."
+    }
+  },
+  "source_files_compared": 95,
+  "artifact_sha256_before": {
+    "deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx": "ec41926c12a14fa5af0c8ad3d26123cfb28bdffd04c42c605a7fdbb29416faf0",
+    "deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx": "37b023e406a3086e76993dd0d3b52d67b0cd6d94bd28ac1ca641a058a31a62df",
+    "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip": "e109ef0d9f501cdd9e203c48821cf1e8c17a413304a14cf13677964b3a240227",
+    "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip": "3eedda8e6416fa29be160fd1bacb9f3adc4c68ea955c5c8bcdf2e9ffb0ce0716",
+    "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip": "6bce17e442630fa5a3d2e45aef502f2896d8ae3ca1f91c9ce1be586526478da1",
+    "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip": "631ecbf2045d1bd3a42d5205a564be72007b649cd8cdd4a106b0b16bfeba7e35"
+  },
+  "artifact_sha256_after": {
+    "deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx": "ec41926c12a14fa5af0c8ad3d26123cfb28bdffd04c42c605a7fdbb29416faf0",
+    "deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx": "37b023e406a3086e76993dd0d3b52d67b0cd6d94bd28ac1ca641a058a31a62df",
+    "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip": "e109ef0d9f501cdd9e203c48821cf1e8c17a413304a14cf13677964b3a240227",
+    "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip": "3eedda8e6416fa29be160fd1bacb9f3adc4c68ea955c5c8bcdf2e9ffb0ce0716",
+    "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip": "6bce17e442630fa5a3d2e45aef502f2896d8ae3ca1f91c9ce1be586526478da1",
+    "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip": "631ecbf2045d1bd3a42d5205a564be72007b649cd8cdd4a106b0b16bfeba7e35"
+  },
+  "raw_log_sha256": "0dcffe50946b523090e7fdf4b2c420b34e8ed6bf4f7656649d230f117df064dc",
+  "published_log_sha256": "a0c7834626e54a7c53b22c514ad0540ab87711e966c6de04e1e81b96ba1fb8f2",
+  "log_transformations": [
+    "CRLF to LF",
+    "project and private lab absolute path prefixes replaced, including JSON-escaped forms"
+  ],
+  "raw_log_location": "private lab only",
+  "inherited_python_utf8_removed": true,
+  "checks": {
+    "process_exited_zero": true,
+    "all_six_steps_reached": true,
+    "all_expected_tests_passed": true,
+    "frozen_request_gate_passed": true,
+    "utf8_decodes_strictly": true,
+    "no_replacement_characters": true,
+    "chinese_content_present": true,
+    "expected_chinese_query_preserved": true,
+    "private_path_prefixes_removed": true,
+    "sqlite_integrity_passed": true,
+    "measured_source_matches_v11": true,
+    "measured_source_unchanged": true,
+    "sealed_artifacts_unchanged": true,
+    "completed_without_server": true
+  },
+  "passed": true
+}
