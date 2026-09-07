@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from datetime import datetime
+import re
 
 from .schemas import DataRecord, PreferenceMemory, SourceType, ToolStatus, stable_id, utc_now
 
@@ -16,9 +17,13 @@ class PreferenceExtractor:
 
     OUTPUT_PREFERENCE_RULES: tuple[tuple[str, str, tuple[str, ...]], ...] = (
         ("output.language", "zh-CN", ("中文", "使用中文")),
+        ("output.language", "en", ("英文", "英语")),
         ("output.verbosity", "brief", ("简洁", "少解释", "直接给结论", "不要展开")),
         ("output.verbosity", "detailed", ("详细", "展开说明", "给出原因", "完整解释")),
         ("output.format", "table", ("表格", "列表对比", "用表")),
+        ("output.format", "json", ("JSON",)),
+        ("output.format", "markdown", ("Markdown",)),
+        ("output.format", "plain_text", ("纯文本",)),
         ("output.structure", "step_by_step", ("分步骤", "步骤", "一步一步")),
     )
     SECURITY_RULES: tuple[tuple[str, str, tuple[str, ...]], ...] = (
@@ -72,8 +77,13 @@ class PreferenceExtractor:
         for record in records:
             if record.source_type not in allowed_sources or record.risk_flags:
                 continue
+            selected = {}
             for key, value, keywords in rules:
-                if self._has_unnegated_keyword(record.content, keywords):
+                positions = self._positive_positions(record.content, keywords)
+                if positions and (key not in selected or max(positions) > selected[key][0]):
+                    selected[key] = (max(positions), value)
+            for key, (_position, value) in selected.items():
+                if value:
                     score, components = self._record_score(record, reference_time)
                     memories.append(
                         self._build_memory(
@@ -248,14 +258,17 @@ class PreferenceExtractor:
 
     @staticmethod
     def _has_unnegated_keyword(content: str, keywords: tuple[str, ...]) -> bool:
-        negative_prefixes = ("不要", "别用", "不使用", "不再", "取消", "禁止")
+        return bool(PreferenceExtractor._positive_positions(content, keywords))
+
+    @staticmethod
+    def _positive_positions(content: str, keywords: tuple[str, ...]) -> list[int]:
+        positions = []
+        normalized = content.casefold()
+        negative = re.compile(r"(?:不要|不想|不需要|不再|禁止|避免|别|不用|不使用|不喜欢|取消)"
+                              r"(?:再|继续|采用|使用|用|输出|提供|做成|生成|给我|给出|以|了|的)?\s*$")
         for keyword in keywords:
-            start = content.find(keyword)
-            while start >= 0:
-                if keyword.startswith(("不要", "不", "禁止")):
-                    return True
-                prefix = content[max(0, start - 4) : start]
-                if not any(prefix.endswith(negative) for negative in negative_prefixes):
-                    return True
-                start = content.find(keyword, start + len(keyword))
-        return False
+            for match in re.finditer(re.escape(keyword.casefold()), normalized):
+                prefix = re.split(r"[，。；;,!?！？\n]", normalized[max(0, match.start() - 16):match.start()])[-1]
+                if keyword.startswith(("不要", "不", "禁止")) or not negative.search(prefix):
+                    positions.append(match.start())
+        return positions

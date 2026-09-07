@@ -1,0 +1,73 @@
+{
+  "v1": {
+    "metrics": {
+      "preference_accuracy": 0.7778,
+      "preference_precision": 1.0,
+      "preference_recall": 0.7778,
+      "preference_f1": 0.875,
+      "knowledge_precision_at_k": 0.4444,
+      "knowledge_recall_at_k": 1.0,
+      "knowledge_mrr": 1.0,
+      "knowledge_ndcg_at_k": 1.0,
+      "knowledge_search_latency_ms": 0.21,
+      "conflict_accuracy": 1.0,
+      "conflict_precision": 1.0,
+      "conflict_recall": 1.0,
+      "conflict_f1": 1.0,
+      "forget_accuracy": 1.0,
+      "forget_precision": 1.0,
+      "forget_recall": 1.0,
+      "forget_f1": 1.0,
+      "forget_misdelete_rate": 0.0
+    },
+    "targets": {
+      "preference_accuracy": false,
+      "preference_precision": true,
+      "preference_recall": false,
+      "preference_f1": true,
+      "knowledge_precision_at_k": true,
+      "knowledge_recall_at_k": true,
+      "knowledge_mrr": true,
+      "knowledge_ndcg_at_k": true,
+      "knowledge_search_latency_ms": true,
+      "conflict_accuracy": true,
+      "conflict_f1": true,
+      "forget_accuracy": true,
+      "forget_f1": true,
+      "forget_misdelete_rate": true
+    }
+  },
+  "v2_test": {
+    "metrics": {
+      "preference_accuracy": 0.4615,
+      "preference_precision": 1.0,
+      "preference_recall": 0.4615,
+      "preference_f1": 0.6316,
+      "knowledge_precision_at_k": 0.2143,
+      "knowledge_recall_at_k": 0.2857,
+      "knowledge_mrr": 0.2857,
+      "knowledge_ndcg_at_k": 0.2857,
+      "knowledge_search_latency_ms": 0.158,
+      "conflict_accuracy": 1.0,
+      "conflict_precision": 1.0,
+      "conflict_recall": 1.0,
+      "conflict_f1": 1.0,
+      "forget_accuracy": 0.0,
+      "forget_precision": 1.0,
+      "forget_recall": 0.0,
+      "forget_f1": 0.0,
+      "forget_misdelete_rate": 0.0
+    },
+    "targets": {
+      "preference_f1": false,
+      "knowledge_precision_at_k": false,
+      "knowledge_recall_at_k": false,
+      "knowledge_mrr": false,
+      "knowledge_ndcg_at_k": false,
+      "knowledge_search_latency_ms": true,
+      "conflict_f1": true,
+      "forget_f1": false,
+      "forget_misdelete_rate": true
+    }
+  }
+}
