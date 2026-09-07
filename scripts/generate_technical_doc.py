@@ -41,14 +41,29 @@ def _set_cell_text(cell, text: str, *, bold: bool = False) -> None:
     _set_run_font(run, 9, bold)
 
 
+def _new_numbering(document: Document, start: int) -> int:
+    numbering = document.part.numbering_part.element
+    style_number = document.styles["List Number"].element.pPr.numPr.numId.val
+    abstract_id = numbering.num_having_numId(style_number).abstractNumId.val
+    instance = numbering.add_num(abstract_id)
+    instance.add_lvlOverride(ilvl=0).add_startOverride(start)
+    return instance.numId
+
+
 def _add_markdown(document: Document, source: Path) -> None:
     lines = source.read_text(encoding="utf-8").splitlines()
     index = 0
     in_code = False
     code_lines: list[str] = []
+    list_numbering = None
+    next_number = None
     while index < len(lines):
         line = lines[index]
         stripped = line.strip()
+        numbered = re.match(r"^(\d+)[.)]\s+(.+)$", stripped)
+        if stripped and numbered is None:
+            list_numbering = None
+            next_number = None
         if stripped.startswith("<!--") and stripped.endswith("-->"):
             index += 1
             continue
@@ -97,11 +112,18 @@ def _add_markdown(document: Document, source: Path) -> None:
                     )
             continue
         bullet = re.match(r"^[-*+]\s+(.+)$", stripped)
-        numbered = re.match(r"^\d+[.)]\s+(.+)$", stripped)
         if bullet or numbered:
-            value = (bullet or numbered).group(1)
+            value = bullet.group(1) if bullet else numbered.group(2)
             style = "List Bullet" if bullet else "List Number"
             paragraph = document.add_paragraph(style=style)
+            if numbered:
+                number = int(numbered.group(1))
+                if list_numbering is None or number != next_number:
+                    list_numbering = _new_numbering(document, number)
+                properties = paragraph._p.get_or_add_pPr().get_or_add_numPr()
+                properties.get_or_add_ilvl().val = 0
+                properties.get_or_add_numId().val = list_numbering
+                next_number = number + 1
             run = paragraph.add_run(_plain_markdown(value))
             _set_run_font(run, 10.5)
             index += 1
@@ -159,11 +181,11 @@ def build_document(solution_path: Path, report_path: Path, output: Path) -> None
     document.add_section(WD_SECTION.NEW_PAGE)
     _add_markdown(document, report_path)
 
-    for section in document.sections:
-        footer = section.footer.paragraphs[0]
-        footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        run = footer.add_run("OS Agent 记忆优化 · 第五轮内部验证 · 结论边界见正文")
-        _set_run_font(run, 8)
+    # Both sections inherit this footer, so populate the shared part only once.
+    footer = document.sections[0].footer.paragraphs[0]
+    footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    run = footer.add_run("OS Agent 记忆优化 · 第五轮内部验证 · 结论边界见正文")
+    _set_run_font(run, 8)
 
     document.core_properties.title = "OS Agent 多源融合记忆优化系统：技术方案与测试报告"
     document.core_properties.subject = "挑战杯揭榜挂帅 XA-202612 第五轮内部验证材料"

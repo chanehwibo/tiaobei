@@ -1,0 +1,482 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-07T14:39:13+00:00",
+  "scope": "actual_wps_pdf_export_and_poppler_raster_text_checks_not_official_certification",
+  "competition_ready": false,
+  "docx_sha256": "69f6807b91059e120719a9ce6ec35adabc335871760aec35e4b51f54424d0c0f",
+  "pdf_sha256": "2e4523b641e12d72c30b9904bb14af7f134d8d2e96f630d92e963b0fe60e86cc",
+  "bbox_sha256": "cfbe89786316b33d913cd67a4e21f2f1827b69dec19a478966f4bb66e292f251",
+  "renderer": "Existing WPS read-only export; existing TeX Live Poppler raster/text extraction",
+  "page_count": 11,
+  "body_paragraphs_checked": 246,
+  "missing_paragraphs": [],
+  "pages": [
+    {
+      "page": 1,
+      "size_points": [
+        612.0,
+        792.0
+      ],
+      "raster_pixels": [
+        1082,
+        1400
+      ],
+      "image_sha256": "07c7af4ac7d70157bb2ee13af303626115c8fb654225536b998c17ce3a8a7e9b",
+      "ink_fraction": 0.02594996039081067,
+      "words": 15,
+      "words_outside_page": [],
+      "footer_counts": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "page": 2,
+      "size_points": [
+        612.0,
+        792.0
+      ],
+      "raster_pixels": [
+        1082,
+        1400
+      ],
+      "image_sha256": "4ba6c9c4c61b11bb38c5033589ae328361ddae2e76b5c278feec9dd5f159c8fc",
+      "ink_fraction": 0.08743332453129125,
+      "words": 66,
+      "words_outside_page": [],
+      "footer_counts": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "page": 3,
+      "size_points": [
+        612.0,
+        792.0
+      ],
+      "raster_pixels": [
+        1082,
+        1400
+      ],
+      "image_sha256": "42a056264ea8526f952b4443612c705fb4d944214a10d14e4edf2babf5445550",
+      "ink_fraction": 0.0847181146025878,
+      "words": 89,
+      "words_outside_page": [],
+      "footer_counts": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "page": 4,
+      "size_points": [
+        612.0,
+        792.0
+      ],
+      "raster_pixels": [
+        1082,
+        1400
+      ],
+      "image_sha256": "2c1d79cdf0fbcfaa4d4a074756afdc204a8b8827a1120c71c1d7f20e691b11c4",
+      "ink_fraction": 0.04421045682598363,
+      "words": 120,
+      "words_outside_page": [],
+      "footer_counts": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "page": 5,
+      "size_points": [
+        612.0,
+        792.0
+      ],
+      "raster_pixels": [
+        1082,
+        1400
+      ],
+      "image_sha256": "54116fadaee0163fa421de6747939efcd7d16969565063efc3b13fe4488b2e01",
+      "ink_fraction": 0.07173752310536044,
+      "words": 96,
+      "words_outside_page": [],
+      "footer_counts": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "page": 6,
+      "size_points": [
+        612.0,
+        792.0
+      ],
+      "raster_pixels": [
+        1082,
+        1400
+      ],
+      "image_sha256": "1312038360349d83f6745a6ba9c3fa1b11779ffdf4ccc5af3494488c7b5eaa94",
+      "ink_fraction": 0.0803848692896752,
+      "words": 83,
+      "words_outside_page": [],
+      "footer_counts": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "page": 7,
+      "size_points": [
+        612.0,
+        792.0
+      ],
+      "raster_pixels": [
+        1082,
+        1400
+      ],
+      "image_sha256": "88555a7b752ac5d460e944208c437ef815d42857ddf2d729640001b09cf6e482",
+      "ink_fraction": 0.09361103776076049,
+      "words": 124,
+      "words_outside_page": [],
+      "footer_counts": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "page": 8,
+      "size_points": [
+        612.0,
+        792.0
+      ],
+      "raster_pixels": [
+        1082,
+        1400
+      ],
+      "image_sha256": "013ffb84d25ebb41837e84411a92eef6e784599fb9a5f730bc21c37c14cae42c",
+      "ink_fraction": 0.08132426722999736,
+      "words": 90,
+      "words_outside_page": [],
+      "footer_counts": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "page": 9,
+      "size_points": [
+        612.0,
+        792.0
+      ],
+      "raster_pixels": [
+        1082,
+        1400
+      ],
+      "image_sha256": "e6c72271900eb104730fe633ce0e4baebfc597e7f0e5574cf80af3aa8e2229a2",
+      "ink_fraction": 0.05281357274887774,
+      "words": 57,
+      "words_outside_page": [],
+      "footer_counts": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "page": 10,
+      "size_points": [
+        612.0,
+        792.0
+      ],
+      "raster_pixels": [
+        1082,
+        1400
+      ],
+      "image_sha256": "bcb9a040fd7720afe462fd6d78d69a3ae835ac2b9f5872688d6eb87cbde92e07",
+      "ink_fraction": 0.07022841299181411,
+      "words": 95,
+      "words_outside_page": [],
+      "footer_counts": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "page": 11,
+      "size_points": [
+        612.0,
+        792.0
+      ],
+      "raster_pixels": [
+        1082,
+        1400
+      ],
+      "image_sha256": "da4ef32455b29c29ac78af62a84b1d095901b24a3bb0f69b4baaffe8ae855f2e",
+      "ink_fraction": 0.06975244256667547,
+      "words": 104,
+      "words_outside_page": [],
+      "footer_counts": [
+        1
+      ],
+      "passed": true
+    }
+  ],
+  "numbered_items": [
+    {
+      "paragraph": 17,
+      "number": 1,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 18,
+      "number": 2,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 19,
+      "number": 3,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 20,
+      "number": 4,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 21,
+      "number": 5,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 76,
+      "number": 1,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 77,
+      "number": 2,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 78,
+      "number": 3,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 79,
+      "number": 4,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 80,
+      "number": 5,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 81,
+      "number": 6,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 100,
+      "number": 1,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 101,
+      "number": 2,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 102,
+      "number": 3,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 103,
+      "number": 4,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 104,
+      "number": 5,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 178,
+      "number": 1,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 179,
+      "number": 2,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 180,
+      "number": 3,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 181,
+      "number": 4,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 182,
+      "number": 5,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 183,
+      "number": 6,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 185,
+      "number": 1,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 186,
+      "number": 2,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 187,
+      "number": 3,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 188,
+      "number": 4,
+      "rendered_number_and_text_match": true
+    },
+    {
+      "paragraph": 189,
+      "number": 5,
+      "rendered_number_and_text_match": true
+    }
+  ],
+  "geometric_table_matches": [
+    {
+      "paragraph": 38,
+      "text": "统一事件模型、错误隔离、去重",
+      "page": 3,
+      "lines": [
+        {
+          "x_min": 188.4,
+          "y_min": 470.245,
+          "y_max": 481.864,
+          "text": "统一事件模型、错误隔"
+        },
+        {
+          "x_min": 188.4,
+          "y_min": 485.726,
+          "y_max": 497.345,
+          "text": "离、去重"
+        }
+      ]
+    },
+    {
+      "paragraph": 50,
+      "text": "词法候选、向量缓存、语义重排",
+      "page": 3,
+      "lines": [
+        {
+          "x_min": 188.4,
+          "y_min": 564.445,
+          "y_max": 576.064,
+          "text": "词法候选、向量缓存、语"
+        },
+        {
+          "x_min": 188.4,
+          "y_min": 579.806,
+          "y_max": 591.425,
+          "text": "义重排"
+        }
+      ]
+    },
+    {
+      "paragraph": 51,
+      "text": "Windows/V11的10,000条服务查询",
+      "page": 3,
+      "lines": [
+        {
+          "x_min": 306.0,
+          "y_min": 564.445,
+          "y_max": 576.064,
+          "text": "Windows/V11的10,000"
+        },
+        {
+          "x_min": 306.0,
+          "y_min": 579.806,
+          "y_max": 591.425,
+          "text": "条服务查询"
+        }
+      ]
+    },
+    {
+      "paragraph": 52,
+      "text": "原生模型复测与赛事部署认可",
+      "page": 3,
+      "lines": [
+        {
+          "x_min": 423.48,
+          "y_min": 564.445,
+          "y_max": 576.064,
+          "text": "原生模型复测与赛事部署"
+        },
+        {
+          "x_min": 423.48,
+          "y_min": 579.806,
+          "y_max": 591.425,
+          "text": "认可"
+        }
+      ]
+    },
+    {
+      "paragraph": 54,
+      "text": "递归脱敏、作用域、两阶段删除、审计",
+      "page": 3,
+      "lines": [
+        {
+          "x_min": 188.4,
+          "y_min": 595.766,
+          "y_max": 607.385,
+          "text": "递归脱敏、作用域、两阶"
+        },
+        {
+          "x_min": 188.4,
+          "y_min": 611.126,
+          "y_max": 622.745,
+          "text": "段删除、审计"
+        }
+      ]
+    }
+  ],
+  "table_match_method": "When Poppler interleaves table cells, require exact full paragraph text on consecutive lines sharing the same left edge within 0.75pt, with a nonnegative vertical gap no larger than one line height. No missing, reordered, intervening, or cross-column text is skipped.",
+  "geometry_negative_controls_passed": true,
+  "checker_sha256": "94d0b2383315eba2ab229335c95ac71976ed9798d0700fc217c4ede1e5c27a22",
+  "measured_source_deltas_from_r08_v11": [
+    {
+      "path": "scripts/generate_technical_doc.py",
+      "before": "d3e42cf25fa018d833eb726f035f1894a58486838fe35e5703d3d7c705eaf314",
+      "after": "e8fcd7865c976f7e548b97ec9ad8ca3ff74de00e10caecb426d24a7887a2e6af"
+    },
+    {
+      "path": "tests/test_deliverables.py",
+      "before": "983a2fdf6eb6fea994c1c3c05d5ce9da1f04e52afea059598ed0b066783f6285",
+      "after": "558ee98535b4b3a43f9ff982229538f9ac2f32a04770d5e2b7702304e5be07e3"
+    }
+  ],
+  "unchanged_measured_files": 93,
+  "visual_review": "Recorded separately after inspection of every raster page",
+  "checks": {
+    "all_pages_nonblank_and_in_bounds": true,
+    "all_body_paragraphs_present": true,
+    "all_numbered_items_render_correctly": true,
+    "only_document_generator_and_its_tests_changed": true
+  },
+  "passed": true
+}

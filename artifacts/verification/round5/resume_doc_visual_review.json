@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-09-07",
+  "scope": "agent_visual_inspection_of_actual_wps_pdf_raster_pages_not_official_review",
+  "competition_ready": false,
+  "docx_sha256": "69f6807b91059e120719a9ce6ec35adabc335871760aec35e4b51f54424d0c0f",
+  "pdf_sha256": "2e4523b641e12d72c30b9904bb14af7f134d8d2e96f630d92e963b0fe60e86cc",
+  "automated_report": "artifacts/verification/round5/resume_doc_render_03.json",
+  "raster_hashes": "Per-page SHA256 values are recorded in the automated report.",
+  "pages_inspected_individually": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+  "review": [
+    {"pages": [1], "checked": "Cover title, submission boundary and single footer fit."},
+    {"pages": [2, 3], "checked": "Introduction, list numbering and all wrapped cells in the mapping table are visible."},
+    {"pages": [4, 5, 6], "checked": "Architecture diagram, formulas, lists, continuation lines and footers are readable."},
+    {"pages": [7, 8], "checked": "SDK boundaries, metrics table, report references and threat-model table are not clipped."},
+    {"pages": [9, 10, 11], "checked": "Independent lists restart, report starts on a new page, metrics and reproduction commands are complete."}
+  ],
+  "checks": {
+    "all_eleven_pages_viewed": true,
+    "no_text_or_table_clipping_observed": true,
+    "no_incoherent_text_overlap_observed": true,
+    "one_footer_per_page_observed": true,
+    "independent_numbered_lists_restart": true,
+    "all_tables_fit_without_split_rows": true
+  },
+  "extraction_false_positive": {
+    "preserved_report": "artifacts/verification/round5/resume_doc_render_02.json",
+    "paragraphs": [38, 50, 51, 52, 54],
+    "page": 3,
+    "cause": "Poppler interleaves adjacent table cells in XML flow order.",
+    "resolution": "Exact text was verified on consecutive, geometrically aligned lines and by inspecting the actual page; no text was ignored."
+  },
+  "material_scope": "Office metrics still cite the immutable R08 evidence. Current-source dual-environment and package revalidation is tracked separately as C05.",
+  "remaining_review": "This is not participant sign-off, final video review, platform review or official submission approval.",
+  "passed": true
+}

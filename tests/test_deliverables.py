@@ -1,6 +1,8 @@
 from pathlib import Path
+import re
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 from zipfile import ZipFile
 
 from scripts.check_deliverables import check_deliverables, inspect_ooxml
@@ -11,6 +13,56 @@ class DeliverableTest(unittest.TestCase):
         report = check_deliverables()
         self.assertTrue(report["passed"], report)
         self.assertFalse(report["visual_render_verified"])
+
+    def test_shared_docx_footer_is_written_once(self):
+        root = Path(__file__).resolve().parents[1]
+        path, = (root / "deliverables/doc").glob("*.docx")
+        with ZipFile(path) as archive:
+            footers = [name for name in archive.namelist()
+                       if re.fullmatch(r"word/footer\d+\.xml", name)]
+            self.assertTrue(footers)
+            for name in footers:
+                text = "".join(ET.fromstring(archive.read(name)).itertext())
+                self.assertEqual(text.count("OS Agent"), 1, name)
+
+    def test_docx_numbered_lists_preserve_markdown_numbers(self):
+        root = Path(__file__).resolve().parents[1]
+        sources = [next((root / "docs").glob("09_*.md")),
+                   root / "docs" / "\u6d4b\u8bd5\u62a5\u544a.md"]
+        expected = []
+        for source in sources:
+            in_code = False
+            for line in source.read_text(encoding="utf-8").splitlines():
+                if line.strip().startswith("```"):
+                    in_code = not in_code
+                match = re.match(r"^\s*(\d+)[.)]\s+", line)
+                if match and not in_code:
+                    expected.append(int(match.group(1)))
+        self.assertTrue(expected)
+        path, = (root / "deliverables/doc").glob("*.docx")
+        ns = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
+        value = "{" + ns["w"] + "}val"
+        with ZipFile(path) as archive:
+            body = ET.fromstring(archive.read("word/document.xml"))
+            numbering = ET.fromstring(archive.read("word/numbering.xml"))
+        definitions = {item.get("{" + ns["w"] + "}numId"): item
+                       for item in numbering.findall("w:num", ns)}
+        counters = {}
+        actual = []
+        for paragraph in body.findall(".//w:p", ns):
+            style = paragraph.find("w:pPr/w:pStyle", ns)
+            if style is None or style.get(value) != "ListNumber":
+                continue
+            num_id = paragraph.find("w:pPr/w:numPr/w:numId", ns)
+            self.assertIsNotNone(num_id, "list must use an explicit numbering instance")
+            key = num_id.get(value)
+            if key not in counters:
+                start = definitions[key].find("w:lvlOverride/w:startOverride", ns)
+                self.assertIsNotNone(start)
+                counters[key] = int(start.get(value))
+            actual.append(counters[key])
+            counters[key] += 1
+        self.assertEqual(actual, expected)
 
     def test_metadata_and_external_links_are_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
