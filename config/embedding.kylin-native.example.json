@@ -1,0 +1,10 @@
+{
+  "provider": "kylin-native",
+  "model_version": "REPLACE_WITH_INSTALLED_MODEL_VERSION",
+  "dimensions": 768,
+  "timeout_seconds": 10,
+  "native": {
+    "library_path": "/usr/lib/x86_64-linux-gnu/libkysdk-coreai-embedding.so.1",
+    "model_name": "REPLACE_WITH_INSTALLED_MODEL_NAME"
+  }
+}

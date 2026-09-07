@@ -1,0 +1,15 @@
+{
+  "system": "Windows",
+  "machine": "AMD64",
+  "os_release": {},
+  "is_galaxy_kylin": false,
+  "is_required_v11": false,
+  "embedding_library": null,
+  "vector_client_library": null,
+  "real_embedding_executed": false,
+  "vector_database_connected": false,
+  "official_validation_ready": false,
+  "scope": "native_environment_discovery_not_performance_or_official_validation",
+  "error_type": "ValueError",
+  "status": "not_connected"
+}

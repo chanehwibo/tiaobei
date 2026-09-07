@@ -72,12 +72,17 @@ def create_provider(config=None):
         if dimension <= 0 or ngram <= 0:
             raise ValueError("hash dimensions and ngram must be positive")
         return HashEmbedding(dimension, ngram)
-    if kind != "kylin" or not config.get("model_version"):
+    if kind not in {"kylin", "kylin-native"} or not config.get("model_version"):
         raise ValueError("kylin provider requires an explicit model_version")
     dimensions = int(config["dimensions"])
-    provider = KylinEmbeddingProvider.from_config(config["sdk"])
+    if kind == "kylin-native":
+        from .kylin_native import NativeEmbeddingClient
+        provider = NativeEmbeddingClient(**config["native"], dimensions=dimensions,
+                                         timeout_seconds=config.get("timeout_seconds", 10))
+    else:
+        provider = KylinEmbeddingProvider.from_config(config["sdk"])
     digest = hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
     return CheckedProvider(provider, dimensions=dimensions, identity={
         "provider": kind, "model_version": config["model_version"], "dimensions": dimensions,
         "configuration_sha256": digest,
-    }, timeout_seconds=float(config.get("timeout_seconds", 10)))
+    }, timeout_seconds=None if kind == "kylin-native" else float(config.get("timeout_seconds", 10)))
