@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-09-07T11:35:11+00:00",
+  "generated_at_utc": "2026-09-07T12:47:07+00:00",
   "scope": "public_synthetic_regression_not_independent_blind_or_official_certification",
-  "tests": 146,
+  "tests": 164,
   "test_results": {
     "windows": {
-      "tests_run": 146,
+      "tests_run": 164,
       "passed": true,
-      "source": "artifacts/verification/round5/materials_tests.json"
+      "source": "artifacts/verification/round5/windows/final_verification.json"
     },
     "kylin": {
-      "tests_run": 134,
+      "tests_run": 164,
       "passed": true,
-      "source": "artifacts/verification/round5/kylin/kylin_vm.json"
+      "source": "artifacts/verification/round5/kylin_final/kylin_vm.json"
     }
   },
   "requests": {
@@ -21,7 +21,7 @@
         "preference_accuracy": 1.0,
         "knowledge_recall": 1.0,
         "conflict_accuracy": 1.0,
-        "retrieval_p95_ms": 67.31970002874732,
+        "retrieval_p95_ms": 77.62949983589351,
         "sensitive_f1": 1.0
       },
       "observation_counts": {
@@ -61,7 +61,7 @@
           "ngram": 2
         }
       },
-      "source": "artifacts/verification/round5/requests_windows.json",
+      "source": "artifacts/verification/round5/windows/requests.json",
       "records": 10000,
       "threshold": 0.265,
       "provider": {
@@ -80,7 +80,7 @@
         "preference_accuracy": 1.0,
         "knowledge_recall": 1.0,
         "conflict_accuracy": 1.0,
-        "retrieval_p95_ms": 111.62611300005665,
+        "retrieval_p95_ms": 156.97658900000988,
         "sensitive_f1": 1.0
       },
       "observation_counts": {
@@ -120,7 +120,7 @@
           "ngram": 2
         }
       },
-      "source": "artifacts/verification/round5/kylin/requests.json",
+      "source": "artifacts/verification/round5/kylin_final/requests.json",
       "records": 10000,
       "threshold": 0.265,
       "provider": {
@@ -155,13 +155,13 @@
     "container_sample_executed": false,
     "independent_judge_executed": false
   },
-  "local_checks_passed": null,
+  "local_checks_passed": true,
   "competition_ready": false,
   "source_sha256": {
-    "artifacts/verification/round5/requests_windows.json": "a7fe5c07a748ce09e537f026c98a4493031b874dd1ed4724876524a2750d73aa",
-    "artifacts/verification/round5/kylin/requests.json": "212bca23666735828936ff86eb4ac8931deb5003e62592bae9defc799352a58e",
-    "artifacts/verification/round5/kylin/kylin_vm.json": "b569b4e4f00c8783e560cbc7c2db472f4d8fa3c5250dcdd22ff988296debefd6",
+    "artifacts/verification/round5/windows/requests.json": "9dfdd525cf651ac22d938f1d5b072eddb3891219174bab0417d5c2c358070427",
+    "artifacts/verification/round5/kylin_final/requests.json": "aa73928c22d0f150d958ca8bc25a83956018e3f02ae24688c788a22994ed1523",
+    "artifacts/verification/round5/kylin_final/kylin_vm.json": "22457136c1c7127ae63c0052f6ddd29acda1ba7f69a7528dfe133a7f4510bb65",
     "artifacts/verification/round5/native/legacy_runtime_started.json": "0d75ff37cc7966d22c266fa40a1913b87c47ed00e54af047d8aa9e0abae85306",
-    "artifacts/verification/round5/materials_tests.json": "88ca483571d5e496d1246909c0dfc9ddf42e6671171a550cffda54577b4dfe37"
+    "artifacts/verification/round5/windows/final_verification.json": "dd4d77bf8f670b0294dcc44c3660e3eb305ae54499a19759d10a3e7fe76a2e9d"
   }
 }

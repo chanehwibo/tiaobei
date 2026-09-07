@@ -40,10 +40,10 @@ def guest_passed(report):
 def file_hashes(root):
     paths = sorted({
         path
-        for folder in ("src", "tests", "scripts", "data/eval", "config")
+        for folder in ("src", "tests", "scripts", "data/eval", "data/samples", "config")
         for path in (root / folder).rglob("*")
-        if path.is_file() and path.suffix in {".py", ".json", ".html"}
-    })
+        if path.is_file() and path.suffix in {".py", ".json", ".jsonl", ".html", ".ps1", ".sh", ".js", ".cjs", ".css"}
+    } | {root / name for name in ("pyproject.toml", ".gitattributes") if (root / name).is_file()})
     # Raw hashes prove the transfer; LF hashes permit Git platform checkouts.
     return {
         "raw_sha256": {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths},
@@ -60,6 +60,7 @@ def verify(output):
         raise ValueError("run this script inside the Linux guest")
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=False)
+    snapshot = file_hashes(ROOT)
     report = {"generated_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "system": platform.system(), "machine": platform.machine(), "python": platform.python_version(),
         "compatibility": collect_compatibility_report(output), "checks": {},
@@ -70,7 +71,7 @@ def verify(output):
         "source_check": [sys.executable, "-S", "scripts/check_source.py"],
         "retrieval_v3": [sys.executable, "-S", "scripts/evaluate_v3.py", "--require-quality"],
         "request_metrics": [sys.executable, "-S", "scripts/evaluate_requests.py", "--size", "10000",
-                            "--require-targets", "--output", str(output / "requests.json")],
+                            "--require-frozen", "--output", str(output / "requests.json")],
         "official_diagnostics": [sys.executable, "-S", "scripts/evaluate_official.py", "--size", "10000", "--output", str(output / "official.json")],
         "action_framework": [sys.executable, "-S", "scripts/evaluate_actions.py", "--workspace", str(output / "action-workspace"), "--output", str(output / "actions.json")],
         "native_sdk": [sys.executable, "-S", "scripts/check_kylin_native.py", "--output", str(output / "native-sdk.json")],
@@ -101,7 +102,9 @@ def verify(output):
         for name in CORE_CHECKS)
     report["source_sha256"] = {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
         for p in sorted((ROOT / "src").rglob("*.py"))}
-    report["file_hashes"] = file_hashes(ROOT)
+    report["file_hashes"] = snapshot
+    report["source_unchanged_during_checks"] = snapshot == file_hashes(ROOT)
+    report["core_checks_passed"] = report["core_checks_passed"] and report["source_unchanged_during_checks"]
     report["dataset_sha256"] = hashlib.sha256((ROOT / "data/eval/request_regression_v1.json").read_bytes()).hexdigest()
     report["guest_verification_passed"] = guest_passed(report)
     (output / "kylin_vm.json").write_text(json.dumps(report, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")

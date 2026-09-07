@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-07T12:47:07+00:00",
+  "scope": "final_windows_v11_public_source_identity_not_official_certification",
+  "comparisons": {
+    "raw_sha256": {
+      "compared_public_files": 95,
+      "differences": {
+        "windows": [],
+        "kylin": [],
+        "worktree": []
+      },
+      "passed": true,
+      "excluded_generated_outputs": {
+        "windows": {
+          "data/eval/latest_report.json": "348773598960b54cd4db2fe4cadc897e2b19323d30f7a74ad467ce2ff713a4ac"
+        },
+        "kylin": {},
+        "worktree": {
+          "data/eval/latest_report.json": "348773598960b54cd4db2fe4cadc897e2b19323d30f7a74ad467ce2ff713a4ac"
+        }
+      }
+    },
+    "lf_sha256": {
+      "compared_public_files": 95,
+      "differences": {
+        "windows": [],
+        "kylin": [],
+        "worktree": []
+      },
+      "passed": true,
+      "excluded_generated_outputs": {
+        "windows": {
+          "data/eval/latest_report.json": "6a1311ec373368e5eb53a9268be0ddbd48f4756c0f6c56cd7f45ac47ae73db4d"
+        },
+        "kylin": {},
+        "worktree": {
+          "data/eval/latest_report.json": "6a1311ec373368e5eb53a9268be0ddbd48f4756c0f6c56cd7f45ac47ae73db4d"
+        }
+      }
+    }
+  },
+  "exclusion_reason": "latest_report.json is a historical generated output, ignored by Git and explicitly blocked by the packaging allowlist; no executable source or frozen labels are excluded",
+  "transfer": {
+    "public_file_count": 274,
+    "tar_sha256": "d8c77db48bcc3bef041475f17d36cd98abb15aeeee44bb8c0a8207c85cc9a970",
+    "iso_sha256": "7e406953fcab339b1b57880058752de3a5ff824a3a9ee16cb0deb38a34ed52d1",
+    "guest_source_differences": [],
+    "guest_and_imported_evidence_tar_sha256": "6c391a8798a4f168e144f6a0740b7525342d758e9ce0ba59d646ec0e99364012",
+    "serial_offset_before_export": 145738,
+    "copied_evidence_files": 15,
+    "copied_evidence_differences": []
+  },
+  "request_gates": {
+    "windows": {
+      "passed": true,
+      "checks": {
+        "five_numeric_targets": true,
+        "required_safety_checks": true,
+        "frozen_dataset": true,
+        "frozen_request_counts": true,
+        "frozen_retrieval_configuration": true,
+        "honest_evidence_scope": true,
+        "distinct_request_rows": true,
+        "denominators_match_rows": true,
+        "summary_matches_details": true,
+        "aggregates_match_request_rows": true
+      },
+      "rubric": {
+        "metrics": {
+          "preference_accuracy": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 68,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "knowledge_recall": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "conflict_accuracy": {
+            "value": 1.0,
+            "target": 0.88,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "retrieval_p95_ms": {
+            "value": 77.62949983589351,
+            "target": 500.0,
+            "operator": "le",
+            "requests": 80,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "sensitive_f1": {
+            "value": 1.0,
+            "target": 0.9,
+            "operator": "ge",
+            "requests": 50,
+            "minimum_requests": 50,
+            "passed": true
+          }
+        },
+        "all_targets_met": true,
+        "scope": "developer_held_measurements_not_official_certification"
+      },
+      "scope": "frozen_public_synthetic_regression_not_independent_blind_or_official_certification"
+    },
+    "kylin": {
+      "passed": true,
+      "checks": {
+        "five_numeric_targets": true,
+        "required_safety_checks": true,
+        "frozen_dataset": true,
+        "frozen_request_counts": true,
+        "frozen_retrieval_configuration": true,
+        "honest_evidence_scope": true,
+        "distinct_request_rows": true,
+        "denominators_match_rows": true,
+        "summary_matches_details": true,
+        "aggregates_match_request_rows": true
+      },
+      "rubric": {
+        "metrics": {
+          "preference_accuracy": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 68,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "knowledge_recall": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "conflict_accuracy": {
+            "value": 1.0,
+            "target": 0.88,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "retrieval_p95_ms": {
+            "value": 156.97658900000988,
+            "target": 500.0,
+            "operator": "le",
+            "requests": 80,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "sensitive_f1": {
+            "value": 1.0,
+            "target": 0.9,
+            "operator": "ge",
+            "requests": 50,
+            "minimum_requests": 50,
+            "passed": true
+          }
+        },
+        "all_targets_met": true,
+        "scope": "developer_held_measurements_not_official_certification"
+      },
+      "scope": "frozen_public_synthetic_regression_not_independent_blind_or_official_certification"
+    }
+  },
+  "source_unchanged_during_tests": {
+    "windows": true,
+    "kylin": true
+  },
+  "dataset_sha256": "51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98",
+  "competition_ready": false,
+  "passed": true
+}

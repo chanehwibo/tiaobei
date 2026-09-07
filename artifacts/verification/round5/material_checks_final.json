@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "scope": "ooxml_structure_and_evidence_consistency_not_visual_render",
+  "passed": true,
+  "issues": [],
+  "deliverables": {
+    "deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx": {
+      "passed": true,
+      "issues": [],
+      "slide_count": 15,
+      "missing_evidence_values": [],
+      "sha256": "37b023e406a3086e76993dd0d3b52d67b0cd6d94bd28ac1ca641a058a31a62df"
+    },
+    "deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx": {
+      "passed": true,
+      "issues": [],
+      "slide_count": 0,
+      "missing_evidence_values": [],
+      "sha256": "ec41926c12a14fa5af0c8ad3d26123cfb28bdffd04c42c605a7fdbb29416faf0"
+    }
+  },
+  "visual_render_verified": false
+}

@@ -69,9 +69,48 @@
         "artifacts/verification/round5/evidence_summary.json",
         "artifacts/verification/round5/materials_tests.json",
         "artifacts/verification/round5/material_checks.json",
+        "artifacts/verification/round5/material_checks_final.json",
+        "artifacts/verification/round5/source_comparison.json",
         "artifacts/verification/round5/requests_baseline.json",
         "artifacts/verification/round5/requests_preference_iteration.json",
         "artifacts/verification/round5/requests_quality_iteration.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮逐请求/Windows最终验收",
+      "files": [
+        "artifacts/verification/round5/windows/ablations.json",
+        "artifacts/verification/round5/windows/compatibility_windows_dev.json",
+        "artifacts/verification/round5/windows/compatibility_windows_dev.md",
+        "artifacts/verification/round5/windows/evaluation_v1_final.json",
+        "artifacts/verification/round5/windows/evaluation_v2_test_final.json",
+        "artifacts/verification/round5/windows/evaluation_v3.json",
+        "artifacts/verification/round5/windows/final_verification.json",
+        "artifacts/verification/round5/windows/final_verification.md",
+        "artifacts/verification/round5/windows/official_diagnostics.json",
+        "artifacts/verification/round5/windows/performance_windows_dev.json",
+        "artifacts/verification/round5/windows/performance_windows_dev.md",
+        "artifacts/verification/round5/windows/requests.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮逐请求/V11最终验收",
+      "files": [
+        "artifacts/verification/round5/kylin_final/action_framework.log",
+        "artifacts/verification/round5/kylin_final/actions.json",
+        "artifacts/verification/round5/kylin_final/installed_sdk_packages.log",
+        "artifacts/verification/round5/kylin_final/kylin_vm.json",
+        "artifacts/verification/round5/kylin_final/native-sdk.json",
+        "artifacts/verification/round5/kylin_final/native_sdk.log",
+        "artifacts/verification/round5/kylin_final/official.json",
+        "artifacts/verification/round5/kylin_final/official_diagnostics.log",
+        "artifacts/verification/round5/kylin_final/request_metrics.log",
+        "artifacts/verification/round5/kylin_final/requests.json",
+        "artifacts/verification/round5/kylin_final/retrieval_v3.log",
+        "artifacts/verification/round5/kylin_final/root_filesystem.log",
+        "artifacts/verification/round5/kylin_final/source_check.log",
+        "artifacts/verification/round5/kylin_final/unit_tests.log",
+        "artifacts/verification/round5/kylin_final/virtualization.log"
       ]
     },
     {
@@ -138,6 +177,7 @@
       "THIRD_PARTY_NOTICES.md",
       "pyproject.toml",
       ".gitignore",
+      ".gitattributes",
       "submission/submission_manifest.json",
       "submission/README.md",
       "docs/04_提交材料清单.md",

@@ -1,8 +1,11 @@
 import hashlib
+import json
 from pathlib import Path
 import unittest
 
-from scripts.generate_round5_materials import BEGIN, END, build_summary, evidence_block, replace_block, render_report
+from scripts.generate_round5_materials import (
+    BEGIN, END, build_summary, evidence_block, replace_block, render_report, validate_request_evidence,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -28,6 +31,17 @@ class EvidenceMaterialsTest(unittest.TestCase):
         for value in ("实体", "原生", "INCOMPLETE", "7分钟", "独立", "Recall@3", "500ms"):
             self.assertIn(value, text)
         self.assertNotIn("Ran 65", text)
+
+    def test_materials_recompute_numeric_gates_and_explicit_configuration(self):
+        report = json.loads((ROOT / "artifacts/verification/round5/requests_windows.json").read_bytes())
+        validate_request_evidence(report, "Windows", historical=True)
+        with self.assertRaises(ValueError):
+            validate_request_evidence(report, "Windows")
+        report["retrieval"]["top_k"] = 3
+        validate_request_evidence(report, "Windows")
+        report["metrics"]["preference_accuracy"] = .84
+        with self.assertRaises(ValueError):
+            validate_request_evidence(report, "Windows")
 
     def test_evidence_block_replacement_is_bounded(self):
         block = evidence_block(build_summary(ROOT))

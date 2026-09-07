@@ -54,7 +54,7 @@ Invoke-PythonStep "Legacy v2 diagnostic (not a release gate)" @(
 Invoke-PythonStep "Frozen request quality gate" @(
     "-S", "scripts/evaluate_requests.py",
     "--size", "10000",
-    "--require-targets",
+    "--require-frozen",
     "--output", $RequestReportPath
 )
 Invoke-PythonStep "Build SQLite v2 store" @(

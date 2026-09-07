@@ -126,7 +126,7 @@ def evaluate_retrieval(suite, *, size, embedding_config=None):
     positive = [row for row in details if row["expected"]]
     negative = [row for row in details if not row["expected"] and row["category"] != "scope"]
     scoped = [row for row in details if row["category"] == "scope"]
-    return {"records": len(service.store.knowledge), "requests": len(details), "positive_requests": len(positive),
+    return {"records": len(service.store.knowledge), "top_k": 3, "requests": len(details), "positive_requests": len(positive),
             "positive_recall_at_3": sum(row["recall_at_3"] for row in positive) / len(positive),
             "ingestion": ingestion,
             "no_answer_requests": len(negative),

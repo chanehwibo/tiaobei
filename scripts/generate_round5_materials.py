@@ -4,8 +4,14 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(ROOT / "src"))
+
+from os_agent_memory.request_contract import assess_frozen_requests
+
 BASE = Path("artifacts/verification/round5")
 BEGIN = "<!-- BEGIN ROUND5 EVIDENCE -->"
 END = "<!-- END ROUND5 EVIDENCE -->"
@@ -16,6 +22,16 @@ METRICS = (
     ("retrieval_p95_ms", "检索 P95", "<=500ms"),
     ("sensitive_f1", "敏感实体 F1", ">=90%"),
 )
+
+
+def validate_request_evidence(report, system, *, historical=False):
+    # Only the two named R04/R05 reports predate the explicit top_k field.
+    candidate = {**report, "retrieval": dict(report["retrieval"])}
+    if historical:
+        candidate["retrieval"].setdefault("top_k", 3)
+    gate = assess_frozen_requests(candidate)
+    if report["environment"]["system"] != system or not gate["passed"]:
+        raise ValueError("request evidence violates the frozen dual-environment contract")
 
 
 def build_summary(root=ROOT):
@@ -34,14 +50,12 @@ def build_summary(root=ROOT):
     windows, guest = read(windows_path), read(guest_dir / "requests.json")
     if windows["dataset"]["sha256"] != guest["dataset"]["sha256"]:
         raise ValueError("Windows and Kylin evidence use different datasets")
-    for report, system in ((windows, "Windows"), (guest, "Linux")):
-        if (report["environment"]["system"] != system
-                or report["all_targets_met"] is not True
-                or not all(value is True for value in report["safety_checks"].values())
-                or report["retrieval"]["records"] != 10000
-                or report["retrieval"]["threshold"] != 0.265):
-            raise ValueError("request evidence is not the validated dual-environment configuration")
+    validate_request_evidence(windows, "Windows", historical=windows_path == BASE / "requests_windows.json")
+    validate_request_evidence(guest, "Linux", historical=guest_dir == BASE / "kylin")
     vm = read(guest_dir / "kylin_vm.json")
+    if not all(vm.get(key) is True for key in (
+            "installed", "required_v11_verified", "guest_verification_passed", "tests_passed")):
+        raise ValueError("V11 evidence has not passed installed-guest verification")
     native = read(BASE / "native/legacy_runtime_started.json")
     final_path = windows_dir / "final_verification.json"
     final = read(final_path) if (root / final_path).is_file() else None
@@ -163,7 +177,7 @@ def render_report(summary):
         "",
         "## 复现", "", "```bash",
         "python -S -m unittest discover -s tests -v",
-        "python -S scripts/evaluate_requests.py --size 10000 --require-targets --output artifacts/runtime/requests.json",
+        "python -X utf8 -S scripts/evaluate_requests.py --size 10000 --require-frozen --output artifacts/runtime/requests.json",
         "python -S scripts/verify_release.py --artifact-dir artifacts/runtime/release --sizes 100,1000,5000,10000 --rounds 30",
         "```", "",
         "实际V11客户机使用 `env TMPDIR=/var/tmp python3 -S scripts/verify_kylin_guest.py --output <新目录>`。"
