@@ -7,7 +7,10 @@ import unittest
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from os_agent_memory.kylin_native import NativeEmbeddingClient, NativeSDKError, _encode_library
+from os_agent_memory.kylin_native import (
+    NativeEmbeddingClient, NativeSDKError, _encode_library, _models_library, discover_native_models,
+    probe_native_default,
+)
 from os_agent_memory.provider_config import create_provider
 
 
@@ -84,3 +87,89 @@ class NativeBindingTests(unittest.TestCase):
         self.assertEqual(provider.identity["provider"], "kylin-native")
         self.assertIsNone(provider.timeout_seconds)
         with self.assertRaises(NativeSDKError): provider.encode("test")
+
+
+class ModelLibrary(FakeLibrary):
+    def __init__(self, *, count=1, dimensions=768, model_name=b"installed-test-model", **kwargs):
+        super().__init__(**kwargs)
+        self.count, self.dimensions, self.model_name = count, dimensions, model_name
+    def text_embedding_get_model_list(self, session, error): return 2
+    def embedding_model_list_get_count(self, models, error): return self.count
+    def embedding_model_list_get_model(self, models, index, error): return index + 3
+    def embedding_model_info_get_model_name(self, item, error): return self.model_name
+    def embedding_model_info_get_model_dim(self, item, error): return self.dimensions
+
+
+class NativeModelDiscoveryTests(unittest.TestCase):
+    def test_models_are_session_owned_and_zero_models_is_valid(self):
+        for count in (0, 1):
+            lib = ModelLibrary(count=count)
+            rows = _models_library(lib)
+            self.assertEqual(len(rows), count)
+            self.assertEqual(lib.released, ["session"])
+
+    def test_invalid_metadata_and_session_errors_fail_closed(self):
+        for kwargs in ({"count": 129}, {"count": -1}, {"count": 2}, {"dimensions": 0},
+                       {"model_name": b""}, {"model_name": b"bad\nname"}, {"init_code": 19}):
+            lib = ModelLibrary(**kwargs)
+            with self.subTest(kwargs=kwargs), self.assertRaises(NativeSDKError):
+                _models_library(lib)
+            self.assertEqual(lib.released, ["session"])
+
+    def test_discovery_subprocess_timeout_and_untrusted_error_details(self):
+        path = str(Path("absent.so").resolve())
+        payload = {"status": "ok", "models": [{"name": "installed", "dimensions": 768}]}
+        with patch("os_agent_memory.kylin_native.subprocess.run",
+                   return_value=subprocess.CompletedProcess([], 0, json.dumps(payload).encode())) as run:
+            self.assertEqual(discover_native_models(path), payload["models"])
+            self.assertEqual(json.loads(run.call_args.kwargs["input"])["operation"], "models")
+        with patch("os_agent_memory.kylin_native.subprocess.run", side_effect=subprocess.TimeoutExpired([], 1)):
+            with self.assertRaises(TimeoutError):
+                discover_native_models(path, timeout_seconds=1)
+        payload = {"status": "unavailable", "stage": "session_init", "error_code": 19, "message": "private"}
+        with patch("os_agent_memory.kylin_native.subprocess.run",
+                   return_value=subprocess.CompletedProcess([], 0, json.dumps(payload).encode())):
+            with self.assertRaises(NativeSDKError) as error:
+                discover_native_models(path)
+            self.assertEqual(error.exception.stage, "session_init")
+            self.assertEqual(error.exception.code, 19)
+            self.assertNotIn("private", str(error.exception))
+
+    def test_model_discovery_does_not_claim_embedding_or_agent_execution(self):
+        from scripts.check_kylin_native import diagnose
+        with patch("scripts.check_kylin_native.discover_native_models", return_value=[]):
+            result = diagnose(library_path=Path("absent.so").resolve())
+            self.assertTrue(result["model_list_executed"])
+            self.assertFalse(result["real_embedding_executed"])
+            self.assertFalse(result["agent_executed"])
+            self.assertFalse(result["official_validation_ready"])
+            result = diagnose(library_path=Path("absent.so").resolve(), probe_model="not-installed")
+            self.assertFalse(result["real_embedding_executed"])
+            self.assertEqual(result["error_type"], "ValueError")
+
+    def test_legacy_probe_is_explicit_and_does_not_claim_model_identity(self):
+        from scripts.check_kylin_native import diagnose
+        path = str(Path("absent.so").resolve())
+        lib = FakeLibrary()
+        with patch.object(lib, "text_embedding_init_model", side_effect=AssertionError("not in legacy ABI")):
+            self.assertEqual(_encode_library(lib, "diagnostic", None, None), [3., 4.])
+        self.assertEqual(lib.released, ["result", "session"])
+        with patch("os_agent_memory.kylin_native._run_worker", return_value={"dimensions": 768}) as worker:
+            self.assertEqual(probe_native_default(path), {"dimensions": 768, "model_identity_verified": False})
+            self.assertEqual(worker.call_args.args[0]["operation"], "legacy_probe")
+        with patch("scripts.check_kylin_native.probe_native_default",
+                   return_value={"dimensions": 768, "model_identity_verified": False}):
+            result = diagnose(library_path=path, probe_legacy_default=True)
+        self.assertTrue(result["real_embedding_executed"])
+        self.assertFalse(result["model_list_executed"])
+        self.assertFalse(result["model_identity_verified"])
+        self.assertFalse(result["vector_database_connected"])
+        self.assertFalse(result["official_validation_ready"])
+        with self.assertRaises(ValueError):
+            diagnose(library_path=path, probe_legacy_default=True, probe_model="unverified")
+
+    def test_legacy_probe_rejects_unbounded_or_invalid_dimensions(self):
+        for dimensions in (0, 16385, True, None, "768"):
+            with patch("os_agent_memory.kylin_native._run_worker", return_value={"dimensions": dimensions}):
+                with self.assertRaises(NativeSDKError):
+                    probe_native_default(str(Path("absent.so").resolve()))

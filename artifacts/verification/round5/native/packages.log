@@ -1,0 +1,12 @@
+dpkg-query: 没有找到与 *docker* 相匹配的软件包
+dpkg-query: 没有找到与 *podman* 相匹配的软件包
+dpkg-query: 没有找到与 *kylinbot* 相匹配的软件包
+kylin-ai-runtime	installed	1.1.0.1-0k1.32
+kylin-ai-vector-engine	installed	1.2.0.1-0k0.11
+kylin-gte-base-model	installed	1.0.0.1-0k0.8
+kylin-gte-base-uint8-onnx-model	not-installed	
+libkylin-coreai-embedding:amd64	installed	1.2.0.0-0k0.3
+libkylin-ondevice-embedding-engine:amd64	installed	1.2.0.0-0k0.10
+libkylin-ondevice-image-embedding-engine	not-installed	
+libkylin-ondevice-text-embedding-engine	not-installed	
+libkysdk-vector-engine-client:amd64	installed	1.2.0.0-0k0.7
