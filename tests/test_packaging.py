@@ -44,6 +44,11 @@ class SubmissionPackagingTest(unittest.TestCase):
                 "docs/测试报告.md",
                 "artifacts/verification/round3/final_verification.json",
                 "artifacts/verification/round3/evidence_summary.json",
+                "artifacts/verification/round5/evidence_summary.json",
+                "artifacts/verification/round5/kylin/requests.json",
+                "artifacts/verification/round5/native/legacy_runtime_started.json",
+                "docs/32_第五轮验收报告.md",
+                "scripts/generate_round5_materials.py",
                 "config/embedding.hash.json",
                 "src/os_agent_memory/dashboard.html",
                 "deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx",
@@ -57,6 +62,8 @@ class SubmissionPackagingTest(unittest.TestCase):
                 allow_incomplete=True,
             )
             self.assertEqual(rebuilt["status"], "incomplete_draft")
+            self.assertTrue((output / "02_技术方案与测试/第五轮逐请求/V11初次通过/requests.json").is_file())
+            self.assertTrue((output / "02_技术方案与测试/第五轮逐请求/V11初次失败/requests.json").is_file())
 
             paths = [path.relative_to(output).as_posix().lower() for path in output.rglob("*") if path.is_file()]
             self.assertFalse(any("case_studies/private" in path for path in paths))

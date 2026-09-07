@@ -12,8 +12,7 @@ from pptx.util import Inches, Pt
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "deliverables" / "ppt" / "OS_Agent_记忆优化_答辩稿.pptx"
-PERFORMANCE = ROOT / "artifacts" / "verification" / "round3" / "performance_windows_dev.json"
-SUMMARY = ROOT / "artifacts" / "verification" / "round4" / "evidence_summary.json"
+SUMMARY = ROOT / "artifacts" / "verification" / "round5" / "evidence_summary.json"
 
 NAVY = RGBColor(7, 17, 31)
 PANEL = RGBColor(17, 34, 53)
@@ -161,20 +160,24 @@ def add_title_slide(prs: Presentation):
     add_textbox(slide, 0.9, 1.15, 11.2, 0.45, "挑战杯“揭榜挂帅” · XA-202612", size=17, color=TEAL, bold=True)
     add_textbox(slide, 0.9, 1.85, 11.2, 1.5, "OS Agent 多源融合\n记忆优化与高效应用", size=40, bold=True)
     add_textbox(slide, 0.92, 3.65, 10.6, 0.85, "有作用域 · 有证据 · 有生命周期 · 可冲突治理 · 可安全遗忘", size=20, color=MUTED)
-    add_box(slide, 0.92, 5.35, 3.2, 0.7, "核心原型与开发机验证完成", fill=PANEL_2, line=TEAL, color=TEAL, size=14)
-    add_box(slide, 4.35, 5.35, 3.2, 0.7, "V11 实测与 SDK 分开验收", fill=PANEL_2, line=AMBER, color=AMBER, size=14)
+    add_box(slide, 0.92, 5.35, 3.2, 0.7, "Windows / V11 内部回归", fill=PANEL_2, line=TEAL, color=TEAL, size=14)
+    add_box(slide, 4.35, 5.35, 3.2, 0.7, "正式提交仍为 INCOMPLETE", fill=PANEL_2, line=AMBER, color=AMBER, size=14)
     evidence = json.loads(SUMMARY.read_text(encoding="utf-8"))
-    add_textbox(slide, 0.92, 6.65, 11.4, 0.35, "第四轮官方口径整改稿 · " + evidence["generated_at_utc"][:10], size=12, color=MUTED)
+    add_textbox(slide, 0.92, 6.65, 11.4, 0.35, "第五轮逐请求实测稿 · " + evidence["generated_at_utc"][:10], size=12, color=MUTED)
 
 
 def build_presentation() -> Presentation:
     evidence = json.loads(SUMMARY.read_text(encoding="utf-8"))
-    evaluation = evidence["evaluation"]
-    performance = json.loads(PERFORMANCE.read_text(encoding="utf-8"))
-    perf_10k = next(item for item in performance["results"] if item["records"] == 10000)
+    windows = evidence["requests"]["windows"]
+    guest = evidence["requests"]["kylin"]
     prs = Presentation()
     prs.slide_width = Inches(13.333)
     prs.slide_height = Inches(7.5)
+    prs.core_properties.title = "OS Agent 记忆优化：第五轮内部验证"
+    prs.core_properties.subject = "XA-202612 公开合成回归；正式提交 INCOMPLETE"
+    prs.core_properties.author = ""
+    prs.core_properties.last_modified_by = ""
+    prs.core_properties.comments = "从第五轮原始证据生成，不构成独立盲测或官方认证。"
     add_title_slide(prs)
 
     slide = base_slide(prs, "01  为什么 OS Agent 需要新的记忆系统？", "问题")
@@ -272,10 +275,10 @@ def build_presentation() -> Presentation:
         if i < len(steps) - 1:
             add_line(slide, x + 2.2, 1.96, x + 2.52, 1.96)
     add_box(slide, 1.0, 3.05, 11.35, 0.92, "中文：0.25 向量 + 0.25 词法 + 0.45 汉字覆盖 + 0.05 权威度", fill=PANEL_2, line=TEAL, size=20)
-    metric_card(slide, 1.05, 4.65, 3.35, "10,000 条冷查询", f"{perf_10k['cold_query_ms']} ms", "Windows / HashEmbedding", BLUE)
-    metric_card(slide, 4.98, 4.65, 3.35, "第三轮10,000条热p99", f"{perf_10k['hot_query_p99_ms']} ms", "历史内部结果；官方使用P95", TEAL)
-    metric_card(slide, 8.91, 4.65, 3.35, "SQLite 体积", f"{perf_10k['sqlite_disk_mb']} MB", "含缓存向量", AMBER)
-    add_textbox(slide, 1.0, 6.38, 11.35, 0.34, "注意：开发机回退模型证据，不替代真实银河麒麟 SDK 性能验收", size=13, color=AMBER, bold=True, align=PP_ALIGN.CENTER)
+    metric_card(slide, 1.05, 4.65, 3.35, "Windows / 10,000 条 P95", f"{windows['metrics']['retrieval_p95_ms']:.3f} ms", "80 个不同请求 / 实际服务", BLUE)
+    metric_card(slide, 4.98, 4.65, 3.35, "麒麟 V11 / 10,000 条 P95", f"{guest['metrics']['retrieval_p95_ms']:.3f} ms", "VMware / HashEmbedding", TEAL)
+    metric_card(slide, 8.91, 4.65, 3.35, "固定配置", "256 维 / top 3", "阈值 0.265 / 不预热", AMBER)
+    add_textbox(slide, 1.0, 6.38, 11.35, 0.34, "进程内 MemoryService.search，非 HTTP / Agent 推理；不是原生 SDK 性能", size=13, color=AMBER, bold=True, align=PP_ALIGN.CENTER)
 
     slide = base_slide(prs, "08  安全遗忘：可预览、可确认、可审计", "安全")
     flow = ["自然语言指令", "作用域解析", "影响预览", "确认令牌", "删除+索引同步", "审计回执"]
@@ -311,27 +314,26 @@ def build_presentation() -> Presentation:
         add_box(slide, 3.48, y, 8.8, 0.86, body, fill=PANEL, line=PANEL_2, size=15)
     add_box(slide, 1.45, 6.08, 10.45, 0.58, "默认监听 127.0.0.1；当前界面用于本地演示，不冒充生产级服务", fill=PANEL_2, line=AMBER, color=AMBER, size=14)
 
-    slide = base_slide(prs, "10  官方五项指标：当前内部证据与缺口", "评测")
-    official = evidence["official"]
-    rows = [("偏好准确率 ≥85%", "preference_accuracy", "13个旧集槽位；非独立请求"),
-            ("知识召回率 ≥85%", "knowledge_recall", "12个正例查询；不足50"),
-            ("冲突正确率 ≥88%", "conflict_accuracy", "2个案例；不足50"),
-            ("检索P95 ≤500ms", "retrieval_p95_ms", "50主题请求；HashEmbedding"),
-            ("敏感F1 ≥90%", "sensitive_f1", "50合成请求；请求级分类")]
+    slide = base_slide(prs, "10  冻结逐请求五项：内部达标，非官方认证", "评测")
+    rows = [("偏好准确率 ≥85%", "preference_accuracy", "68 请求；完整键值集合匹配"),
+            ("知识召回率 ≥85%", "knowledge_recall", "60 正例；另查无答案/跨域"),
+            ("冲突正确率 ≥88%", "conflict_accuracy", "60 对；检测和最终状态联合"),
+            ("检索P95 ≤500ms", "retrieval_p95_ms", "80 查询；10,000 条 / Hash"),
+            ("敏感F1 ≥90%", "sensitive_f1", "50 请求；实体 TP30/FP0/FN0")]
     for i, (label, key, note) in enumerate(rows):
         y = 1.18 + i * .87
-        value = official["metrics"][key]
-        formatted = f"{value:.2f} ms" if key == "retrieval_p95_ms" else f"{value:.2%}"
+        value = windows["metrics"][key]
+        formatted = f"{value:.3f} ms" if key == "retrieval_p95_ms" else f"{value:.2%}"
         add_box(slide, .75, y, 3.7, .63, label, size=16)
         add_textbox(slide, 4.7, y, 2.05, .63, formatted, size=22, color=AMBER, bold=True)
         add_textbox(slide, 7.0, y, 5.3, .63, note, size=15, color=MUTED)
-    add_box(slide, .8, 5.7, 11.7, .75, "官方尚未就绪：V11强制部署 + 每项至少50独立请求 + 真实评测", line=AMBER, color=AMBER, size=17)
-    add_textbox(slide, .8, 6.5, 11.7, .35, "历史召回91.67%与无答案100%不等于官方两个85%均达标；行动替身15/15仅为框架自检", size=12, color=MUTED)
+    add_box(slide, .8, 5.7, 11.7, .75, "上表 Windows；V11 同套五项也通过，原始报告分别保存", line=TEAL, color=TEAL, size=17)
+    add_textbox(slide, .8, 6.5, 11.7, .35, "公开合成标签由开发者持有；保留失败基线；不等于第三方盲测、真实Agent或官方认证", size=12, color=MUTED)
 
     slide = base_slide(prs, "11  自动化与安全证据", "验证")
-    metric_card(slide, 0.8, 1.22, 3.2, "自动化测试", str(evidence['tests']), "测试数；通过状态见原始报告", GREEN)
-    metric_card(slide, 4.45, 1.22, 3.2, "规模覆盖", "100 → 10,000", "冷/热/资源/磁盘", BLUE)
-    metric_card(slide, 8.1, 1.22, 3.2, "环境判定", "分层报告", "本地 ≠ 麒麟 ≠ SDK", AMBER)
+    metric_card(slide, 0.8, 1.22, 3.2, "Windows 自动化测试", str(evidence['tests']), "通过状态与源码摘要见报告", GREEN)
+    metric_card(slide, 4.45, 1.22, 3.2, "V11 客户机自动化测试", str(evidence["test_results"]["kylin"]["tests_run"]), "磁盘安装 / VMware / 离线", BLUE)
+    metric_card(slide, 8.1, 1.22, 3.2, "真实 SDK 单探针", "768 维", "身份/质量/性能仍待验证", AMBER)
     tests = ["跨租户/用户串读与误删", "提示注入与记忆污染", "失败工具偏好污染", "未决冲突普通检索隔离", "硬删除 SQLite 重载无残留", "嵌套凭证递归脱敏"]
     for i, item in enumerate(tests):
         x = 0.75 + (i % 2) * 6.15
@@ -345,7 +347,7 @@ def build_presentation() -> Presentation:
         ("3", "知识检索", "场景过滤与无答案"),
         ("4", "冲突治理", "待决隔离后自动/人工策略"),
         ("5", "安全遗忘", "预览影响范围，再确认删除"),
-        ("6", "评测证据", f"v3 对照、{evidence['tests']} 测试、10k 性能"),
+        ("6", "评测证据", f"五项逐请求、{evidence['tests']} 测试、V11 报告"),
     ]
     for i, (number, title, body) in enumerate(demo_steps):
         y = 1.12 + i * 0.91
@@ -355,21 +357,21 @@ def build_presentation() -> Presentation:
     add_box(slide, 3.2, 6.45, 6.95, 0.4, "一键脚本：scripts/run_demo.ps1", fill=PANEL_2, line=BLUE, color=BLUE, size=13)
 
     slide = base_slide(prs, "13  证据边界与最后一公里", "计划")
-    completed = ["统一生命周期门控", "增量事务与失败回滚", "服务/API/场景演示", "v3 隔离分区与对照", "10k 检索 + 实际服务负载", "作用域与重启安全测试"]
-    pending = ["真实SDK/向量服务联调", "V11虚拟机赛事认可", "独立盲测与LLM Judge", "知情同意案例", "最终视频", "平台/邮件回执"]
-    add_textbox(slide, 0.8, 1.15, 5.65, 0.45, "已完成（代码与开发机证据）", size=20, color=GREEN, bold=True)
+    completed = ["生命周期/显式授权门控", "增量事务与失败回滚", "服务/API/场景演示", "冻结逐请求五项回归", "V11磁盘安装与客户机实测", "旧ABI真实向量单探针"]
+    pending = ["原生模型身份/向量库往返", "V11虚拟机赛事认可", "真实Agent与独立LLM Judge", "知情同意案例", "最终视频（不超过7分钟）", "平台/报名/邮件回执"]
+    add_textbox(slide, 0.8, 1.15, 5.65, 0.45, "已完成（可复现内部证据）", size=20, color=GREEN, bold=True)
     add_textbox(slide, 6.95, 1.15, 5.55, 0.45, "继续验证与补齐", size=20, color=AMBER, bold=True)
     for i, item in enumerate(completed):
         add_box(slide, 0.8, 1.85 + i * 0.72, 5.65, 0.53, "✓  " + item, fill=PANEL, line=GREEN, color=WHITE, size=14)
     for i, item in enumerate(pending):
         add_box(slide, 6.95, 1.85 + i * 0.72, 5.55, 0.53, "!  " + item, fill=PANEL, line=AMBER, color=WHITE, size=14)
-    add_textbox(slide, 0.85, 6.42, 11.6, 0.34, "当前准确表述：核心原型与开发机验证完成，赛题指定环境待验收", size=17, color=TEAL, bold=True, align=PP_ALIGN.CENTER)
+    add_textbox(slide, 0.85, 6.42, 11.6, 0.34, "当前准确表述：Windows/V11 内部回归达标；外部赛事验收尚未完成", size=17, color=TEAL, bold=True, align=PP_ALIGN.CENTER)
 
     slide = base_slide(prs, "14  结论", "总结")
     add_textbox(slide, 1.05, 1.25, 11.25, 0.75, "从“记住更多”走向“记得正确、找得快速、忘得安全”", size=29, color=WHITE, bold=True, align=PP_ALIGN.CENTER)
     conclusions = [
         ("正确", "多维偏好 + 权威/时效证据 + 冲突隔离", TEAL),
-        ("高效", f"候选合并 + 向量缓存；10k 开发机 p99 {perf_10k['hot_query_p99_ms']}ms", BLUE),
+        ("高效", f"候选合并 + 向量缓存；V11 P95 {guest['metrics']['retrieval_p95_ms']:.3f}ms（Hash）", BLUE),
         ("安全", "递归脱敏 + 作用域 + 两阶段遗忘 + 隐私审计", AMBER),
     ]
     for i, (name, body, color) in enumerate(conclusions):
@@ -377,7 +379,7 @@ def build_presentation() -> Presentation:
         add_box(slide, x, 2.65, 3.75, 2.0, "", fill=PANEL, line=color)
         add_textbox(slide, x + 0.25, 2.98, 3.25, 0.5, name, size=24, color=color, bold=True, align=PP_ALIGN.CENTER)
         add_textbox(slide, x + 0.32, 3.62, 3.1, 0.7, body, size=14, align=PP_ALIGN.CENTER)
-    add_box(slide, 2.15, 5.35, 9.0, 0.78, "下一步：真实 SDK × 真实银河麒麟 × 独立盲测 × 授权案例", fill=PANEL_2, line=TEAL, color=TEAL, size=18)
+    add_box(slide, 2.15, 5.35, 9.0, 0.78, "下一步：原生模型复测 × 真实Agent × 独立盲测 × 授权案例", fill=PANEL_2, line=TEAL, color=TEAL, size=18)
     add_textbox(slide, 1.1, 6.42, 11.15, 0.4, "谢谢各位老师，欢迎提问", size=22, color=WHITE, bold=True, align=PP_ALIGN.CENTER)
     return prs
 

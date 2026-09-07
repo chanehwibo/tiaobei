@@ -19,7 +19,12 @@
         "docs/03_评测方案.md",
         "docs/06_测试矩阵.md",
         "docs/07_银河麒麟适配说明.md",
-        "docs/16_原创性与隐私发布边界.md",
+        "docs/16_原创性与隐私发布边界.md"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/历史第三轮",
+      "files": [
         "artifacts/verification/round3/compatibility_windows_dev.json",
         "artifacts/verification/round3/compatibility_windows_dev.md",
         "artifacts/verification/kylin_sdk_check_missing.json",
@@ -40,7 +45,7 @@
       ]
     },
     {
-      "target": "02_技术方案与测试/第四轮官方对齐",
+      "target": "02_技术方案与测试/历史第四轮",
       "files": [
         "docs/24_官方对齐整改清单.md",
         "docs/25_隔离实验室与赛后清理.md",
@@ -51,6 +56,75 @@
         "artifacts/verification/round4/evidence_summary.json",
         "artifacts/verification/round4/native_sdk_windows.json",
         "artifacts/verification/round4/actions_fixture.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮逐请求",
+      "files": [
+        "docs/29_续作任务清单.md",
+        "docs/30_逐请求评测与冻结基线.md",
+        "docs/31_麒麟V11客户机实测.md",
+        "docs/32_第五轮验收报告.md",
+        "docs/33_第五轮交付复核.md",
+        "artifacts/verification/round5/evidence_summary.json",
+        "artifacts/verification/round5/materials_tests.json",
+        "artifacts/verification/round5/material_checks.json",
+        "artifacts/verification/round5/requests_baseline.json",
+        "artifacts/verification/round5/requests_preference_iteration.json",
+        "artifacts/verification/round5/requests_quality_iteration.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮逐请求/Windows初次确认",
+      "files": [
+        "artifacts/verification/round5/requests_windows.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮逐请求/V11初次通过",
+      "files": [
+        "artifacts/verification/round5/kylin/requests.json",
+        "artifacts/verification/round5/kylin/kylin_vm.json",
+        "artifacts/verification/round5/kylin/unit_tests.log",
+        "artifacts/verification/round5/kylin/source_check.log",
+        "artifacts/verification/round5/kylin/root_filesystem.log",
+        "artifacts/verification/round5/kylin/virtualization.log",
+        "artifacts/verification/round5/kylin/retrieval_v3.log",
+        "artifacts/verification/round5/kylin/request_metrics.log",
+        "artifacts/verification/round5/kylin/official.json",
+        "artifacts/verification/round5/kylin/official_diagnostics.log",
+        "artifacts/verification/round5/kylin/native-sdk.json",
+        "artifacts/verification/round5/kylin/native_sdk.log",
+        "artifacts/verification/round5/kylin/installed_sdk_packages.log",
+        "artifacts/verification/round5/kylin/actions.json",
+        "artifacts/verification/round5/kylin/action_framework.log"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮逐请求/V11初次失败",
+      "files": [
+        "artifacts/verification/round5/kylin_initial/requests.json",
+        "artifacts/verification/round5/kylin_initial/kylin_vm.json",
+        "artifacts/verification/round5/kylin_initial/unit_tests.log"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮逐请求/SDK单探针",
+      "files": [
+        "artifacts/verification/round5/native/README.md",
+        "artifacts/verification/round5/native/legacy_runtime_started.json",
+        "artifacts/verification/round5/native/legacy_probe.json",
+        "artifacts/verification/round5/native/models_recheck.json",
+        "artifacts/verification/round5/native/unit_tests.json",
+        "artifacts/verification/round5/native/dependencies.log",
+        "artifacts/verification/round5/native/packages.log",
+        "artifacts/verification/round5/native/model_package_files.log",
+        "artifacts/verification/round5/native/model_file.log",
+        "artifacts/verification/round5/native/symbols.log",
+        "artifacts/verification/round5/native/tools.log",
+        "artifacts/verification/round5/native/vector_service.log",
+        "artifacts/verification/round5/native/vector_pkgconfig.log",
+        "artifacts/verification/round5/native/vector_development_recheck.log"
       ]
     }
   ],
@@ -66,6 +140,7 @@
       ".gitignore",
       "submission/submission_manifest.json",
       "submission/README.md",
+      "docs/04_提交材料清单.md",
       "docs/05_整改任务总清单.md",
       "docs/08_演示快跑指南.md",
       "docs/演示操作手册.md",

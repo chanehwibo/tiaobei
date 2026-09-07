@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-07T11:35:11+00:00",
+  "scope": "public_synthetic_regression_not_independent_blind_or_official_certification",
+  "tests": 146,
+  "test_results": {
+    "windows": {
+      "tests_run": 146,
+      "passed": true,
+      "source": "artifacts/verification/round5/materials_tests.json"
+    },
+    "kylin": {
+      "tests_run": 134,
+      "passed": true,
+      "source": "artifacts/verification/round5/kylin/kylin_vm.json"
+    }
+  },
+  "requests": {
+    "windows": {
+      "metrics": {
+        "preference_accuracy": 1.0,
+        "knowledge_recall": 1.0,
+        "conflict_accuracy": 1.0,
+        "retrieval_p95_ms": 67.31970002874732,
+        "sensitive_f1": 1.0
+      },
+      "observation_counts": {
+        "preference_accuracy": 68,
+        "knowledge_recall": 60,
+        "conflict_accuracy": 60,
+        "retrieval_p95_ms": 80,
+        "sensitive_f1": 50
+      },
+      "safety_checks": {
+        "durable_preferences": true,
+        "knowledge_ingestion": true,
+        "no_scope_leaks": true,
+        "no_answer_85": true,
+        "no_redaction_leaks": true
+      },
+      "all_targets_met": true,
+      "dataset": {
+        "name": "public_request_regression_v1",
+        "sha256": "51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98",
+        "provenance": {
+          "type": "developer_authored_synthetic",
+          "human_data": false,
+          "independent_blind": false,
+          "labels_frozen_before_algorithm_changes": true,
+          "limitations": "Public labels; repeated development evaluation is regression, not blind validation."
+        }
+      },
+      "environment": {
+        "system": "Windows",
+        "release": "10",
+        "machine": "AMD64",
+        "python": "3.14.3",
+        "embedding_provider": {
+          "implementation": "os_agent_memory.embeddings.HashEmbedding",
+          "dimensions": 256,
+          "ngram": 2
+        }
+      },
+      "source": "artifacts/verification/round5/requests_windows.json",
+      "records": 10000,
+      "threshold": 0.265,
+      "provider": {
+        "implementation": "os_agent_memory.embeddings.HashEmbedding",
+        "dimensions": 256,
+        "ngram": 2
+      },
+      "sensitive_counts": {
+        "tp": 30,
+        "fp": 0,
+        "fn": 0
+      }
+    },
+    "kylin": {
+      "metrics": {
+        "preference_accuracy": 1.0,
+        "knowledge_recall": 1.0,
+        "conflict_accuracy": 1.0,
+        "retrieval_p95_ms": 111.62611300005665,
+        "sensitive_f1": 1.0
+      },
+      "observation_counts": {
+        "preference_accuracy": 68,
+        "knowledge_recall": 60,
+        "conflict_accuracy": 60,
+        "retrieval_p95_ms": 80,
+        "sensitive_f1": 50
+      },
+      "safety_checks": {
+        "durable_preferences": true,
+        "knowledge_ingestion": true,
+        "no_scope_leaks": true,
+        "no_answer_85": true,
+        "no_redaction_leaks": true
+      },
+      "all_targets_met": true,
+      "dataset": {
+        "name": "public_request_regression_v1",
+        "sha256": "51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98",
+        "provenance": {
+          "type": "developer_authored_synthetic",
+          "human_data": false,
+          "independent_blind": false,
+          "labels_frozen_before_algorithm_changes": true,
+          "limitations": "Public labels; repeated development evaluation is regression, not blind validation."
+        }
+      },
+      "environment": {
+        "system": "Linux",
+        "release": "6.6.0-63-generic",
+        "machine": "x86_64",
+        "python": "3.12.3",
+        "embedding_provider": {
+          "implementation": "os_agent_memory.embeddings.HashEmbedding",
+          "dimensions": 256,
+          "ngram": 2
+        }
+      },
+      "source": "artifacts/verification/round5/kylin/requests.json",
+      "records": 10000,
+      "threshold": 0.265,
+      "provider": {
+        "implementation": "os_agent_memory.embeddings.HashEmbedding",
+        "dimensions": 256,
+        "ngram": 2
+      },
+      "sensitive_counts": {
+        "tp": 30,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  "vm": {
+    "installed": true,
+    "required_v11_verified": true,
+    "guest_verification_passed": true,
+    "virtualization": "vmware",
+    "root_filesystem": "/dev/sda3[/ostree/deploy/kylin/deploy/c6914efa45786c8ff432b2a1a2c0933bbcdcb411d43bf03b65c83b3e5d4a2bc9.1] ext4",
+    "machine": "x86_64",
+    "python": "3.12.3"
+  },
+  "native": {
+    "real_embedding_executed": true,
+    "dimensions": 768,
+    "single_probe_ms": 13390.614526000036,
+    "model_identity_verified": false,
+    "model_version_verified": false,
+    "vector_database_connected": false,
+    "agent_executed": false,
+    "container_sample_executed": false,
+    "independent_judge_executed": false
+  },
+  "local_checks_passed": null,
+  "competition_ready": false,
+  "source_sha256": {
+    "artifacts/verification/round5/requests_windows.json": "a7fe5c07a748ce09e537f026c98a4493031b874dd1ed4724876524a2750d73aa",
+    "artifacts/verification/round5/kylin/requests.json": "212bca23666735828936ff86eb4ac8931deb5003e62592bae9defc799352a58e",
+    "artifacts/verification/round5/kylin/kylin_vm.json": "b569b4e4f00c8783e560cbc7c2db472f4d8fa3c5250dcdd22ff988296debefd6",
+    "artifacts/verification/round5/native/legacy_runtime_started.json": "0d75ff37cc7966d22c266fa40a1913b87c47ed00e54af047d8aa9e0abae85306",
+    "artifacts/verification/round5/materials_tests.json": "88ca483571d5e496d1246909c0dfc9ddf42e6671171a550cffda54577b4dfe37"
+  }
+}

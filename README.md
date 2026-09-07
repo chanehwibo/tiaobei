@@ -4,16 +4,35 @@
 
 ## 当前状态
 
-第四轮按官方资料整改。强制部署环境为银河麒麟 **V11**；SDK 是推荐项。当前五项指标及环境实测状态见 [第四轮验收报告](docs/28_第四轮验收报告.md)，逐项进度见 [整改清单](docs/24_官方对齐整改清单.md)。正式提交仍为 `INCOMPLETE`。
+第五轮已在 Windows 和真实安装的银河麒麟 **V11 虚拟机**完成冻结逐请求回归。强制部署环境为 V11，SDK 是推荐项；虚拟机部署形式是否被赛事接受仍需出题方确认。当前证据见 [第五轮验收报告](docs/32_第五轮验收报告.md)，进度见 [续作 TODO](docs/29_续作任务清单.md)。正式提交仍为 `INCOMPLETE`。
 
 - 已增加显式授权的 Markdown/YAML 记忆、按需召回与逐项确认遗忘、否定及多字段偏好修正。
 - 5会话50轮行动评测检查15个实际输出文件；替身通过只证明框架自检，真实Agent/容器/独立Judge仍待验证。
-- 五项内部诊断：偏好准确率46.15%（13槽位）、知识Recall@3 91.67%（12查询）、冲突100%（2案例）、检索P95与敏感F1各50请求。前三项样本不足，偏好未达85%，不宣称官方全部达标。
-- 已依据官方C ABI增加真实Embedding子进程适配；实际库/模型/服务连通状态由 [SDK诊断](docs/27_真实SDK接入与证据边界.md) 证明，向量数据库桥接仍未完成。
+- 五项均有至少50个不同请求，逐请求完整评分，固定标签与配置；保留失败基线及修复后的完整结果。
+- 真实Embedding旧ABI单探针成功；新ABI缺符号，模型身份未核实，向量数据库往返仍未完成。详见 [SDK诊断](docs/27_真实SDK接入与证据边界.md)，不把单探针称为生产集成或性能验收。
 - [隔离实验室](docs/25_隔离实验室与赛后清理.md)使用独立venv、镜像和虚拟磁盘，不升级或卸载宿主Python/VMware；赛后可核查并可恢复撤除。
 - 独立盲测、真实授权案例、视频和赛事凭证仍待补齐。
 
-第三轮的91项回归、91.67%正例召回及100%无答案正确率是历史内部证据，见 [第三轮报告](docs/22_第三轮验收报告.md)。它们不等同于官方“偏好准确率＋知识召回率”两个85%。历史报告和只读ZIP保留。
+<!-- BEGIN ROUND5 EVIDENCE -->
+公开合成冻结回归，不是第三方盲测或官方认证；两个环境均为 HashEmbedding 256 维、10,000 条记录、top_k=3、阈值 0.265，实际调用 MemoryService.search。
+
+| 指标 | 门槛 | Windows | 麒麟 V11 虚拟机 | 请求数 |
+| --- | --- | --- | --- | --- |
+| 偏好逐请求准确率 | >=85% | 100.00% | 100.00% | 68 |
+| 知识 Recall@3 | >=85% | 100.00% | 100.00% | 60 |
+| 冲突正确率 | >=88% | 100.00% | 100.00% | 60 |
+| 检索 P95 | <=500ms | 67.320ms | 111.626ms | 80 |
+| 敏感实体 F1 | >=90% | 100.00% | 100.00% | 50 |
+
+自动化测试：Windows 146 项（通过）；V11 134 项（通过）。两个报告各自绑定被测版本，最终交付需核对源码摘要。
+五项及附加安全门槛：Windows True；V11 True。敏感识别为实体级微平均，Windows TP/FP/FN=30/0/0。
+旧 ABI 原生单探针返回 768 维向量，耗时 13390.615ms；模型身份未验证，不是原生 P95 或质量达标证据。向量数据库往返、真实 Agent/容器和独立 Judge 尚未验证。
+
+数据原始 SHA256：`51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98`。
+原始报告：`artifacts/verification/round5/requests_windows.json`、`artifacts/verification/round5/kylin/requests.json`；完整来源摘要见 `artifacts/verification/round5/evidence_summary.json`。
+<!-- END ROUND5 EVIDENCE -->
+
+第三、四轮原始报告及只读 ZIP 保留为历史，不用旧 v1/v2 满分或小样本诊断替代当前逐请求成绩。
 
 ## 能力概览
 
@@ -64,10 +83,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\run_demo.ps1"
 ```powershell
 $env:PYTHONPATH="$PWD\src"
 python scripts/evaluate_v3.py --require-quality --embedding-config config/embedding.hash.json
+python -S scripts/evaluate_requests.py --size 10000 --require-targets --output artifacts/runtime/requests.json
 python .\scripts\verify_release.py --artifact-dir artifacts/runtime/verification --sizes 100,1000,5000,10000 --rounds 30
 ```
 
-当前固定证据位于 `artifacts/verification/round4/`，第三轮目录保留为历史。完整验收会执行源码编译、全部测试、v1/v2 诊断、v3 两项 85% 门槛、消融、性能、兼容性、演示预检、材料检查和隐私扫描，通常需数分钟。它明确区分 `local_release_checks_passed` 与 `competition_submission_ready`；任一质量目标未达标时返回非零退出码。真实 SDK/新领域需重新校准，0.265 不保证通用。
+当前固定证据位于 `artifacts/verification/round5/`。逐请求命令对五项数值、样本数和附加安全门槛执行硬检查，未达标返回非零。完整验收还执行源码编译、全部测试、v1/v2 历史诊断、v3 检索回归、消融、规模性能、兼容性、演示预检、材料及隐私检查，通常需数分钟。`local_release_checks_passed` 与 `competition_submission_ready` 分开；真实 SDK/新领域需重新校准，0.265 不保证通用。
 
 ## 提交包草案
 
@@ -82,7 +102,7 @@ python .\scripts\build_submission.py --allow-incomplete
 ```text
 artifacts/verification/  固定评测、性能、兼容性与最终验收证据
 case_studies/            真实案例流程说明与空白模板；私有材料不入库
-data/                    合成样例及 v1/v2 标注评测集
+data/                    合成样例、v1/v2/v3 及冻结逐请求评测集
 deliverables/            可编辑 PPT、Word 技术报告与视频交付说明
 docs/                    技术方案、测试、部署、API、演示和答辩材料
 scripts/                 数据、PPT、演示、验收与打包工具
@@ -94,12 +114,12 @@ tests/                   单元、集成、HTTP E2E、安全与打包测试
 ## 文档入口
 
 - 技术方案：`docs/09_技术方案正文.md`
-- 测试与证据：`docs/测试报告.md`、`artifacts/verification/round4/final_verification.md`
+- 测试与证据：`docs/测试报告.md`、`docs/32_第五轮验收报告.md`
 - 快速演示：`docs/08_演示快跑指南.md`、`docs/演示操作手册.md`
 - 部署与复现：`docs/12_部署手册.md`、`docs/14_可复现指南.md`
 - API 与模块：`docs/13_API文档.md`、`docs/15_源代码模块说明.md`
 - 适配边界：`docs/07_银河麒麟适配说明.md`
-- 整改进度：`docs/05_整改任务总清单.md`
+- 整改进度：`docs/29_续作任务清单.md`；历史总表 `docs/05_整改任务总清单.md`
 
 ## 许可与隐私
 

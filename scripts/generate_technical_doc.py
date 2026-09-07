@@ -49,6 +49,9 @@ def _add_markdown(document: Document, source: Path) -> None:
     while index < len(lines):
         line = lines[index]
         stripped = line.strip()
+        if stripped.startswith("<!--") and stripped.endswith("-->"):
+            index += 1
+            continue
         if stripped.startswith("```"):
             if in_code:
                 paragraph = document.add_paragraph()
@@ -138,17 +141,17 @@ def build_document(solution_path: Path, report_path: Path, output: Path) -> None
     _set_run_font(run, 26, True)
     subtitle = document.add_paragraph()
     subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run = subtitle.add_run("技术方案与测试报告（开发机交付版）")
+    run = subtitle.add_run("技术方案与测试报告（第五轮内部验证版）")
     _set_run_font(run, 16, True)
     meta = document.add_paragraph()
     meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    evidence = json.loads((PROJECT_ROOT / "artifacts/verification/round4/evidence_summary.json").read_text(encoding="utf-8"))
-    run = meta.add_run("对应赛题：XA-202612\n第四轮证据日期：" + evidence["generated_at_utc"][:10])
+    evidence = json.loads((PROJECT_ROOT / "artifacts/verification/round5/evidence_summary.json").read_text(encoding="utf-8"))
+    run = meta.add_run("对应赛题：XA-202612\n第五轮证据日期：" + evidence["generated_at_utc"][:10])
     _set_run_font(run, 11)
     boundary = document.add_paragraph()
     boundary.alignment = WD_ALIGN_PARAGRAPH.CENTER
     boundary.paragraph_format.space_before = Pt(80)
-    run = boundary.add_run("边界：官方五项指标尚未全达成；V11虚拟机、真实SDK与独立评测分别记录")
+    run = boundary.add_run("边界：Windows/V11公开合成回归五项达标；原生模型、独立盲测及赛事验收未完成。INCOMPLETE")
     _set_run_font(run, 10, True)
 
     document.add_page_break()
@@ -159,11 +162,13 @@ def build_document(solution_path: Path, report_path: Path, output: Path) -> None
     for section in document.sections:
         footer = section.footer.paragraphs[0]
         footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        run = footer.add_run("OS Agent 记忆优化 · 开发机交付材料 · 结论边界见正文")
+        run = footer.add_run("OS Agent 记忆优化 · 第五轮内部验证 · 结论边界见正文")
         _set_run_font(run, 8)
 
     document.core_properties.title = "OS Agent 多源融合记忆优化系统：技术方案与测试报告"
-    document.core_properties.subject = "挑战杯揭榜挂帅 XA-202612 开发机交付材料"
+    document.core_properties.subject = "挑战杯揭榜挂帅 XA-202612 第五轮内部验证材料"
+    document.core_properties.author = ""
+    document.core_properties.last_modified_by = ""
     document.core_properties.comments = "由仓库脚本从 Markdown 正文生成，可编辑；不构成真实麒麟 SDK 验收。"
     output.parent.mkdir(parents=True, exist_ok=True)
     document.save(output)
