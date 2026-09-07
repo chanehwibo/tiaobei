@@ -13,10 +13,11 @@ class KnowledgeExtractor:
         ("case", ("案例", "故障", "问题", "复盘")),
         ("template", ("模板", "格式", "范文")),
         ("tool", ("工具", "脚本", "命令")),
-        ("policy", ("安全", "合规", "权限", "隐私")),
+        ("policy", ("安全", "合规", "权限", "隐私", "规则", "规范", "制度")),
     )
 
-    KNOWLEDGE_HINTS = ("流程", "步骤", "案例", "模板", "复盘", "解决方案", "总结", "命令", "脚本")
+    KNOWLEDGE_HINTS = ("流程", "步骤", "案例", "模板", "复盘", "解决方案", "总结", "命令", "脚本",
+                       "规则", "规范", "制度")
 
     def extract(self, records: list[DataRecord]) -> list[KnowledgeMemory]:
         memories: list[KnowledgeMemory] = []

@@ -16,7 +16,7 @@ class SensitiveFilter:
 
     PATTERNS: tuple[tuple[str, re.Pattern[str], str], ...] = (
         ("email", re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"), "[EMAIL]"),
-        ("phone", re.compile(r"(?<!\d)1[3-9]\d{9}(?!\d)"), "[PHONE]"),
+        ("phone", re.compile(r"(?<![A-Za-z0-9_])1[3-9]\d{9}(?![A-Za-z0-9_])"), "[PHONE]"),
         ("id_card", re.compile(r"(?<!\d)\d{17}[\dXx](?!\d)"), "[ID_CARD]"),
         ("bank_card", re.compile(r"(?<!\d)(?:\d[ -]?){15,18}\d(?!\d)"), "[BANK_CARD]"),
         (
@@ -24,9 +24,10 @@ class SensitiveFilter:
             re.compile(r"(?<!\d)(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)(?!\d)"),
             "[IP_ADDRESS]",
         ),
-        ("api_key", re.compile(r"(?i)\b(?:api[_-]?key|token|secret)\s*[:=]\s*[A-Za-z0-9_\-]{8,}"), "[SECRET]"),
-        ("bearer_token", re.compile(r"(?i)\bbearer\s+[A-Za-z0-9._~+/=-]{12,}"), "Bearer [SECRET]"),
-        ("private_key", re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"), "[PRIVATE_KEY_BLOCK]"),
+        ("api_key", re.compile(r"(?i)(?<![A-Za-z0-9_])(?:api[_-]?key|token|secret)\s*[:=]\s*[A-Za-z0-9_.~+/@=-]{8,}"), "[SECRET]"),
+        ("bearer_token", re.compile(r"(?i)(?<![A-Za-z0-9_])bearer\s+[A-Za-z0-9._~+/=-]{12,}"), "Bearer [SECRET]"),
+        ("private_key", re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"
+                                    r"(?:[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----)?"), "[PRIVATE_KEY_BLOCK]"),
     )
     SECRET_KEYS = {
         "api_key",
@@ -57,19 +58,32 @@ class SensitiveFilter:
         ),
     )
 
-    def detect(self, text: str) -> list[SensitiveHit]:
-        hits: list[SensitiveHit] = []
-        for kind, pattern, _replacement in self.PATTERNS:
+    def _spans(self, text: str):
+        candidates = []
+        for priority, (kind, pattern, replacement) in enumerate(self.PATTERNS):
             for match in pattern.finditer(text):
-                hits.append(SensitiveHit(kind=kind, value=match.group(0)))
-        return hits
+                candidates.append((match.start(), match.end(), priority, kind, replacement))
+        selected = []
+        # A complete entity owns contained generic matches (ID versus bank number,
+        # or a token containing an address). Count and redact the same spans.
+        for candidate in sorted(candidates, key=lambda span: (span[0] - span[1], span[2], span[0])):
+            start, end = candidate[:2]
+            if not any(start < existing[1] and existing[0] < end for existing in selected):
+                selected.append(candidate)
+        return sorted(selected)
+
+    def detect(self, text: str) -> list[SensitiveHit]:
+        return [SensitiveHit(kind=kind, value=text[start:end])
+                for start, end, _priority, kind, _replacement in self._spans(text)]
 
     def redact(self, text: str) -> tuple[str, list[SensitiveHit]]:
-        hits = self.detect(text)
-        redacted = text
-        for _kind, pattern, replacement in self.PATTERNS:
-            redacted = pattern.sub(replacement, redacted)
-        return redacted, hits
+        parts, hits, cursor = [], [], 0
+        for start, end, _priority, kind, replacement in self._spans(text):
+            parts.extend((text[cursor:start], replacement))
+            hits.append(SensitiveHit(kind=kind, value=text[start:end]))
+            cursor = end
+        parts.append(text[cursor:])
+        return "".join(parts), hits
 
     def redact_structure(self, value: Any, key: str = "") -> tuple[Any, list[SensitiveHit]]:
         """Recursively redact metadata without retaining secret field values."""
