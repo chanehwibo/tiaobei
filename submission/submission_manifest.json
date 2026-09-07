@@ -165,6 +165,73 @@
         "artifacts/verification/round5/native/vector_pkgconfig.log",
         "artifacts/verification/round5/native/vector_development_recheck.log"
       ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮续作补验/双环境核对",
+      "files": [
+        "artifacts/verification/round5/resume/windows_source_check.json",
+        "artifacts/verification/round5/resume/windows_privacy.json",
+        "artifacts/verification/round5/resume/source_comparison.json",
+        "artifacts/verification/round5/resume/v11_import_privacy.json",
+        "artifacts/verification/round5/resume/v11_privacy.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮续作补验/Windows",
+      "files": [
+        "artifacts/verification/round5/resume/windows/ablations.json",
+        "artifacts/verification/round5/resume/windows/compatibility_windows_dev.json",
+        "artifacts/verification/round5/resume/windows/compatibility_windows_dev.md",
+        "artifacts/verification/round5/resume/windows/evaluation_v1_final.json",
+        "artifacts/verification/round5/resume/windows/evaluation_v2_test_final.json",
+        "artifacts/verification/round5/resume/windows/evaluation_v3.json",
+        "artifacts/verification/round5/resume/windows/final_verification.json",
+        "artifacts/verification/round5/resume/windows/final_verification.md",
+        "artifacts/verification/round5/resume/windows/official_diagnostics.json",
+        "artifacts/verification/round5/resume/windows/performance_windows_dev.json",
+        "artifacts/verification/round5/resume/windows/performance_windows_dev.md",
+        "artifacts/verification/round5/resume/windows/requests.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮续作补验/V11",
+      "files": [
+        "artifacts/verification/round5/resume/kylin/action_framework.log",
+        "artifacts/verification/round5/resume/kylin/actions.json",
+        "artifacts/verification/round5/resume/kylin/installed_sdk_packages.log",
+        "artifacts/verification/round5/resume/kylin/kylin_vm.json",
+        "artifacts/verification/round5/resume/kylin/native-sdk.json",
+        "artifacts/verification/round5/resume/kylin/native_sdk.log",
+        "artifacts/verification/round5/resume/kylin/official.json",
+        "artifacts/verification/round5/resume/kylin/official_diagnostics.log",
+        "artifacts/verification/round5/resume/kylin/request_metrics.log",
+        "artifacts/verification/round5/resume/kylin/requests.json",
+        "artifacts/verification/round5/resume/kylin/retrieval_v3.log",
+        "artifacts/verification/round5/resume/kylin/root_filesystem.log",
+        "artifacts/verification/round5/resume/kylin/source_check.log",
+        "artifacts/verification/round5/resume/kylin/unit_tests.log",
+        "artifacts/verification/round5/resume/kylin/virtualization.log"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮续作补验/完整演示",
+      "files": [
+        "artifacts/verification/round5/resume-demo-02/demo.redacted.log",
+        "artifacts/verification/round5/resume-demo-02/requests.json",
+        "artifacts/verification/round5/resume-demo-02/verification.json",
+        "artifacts/verification/round5/resume_demo_privacy.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/第五轮续作补验/DOCX排版",
+      "files": [
+        "artifacts/verification/round5/resume_doc_materials.json",
+        "artifacts/verification/round5/resume_doc_privacy.json",
+        "artifacts/verification/round5/resume_doc_render_02.json",
+        "artifacts/verification/round5/resume_doc_render_03.json",
+        "artifacts/verification/round5/resume_doc_tests_01.json",
+        "artifacts/verification/round5/resume_doc_visual_review.json"
+      ]
     }
   ],
   "source_section": {
