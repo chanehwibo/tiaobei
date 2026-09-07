@@ -4,7 +4,7 @@
     "preference_accuracy": 0.4615,
     "knowledge_recall": 0.9167,
     "conflict_accuracy": 1.0,
-    "retrieval_p95_ms": 107.96619998291135,
+    "retrieval_p95_ms": 190.5652000568807,
     "sensitive_f1": 1.0
   },
   "observation_counts": {
@@ -48,7 +48,7 @@
         "passed": false
       },
       "retrieval_p95_ms": {
-        "value": 107.96619998291135,
+        "value": 190.5652000568807,
         "target": 500.0,
         "operator": "le",
         "requests": 50,
@@ -73,308 +73,308 @@
     "records": 10000,
     "requests": 50,
     "unique_queries": 50,
-    "p95_ms": 107.96619998291135,
-    "p99_ms": 119.82870008796453,
-    "cold_first_ms": 94.88589991815388,
+    "p95_ms": 190.5652000568807,
+    "p99_ms": 216.27270011231303,
+    "cold_first_ms": 132.15459999628365,
     "rows": [
       {
         "id": "latency-000",
         "query": "专项主题 topic000 办公审批流程",
-        "elapsed_ms": 94.88589991815388,
+        "elapsed_ms": 132.15459999628365,
         "results": 5
       },
       {
         "id": "latency-001",
         "query": "专项主题 topic001 办公审批流程",
-        "elapsed_ms": 102.57320012897253,
+        "elapsed_ms": 190.5652000568807,
         "results": 5
       },
       {
         "id": "latency-002",
         "query": "专项主题 topic002 办公审批流程",
-        "elapsed_ms": 119.82870008796453,
+        "elapsed_ms": 216.27270011231303,
         "results": 5
       },
       {
         "id": "latency-003",
         "query": "专项主题 topic003 办公审批流程",
-        "elapsed_ms": 90.63189988955855,
+        "elapsed_ms": 170.67899997346103,
         "results": 5
       },
       {
         "id": "latency-004",
         "query": "专项主题 topic004 办公审批流程",
-        "elapsed_ms": 93.46129978075624,
+        "elapsed_ms": 108.49259980022907,
         "results": 5
       },
       {
         "id": "latency-005",
         "query": "专项主题 topic005 办公审批流程",
-        "elapsed_ms": 89.2232998739928,
+        "elapsed_ms": 114.03480009175837,
         "results": 5
       },
       {
         "id": "latency-006",
         "query": "专项主题 topic006 办公审批流程",
-        "elapsed_ms": 102.63069998472929,
+        "elapsed_ms": 143.12990009784698,
         "results": 5
       },
       {
         "id": "latency-007",
         "query": "专项主题 topic007 办公审批流程",
-        "elapsed_ms": 89.7178000304848,
+        "elapsed_ms": 156.6407000645995,
         "results": 5
       },
       {
         "id": "latency-008",
         "query": "专项主题 topic008 办公审批流程",
-        "elapsed_ms": 90.81379999406636,
+        "elapsed_ms": 153.1215999275446,
         "results": 5
       },
       {
         "id": "latency-009",
         "query": "专项主题 topic009 办公审批流程",
-        "elapsed_ms": 88.095499901101,
+        "elapsed_ms": 171.3543999940157,
         "results": 5
       },
       {
         "id": "latency-010",
         "query": "专项主题 topic010 办公审批流程",
-        "elapsed_ms": 89.30540014989674,
+        "elapsed_ms": 181.03810003958642,
         "results": 5
       },
       {
         "id": "latency-011",
         "query": "专项主题 topic011 办公审批流程",
-        "elapsed_ms": 96.40269982628524,
+        "elapsed_ms": 181.77259992808104,
         "results": 5
       },
       {
         "id": "latency-012",
         "query": "专项主题 topic012 办公审批流程",
-        "elapsed_ms": 94.1663000266999,
+        "elapsed_ms": 156.11229999922216,
         "results": 5
       },
       {
         "id": "latency-013",
         "query": "专项主题 topic013 办公审批流程",
-        "elapsed_ms": 107.96619998291135,
+        "elapsed_ms": 126.41069991514087,
         "results": 5
       },
       {
         "id": "latency-014",
         "query": "专项主题 topic014 办公审批流程",
-        "elapsed_ms": 92.95489988289773,
+        "elapsed_ms": 132.40910018794239,
         "results": 5
       },
       {
         "id": "latency-015",
         "query": "专项主题 topic015 办公审批流程",
-        "elapsed_ms": 91.40429995022714,
+        "elapsed_ms": 150.1879000570625,
         "results": 5
       },
       {
         "id": "latency-016",
         "query": "专项主题 topic016 办公审批流程",
-        "elapsed_ms": 87.71439990960062,
+        "elapsed_ms": 167.28730010800064,
         "results": 5
       },
       {
         "id": "latency-017",
         "query": "专项主题 topic017 办公审批流程",
-        "elapsed_ms": 91.81939996778965,
+        "elapsed_ms": 188.07439994998276,
         "results": 5
       },
       {
         "id": "latency-018",
         "query": "专项主题 topic018 办公审批流程",
-        "elapsed_ms": 91.45009983330965,
+        "elapsed_ms": 172.09520004689693,
         "results": 5
       },
       {
         "id": "latency-019",
         "query": "专项主题 topic019 办公审批流程",
-        "elapsed_ms": 89.91320012137294,
+        "elapsed_ms": 174.64669980108738,
         "results": 5
       },
       {
         "id": "latency-020",
         "query": "专项主题 topic020 办公审批流程",
-        "elapsed_ms": 88.41430000029504,
+        "elapsed_ms": 172.83600009977818,
         "results": 5
       },
       {
         "id": "latency-021",
         "query": "专项主题 topic021 办公审批流程",
-        "elapsed_ms": 109.70799997448921,
+        "elapsed_ms": 141.0882999189198,
         "results": 5
       },
       {
         "id": "latency-022",
         "query": "专项主题 topic022 办公审批流程",
-        "elapsed_ms": 91.49100002832711,
+        "elapsed_ms": 139.9283001665026,
         "results": 5
       },
       {
         "id": "latency-023",
         "query": "专项主题 topic023 办公审批流程",
-        "elapsed_ms": 98.55780005455017,
+        "elapsed_ms": 186.98050011880696,
         "results": 5
       },
       {
         "id": "latency-024",
         "query": "专项主题 topic024 办公审批流程",
-        "elapsed_ms": 91.73500002361834,
+        "elapsed_ms": 163.1197000388056,
         "results": 5
       },
       {
         "id": "latency-025",
         "query": "专项主题 topic025 办公审批流程",
-        "elapsed_ms": 91.82440000586212,
+        "elapsed_ms": 155.659600161016,
         "results": 5
       },
       {
         "id": "latency-026",
         "query": "专项主题 topic026 办公审批流程",
-        "elapsed_ms": 86.09050000086427,
+        "elapsed_ms": 171.90299998037517,
         "results": 5
       },
       {
         "id": "latency-027",
         "query": "专项主题 topic027 办公审批流程",
-        "elapsed_ms": 90.96239996142685,
+        "elapsed_ms": 160.39269999600947,
         "results": 5
       },
       {
         "id": "latency-028",
         "query": "专项主题 topic028 办公审批流程",
-        "elapsed_ms": 90.8031000290066,
+        "elapsed_ms": 145.3359997831285,
         "results": 5
       },
       {
         "id": "latency-029",
         "query": "专项主题 topic029 办公审批流程",
-        "elapsed_ms": 86.14760008640587,
+        "elapsed_ms": 193.97999998182058,
         "results": 5
       },
       {
         "id": "latency-030",
         "query": "专项主题 topic030 办公审批流程",
-        "elapsed_ms": 89.64230003766716,
+        "elapsed_ms": 165.3750000987202,
         "results": 5
       },
       {
         "id": "latency-031",
         "query": "专项主题 topic031 办公审批流程",
-        "elapsed_ms": 85.25709994137287,
+        "elapsed_ms": 168.24410017579794,
         "results": 5
       },
       {
         "id": "latency-032",
         "query": "专项主题 topic032 办公审批流程",
-        "elapsed_ms": 95.02859995700419,
+        "elapsed_ms": 170.46339996159077,
         "results": 5
       },
       {
         "id": "latency-033",
         "query": "专项主题 topic033 办公审批流程",
-        "elapsed_ms": 93.13110006041825,
+        "elapsed_ms": 136.79639995098114,
         "results": 5
       },
       {
         "id": "latency-034",
         "query": "专项主题 topic034 办公审批流程",
-        "elapsed_ms": 89.06939998269081,
+        "elapsed_ms": 136.74610015004873,
         "results": 5
       },
       {
         "id": "latency-035",
         "query": "专项主题 topic035 办公审批流程",
-        "elapsed_ms": 90.84889991208911,
+        "elapsed_ms": 150.57890000753105,
         "results": 5
       },
       {
         "id": "latency-036",
         "query": "专项主题 topic036 办公审批流程",
-        "elapsed_ms": 93.6489999294281,
+        "elapsed_ms": 175.7410999853164,
         "results": 5
       },
       {
         "id": "latency-037",
         "query": "专项主题 topic037 办公审批流程",
-        "elapsed_ms": 89.36490002088249,
+        "elapsed_ms": 153.1154999975115,
         "results": 5
       },
       {
         "id": "latency-038",
         "query": "专项主题 topic038 办公审批流程",
-        "elapsed_ms": 88.45770009793341,
+        "elapsed_ms": 151.5128999017179,
         "results": 5
       },
       {
         "id": "latency-039",
         "query": "专项主题 topic039 办公审批流程",
-        "elapsed_ms": 89.36920017004013,
+        "elapsed_ms": 160.51590000279248,
         "results": 5
       },
       {
         "id": "latency-040",
         "query": "专项主题 topic040 办公审批流程",
-        "elapsed_ms": 90.96559998579323,
+        "elapsed_ms": 133.49639996886253,
         "results": 5
       },
       {
         "id": "latency-041",
         "query": "专项主题 topic041 办公审批流程",
-        "elapsed_ms": 96.41360002569854,
+        "elapsed_ms": 118.90959995798767,
         "results": 5
       },
       {
         "id": "latency-042",
         "query": "专项主题 topic042 办公审批流程",
-        "elapsed_ms": 93.07339997030795,
+        "elapsed_ms": 123.57360008172691,
         "results": 5
       },
       {
         "id": "latency-043",
         "query": "专项主题 topic043 办公审批流程",
-        "elapsed_ms": 89.15279991924763,
+        "elapsed_ms": 106.99880006723106,
         "results": 5
       },
       {
         "id": "latency-044",
         "query": "专项主题 topic044 办公审批流程",
-        "elapsed_ms": 88.26560014858842,
+        "elapsed_ms": 117.53119993954897,
         "results": 5
       },
       {
         "id": "latency-045",
         "query": "专项主题 topic045 办公审批流程",
-        "elapsed_ms": 90.3957998380065,
+        "elapsed_ms": 112.60100011713803,
         "results": 5
       },
       {
         "id": "latency-046",
         "query": "专项主题 topic046 办公审批流程",
-        "elapsed_ms": 92.42260013706982,
+        "elapsed_ms": 109.40300021320581,
         "results": 5
       },
       {
         "id": "latency-047",
         "query": "专项主题 topic047 办公审批流程",
-        "elapsed_ms": 86.72440005466342,
+        "elapsed_ms": 110.04970013163984,
         "results": 5
       },
       {
         "id": "latency-048",
         "query": "专项主题 topic048 办公审批流程",
-        "elapsed_ms": 96.52820019982755,
+        "elapsed_ms": 102.85220015794039,
         "results": 5
       },
       {
         "id": "latency-049",
         "query": "专项主题 topic049 办公审批流程",
-        "elapsed_ms": 90.87670012377203,
+        "elapsed_ms": 115.01759989187121,
         "results": 5
       }
     ],

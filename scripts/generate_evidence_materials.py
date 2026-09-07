@@ -131,7 +131,7 @@ def generate():
         "",
     ]
     report = "\n".join(lines)
-    for path in (ROOT / "docs/22_第三轮验收报告.md", ROOT / "docs/测试报告.md"):
+    for path in (ROOT / "docs/22_第三轮验收报告.md",):
         path.write_text(report, encoding="utf-8")
     return summary
 

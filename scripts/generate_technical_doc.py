@@ -142,13 +142,13 @@ def build_document(solution_path: Path, report_path: Path, output: Path) -> None
     _set_run_font(run, 16, True)
     meta = document.add_paragraph()
     meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    evidence = json.loads((PROJECT_ROOT / "artifacts/verification/round3/evidence_summary.json").read_text(encoding="utf-8"))
-    run = meta.add_run("对应赛题：XA-202612\n第二轮证据日期：" + evidence["generated_at_utc"][:10])
+    evidence = json.loads((PROJECT_ROOT / "artifacts/verification/round4/evidence_summary.json").read_text(encoding="utf-8"))
+    run = meta.add_run("对应赛题：XA-202612\n第四轮证据日期：" + evidence["generated_at_utc"][:10])
     _set_run_font(run, 11)
     boundary = document.add_paragraph()
     boundary.alignment = WD_ALIGN_PARAGRAPH.CENTER
     boundary.paragraph_format.space_before = Pt(80)
-    run = boundary.add_run("边界：Windows + HashEmbedding 本地结果；真实银河麒麟与真实 SDK 尚未验证")
+    run = boundary.add_run("边界：官方五项指标尚未全达成；V11虚拟机、真实SDK与独立评测分别记录")
     _set_run_font(run, 10, True)
 
     document.add_page_break()

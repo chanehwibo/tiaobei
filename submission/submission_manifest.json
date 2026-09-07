@@ -38,6 +38,20 @@
         "artifacts/verification/round3/ablations.json",
         "artifacts/verification/round3/calibration_first_probe.json"
       ]
+    },
+    {
+      "target": "02_技术方案与测试/第四轮官方对齐",
+      "files": [
+        "docs/24_官方对齐整改清单.md",
+        "docs/25_隔离实验室与赛后清理.md",
+        "docs/26_官方行动评测协议.md",
+        "docs/27_真实SDK接入与证据边界.md",
+        "docs/28_第四轮验收报告.md",
+        "artifacts/verification/round4/official_diagnostics.json",
+        "artifacts/verification/round4/evidence_summary.json",
+        "artifacts/verification/round4/native_sdk_windows.json",
+        "artifacts/verification/round4/actions_fixture.json"
+      ]
     }
   ],
   "source_section": {

@@ -13,7 +13,7 @@ from pptx.util import Inches, Pt
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "deliverables" / "ppt" / "OS_Agent_记忆优化_答辩稿.pptx"
 PERFORMANCE = ROOT / "artifacts" / "verification" / "round3" / "performance_windows_dev.json"
-SUMMARY = ROOT / "artifacts" / "verification" / "round3" / "evidence_summary.json"
+SUMMARY = ROOT / "artifacts" / "verification" / "round4" / "evidence_summary.json"
 
 NAVY = RGBColor(7, 17, 31)
 PANEL = RGBColor(17, 34, 53)
@@ -162,9 +162,9 @@ def add_title_slide(prs: Presentation):
     add_textbox(slide, 0.9, 1.85, 11.2, 1.5, "OS Agent 多源融合\n记忆优化与高效应用", size=40, bold=True)
     add_textbox(slide, 0.92, 3.65, 10.6, 0.85, "有作用域 · 有证据 · 有生命周期 · 可冲突治理 · 可安全遗忘", size=20, color=MUTED)
     add_box(slide, 0.92, 5.35, 3.2, 0.7, "核心原型与开发机验证完成", fill=PANEL_2, line=TEAL, color=TEAL, size=14)
-    add_box(slide, 4.35, 5.35, 3.2, 0.7, "真实麒麟 + SDK 待验收", fill=PANEL_2, line=AMBER, color=AMBER, size=14)
+    add_box(slide, 4.35, 5.35, 3.2, 0.7, "V11 实测与 SDK 分开验收", fill=PANEL_2, line=AMBER, color=AMBER, size=14)
     evidence = json.loads(SUMMARY.read_text(encoding="utf-8"))
-    add_textbox(slide, 0.92, 6.65, 11.4, 0.35, "第三轮开发机答辩稿 · " + evidence["generated_at_utc"][:10], size=12, color=MUTED)
+    add_textbox(slide, 0.92, 6.65, 11.4, 0.35, "第四轮官方口径整改稿 · " + evidence["generated_at_utc"][:10], size=12, color=MUTED)
 
 
 def build_presentation() -> Presentation:
@@ -273,7 +273,7 @@ def build_presentation() -> Presentation:
             add_line(slide, x + 2.2, 1.96, x + 2.52, 1.96)
     add_box(slide, 1.0, 3.05, 11.35, 0.92, "中文：0.25 向量 + 0.25 词法 + 0.45 汉字覆盖 + 0.05 权威度", fill=PANEL_2, line=TEAL, size=20)
     metric_card(slide, 1.05, 4.65, 3.35, "10,000 条冷查询", f"{perf_10k['cold_query_ms']} ms", "Windows / HashEmbedding", BLUE)
-    metric_card(slide, 4.98, 4.65, 3.35, "10,000 条热 p99", f"{perf_10k['hot_query_p99_ms']} ms", "门槛：≤ 500ms", TEAL)
+    metric_card(slide, 4.98, 4.65, 3.35, "第三轮10,000条热p99", f"{perf_10k['hot_query_p99_ms']} ms", "历史内部结果；官方使用P95", TEAL)
     metric_card(slide, 8.91, 4.65, 3.35, "SQLite 体积", f"{perf_10k['sqlite_disk_mb']} MB", "含缓存向量", AMBER)
     add_textbox(slide, 1.0, 6.38, 11.35, 0.34, "注意：开发机回退模型证据，不替代真实银河麒麟 SDK 性能验收", size=13, color=AMBER, bold=True, align=PP_ALIGN.CENTER)
 
@@ -311,19 +311,25 @@ def build_presentation() -> Presentation:
         add_box(slide, 3.48, y, 8.8, 0.86, body, fill=PANEL, line=PANEL_2, size=15)
     add_box(slide, 1.45, 6.08, 10.45, 0.58, "默认监听 127.0.0.1；当前界面用于本地演示，不冒充生产级服务", fill=PANEL_2, line=AMBER, color=AMBER, size=14)
 
-    slide = base_slide(prs, "10  评测体系：开始惩罚“多报、误删、乱答”", "评测")
-    metric_card(slide, 0.65, 1.25, 2.85, "正例 Recall@3", f"{evaluation['positive_recall_at_3']:.4f}", "v3 test · 12 正例", TEAL)
-    metric_card(slide, 3.7, 1.25, 2.85, "无答案正确率", f"{evaluation['no_answer_accuracy']:.4f}", "v3 test · 6 无答案", BLUE)
-    metric_card(slide, 6.75, 1.25, 2.85, "平衡得分", f"{evaluation['balanced_score']:.4f}", "召回与拒答平均", GREEN)
-    quality_passed = all(evidence["quality_targets"].values())
-    metric_card(slide, 9.8, 1.25, 2.85, "内部质量目标", "两项已满足" if quality_passed else "尚未全满足", "两项分别 ≥ 0.85", TEAL if quality_passed else AMBER)
-    add_textbox(slide, 0.75, 3.18, 5.8, 0.45, "42 事件 · 18 主题 · 54 查询", size=22, color=WHITE, bold=True)
-    bullet_list(slide, ["正文/模板族跨分区交集为零", f"统一阈值 {evaluation['threshold']} 仅由 dev 选择", "词法/向量/混合对照：不宣称全面领先"], 0.75, 3.72, 5.8, 2.2, size=15)
-    add_box(slide, 7.0, 3.2, 5.55, 2.4, "公开 test 标签\n= 冻结回归分区\n≠ 第三方独立盲测", fill=PANEL, line=RED, color=RED, size=22)
-    add_textbox(slide, 0.75, 6.35, 11.8, 0.32, "合成小集上的 1.0 不能外推到开放真实数据", size=14, color=AMBER, bold=True, align=PP_ALIGN.CENTER)
+    slide = base_slide(prs, "10  官方五项指标：当前内部证据与缺口", "评测")
+    official = evidence["official"]
+    rows = [("偏好准确率 ≥85%", "preference_accuracy", "13个旧集槽位；非独立请求"),
+            ("知识召回率 ≥85%", "knowledge_recall", "12个正例查询；不足50"),
+            ("冲突正确率 ≥88%", "conflict_accuracy", "2个案例；不足50"),
+            ("检索P95 ≤500ms", "retrieval_p95_ms", "50主题请求；HashEmbedding"),
+            ("敏感F1 ≥90%", "sensitive_f1", "50合成请求；请求级分类")]
+    for i, (label, key, note) in enumerate(rows):
+        y = 1.18 + i * .87
+        value = official["metrics"][key]
+        formatted = f"{value:.2f} ms" if key == "retrieval_p95_ms" else f"{value:.2%}"
+        add_box(slide, .75, y, 3.7, .63, label, size=16)
+        add_textbox(slide, 4.7, y, 2.05, .63, formatted, size=22, color=AMBER, bold=True)
+        add_textbox(slide, 7.0, y, 5.3, .63, note, size=15, color=MUTED)
+    add_box(slide, .8, 5.7, 11.7, .75, "官方尚未就绪：V11强制部署 + 每项至少50独立请求 + 真实评测", line=AMBER, color=AMBER, size=17)
+    add_textbox(slide, .8, 6.5, 11.7, .35, "历史召回91.67%与无答案100%不等于官方两个85%均达标；行动替身15/15仅为框架自检", size=12, color=MUTED)
 
     slide = base_slide(prs, "11  自动化与安全证据", "验证")
-    metric_card(slide, 0.8, 1.22, 3.2, "自动化测试", f"{evidence['tests']} 项通过", "单元 + 集成 + E2E", GREEN)
+    metric_card(slide, 0.8, 1.22, 3.2, "自动化测试", str(evidence['tests']), "测试数；通过状态见原始报告", GREEN)
     metric_card(slide, 4.45, 1.22, 3.2, "规模覆盖", "100 → 10,000", "冷/热/资源/磁盘", BLUE)
     metric_card(slide, 8.1, 1.22, 3.2, "环境判定", "分层报告", "本地 ≠ 麒麟 ≠ SDK", AMBER)
     tests = ["跨租户/用户串读与误删", "提示注入与记忆污染", "失败工具偏好污染", "未决冲突普通检索隔离", "硬删除 SQLite 重载无残留", "嵌套凭证递归脱敏"]
@@ -350,9 +356,9 @@ def build_presentation() -> Presentation:
 
     slide = base_slide(prs, "13  证据边界与最后一公里", "计划")
     completed = ["统一生命周期门控", "增量事务与失败回滚", "服务/API/场景演示", "v3 隔离分区与对照", "10k 检索 + 实际服务负载", "作用域与重启安全测试"]
-    pending = ["真实 Kylin SDK", "真实银河麒麟", "独立盲测", "知情同意案例", "最终视频", "平台/邮件回执"]
+    pending = ["真实SDK/向量服务联调", "V11虚拟机赛事认可", "独立盲测与LLM Judge", "知情同意案例", "最终视频", "平台/邮件回执"]
     add_textbox(slide, 0.8, 1.15, 5.65, 0.45, "已完成（代码与开发机证据）", size=20, color=GREEN, bold=True)
-    add_textbox(slide, 6.95, 1.15, 5.55, 0.45, "必须人工/外部完成", size=20, color=AMBER, bold=True)
+    add_textbox(slide, 6.95, 1.15, 5.55, 0.45, "继续验证与补齐", size=20, color=AMBER, bold=True)
     for i, item in enumerate(completed):
         add_box(slide, 0.8, 1.85 + i * 0.72, 5.65, 0.53, "✓  " + item, fill=PANEL, line=GREEN, color=WHITE, size=14)
     for i, item in enumerate(pending):

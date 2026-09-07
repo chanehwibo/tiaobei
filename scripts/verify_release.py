@@ -25,6 +25,7 @@ from os_agent_memory.compatibility import collect_compatibility_report, write_co
 from os_agent_memory.diagnostics import run_preflight
 from os_agent_memory.evaluation import run_evaluation_suite
 from os_agent_memory.experiments import evaluate_frozen, run_ablations
+from os_agent_memory.official_diagnostics import run_official_diagnostics
 
 
 TEXT_SUFFIXES = {
@@ -229,6 +230,7 @@ def run_release_verification(
     artifact_dir = artifact_dir.resolve()
     artifact_dir.mkdir(parents=True, exist_ok=True)
     environment = os.environ.copy()
+    environment["PYTHONUTF8"] = "1"
     prior_pythonpath = environment.get("PYTHONPATH")
     environment["PYTHONPATH"] = str(project_root / "src") + (os.pathsep + prior_pythonpath if prior_pythonpath else "")
 
@@ -258,6 +260,8 @@ def run_release_verification(
     ablations = run_ablations(suite_v3)
     _write_json(artifact_dir / "evaluation_v3.json", evaluation_v3)
     _write_json(artifact_dir / "ablations.json", ablations)
+    official = run_official_diagnostics(project_root, size=max(1000, max(benchmark_sizes)))
+    _write_json(artifact_dir / "official_diagnostics.json", official)
 
     benchmark = run_scale_benchmark(benchmark_sizes, rounds=benchmark_rounds, top_k=5)
     write_benchmark_report(
@@ -300,6 +304,7 @@ def run_release_verification(
     competition_ready = bool(
         local_passed
         and compatibility["verdict"]["competition_environment_ready"]
+        and official["official_validation_ready"]
         and len(EXTERNAL_BLOCKERS) == 0
     )
     return {
@@ -309,6 +314,7 @@ def run_release_verification(
         "local_release_checks_passed": local_passed,
         "competition_submission_ready": competition_ready,
         "internal_quality_targets": evaluation_v3["quality_targets"],
+        "official_diagnostics": official,
         "checks": checks,
         "compile": compile_result,
         "unit_tests": test_result,
@@ -354,7 +360,10 @@ def write_verification_report(result: dict[str, Any], *, json_path: Path, markdo
         f"- v3 test 正例 Recall@3：{metrics['positive_recall_at_3']:.4f}",
         f"- v3 test 无答案正确率：{metrics['no_answer_accuracy']:.4f}",
         f"- v3 test 平衡得分：{metrics['balanced_score']:.4f}",
-        f"- 内部质量目标全部满足：{all(result['internal_quality_targets'].values())}",
+        f"- 历史内部检索门槛满足：{all(result['internal_quality_targets'].values())}（不是官方两个85%指标）",
+        f"- 官方五项指标证据就绪：{result['official_diagnostics']['official_validation_ready']}",
+        f"- 官方口径内部诊断：{result['official_diagnostics']['metrics']}",
+        f"- 分母及单位：{result['official_diagnostics']['observation_counts']}；详见 official_diagnostics.json",
         "- v1/v2 旧标签含单条低证据事件，门控后有目标未满足；保留原始结果，不能沿用旧版满分宣称。",
         f"- {largest['records']} 条开发机热查询 p99：{largest['hot_query_p99_ms']} ms",
         f"- 隐私扫描异常：{len(result['privacy_scan']['unexpected_findings'])} 项",
