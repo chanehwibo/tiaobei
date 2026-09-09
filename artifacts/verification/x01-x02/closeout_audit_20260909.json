@@ -1,0 +1,2240 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-09T01:48:14+00:00",
+  "scope": "closeout_integrity_and_privacy_not_new_tests_or_external_acceptance",
+  "passed": true,
+  "competition_ready": false,
+  "x01_complete": false,
+  "x02_complete": false,
+  "checks": {
+    "prior_17_evidence_checks_passed": true,
+    "all_98_tested_public_files_still_match_both_environments": true,
+    "both_frozen_request_gates_recomputed_and_passed": true,
+    "referenced_original_reports_unchanged": true,
+    "all_17_imported_guest_files_unchanged": true,
+    "five_sealed_archives_unchanged": true,
+    "tracked_diff_whitespace_clean": true,
+    "all_edited_code_and_docs_whitespace_clean": true,
+    "public_privacy_scan_passed": true,
+    "all_current_run_evidence_and_summary_docs_scanned": true,
+    "scan_did_not_change_public_files": true,
+    "external_acceptance_not_substituted": true
+  },
+  "prior_audit": {
+    "path": "artifacts/verification/x01-x02/source_comparison.json",
+    "sha256": "fb6e48797ebd29d24be61bb05e79dceab47b5f362270c20b2516d0f10f5b6ce7"
+  },
+  "private_audit_script_sha256": "fd99aa7c2da3e37696ee0c6fd3c471d516514e32f5ab1ef9b449c3cf796e99b0",
+  "source_comparison": {
+    "counts": {
+      "raw_sha256": 98,
+      "lf_sha256": 98
+    },
+    "differences": {
+      "raw_sha256": {
+        "windows": [],
+        "kylin": []
+      },
+      "lf_sha256": {
+        "windows": [],
+        "kylin": []
+      }
+    },
+    "excluded_package_blocked_output": [
+      "data/eval/latest_report.json"
+    ]
+  },
+  "request_gates": {
+    "windows": {
+      "passed": true,
+      "checks": {
+        "five_numeric_targets": true,
+        "required_safety_checks": true,
+        "frozen_dataset": true,
+        "frozen_request_counts": true,
+        "frozen_retrieval_configuration": true,
+        "honest_evidence_scope": true,
+        "distinct_request_rows": true,
+        "denominators_match_rows": true,
+        "summary_matches_details": true,
+        "aggregates_match_request_rows": true
+      },
+      "rubric": {
+        "metrics": {
+          "preference_accuracy": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 68,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "knowledge_recall": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "conflict_accuracy": {
+            "value": 1.0,
+            "target": 0.88,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "retrieval_p95_ms": {
+            "value": 87.2805998660624,
+            "target": 500.0,
+            "operator": "le",
+            "requests": 80,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "sensitive_f1": {
+            "value": 1.0,
+            "target": 0.9,
+            "operator": "ge",
+            "requests": 50,
+            "minimum_requests": 50,
+            "passed": true
+          }
+        },
+        "all_targets_met": true,
+        "scope": "developer_held_measurements_not_official_certification"
+      },
+      "scope": "frozen_public_synthetic_regression_not_independent_blind_or_official_certification"
+    },
+    "kylin": {
+      "passed": true,
+      "checks": {
+        "five_numeric_targets": true,
+        "required_safety_checks": true,
+        "frozen_dataset": true,
+        "frozen_request_counts": true,
+        "frozen_retrieval_configuration": true,
+        "honest_evidence_scope": true,
+        "distinct_request_rows": true,
+        "denominators_match_rows": true,
+        "summary_matches_details": true,
+        "aggregates_match_request_rows": true
+      },
+      "rubric": {
+        "metrics": {
+          "preference_accuracy": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 68,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "knowledge_recall": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "conflict_accuracy": {
+            "value": 1.0,
+            "target": 0.88,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "retrieval_p95_ms": {
+            "value": 130.62746800005698,
+            "target": 500.0,
+            "operator": "le",
+            "requests": 80,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "sensitive_f1": {
+            "value": 1.0,
+            "target": 0.9,
+            "operator": "ge",
+            "requests": 50,
+            "minimum_requests": 50,
+            "passed": true
+          }
+        },
+        "all_targets_met": true,
+        "scope": "developer_held_measurements_not_official_certification"
+      },
+      "scope": "frozen_public_synthetic_regression_not_independent_blind_or_official_certification"
+    }
+  },
+  "reference_report_differences": [],
+  "sealed_archives": {
+    "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip": true,
+    "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip": true,
+    "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip": true,
+    "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip": true,
+    "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip": true
+  },
+  "whitespace": {
+    "edited_files_checked": [
+      "README.md",
+      "docs/26_官方行动评测协议.md",
+      "docs/29_续作任务清单.md",
+      "docs/31_麒麟V11客户机实测.md",
+      "docs/34_X01_X02推进与外部验收.md",
+      "scripts/check_action_runtime.py",
+      "scripts/evaluate_actions.py",
+      "scripts/verify_kylin_guest.py",
+      "src/os_agent_memory/action_evaluation.py",
+      "tests/test_action_runtime.py",
+      "tests/test_cross_session_actions.py"
+    ],
+    "findings": [],
+    "git_diff_check_returncode": 0
+  },
+  "privacy_scan": {
+    "passed": true,
+    "scanned_text_files": 1524,
+    "scanned_office_documents": 22,
+    "scanned_zip_archives": 5,
+    "skipped_binary_or_large_files": 33,
+    "manual_review_required": [
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!ppt/printerSettings/printerSettings1.bin",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!02_技术方案与测试/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!ppt/printerSettings/printerSettings1.bin",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!ppt/printerSettings/printerSettings1.bin",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!02_技术方案与测试/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!ppt/printerSettings/printerSettings1.bin",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!ppt/printerSettings/printerSettings1.bin",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!02_技术方案与测试/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!ppt/printerSettings/printerSettings1.bin",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!ppt/printerSettings/printerSettings1.bin",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!02_技术方案与测试/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!ppt/printerSettings/printerSettings1.bin",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!ppt/printerSettings/printerSettings1.bin",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!02_技术方案与测试/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!ppt/printerSettings/printerSettings1.bin",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!ppt/printerSettings/printerSettings1.bin",
+        "reason": "non_text_office_member"
+      },
+      {
+        "path": "deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!docProps/thumbnail.jpeg",
+        "reason": "non_text_office_member"
+      }
+    ],
+    "unexpected_findings": [],
+    "approved_synthetic_fixture_findings": [
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/office_memory_eval.json",
+        "line": 92,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/samples/events.jsonl",
+        "line": 4,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/docs/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/docs/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 68,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 68,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 69,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 69,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 49,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 64,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 65,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 671,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 688,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 16,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 22,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 29,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 176,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 177,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 178,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/office_memory_eval.json",
+        "line": 92,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/samples/events.jsonl",
+        "line": 4,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/docs/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/docs/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 68,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 68,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 69,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 69,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 49,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 64,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 65,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 671,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 688,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 16,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 22,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 29,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 176,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 177,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 178,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!01_项目报告与PPT/11_演示视频分镜与录制检查表.md",
+        "line": 96,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!01_项目报告与PPT/11_演示视频分镜与录制检查表.md",
+        "line": 96,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/office_memory_eval.json",
+        "line": 92,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3337,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3343,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3347,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3353,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3357,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3417,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3437,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3443,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3447,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3453,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3457,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3517,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3537,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3543,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3547,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3553,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3557,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3617,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 5,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 6,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 7,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 25,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 26,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 29,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/samples/events.jsonl",
+        "line": 4,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/docs/11_演示视频分镜与录制检查表.md",
+        "line": 96,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/docs/11_演示视频分镜与录制检查表.md",
+        "line": 96,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/generate_request_suite.py",
+        "line": 250,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/generate_request_suite.py",
+        "line": 250,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/generate_request_suite.py",
+        "line": 251,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/generate_request_suite.py",
+        "line": 254,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 84,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 84,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 85,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 85,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 87,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_file_memory.py",
+        "line": 35,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 49,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 64,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 65,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 671,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 688,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 19,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 25,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 32,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 78,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 83,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 132,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 154,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 155,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_request_evaluation.py",
+        "line": 38,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_request_evaluation.py",
+        "line": 38,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_request_evaluation.py",
+        "line": 39,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_request_quality.py",
+        "line": 22,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_request_quality.py",
+        "line": 29,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 176,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 177,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 178,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!01_项目报告与PPT/11_演示视频分镜与录制检查表.md",
+        "line": 96,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!01_项目报告与PPT/11_演示视频分镜与录制检查表.md",
+        "line": 96,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/office_memory_eval.json",
+        "line": 92,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3337,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3343,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3347,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3353,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3357,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3417,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3437,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3443,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3447,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3453,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3457,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3517,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3537,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3543,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3547,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3553,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3557,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/request_regression_v1.json",
+        "line": 3617,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 5,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 6,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 7,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 25,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 26,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/sensitive_official_diagnostic.json",
+        "line": 29,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/samples/events.jsonl",
+        "line": 4,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/docs/11_演示视频分镜与录制检查表.md",
+        "line": 96,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/docs/11_演示视频分镜与录制检查表.md",
+        "line": 96,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/generate_request_suite.py",
+        "line": 250,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/generate_request_suite.py",
+        "line": 250,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/generate_request_suite.py",
+        "line": 251,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/generate_request_suite.py",
+        "line": 254,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 84,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 84,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 85,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 85,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 87,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_file_memory.py",
+        "line": 35,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 49,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 64,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 65,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 671,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 688,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 19,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 25,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 32,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 78,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 83,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 132,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 154,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 155,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_request_evaluation.py",
+        "line": 38,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_request_evaluation.py",
+        "line": 38,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_request_evaluation.py",
+        "line": 39,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_request_quality.py",
+        "line": 22,
+        "kind": "cn_id"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_request_quality.py",
+        "line": 29,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 176,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 177,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 178,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/eval/office_memory_eval.json",
+        "line": 92,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/data/samples/events.jsonl",
+        "line": 4,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/docs/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/docs/11_演示视频分镜与录制检查表.md",
+        "line": 73,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 66,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 66,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 67,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/scripts/verify_release.py",
+        "line": 67,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 49,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 64,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 65,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 671,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_memory_pipeline.py",
+        "line": 688,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 16,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 22,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_release_verification.py",
+        "line": 29,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 176,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 177,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 178,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "service_token"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "email"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "data/eval/office_memory_eval.json",
+        "line": 92,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3337,
+        "kind": "email"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3343,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3347,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3353,
+        "kind": "cn_id"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3357,
+        "kind": "cn_id"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3417,
+        "kind": "email"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3437,
+        "kind": "email"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3443,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3447,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3453,
+        "kind": "cn_id"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3457,
+        "kind": "cn_id"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3517,
+        "kind": "email"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3537,
+        "kind": "email"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3543,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3547,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3553,
+        "kind": "cn_id"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3557,
+        "kind": "cn_id"
+      },
+      {
+        "path": "data/eval/request_regression_v1.json",
+        "line": 3617,
+        "kind": "email"
+      },
+      {
+        "path": "data/eval/sensitive_official_diagnostic.json",
+        "line": 5,
+        "kind": "email"
+      },
+      {
+        "path": "data/eval/sensitive_official_diagnostic.json",
+        "line": 6,
+        "kind": "email"
+      },
+      {
+        "path": "data/eval/sensitive_official_diagnostic.json",
+        "line": 7,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "data/eval/sensitive_official_diagnostic.json",
+        "line": 25,
+        "kind": "email"
+      },
+      {
+        "path": "data/eval/sensitive_official_diagnostic.json",
+        "line": 26,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "data/eval/sensitive_official_diagnostic.json",
+        "line": 29,
+        "kind": "email"
+      },
+      {
+        "path": "data/samples/events.jsonl",
+        "line": 4,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "docs/11_演示视频分镜与录制检查表.md",
+        "line": 96,
+        "kind": "email"
+      },
+      {
+        "path": "docs/11_演示视频分镜与录制检查表.md",
+        "line": 96,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "scripts/generate_request_suite.py",
+        "line": 250,
+        "kind": "email"
+      },
+      {
+        "path": "scripts/generate_request_suite.py",
+        "line": 250,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "scripts/generate_request_suite.py",
+        "line": 251,
+        "kind": "cn_id"
+      },
+      {
+        "path": "scripts/generate_request_suite.py",
+        "line": 254,
+        "kind": "email"
+      },
+      {
+        "path": "scripts/verify_release.py",
+        "line": 84,
+        "kind": "email"
+      },
+      {
+        "path": "scripts/verify_release.py",
+        "line": 84,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "scripts/verify_release.py",
+        "line": 85,
+        "kind": "service_token"
+      },
+      {
+        "path": "scripts/verify_release.py",
+        "line": 85,
+        "kind": "email"
+      },
+      {
+        "path": "scripts/verify_release.py",
+        "line": 87,
+        "kind": "cn_id"
+      },
+      {
+        "path": "tests/test_file_memory.py",
+        "line": 35,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_memory_pipeline.py",
+        "line": 49,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_memory_pipeline.py",
+        "line": 57,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "tests/test_memory_pipeline.py",
+        "line": 64,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "tests/test_memory_pipeline.py",
+        "line": 65,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_memory_pipeline.py",
+        "line": 671,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "tests/test_memory_pipeline.py",
+        "line": 688,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "tests/test_release_verification.py",
+        "line": 19,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_release_verification.py",
+        "line": 25,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_release_verification.py",
+        "line": 32,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "tests/test_release_verification.py",
+        "line": 78,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_release_verification.py",
+        "line": 83,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_release_verification.py",
+        "line": 132,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_release_verification.py",
+        "line": 154,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_release_verification.py",
+        "line": 155,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "tests/test_request_evaluation.py",
+        "line": 38,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_request_evaluation.py",
+        "line": 38,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "tests/test_request_evaluation.py",
+        "line": 39,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_request_quality.py",
+        "line": 22,
+        "kind": "cn_id"
+      },
+      {
+        "path": "tests/test_request_quality.py",
+        "line": 29,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_security_adversarial.py",
+        "line": 176,
+        "kind": "service_token"
+      },
+      {
+        "path": "tests/test_security_adversarial.py",
+        "line": 177,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_security_adversarial.py",
+        "line": 178,
+        "kind": "cn_phone"
+      },
+      {
+        "path": "tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "service_token"
+      },
+      {
+        "path": "tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "email"
+      },
+      {
+        "path": "tests/test_security_adversarial.py",
+        "line": 185,
+        "kind": "cn_phone"
+      }
+    ],
+    "approved_legacy_template_metadata": [
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!02_技术方案与测试/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!02_技术方案与测试/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!01_项目报告与PPT/OS_Agent_记忆优化_答辩稿.pptx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!02_技术方案与测试/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      },
+      {
+        "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip!03_源代码与说明/project/deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx!docProps/core.xml",
+        "line": null,
+        "kind": "author_metadata"
+      }
+    ],
+    "policy": "文本逐行扫描，无2MiB跳过；ZIP递归扫描有128MiB及层数上限，超限失败；Office扫描XML/元数据/拆分文本。只记录位置和类型，不记录敏感原文。媒体无OCR，须单独人工复核。"
+  },
+  "current_run_evidence_files_scanned": [
+    "artifacts/verification/x01-x02/kylin/action-runtime.json",
+    "artifacts/verification/x01-x02/kylin/action_framework.log",
+    "artifacts/verification/x01-x02/kylin/action_runtime.log",
+    "artifacts/verification/x01-x02/kylin/actions.json",
+    "artifacts/verification/x01-x02/kylin/installed_sdk_packages.log",
+    "artifacts/verification/x01-x02/kylin/kylin_vm.json",
+    "artifacts/verification/x01-x02/kylin/native-sdk.json",
+    "artifacts/verification/x01-x02/kylin/native_sdk.log",
+    "artifacts/verification/x01-x02/kylin/official.json",
+    "artifacts/verification/x01-x02/kylin/official_diagnostics.log",
+    "artifacts/verification/x01-x02/kylin/request_metrics.log",
+    "artifacts/verification/x01-x02/kylin/requests.json",
+    "artifacts/verification/x01-x02/kylin/retrieval_v3.log",
+    "artifacts/verification/x01-x02/kylin/root_filesystem.log",
+    "artifacts/verification/x01-x02/kylin/source_check.log",
+    "artifacts/verification/x01-x02/kylin/unit_tests.log",
+    "artifacts/verification/x01-x02/kylin/virtualization.log",
+    "artifacts/verification/x01-x02/source_comparison.json",
+    "artifacts/verification/x01-x02/v11_import_privacy.json",
+    "artifacts/verification/x01-x02/windows-runtime.json",
+    "artifacts/verification/x01-x02/windows/ablations.json",
+    "artifacts/verification/x01-x02/windows/actions.json",
+    "artifacts/verification/x01-x02/windows/compatibility_windows_dev.json",
+    "artifacts/verification/x01-x02/windows/compatibility_windows_dev.md",
+    "artifacts/verification/x01-x02/windows/evaluation_v1_final.json",
+    "artifacts/verification/x01-x02/windows/evaluation_v2_test_final.json",
+    "artifacts/verification/x01-x02/windows/evaluation_v3.json",
+    "artifacts/verification/x01-x02/windows/final_verification.json",
+    "artifacts/verification/x01-x02/windows/final_verification.md",
+    "artifacts/verification/x01-x02/windows/official_diagnostics.json",
+    "artifacts/verification/x01-x02/windows/performance_windows_dev.json",
+    "artifacts/verification/x01-x02/windows/performance_windows_dev.md",
+    "artifacts/verification/x01-x02/windows/requests.json"
+  ],
+  "public_inventory_sha256": {
+    ".gitattributes": "dfd6eb4bb2aea4f7f024578e8f3a3b5037e43bd0a202d5def6e6567c9f9f5480",
+    ".github/workflows/ci.yml": "08c3b799cee3465d325e055fda19147664fad43dfcbbeb4d876c21511a6c7164",
+    ".gitignore": "323b6b3f8f5429e7f7ccfe302ede6fd92886201d4de9dfaa22e5b4e352b4fc85",
+    "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip": "e109ef0d9f501cdd9e203c48821cf1e8c17a413304a14cf13677964b3a240227",
+    "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip.sha256": "900d6be6eeaa155eb5b261d5abb92fc602d70fef3db9b23be33dd2fbc08e337c",
+    "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE_archive_report.json": "a432f539c27e434f9daf0327ffaa0905c0155f0aac6e1b36f697608555962751",
+    "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE_CONTENTS_SHA256.txt": "61c27dac8fb63857c786dae3e05d4f4cf088827e842795aef2ee6d878710fa44",
+    "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip": "3eedda8e6416fa29be160fd1bacb9f3adc4c68ea955c5c8bcdf2e9ffb0ce0716",
+    "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip.sha256": "0e84b15357cf2e0039aee7ebcff447fd9f6d04e8f575ae671b48d4899b98423d",
+    "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE_archive_report.json": "9a475eb1370089967ac3d0343835f6e9a3956653f276b437588b02abd8084b26",
+    "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE_CONTENTS_SHA256.txt": "3cebce026a1176e538ccc2c12475fea5cecd72f4ddac2aedb9359e797761e327",
+    "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip": "6bce17e442630fa5a3d2e45aef502f2896d8ae3ca1f91c9ce1be586526478da1",
+    "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip.sha256": "d84956b1e154218fe413dbff6dcdfcd9279a344e1442b1b452e8dad313909567",
+    "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE_archive_report.json": "44e2d983a06f2f205cd528ab571a4d41789208375a23e55eaa34dae87d919b4d",
+    "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE_CONTENTS_SHA256.txt": "1a38075c317643670987d0cea03f4aa280ca0bcefa989809a2efd97e126824e6",
+    "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip": "5b47d71af6a13e4f16c7b8aa604431225d087c761e8282b90fe422a5887123f4",
+    "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip.sha256": "45940b1eb2004b83bf7f7c734034e06599dbc2b62a5b64094280ec81e862dea6",
+    "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE_archive_report.json": "d8efbfc5ad7311a25d4045e8d2382be29154d7dcc93513e3892002185348d1a0",
+    "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE_CONTENTS_SHA256.txt": "47be4da87631651665b336ba90146ef8f8b77935750c57926cc55d728d7c9184",
+    "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip": "631ecbf2045d1bd3a42d5205a564be72007b649cd8cdd4a106b0b16bfeba7e35",
+    "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip.sha256": "2d5b3cb4a8308e449681d0812c514e486778981d3c73a8939b8b93fd3dc3e0c5",
+    "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE_archive_report.json": "6bd255f7a1e6e410b9eb23f83873cf0536d623ff6bbe0cab4cfc11303d042c58",
+    "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE_CONTENTS_SHA256.txt": "5a20899d78f86af7b505d3994fa7be050ea05576e6e51ca2ef733baea90bf5e5",
+    "artifacts/release/README.md": "e44624286b7a28f4f527af10194e6e4378313b994aadb69be70339974fcb4fc3",
+    "artifacts/verification/compatibility_windows_dev.json": "011c7115976103450c70f539dd16827e500e04bce1ec11254445001c77164cbd",
+    "artifacts/verification/compatibility_windows_dev.md": "c4f2ca7abebad0c1a134703daec31de9c20bfbf095afd867a3ca8e7fad223f30",
+    "artifacts/verification/delivery_acceptance.md": "7617513743c00998187a19b5aca307fdf0f812dc052142fa3d3b27b00e915876",
+    "artifacts/verification/evaluation_v1_final.json": "dd2d95b29f012c51e932655a49d634b33465028ee911e4213e7763188023badf",
+    "artifacts/verification/evaluation_v2_test_final.json": "563dc9c996a9169c9dd8c181437d36ad40e93f97ee9461576b4a26690d3f04a4",
+    "artifacts/verification/final_verification.json": "1d468350c01536293241e77d95a8703ede7673c7f1cf5d6c7a97e4344e6e5b23",
+    "artifacts/verification/final_verification.md": "e41247e5f1c2734ec5fe5ead5f009d47e48590056d56557013d599f2fb7bf7cc",
+    "artifacts/verification/kylin_sdk_check_missing.json": "fa8003fd6f4b9da24505b9faf1976481f0565aec7f308352fe1aeb16c2536fb2",
+    "artifacts/verification/performance_windows_dev.json": "803e055358e5deb609e0f0fc60c3c761a3fe89772a7d13a321dd34b16237927d",
+    "artifacts/verification/performance_windows_dev.md": "9ac20252337aa6a4461e816bb598b5a7e17ce404ad8e6119eb84f20d71c7ed20",
+    "artifacts/verification/round2/ablations.json": "21ddd0ac679514ec0cef449710d1e9e5c34278ebef4565c254a5b2b0fec6086c",
+    "artifacts/verification/round2/compatibility_windows_dev.json": "9828e091f28d5f7baf3cad552f8e5abadb287d7cdb7e3dd77b48fe44aa2a55f5",
+    "artifacts/verification/round2/compatibility_windows_dev.md": "b2f071de9ece8b10218d3f02b70c0297d412cb8ff9f4b253d0945f096733b4a3",
+    "artifacts/verification/round2/delivery_acceptance.md": "fac09833acfa1d0ba71886bf75b5c0697792cabe8874b8bba369d8866e203d8b",
+    "artifacts/verification/round2/evaluation_v1_final.json": "a3314b0c6f471f47ace1dbdc71d44f53474506e34278d869ecc1073e23dfde4e",
+    "artifacts/verification/round2/evaluation_v2_test_final.json": "8b00711063d4f0b77c182f9a7016d38c2b92c4cb28288dd92ba8e4d884ac2abe",
+    "artifacts/verification/round2/evaluation_v3.json": "6ae219e3ea49fdcdd6ddd6828e15c7b2795af955e9830b1d34569493bc51bd57",
+    "artifacts/verification/round2/evidence_summary.json": "f25761e4c595eec0f95e69f5464a458cd0c79f08180af73e7c044fe6ccae3f40",
+    "artifacts/verification/round2/final_verification.json": "7f6a1e7ec830703c7710820f37214961e8c92345e1d308509961015774a4ea37",
+    "artifacts/verification/round2/final_verification.md": "1d7db4f779bc9c918bfbc3aaf83dca69a3902cbc4443c5db74861c9f962919f9",
+    "artifacts/verification/round2/performance_windows_dev.json": "6e18c02a54e3ba89e508802c510bee1c344f7e86e0fd4b02321b3cd2cfcbbe3f",
+    "artifacts/verification/round2/performance_windows_dev.md": "4b289b7200ff2d700782cdd4fee7d2e36563379138631187e23dbfd1c0ef60ba",
+    "artifacts/verification/round2_ablations.json": "c3f80f8ac8ded8c14cdea3cbc387c4a1a1d0383c8c40dbdc00dc57378a949a77",
+    "artifacts/verification/round2_evaluation_v3.json": "b1bf26af434319bc81910ab2fac9b2803ca5278eed5d1f45a0937374d60aca2b",
+    "artifacts/verification/round2_service_after.json": "b28f5a0bc123d15746779bfae012e14002121581dcde56715a50e6ad60664cdc",
+    "artifacts/verification/round2_service_before.json": "22b347ed34806e9e69cf7683df6540124df40d2e0b3dcc5a563250500fdd0627",
+    "artifacts/verification/round3/ablations.json": "dc33f7f677edbae13f288c98ce3c8f57078791912daeaf9a71eabc8ebb43b907",
+    "artifacts/verification/round3/archive_checks.json": "9d94e38bf4d5b7580d7496cb93738a3e5b0787b3e33b17c68699aac72f6bbd5f",
+    "artifacts/verification/round3/calibration_first_probe.json": "a2974b64db454b3b359e418cee1f998cefcfd57355573145325b76edfe323ac2",
+    "artifacts/verification/round3/compatibility_windows_dev.json": "ef74904f1b1ff08bd24a5845b9fc9209a1a6d9ae46adab074ea8915bbe4358cc",
+    "artifacts/verification/round3/compatibility_windows_dev.md": "8d3f5b768fa468943b8f00aaaa86bbb9d54ffe73ad9c500135c3462cd6e3edff",
+    "artifacts/verification/round3/delivery_acceptance.md": "2eda88e424df3e82dceb1aed2c9cc0987f1dceb756177477e54bd8895de20307",
+    "artifacts/verification/round3/delivery_checks.json": "a666725610e8fede5dfda08f71d7ad24eb0736627e64d90e60c6d8ac760b0d55",
+    "artifacts/verification/round3/evaluation_v1_final.json": "b18b19cbf9ca8de7b30f090d492af81d8219f0d1332c6fc391e1227d6da5b092",
+    "artifacts/verification/round3/evaluation_v2_test_final.json": "4a386bc2b09ec1376688136172c62aab5080aa95cdc44e35f74d84a31b891a86",
+    "artifacts/verification/round3/evaluation_v3.json": "d4b4698c599b8bb00911f8ced4a07b8bc90a1eff27513703cdcaf17b1ee5c818",
+    "artifacts/verification/round3/evidence_summary.json": "c44d950d13efa84d748cb0c0f3fe91140b1c8b92f3e4ba90d94c91bf753e612c",
+    "artifacts/verification/round3/final_verification.json": "4eecfb581ebe56d64335abc4741389e9d7c61880bd54b5cc797e0beddf0f34db",
+    "artifacts/verification/round3/final_verification.md": "061e255cf65a921f80a8543b6cce4dc481a35777578938e60be1f51ad7d5b6ce",
+    "artifacts/verification/round3/performance_windows_dev.json": "50e47fd70397151a1c1fab5a898e012af832579a38f35d28ad5380447fe5b744",
+    "artifacts/verification/round3/performance_windows_dev.md": "e51ba7e5f13d6d2fe50622168d4a8d4a2093aeca079ca191ac1db8dfca389e63",
+    "artifacts/verification/round3/service_workload.json": "aead802467cab8d2e4a61e2076fe83210ad5b852e164596087d0e2010e51ce30",
+    "artifacts/verification/round4/ablations.json": "5a53d83d1909f5e98a2e4958443be09f567c6045c72792ff623d36041c97775b",
+    "artifacts/verification/round4/actions_fixture.json": "8168f938292b861894c2a0b605888cef3732bba54c4c778d775588e1338a50c4",
+    "artifacts/verification/round4/compatibility_windows_dev.json": "708b979dc6c31d5051a9640ca83a74d939fae5c69f6b97929042548bd05bd2d3",
+    "artifacts/verification/round4/compatibility_windows_dev.md": "5285adca4fc1b28a079dc2a5cbbd690dea41da32e2fc4f08bd4ca07329dd7838",
+    "artifacts/verification/round4/evaluation_v1_final.json": "a31afd91cef9c9d67399c552ac891435b5dc66fba233689807aa98de416149dc",
+    "artifacts/verification/round4/evaluation_v2_test_final.json": "57deada68991a7918f980e3e878d84965b6203f706106b5e4787131715ecdc0f",
+    "artifacts/verification/round4/evaluation_v3.json": "c2125caa9047e094d5457896996333be0f6221ce7b03838990c3203461a57616",
+    "artifacts/verification/round4/evidence_summary.json": "a103f6689f687b1207522f27ac8450a729b5bdc21e7fa5b93dfdfb2f03d44c3b",
+    "artifacts/verification/round4/final_verification.json": "0582d873525d11969b1958230624b988dc9fecbb4d2878ded369c6cf6435f485",
+    "artifacts/verification/round4/final_verification.md": "abcbd65612dfcba1af62e8f302c5e34bf434869ff125de91a4fe3ab766686596",
+    "artifacts/verification/round4/legacy_diagnostics.json": "c163a9646f5dc6dc00a8d8ba1f7f81c82f932bb9ddb5c358aa4403b07240a918",
+    "artifacts/verification/round4/native_sdk_windows.json": "5b944c18d85f00f74463e5e6046480e5ae06a6c55ff24f5c29928158d9c0abf6",
+    "artifacts/verification/round4/official_diagnostics.json": "75dc753f2f0c2da869db522a91aacc7c6293d0352fde8585a80f71d51ffd3b39",
+    "artifacts/verification/round4/performance_windows_dev.json": "97f54bff4f8fa57e3f1e57ba48faddc53f67cae629544d43e2c40b08511d8508",
+    "artifacts/verification/round4/performance_windows_dev.md": "31d3045be4e2ec9cb9793fa7ebe079255b123eb46c087990c0164b4d25d4b039",
+    "artifacts/verification/round5/evidence_summary.json": "e5a754bf990d6d2128bc3bc0a4f0fe21126d0cf5626978bebb59e58cad572017",
+    "artifacts/verification/round5/git_index_check.json": "cc043354a3e5b3d76393e85bebce3b96e3cb078c5f4b5266a01aed622cfcf82e",
+    "artifacts/verification/round5/kylin/action_framework.log": "14ab0c908b00ad14c0653fddeb2a62432b382d4ba9708298abf17edce2f29e9c",
+    "artifacts/verification/round5/kylin/actions.json": "fdbcc15bbd1c06d10f8164933487adf291f7082e93698268bff69952aca1fc6c",
+    "artifacts/verification/round5/kylin/installed_sdk_packages.log": "7f2b3138570599f6064578366780449b3551dd8d1e5ca38931374fbfa940bcc3",
+    "artifacts/verification/round5/kylin/kylin_vm.json": "b569b4e4f00c8783e560cbc7c2db472f4d8fa3c5250dcdd22ff988296debefd6",
+    "artifacts/verification/round5/kylin/native-sdk.json": "bec40f80a0a2c471010d378fc061957aed8df1dc1635a09cf0a33eb10d24ebc4",
+    "artifacts/verification/round5/kylin/native_sdk.log": "b37199418886d5788dd3b92432e3f76c2496989ee4f9b603fc7f96abcbf548fe",
+    "artifacts/verification/round5/kylin/official.json": "9633effe51a4523251d205c22e12a9d378db0ab505a0ae793d64558c81e21f82",
+    "artifacts/verification/round5/kylin/official_diagnostics.log": "c62596a4f54648e08094e2e85906c187f40c2a3b9ad30dbae237afd62c0bff09",
+    "artifacts/verification/round5/kylin/request_metrics.log": "ef16c0f2fde6df5f4350d98e2f36c2940b61553331979e618cfc947fd259d538",
+    "artifacts/verification/round5/kylin/requests.json": "212bca23666735828936ff86eb4ac8931deb5003e62592bae9defc799352a58e",
+    "artifacts/verification/round5/kylin/retrieval_v3.log": "c501d999964b34ef831869399bc8bee88539c8abf92809294a74ed0ce4d3fc15",
+    "artifacts/verification/round5/kylin/root_filesystem.log": "c7fdc5d855e6c49c9288588764398601f1815fe93f676399c742ef013cd8fc31",
+    "artifacts/verification/round5/kylin/source_check.log": "59de20d4465702f492068268505de479fa751dfd398b3f75ffe40cfffc67551a",
+    "artifacts/verification/round5/kylin/unit_tests.log": "00a3946766cdc75b7c6a04358b31237c9ed2d99e7e475353ee81d0fd011fa3a8",
+    "artifacts/verification/round5/kylin/virtualization.log": "982a698aea678befdb27602825fb9a5d38d744f0a6e59585e48381010d52766b",
+    "artifacts/verification/round5/kylin_final/action_framework.log": "14ab0c908b00ad14c0653fddeb2a62432b382d4ba9708298abf17edce2f29e9c",
+    "artifacts/verification/round5/kylin_final/actions.json": "fdbcc15bbd1c06d10f8164933487adf291f7082e93698268bff69952aca1fc6c",
+    "artifacts/verification/round5/kylin_final/installed_sdk_packages.log": "7f2b3138570599f6064578366780449b3551dd8d1e5ca38931374fbfa940bcc3",
+    "artifacts/verification/round5/kylin_final/kylin_vm.json": "22457136c1c7127ae63c0052f6ddd29acda1ba7f69a7528dfe133a7f4510bb65",
+    "artifacts/verification/round5/kylin_final/native-sdk.json": "7f7a0664cf461e63ad3eb0cb13a06af0e070efb7a2596274e40b8733465308d9",
+    "artifacts/verification/round5/kylin_final/native_sdk.log": "16c6fbc7086d131d90aa3ed83441b4650022c2da34c0438f6c37b2205620997d",
+    "artifacts/verification/round5/kylin_final/official.json": "9f830155a17390abfd460d9b2eb7fbaa03d6f9419f9ef0647f64548d1ed2c4f9",
+    "artifacts/verification/round5/kylin_final/official_diagnostics.log": "0d4ebebb7e8adcda19a841cc0ab26b87fb4350bbeda262dc327572c258caddcb",
+    "artifacts/verification/round5/kylin_final/request_metrics.log": "284cb37867da416502259955896e0249a2e05e4b636a8a6976a42aa63b468efe",
+    "artifacts/verification/round5/kylin_final/requests.json": "aa73928c22d0f150d958ca8bc25a83956018e3f02ae24688c788a22994ed1523",
+    "artifacts/verification/round5/kylin_final/retrieval_v3.log": "c703566891b3cb77e1609e93ac7514cb66c9b4ac10d6af8a3c78b33b84725006",
+    "artifacts/verification/round5/kylin_final/root_filesystem.log": "c7fdc5d855e6c49c9288588764398601f1815fe93f676399c742ef013cd8fc31",
+    "artifacts/verification/round5/kylin_final/source_check.log": "b730bd97e229704d738f79a0c4cd7cdbd37a213087a6d4b4d5911c9c41f52a27",
+    "artifacts/verification/round5/kylin_final/unit_tests.log": "a843599444934f1d93f99c6749d89afb347cf05ef11cbeebbca91d6d98edbd78",
+    "artifacts/verification/round5/kylin_final/virtualization.log": "982a698aea678befdb27602825fb9a5d38d744f0a6e59585e48381010d52766b",
+    "artifacts/verification/round5/kylin_initial/action_framework.log": "14ab0c908b00ad14c0653fddeb2a62432b382d4ba9708298abf17edce2f29e9c",
+    "artifacts/verification/round5/kylin_initial/actions.json": "fdbcc15bbd1c06d10f8164933487adf291f7082e93698268bff69952aca1fc6c",
+    "artifacts/verification/round5/kylin_initial/installed_sdk_packages.log": "7f2b3138570599f6064578366780449b3551dd8d1e5ca38931374fbfa940bcc3",
+    "artifacts/verification/round5/kylin_initial/kylin_vm.json": "fc3bb58f308d802bb0b4469b2d5e16a31165122b9b6e67beb7e42b7233fa2e70",
+    "artifacts/verification/round5/kylin_initial/native-sdk.json": "bec40f80a0a2c471010d378fc061957aed8df1dc1635a09cf0a33eb10d24ebc4",
+    "artifacts/verification/round5/kylin_initial/native_sdk.log": "b37199418886d5788dd3b92432e3f76c2496989ee4f9b603fc7f96abcbf548fe",
+    "artifacts/verification/round5/kylin_initial/official.json": "179ed96a4bc79798259dc4f94eb7201fe6c25226ab4493cd3adcb3a71bc0a6ca",
+    "artifacts/verification/round5/kylin_initial/official_diagnostics.log": "7debf68a0df4fced769f6f8bf3cc94bea3939bbd8649a0e6770413a7975c403a",
+    "artifacts/verification/round5/kylin_initial/request_metrics.log": "09ff97e67022aeb783d35ea7d948be6128689ac7f16a9f6b5738bb17ce9e1cbe",
+    "artifacts/verification/round5/kylin_initial/requests.json": "4f011a26c3f202ec6ee113a050443b85df32615c54087e6be0ee36c91d4e99ad",
+    "artifacts/verification/round5/kylin_initial/retrieval_v3.log": "8609e07cedd71c71d70e0b0e5876e974fc8eaeb87093ff1edfd6a13a65ec582e",
+    "artifacts/verification/round5/kylin_initial/root_filesystem.log": "c7fdc5d855e6c49c9288588764398601f1815fe93f676399c742ef013cd8fc31",
+    "artifacts/verification/round5/kylin_initial/source_check.log": "59de20d4465702f492068268505de479fa751dfd398b3f75ffe40cfffc67551a",
+    "artifacts/verification/round5/kylin_initial/unit_tests.log": "91f0621ab56669dac039421f7a5044800ec4044714cebb0a0a4d827410313238",
+    "artifacts/verification/round5/kylin_initial/virtualization.log": "982a698aea678befdb27602825fb9a5d38d744f0a6e59585e48381010d52766b",
+    "artifacts/verification/round5/material_checks.json": "196b2ea1de4a7691ca35b1af44fa72ef15e6c8ad7449e2f5e46aab4b79449245",
+    "artifacts/verification/round5/material_checks_final.json": "92b3d0f65ecfec6b6d8c8a49acf602f25f489bbe6af800876ef8ce56dc27f42c",
+    "artifacts/verification/round5/materials_tests.json": "88ca483571d5e496d1246909c0dfc9ddf42e6671171a550cffda54577b4dfe37",
+    "artifacts/verification/round5/native/dependencies.log": "fd9367b8cb1f975a5db7a7794a1288b192323bf765de324615b5a705a6d4a040",
+    "artifacts/verification/round5/native/legacy_probe.json": "617cdffeaa746036a1faaa69d1dcd86b8c1dc1c71a7ccb026d885b3f0b83c10e",
+    "artifacts/verification/round5/native/legacy_runtime_started.json": "0d75ff37cc7966d22c266fa40a1913b87c47ed00e54af047d8aa9e0abae85306",
+    "artifacts/verification/round5/native/model_file.log": "f3e09c8e5ad6b16a4a62f0efbd9ffbfe94ba0669e718a33e04e7da0ffddbb768",
+    "artifacts/verification/round5/native/model_package_files.log": "7bca20f9df1af270e391f96f5cf2364ee6d01bd839e9bc0f8a9d18df83b66e65",
+    "artifacts/verification/round5/native/models_recheck.json": "f9ad0927c1cba110187b9ac019c18e5894427242a487e64e9083fbfef8cdaae5",
+    "artifacts/verification/round5/native/packages.log": "88d1609bdd924213c755a0eca44c6b0fe85f56be521868773ec666a1d6ac8685",
+    "artifacts/verification/round5/native/README.md": "ad4f74a08eef0f974b467ccc2379c5470ea90fa705f7c1c68619d83267d6db89",
+    "artifacts/verification/round5/native/symbols.log": "ac7a7fc15ac1dd8a26f5fc355648ab6d6ba15638c1c6045e4dbe4a9409428616",
+    "artifacts/verification/round5/native/tools.log": "ab0f6388ed32be25f9f54cf914a7fa832f382da0164492e6c8484b07cb99ff1b",
+    "artifacts/verification/round5/native/unit_tests.json": "237199408564cce56664ef04b7dd1b47dc6b9070b1210ace1197255feea633af",
+    "artifacts/verification/round5/native/vector_development_recheck.log": "fe209c21d5469683c6381121d0a51c3d82317c56d0a7693fbea4f300e4f95f71",
+    "artifacts/verification/round5/native/vector_pkgconfig.log": "345871da85178d8b50135262217e8bb4cda81b3c7f903498eccb472309b07353",
+    "artifacts/verification/round5/native/vector_service.log": "0435519e8aeacb23ad16c48f01e720090750f6b95ac64cc91680023e58d94779",
+    "artifacts/verification/round5/package/ablations.json": "5277188caff8d735a529d814dbbc9fd0b5f1fffa58f8fa9df0b1f66f7f25d463",
+    "artifacts/verification/round5/package/compatibility_windows_dev.json": "4371d5ebe35c7e681e797d0c55aeedf5b7bd365e641a7a7915c72d7d50c25077",
+    "artifacts/verification/round5/package/compatibility_windows_dev.md": "29bd0acd1c17f7efc0f803046ba5a58830bf9cc2fa4ac6f86201892802ce9a20",
+    "artifacts/verification/round5/package/evaluation_v1_final.json": "c065e223fa60421cf7956db3f803e91ea7de08b0d36b9e1ba98470090f44c3ec",
+    "artifacts/verification/round5/package/evaluation_v2_test_final.json": "650a942cf2c81309b6f46c8eead186362b96f51491ceaf37bc9610126024d69d",
+    "artifacts/verification/round5/package/evaluation_v3.json": "cdd3cc253379f039c6969342ae210107ecac3e5375c5d8c91e73cdd92c9764c3",
+    "artifacts/verification/round5/package/final_verification.json": "2d32004faad0dce06b705d93e0c953ff3bece17fa68b379931f705734e2a5ff2",
+    "artifacts/verification/round5/package/final_verification.md": "2de8a87a48c706abcacf31faa32bb11448589a78b652a12f6f5a1d4dcb4f5050",
+    "artifacts/verification/round5/package/official_diagnostics.json": "5518576d0b5a7d2bfbad1d3607352db8ed263b249cdfb3442934f76409ee5737",
+    "artifacts/verification/round5/package/performance_windows_dev.json": "2429c9aa405bdfcb26269d2f58a7b6334f2c14bb258d542696127c6f2b43a2bf",
+    "artifacts/verification/round5/package/performance_windows_dev.md": "b97c6820d6e9df181397a2265b116c2a81fa5fef6f290ffdafb666cbfe1510e5",
+    "artifacts/verification/round5/package/requests.json": "bd4ec62ec7f0721395710336d5112dda15a34b556f56d29e3b2f65ec582884b2",
+    "artifacts/verification/round5/package_integrity.json": "8f01f0605e359073065f03daf0ee49cec3b2abba2e0405cfd675cfc5cefab438",
+    "artifacts/verification/round5/privacy_before_archive.json": "936ea7e49fac92fbf5604444912010c04678191d5f5cfea48afbadb17295cb3e",
+    "artifacts/verification/round5/requests_baseline.json": "8f69c5d335beab7a472ef5aed55604627510846da8b1dc1e5f661d6d735f5015",
+    "artifacts/verification/round5/requests_preference_iteration.json": "58d9ef1cb511b50985288f64dd393b3fa865286b7794d9d61dd02419d04f8ea0",
+    "artifacts/verification/round5/requests_quality_iteration.json": "f378adcb36238536d6ad2c59be534849a05aaad82d6921db42e6aa15e3e3bc5e",
+    "artifacts/verification/round5/requests_windows.json": "a7fe5c07a748ce09e537f026c98a4493031b874dd1ed4724876524a2750d73aa",
+    "artifacts/verification/round5/resume/git_index_check.json": "1a2f239fd6588e8f3e4b7fdf1f0768bb30eda1358653bfe73d327d70b603dcb2",
+    "artifacts/verification/round5/resume/kylin/action_framework.log": "14ab0c908b00ad14c0653fddeb2a62432b382d4ba9708298abf17edce2f29e9c",
+    "artifacts/verification/round5/resume/kylin/actions.json": "fdbcc15bbd1c06d10f8164933487adf291f7082e93698268bff69952aca1fc6c",
+    "artifacts/verification/round5/resume/kylin/installed_sdk_packages.log": "7f2b3138570599f6064578366780449b3551dd8d1e5ca38931374fbfa940bcc3",
+    "artifacts/verification/round5/resume/kylin/kylin_vm.json": "ef7ec43bba9d29ece3eb1977dcf0ad84a6f8892b293424c29e46ff188318cc5a",
+    "artifacts/verification/round5/resume/kylin/native-sdk.json": "7f7a0664cf461e63ad3eb0cb13a06af0e070efb7a2596274e40b8733465308d9",
+    "artifacts/verification/round5/resume/kylin/native_sdk.log": "16c6fbc7086d131d90aa3ed83441b4650022c2da34c0438f6c37b2205620997d",
+    "artifacts/verification/round5/resume/kylin/official.json": "365927564d24ecb67da31bf7a0c70485386776dd0e0a23385e6844c89dada4e6",
+    "artifacts/verification/round5/resume/kylin/official_diagnostics.log": "8fca905129fba96f635fa67b0aa9dc28bfbeb4d8b3fd5c0f6cd98c9313db4d43",
+    "artifacts/verification/round5/resume/kylin/request_metrics.log": "6db9b23db151e3bd7d304b1af8d11cd117430817cd1d2ffd9465ec8f4f846bda",
+    "artifacts/verification/round5/resume/kylin/requests.json": "65e4c35afa636e1e91f755cf0387d16c2131ede0b402ca574dd20a80330abe02",
+    "artifacts/verification/round5/resume/kylin/retrieval_v3.log": "1fac98084f655f2a4c995bc2b9dcbb537b16a16340dc413d3d42e5a4ee0b5b02",
+    "artifacts/verification/round5/resume/kylin/root_filesystem.log": "c7fdc5d855e6c49c9288588764398601f1815fe93f676399c742ef013cd8fc31",
+    "artifacts/verification/round5/resume/kylin/source_check.log": "b730bd97e229704d738f79a0c4cd7cdbd37a213087a6d4b4d5911c9c41f52a27",
+    "artifacts/verification/round5/resume/kylin/unit_tests.log": "f4a96ba66480a963b27a8ac7e203a4746dc17bb7db652f4b265af3c6e6591667",
+    "artifacts/verification/round5/resume/kylin/virtualization.log": "982a698aea678befdb27602825fb9a5d38d744f0a6e59585e48381010d52766b",
+    "artifacts/verification/round5/resume/package/ablations.json": "60033e5bd35bdf9759672f351bb9b7f6fc9069e7f9b422279bf8834da0414672",
+    "artifacts/verification/round5/resume/package/compatibility_windows_dev.json": "bf28165c69d635828b434515093a30cffea7c69cdaecd40aafe2e9baaf5d7b6a",
+    "artifacts/verification/round5/resume/package/compatibility_windows_dev.md": "a1d3c893943da88757f0aaf67c90a07910dd088b54240c7a1933c78c67729a89",
+    "artifacts/verification/round5/resume/package/evaluation_v1_final.json": "ab74fdddbed62ecfea25c9bafb4c116d922629526f97cf8bf56dcede91416185",
+    "artifacts/verification/round5/resume/package/evaluation_v2_test_final.json": "bccf8fcc1cd6afe345ecdf20c1554e67f0d081bd75f3d839db32ed7f38c139db",
+    "artifacts/verification/round5/resume/package/evaluation_v3.json": "d0f786dc37c095673b35990acf765556e6cf693e91c3b59519fa3fdb6204feb3",
+    "artifacts/verification/round5/resume/package/final_verification.json": "c31ce6c866fbefa819fd9d79bb08213197fec7b1bc14a010119ef7c49986ef58",
+    "artifacts/verification/round5/resume/package/final_verification.md": "1c9b223d50a60c7a2f04daf04e5260240782549934971e2b980230df9bb3f53f",
+    "artifacts/verification/round5/resume/package/official_diagnostics.json": "9799a553dfc388ac1da506632938fc1bcc108663bb569c933897472ea8088306",
+    "artifacts/verification/round5/resume/package/performance_windows_dev.json": "92211e3ef5b8e952cab2463f76739cdd0b86892a62357b44d8f61a424a551e78",
+    "artifacts/verification/round5/resume/package/performance_windows_dev.md": "c7a1ee652c276199895f0cb9365623436c914dee3544bb57c18cfaf98c53ff9b",
+    "artifacts/verification/round5/resume/package/requests.json": "6a7b20bdd255ba67878698b778854d90a6fbb88f42988fe923acc6641457521d",
+    "artifacts/verification/round5/resume/package_integrity.json": "8f52025314b794bf67a7d76f9bd5aec9efe3ada48a8904f0f4e454d5f0324d7a",
+    "artifacts/verification/round5/resume/privacy_before_archive.json": "67b43df0f596b4dc7dc169a373bf345cebe0475455847acc09b99958b5d1bbf5",
+    "artifacts/verification/round5/resume/publication.json": "3e9dedff84e156f66fb3472bc02d86ba46c24a742ab10c71403316fbdaca25b6",
+    "artifacts/verification/round5/resume/source_comparison.json": "13cfade47dbbcbc33b96687556713c61165fe6a8761c18a41c5ce3780c315104",
+    "artifacts/verification/round5/resume/v11_import_privacy.json": "e7e39086912c1b2dd433b97432a925b65d76cbdda8e8f3f398b4d4a2a8ace118",
+    "artifacts/verification/round5/resume/v11_privacy.json": "e490d4a971a024a02e5775ac458a4b1fcf9b2ce17c636db7bf2e8329300c4fa1",
+    "artifacts/verification/round5/resume/windows/ablations.json": "ce926a039de451d6a8c2b1be5c64f8c40ba0cfd0ce340b79961ffa3d669387c7",
+    "artifacts/verification/round5/resume/windows/compatibility_windows_dev.json": "81f1bf3a85518ac52dea2727f3d0a1f81cfc9df0bf6ed9b4d51ed0f362c5a4af",
+    "artifacts/verification/round5/resume/windows/compatibility_windows_dev.md": "fcbfd52dbacffbb0897bb3434d0be8ddd70f06ad85095e272f35bf228d389ec2",
+    "artifacts/verification/round5/resume/windows/evaluation_v1_final.json": "623e1f4b55fb6902a1d94e2e43ad3876790134e1e01dc0fc50f2c038b7b420ba",
+    "artifacts/verification/round5/resume/windows/evaluation_v2_test_final.json": "4797757d5a3d84329ef1fd955921086abe9ba8eb3e7f3742d31074d0eea5df66",
+    "artifacts/verification/round5/resume/windows/evaluation_v3.json": "2a6ce1cf11e2e8c94d0f0ffbb3ba6a5fcd966a9e48297310b64e8fc6c88f09b9",
+    "artifacts/verification/round5/resume/windows/final_verification.json": "f973846648801a8ceed0af8e06a8178ec469f496483d89941df416d0852b64a0",
+    "artifacts/verification/round5/resume/windows/final_verification.md": "90dd2d5c187fa3c46c1c36327a6024fb269040b010a6c4947cd91294ed19cb3b",
+    "artifacts/verification/round5/resume/windows/official_diagnostics.json": "6b474e41abc99c34d59ea4683853265dd28d17823bfdfc014568b3a43a179def",
+    "artifacts/verification/round5/resume/windows/performance_windows_dev.json": "b19506c955e2e0c751c8ec47748275a9da95522d4099c4955b0d6528116cad7f",
+    "artifacts/verification/round5/resume/windows/performance_windows_dev.md": "dadd2fd1fc414785456f0219b44d19ccf42ed85fe04e91055aeed9cdbb486643",
+    "artifacts/verification/round5/resume/windows/requests.json": "2d8b4862e866c8c615c0f9f4077c07e5bcfa0c01f790fadbce79e6e992611c65",
+    "artifacts/verification/round5/resume/windows_privacy.json": "b57445a75f74aacfbcd05bb7400f100b2af88f22216cf614877f4c38f452e081",
+    "artifacts/verification/round5/resume/windows_source_check.json": "8bf6388b0976954c68d3920f05f7d584163adc7761fb7c25d528878665e94aa6",
+    "artifacts/verification/round5/resume-demo-02/demo.redacted.log": "a0c7834626e54a7c53b22c514ad0540ab87711e966c6de04e1e81b96ba1fb8f2",
+    "artifacts/verification/round5/resume-demo-02/requests.json": "c2aa0542a748a455d661783e936da6f27e973f68b9fab7c62937bc1fb2bef702",
+    "artifacts/verification/round5/resume-demo-02/verification.json": "063d12f415cf4fda7d1780ace3a1ebe94c6439d608e1f08f51cea63a31d87ec8",
+    "artifacts/verification/round5/resume_demo_privacy.json": "138d3de0156ea9c79376f37ee6d39739ec8803d59a6fec4d6bafa4d23150c115",
+    "artifacts/verification/round5/resume_doc_materials.json": "b296dd48d51003083df80653ad6102dc3660b85ef8ac004c6a533067d7d14262",
+    "artifacts/verification/round5/resume_doc_privacy.json": "8cac10f92812149260de5cf150af69d557170a17ca9d316db25176fe0d9a31bb",
+    "artifacts/verification/round5/resume_doc_render_02.json": "2e24bdf66f5ab27d40f9e41072e6486e9aecbdf06e8e3b37ccdb1c4c5c80a71a",
+    "artifacts/verification/round5/resume_doc_render_03.json": "c6e5f1310c7570289cb8480ab3dda133e89f0e4c7dd15aee801e356de8bc5281",
+    "artifacts/verification/round5/resume_doc_tests_01.json": "44cf368ef717e308a95c698aea56b23e0c0419236051f5ad4a9d17225c12c82d",
+    "artifacts/verification/round5/resume_doc_visual_review.json": "a1f0c560c63624b35e5e49e43f4490bbca386cdb5ab388f15dfdc65eee259095",
+    "artifacts/verification/round5/source_comparison.json": "aba26ee46cd98e06338ccf95334a3161e8f2c3f534d38a277f5b24a5830203e9",
+    "artifacts/verification/round5/windows/ablations.json": "9fdb75f3583db062d91112d65d4ee33b58664ba0026060416ab43fc97107c883",
+    "artifacts/verification/round5/windows/compatibility_windows_dev.json": "91550a5ee6de20c4bafd5e91e9fce57ae8aef6b1ced1bef7e025289145126819",
+    "artifacts/verification/round5/windows/compatibility_windows_dev.md": "fc86ffa31ed83d084f2a090740b0ef8a659929c238f57e14faf115744427751e",
+    "artifacts/verification/round5/windows/evaluation_v1_final.json": "d2de737f3f6c480dad01111a966f7f2b15e3b00e6be4a70f257654ef3c935385",
+    "artifacts/verification/round5/windows/evaluation_v2_test_final.json": "4267721f061319d241f32756c360f4e30b0a662d58b11835551fed625e76b3df",
+    "artifacts/verification/round5/windows/evaluation_v3.json": "5fddf4e0913866436f49011756652c7bc1462ab1ff4f3e842865ea9b638941b3",
+    "artifacts/verification/round5/windows/final_verification.json": "dd4d77bf8f670b0294dcc44c3660e3eb305ae54499a19759d10a3e7fe76a2e9d",
+    "artifacts/verification/round5/windows/final_verification.md": "c586b24a6f149165c7d7858bfd95912498468e32104802abab00deb31cdcc627",
+    "artifacts/verification/round5/windows/official_diagnostics.json": "90405db184f8a9ad7f329334969552ac48887c9546caab6e4abe48bf1a0b101c",
+    "artifacts/verification/round5/windows/performance_windows_dev.json": "23478e449d97c9cf98ad13b96924ff23df9d144ae900257fdc7f51e4c46280b4",
+    "artifacts/verification/round5/windows/performance_windows_dev.md": "10d20c881c756a8fbb459217cdcca1815fc742853915b06f5c275ee8525f71cb",
+    "artifacts/verification/round5/windows/requests.json": "9dfdd525cf651ac22d938f1d5b072eddb3891219174bab0417d5c2c358070427",
+    "artifacts/verification/x01-x02/kylin/action-runtime.json": "837251c930a5f0b7c38f217198ca6fd456609e2e53e05fc35c5993df9bb9d896",
+    "artifacts/verification/x01-x02/kylin/action_framework.log": "4a7bac25b470aa82df14238066dd0f96da5ac427b8a978ab403f7cfc6f22a086",
+    "artifacts/verification/x01-x02/kylin/action_runtime.log": "5506368ff26b4aeebb32438ecb73ca6240018cd86d29e075a97f20de2bddb58e",
+    "artifacts/verification/x01-x02/kylin/actions.json": "78a47466bc867b60adbfc98fc38892429ef65d8b0e4f5b4ad0799b9593b8f385",
+    "artifacts/verification/x01-x02/kylin/installed_sdk_packages.log": "7f2b3138570599f6064578366780449b3551dd8d1e5ca38931374fbfa940bcc3",
+    "artifacts/verification/x01-x02/kylin/kylin_vm.json": "8e461e0cf608e23b5c4864df847e3472bb33a868d4979e20a0cbeb3456bbc2f5",
+    "artifacts/verification/x01-x02/kylin/native-sdk.json": "7f7a0664cf461e63ad3eb0cb13a06af0e070efb7a2596274e40b8733465308d9",
+    "artifacts/verification/x01-x02/kylin/native_sdk.log": "16c6fbc7086d131d90aa3ed83441b4650022c2da34c0438f6c37b2205620997d",
+    "artifacts/verification/x01-x02/kylin/official.json": "ff257b6ebebba4706b690453956957b527050d4e87db57a3f38123920f6a0074",
+    "artifacts/verification/x01-x02/kylin/official_diagnostics.log": "97d390e1277a854cf3daea37f881129dee94a936c956ef7dbfbf4e0fc089ace3",
+    "artifacts/verification/x01-x02/kylin/request_metrics.log": "dcdd6678d76c2fbc92113328c0ee7ca29fa69b86413353e2d35bd3f98d3bb87f",
+    "artifacts/verification/x01-x02/kylin/requests.json": "67119b252b83619283840d127ef1d6dd537b884bf9003886c56067501c440106",
+    "artifacts/verification/x01-x02/kylin/retrieval_v3.log": "036e867bb1ccd48d9db4a39b833864923cae8d4228cbd9965b1f7cc2c65a9df9",
+    "artifacts/verification/x01-x02/kylin/root_filesystem.log": "c7fdc5d855e6c49c9288588764398601f1815fe93f676399c742ef013cd8fc31",
+    "artifacts/verification/x01-x02/kylin/source_check.log": "c7fcc0b6bf9aab78d705b4046ee96168dd2094f834b5ec7940ef729bc34a9ddb",
+    "artifacts/verification/x01-x02/kylin/unit_tests.log": "ef0d2528aa5caadfca5d29c40f86503957bcbe9f2f65047cd71eec1f4244c30b",
+    "artifacts/verification/x01-x02/kylin/virtualization.log": "982a698aea678befdb27602825fb9a5d38d744f0a6e59585e48381010d52766b",
+    "artifacts/verification/x01-x02/source_comparison.json": "fb6e48797ebd29d24be61bb05e79dceab47b5f362270c20b2516d0f10f5b6ce7",
+    "artifacts/verification/x01-x02/v11_import_privacy.json": "b4ca252532e519bb11590ad1aa3d9b3328501f602c89b68543b4334baf070816",
+    "artifacts/verification/x01-x02/windows/ablations.json": "6e19f16d7bcaa093f94538b48632593012164d07ae774e3a5453ec4070e9cb54",
+    "artifacts/verification/x01-x02/windows/actions.json": "c6b94b097124643f0d1e50e1a7af6c8821f6cea287521b703bd9e127208601cb",
+    "artifacts/verification/x01-x02/windows/compatibility_windows_dev.json": "8045088445c64b54b4d86b302a0279b4011229ad470194ee209ea7120faeb823",
+    "artifacts/verification/x01-x02/windows/compatibility_windows_dev.md": "cc5b4fcb5318a4354409750985fbbaaf898dd3b699f0ff2617e48b1a3b8760c7",
+    "artifacts/verification/x01-x02/windows/evaluation_v1_final.json": "4a3f8f35cea2d4c1351012c77fd943488fbd42b024ac7d0b50eb3a57912121ca",
+    "artifacts/verification/x01-x02/windows/evaluation_v2_test_final.json": "8829049ad0585f4643d58db21fa32a6054540962aeebc45baab25b47753ec118",
+    "artifacts/verification/x01-x02/windows/evaluation_v3.json": "9161921df93375a0537009f0e880cbf44db52963f70c515278f1edc7e40e28db",
+    "artifacts/verification/x01-x02/windows/final_verification.json": "bd06f8e656597dab8def190322992fc9ecdec94c62bb8b812d8ec94d1e2f60d1",
+    "artifacts/verification/x01-x02/windows/final_verification.md": "55b181afe1cc026fba762afe801a903419c82550f3226ed8ef9e3bc2efee45f1",
+    "artifacts/verification/x01-x02/windows/official_diagnostics.json": "e13b757a182aa5a824781e6f47ba3bc76046e233275ad6cecf6d201d44ef5fb7",
+    "artifacts/verification/x01-x02/windows/performance_windows_dev.json": "cef21f28eeceb9f54056d55ddfaf92764447d293d5db449e5e43184223bbffea",
+    "artifacts/verification/x01-x02/windows/performance_windows_dev.md": "a922afd503c07ef7bd048ecf5e459a374ea24c5f62846b9965741b0387eed66c",
+    "artifacts/verification/x01-x02/windows/requests.json": "eeef07c5f19095e6ef9a1f083fd369d5a838e498ce105b0405e3160cf4300c97",
+    "artifacts/verification/x01-x02/windows-runtime.json": "7544e3de13cb80317b511c7b0bdcbff4662d793e42717ef988db5927c757ee7a",
+    "case_studies/README.md": "5093170a8633629c893a3575fc22a3914a846131ea0a1f10d03a4d4d7e5a34ea",
+    "case_studies/templates/01_知情同意书模板.md": "5fd050b3a6b45748d5fa9cc587603900ae373bfe536613b1bd9a9dc39ac57b95",
+    "case_studies/templates/02_案例记录模板.md": "906e88d765d425faf41e4f83e256654a16196818f4041c03fe1811c2b4efc44f",
+    "case_studies/templates/03_匿名化检查表.md": "3cdaa4b5a9babf99f232927db7a40f54dad17948e723b9a5e215cacb6b583cb3",
+    "config/embedding.hash.json": "1d3b65ffd5abe5e8e92ee8c1298f16ec9ff22ee3f775bcedfbe5577f19e207aa",
+    "config/embedding.kylin-native.example.json": "9cb2a575a89d5d1074ee262c5d8d3e25386aaf542db1e38a365b9bcfa7ea887c",
+    "config/embedding.kylin.example.json": "b97b46a38eaee49fe8b6a10b23b4da1420a40674c2cf33be68fe2ec0a20f465c",
+    "CONTRIBUTING.md": "3800745d9b18a5bbcf0723448c95bb0cbe3d004151b0721a352424d95d873597",
+    "data/eval/office_memory_eval.json": "890d029e0a1d0158b227e32347f7c9599dd66d0b46aed63b1f0a12ad9802822a",
+    "data/eval/office_memory_eval_v2.json": "f7f1e3f6d99a0f3acc528c6ceb00bd8a4692bcdf5cd1dfddd8e20034d50a7db2",
+    "data/eval/office_memory_eval_v3.json": "641a6af67005a80e0e3108505307822630d8f1c7b7122de7da0e80fe10188213",
+    "data/eval/request_regression_v1.json": "51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98",
+    "data/eval/sensitive_official_diagnostic.json": "db1140b22708006be6e6c1c971b61c1363598f4c6b39fd014fd66e6feab36e13",
+    "data/samples/events.jsonl": "a3931f9629b3fcabc271c72245e30c4821f58ea50459a7c92bcbe81a6731dacd",
+    "deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx": "69f6807b91059e120719a9ce6ec35adabc335871760aec35e4b51f54424d0c0f",
+    "deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx": "37b023e406a3086e76993dd0d3b52d67b0cd6d94bd28ac1ca641a058a31a62df",
+    "deliverables/video/README.md": "edcd9a3cd05a6c533638f8c3a88392a57047f312c742871ceac545ae2ec177e7",
+    "docs/00_赛题解读.md": "8fdf83aaa573f5fe2f731e55a90c57240a069826b45cbc58a261db6f2f523fb8",
+    "docs/01_技术路线.md": "8efcadad8ebde5411948c1b9ec030c18fb911766c1e0e9d5da7e684d5c136ba7",
+    "docs/02_系统架构.md": "b9a7a821d943ca9a8f74863774c09caad9d993a9e37fece42d9a705eaa52dd5b",
+    "docs/03_评测方案.md": "64fc1a3154fe6dda3417f646b7146e13fe94a8b1f7a0dc61ec3fc6021b1e2ab7",
+    "docs/04_提交材料清单.md": "b6338e57fb3e6dcf8f9a61eb61312a83ad680321cca8ab13062b0882c524a4c0",
+    "docs/05_整改任务总清单.md": "f2e38886701a9d54258d94d9f04cc37c61cf1b76d4a80f83076cf577d9cd677f",
+    "docs/06_测试矩阵.md": "7abdffb35c79462f332de8be972f2c774ba9b74ccecd7c57b7cfee8a55afc5c7",
+    "docs/07_银河麒麟适配说明.md": "702ba0ee7f777859d9735b2d5ed6d56ec2bbb40062c7bbbd70e716178ff665c9",
+    "docs/08_演示快跑指南.md": "b2f3c255e9e22df5c43d9492eab97874706257766fd3a0e25ed6f415f7e5c0cc",
+    "docs/09_技术方案正文.md": "fd88433ae6eac658658ae9e1ecab72a43f151ecfe83d7ed791c2666bffd0ec27",
+    "docs/10_PPT逐页讲稿与答辩问答.md": "144942b6b20bf7ae57db8ae11fbc0b3e0c9762dd1acf7ee29219ef5441ae3b68",
+    "docs/11_演示视频分镜与录制检查表.md": "e2a2ff56a066dbbc058af78130e5dc628e455cd955ebd3ee08b8b8e0f9555b32",
+    "docs/12_部署手册.md": "07fbbccc795c4a87a9812f33ba885b736f99f8fe73b0926cb779e16a5eec6e48",
+    "docs/13_API文档.md": "f7eca4e7d365c0f2e1979e5fba195ddb0b96bed014a1e90bd8b47de74c71304f",
+    "docs/14_可复现指南.md": "4686ebcd597e9ab01688325fb95aa275962528ddefbdc6a7fd671aaf9042ae4a",
+    "docs/15_源代码模块说明.md": "923e84076c988ba6e35fd5b99d9f42ec09ff7f2af22a320dab5d96d5da48e6e4",
+    "docs/16_原创性与隐私发布边界.md": "d347327afcf6216f9639b7d11623d847df9b11369368faf694443dcea60aa284",
+    "docs/17_第二轮整改清单.md": "1f6cff3ce922b50a9ab901edaeb5654dd75a5b8c4c7803829a0ef9864ac743fb",
+    "docs/18_第二轮验收报告.md": "39b5db8df5090b9878523e2b19f991eb101f4e71340d2ed8a7bd231c2e278158",
+    "docs/19_第二轮运行交接.md": "f5dad304bb4f2af2ad03ce312cd6cd5ece8974149d6625bff006d8e668d1c051",
+    "docs/20_第二轮发布记录.md": "b57501269f226b2698b2069a4e89f3d0bf206d40110affcfb2331672b842fd80",
+    "docs/21_第三轮质量提升清单.md": "8bcb2ca8531b02f1d1816fdcb01f41c5fa2cb4f679d501da0d46f67c4e217181",
+    "docs/22_第三轮验收报告.md": "3aab42d30bd7a6d11f0a22b36864530fcc84b59236ef8b51c0e05f65a4e7c99e",
+    "docs/23_第三轮发布记录.md": "f5f45982db68d6ed2d90ec5609d6aff06a5778524d3f908d0950a191506c34b3",
+    "docs/24_官方对齐整改清单.md": "e9dd2f35b5a307e0fafc41a9c06c0c6711521a55e2efd2d3abdc893df7069186",
+    "docs/25_隔离实验室与赛后清理.md": "ba9f773f96118cb0b89de6ca3eaa0c960e1be1d2399f0186192fa81f9491397f",
+    "docs/26_官方行动评测协议.md": "cc5a4504966447a83f3bbf9897ac5bdb1c52890a697fe5fad0d3a930494283dc",
+    "docs/27_真实SDK接入与证据边界.md": "3f3be8ed4e91752b0d1e244a5cce77171c8c6e0c92df2a35cc2ee8f350a913b5",
+    "docs/28_第四轮验收报告.md": "1f879b4b5a758f6dfb0eea7397482c890cf540780f340729ef647f8406015c2f",
+    "docs/29_续作任务清单.md": "a49b1d30b2251203ca4ef9e551f310fa07147fea8e567bb3924669e469bdaeed",
+    "docs/30_逐请求评测与冻结基线.md": "d277285b548f86cc5e4ed186818425cae2faa340f04652d39fc0330e0531fb44",
+    "docs/31_麒麟V11客户机实测.md": "e0cb625fb09499e3ad7f0bb484e0989d708d54e28bc1000daf543b11b1c918df",
+    "docs/32_第五轮验收报告.md": "8bc789545a179004541f47b72e8247ff6da19c3207acd7e6419ea889e74a73f6",
+    "docs/33_第五轮交付复核.md": "5df925680f4b55622228b97fd9a27bf78fad7ff81668c636e37556a469812e72",
+    "docs/34_X01_X02推进与外部验收.md": "4b1fd553bb8f2c34d97fca03216dd40d97d1b4dbdb0690117c6905f95463f1e1",
+    "docs/测试报告.md": "8bc789545a179004541f47b72e8247ff6da19c3207acd7e6419ea889e74a73f6",
+    "docs/演示操作手册.md": "1db5b88ca00556be6dea7167893cc25720a26573d2cc6fed4200a2e8f97d4e6b",
+    "docs/研发记录.md": "3d56896e622dc01f92446cc3c4452085065ebdc2e570683357014f7309a96336",
+    "docs/问题与解决方案.md": "d6fe8e58c92921310e92284a6d8f9407015348692169c52a4688f218d8073ada",
+    "LICENSE": "f94c2ff6405d3c005f9d8b0164755670ef142dbf4e95f75f80e2fbe702d99b61",
+    "pyproject.toml": "fb3cf20cb435f63672a103ae12f07eab4f6ac628b814c1ab61244e523c51053d",
+    "README.md": "c6672e5ac6269c5d0d4661eca42ce54b064b1ed9edf12ba5a2def1135572ec7f",
+    "scripts/archive_submission.py": "1bc890e438b9cdc8bd1ba358588da3ff6c18f50479033791b8115a9476b1b658",
+    "scripts/benchmark_service.py": "70c4fac1e4593b69a5072320c7249c33fd83d5912fa6f9dffe0d0debd66cc32f",
+    "scripts/build_submission.py": "c72fc44f7b777fa312dc391072c0f7f91c8e4760a7dc1fcbb73c36ede70d7235",
+    "scripts/check_action_runtime.py": "ce58d3521e7bb2b1728dd0cced64945f1c5f7ba9951edaa69e46c9d1b5dfe153",
+    "scripts/check_dashboard.cjs": "92064905399c2b7cd857aa69fe8f85a32ecc387042c8365a1c8ea3221968e2e8",
+    "scripts/check_deliverables.py": "61787f9f43de23e38e3ea36b38021caea92fa71f63fe26d913ec51ca9f63c066",
+    "scripts/check_kylin_native.py": "27b2ff69a38bee7fd6bb6e381f6c462b61231e19ab8ed1a1fb82abaaf6515446",
+    "scripts/check_source.py": "9d3debd3913ff1ce3317ee1a2652a6c9a53f66a000b0ac65a8f2af9c13127983",
+    "scripts/evaluate_actions.py": "fcb9d4b743f85947567891da16e12c60dd698ed332afd4434c13fa7323b9c040",
+    "scripts/evaluate_official.py": "3deee34b0cfb9fc0910af8917628e1eeb1ace2ca6ae4de5dae4503e48a6d9c99",
+    "scripts/evaluate_requests.py": "44f8fd790e9f40c95338cb48c7039d6eed61122c2a70f448e33ccbd8d46439dc",
+    "scripts/evaluate_v3.py": "9947789e90b2f8533162e9bbac182bed69fae1da68f7e0a016b5eacabd4c31b4",
+    "scripts/generate_eval_v2.py": "8a65f5b9dc9a195ff6e58faa742d304275da96c2c03b94109741a7a28b4192c4",
+    "scripts/generate_eval_v3.py": "feecd2e050b6824957ee4ce6db67f4eedbad899624383e48416137ea49b6e9a8",
+    "scripts/generate_evidence_materials.py": "54143bec51aeab73310b67cf085f9c57215bb1d2a15b86236f910247d0c6203c",
+    "scripts/generate_ppt.py": "5989844241cb747bf973e302a99635ab8815316c224a569dad69b63fd4f09b44",
+    "scripts/generate_request_suite.py": "62fd7ddbd2ab6f88abc09750b6d92dff15dad71efc0f9869513dde6b205b3b2b",
+    "scripts/generate_round4_materials.py": "d05563923d27f2afd8c219061465db97f3f578d9ac7dfc604abfaf5240380464",
+    "scripts/generate_round5_materials.py": "3396e27c66be3f791823c1a8ea35d3b81711698cbb997992f7e14b171c85bff4",
+    "scripts/generate_technical_doc.py": "e8fcd7865c976f7e548b97ec9ad8ca3ff74de00e10caecb426d24a7887a2e6af",
+    "scripts/manage_lab.py": "d010850592c50f72a20dd3e88d516e9b6290125e7428979039d66d35544fe5c2",
+    "scripts/memory_tools.py": "4b33d5bc104ecefa890689bea9bc6a295d60291520f95ef8f4732c494d517211",
+    "scripts/run_ablations.py": "414ed60d6046d64486ef8c1cefc33a0b067ce2c9356d0d4bc5f82ed94f3c4582",
+    "scripts/run_demo.ps1": "446158a5cba403d49601760bc20184bd819e8a258240e1153a851e1021ebbd47",
+    "scripts/verify_kylin_guest.py": "ddeec4c2ef1fc609daf070b85bd4355d588c31dcaca5e84ad790e3dd5b7a3317",
+    "scripts/verify_release.py": "13115d0b218ea313a3bed6ecb351c2cbddb0ec2b0347492b1e7ac488db7f97c6",
+    "SECURITY.md": "e786d44cd1aae2eaf84966eefeaa65b99c4b3b2f0518a0cb63f16963e5086d74",
+    "src/os_agent_memory/__init__.py": "79789b69ee6e07b5f8d85fa9bc2482fd0973466e67cd0559319791933f79c828",
+    "src/os_agent_memory/action_evaluation.py": "4800e6f0e7e2b4c923c68774b778e784d06dd336c8f12de7269c1701624db402",
+    "src/os_agent_memory/benchmark.py": "4086e132f26250bd671459d39947cb71e88fcc386827b0321fa712a80cc18dc4",
+    "src/os_agent_memory/cli.py": "9ce63038fdd4b8452c50335d3f9961bae539a2216e96a3e20dac2c09546fe095",
+    "src/os_agent_memory/compatibility.py": "7584c227acb9d349c8428b08cfb0be10d3f6cdc4a54a229ddb126f48e85e9c5f",
+    "src/os_agent_memory/dashboard.html": "21121e40ff802713a998c8e83614ee47994d2481d80b027e8033b71ed265adff",
+    "src/os_agent_memory/demo.py": "ad7c3f79e99f81d71cf24d11e73d171cd0de3f5044f756fcd80f94bb6a833bd7",
+    "src/os_agent_memory/diagnostics.py": "6eb90ccdfd24aa6b6200107f3402773933897a9ed83793683210975d6271bcec",
+    "src/os_agent_memory/embeddings.py": "091af84fe0248a826aa524a8a60068c0ae3f03a009b58ce686395ef0ae805d8c",
+    "src/os_agent_memory/evaluation.py": "1007391573b118d4d0e2c694a5e3ca2049738887a3c78fb460b437255fa2cb7a",
+    "src/os_agent_memory/experiments.py": "6bb8b5d8c6289c727564e863089b4a97bc32330a13d3432f2586ea505afd1693",
+    "src/os_agent_memory/file_memory.py": "5f5344995dde200334510ca971aff87de11ceee8d5c216c9cc8c85d1b56a1d88",
+    "src/os_agent_memory/ingestion.py": "d89215ccf26e7f1483ac46d4f0ebaa1d80aff425375703cbec4c67b4c08e6428",
+    "src/os_agent_memory/knowledge.py": "6c873d74754bcd8ee7cf447618f741205fbe6edb269ed6e5e0ce8af55276165c",
+    "src/os_agent_memory/kylin_native.py": "689f0bbcb913726640486d57b5b66006610ea922fa5dbc2c768bc0160ba95f9f",
+    "src/os_agent_memory/lifecycle.py": "a6b625f5fbb2f63d82847e11c700da3655881653776c46014f1fd22add919850",
+    "src/os_agent_memory/memory_store.py": "1fc3172c72575948411970400b8eac054521efc1351ea2a88c33c32d359eba73",
+    "src/os_agent_memory/memory_tools.py": "e0435da7f8218d3a56b6999aa13297bad41e6298fa2cf1af7947e04aaf71cf39",
+    "src/os_agent_memory/official_contract.py": "28e30e2d9dc58e554851eafc35cb226d14599181a4ba571805d580613a35c487",
+    "src/os_agent_memory/official_diagnostics.py": "8ac8e5f8b19ce1e322c0d949fb24f85baee2b39ca43fd9624a8a75424233551e",
+    "src/os_agent_memory/persistence.py": "cc4a7e172908c36c6c487b3399569fb00e0028ba1da0f7873b4901377b3538c7",
+    "src/os_agent_memory/preference.py": "5be098ac87d35a23fffde440619d30a7be2df357d3bb499b72686e0a3440dbf4",
+    "src/os_agent_memory/provider_config.py": "6059798f8e2d88c268d548c2782fec20916a778f789d7d563986438be5fc0135",
+    "src/os_agent_memory/request_contract.py": "50a2a2cd4c95feba36c6760d94ea83109e5edfa9f079e4e77f4354efd45e9613",
+    "src/os_agent_memory/request_evaluation.py": "eb085e0394506629e309ca83502d3ff28aaa6fdbef865f08536665f64232d45a",
+    "src/os_agent_memory/schemas.py": "702789c83ede2174a0bab1a255250c6191dc0230983f49727f545187522ba5d5",
+    "src/os_agent_memory/security.py": "797751be58e46f8f02f2e87f846616f55063925cede7271d3f1b40253d9a4013",
+    "src/os_agent_memory/service.py": "0216678574d9266ddfdfce770039104311b530653022c0238c0e8b271cd90dc6",
+    "src/os_agent_memory/web_server.py": "89c1de5e20777def30a2867412fe54ab37becd5798f01895661d039f4df7a5c7",
+    "src/os_agent_memory/workload.py": "deebf74b6e36e4ef1595e1190e250da48fb5ea3038613a679e54283440427814",
+    "submission/01_项目报告与PPT/README.md": "3a4e7e9e9b6b1e3f4fcb4d0fc5218e8c46cc024cb20dd46248cf9cff4c3628bc",
+    "submission/02_技术方案与测试/README.md": "12e83e636e509af334ae0a237d7f09a97f6f689c0ec6afde250860dd3b2e8226",
+    "submission/03_源代码与说明/README.md": "1fd0986f4012319498fcbada6aa0ba835f55a2e04d8e73d211043f584dc5223c",
+    "submission/04_演示视频/README.md": "72726ac8d452a77add35f62141c6e3b2d3272b3b91a7b7394fa58920a2d5c106",
+    "submission/05_报名与外部证明/README.md": "4d0a1ecd8d2d004e39da5e2aba285915d6478a470e6301c5606a40e383559cf8",
+    "submission/README.md": "803ad83dd4af3673c3e3a1204ad7a96ae5f1256be797d9af70647178790a0c88",
+    "submission/submission_manifest.json": "4659f1520692576e06e7b467ccf4d143cece76f0f9df0436bbca80734a919a71",
+    "tests/test_action_evaluation.py": "7dc3d7a040bd547fa08e189059b340eee341c3cc82e0953e5dcf481f096a8a2a",
+    "tests/test_action_runtime.py": "c4433098fc8218160389ca3fa3722a6ed2f838f20e23da2a2c92fff1cd7246bc",
+    "tests/test_archive_submission.py": "08ad115b58574ebc38a4ae90aef669df3df07c06b7e6ad439de8406acd6f4692",
+    "tests/test_benchmark.py": "fe6b0b6d1d7dbe55984bc20cd8509c3c0dd727f4202390c071c66b780248946c",
+    "tests/test_compatibility.py": "40805211aec804a5f77e301e15e19e4fdcfdfdc5788da4745ae3fcefe29ea6ee",
+    "tests/test_cross_session_actions.py": "e4aa28a6bc31290e4b8471b3bbb3548f632a86ca25216f7b93ac25f615ce3cc4",
+    "tests/test_deliverables.py": "558ee98535b4b3a43f9ff982229538f9ac2f32a04770d5e2b7702304e5be07e3",
+    "tests/test_diagnostics.py": "e2ed84383c98177f331c6185c9dfe3ec56e81f095284d881c9823460c0582eec",
+    "tests/test_evaluation_v3.py": "451df691156b332800113e90f873f8f30999078b1e1c394031db8b3c9dcc29bd",
+    "tests/test_evidence_materials.py": "0bd274912478e893af3908548c43129f08438f7fc993d9ebe0e8708696e5264e",
+    "tests/test_file_memory.py": "09d6a371db277b74438bc49d32a5553f0b6bf91f7b9d48f9192504228f793053",
+    "tests/test_incremental.py": "4ac642ac17280e553741d2c68024d88ab76f29505ad5f0b15f9114af40f174aa",
+    "tests/test_kylin_guest_verification.py": "633ab5bed53eaf6ab8c60530a86479a1ffef8f814ee9ee6017b7be55c7a63bc0",
+    "tests/test_kylin_native.py": "5ee745fa0885b708b2b5f5ed51800746beece0ae15df6d5c5d1cb338292c01f8",
+    "tests/test_lab_isolation.py": "3225dd85f73626f3673ebe36e4bdf80e528883636ae98524198800b7d5d5ec73",
+    "tests/test_memory_pipeline.py": "27fccc667158ac6bf24c5d37f9c7e38c70dead6a742fd8b7324ed828269da9ae",
+    "tests/test_memory_tools.py": "8b3828096613f93daa6426f26227337a14e2bf7fb7e2d700f67cd07f80bc9cf6",
+    "tests/test_official_contract.py": "d99791db5e95248b371e4e8cb55c8818c4c281e3baead1adbe997d99fc308a5c",
+    "tests/test_official_diagnostics.py": "1e8f6977a47638598470c9f5aa029bcc1fbbe05c848687f9d592f61203e7c2d7",
+    "tests/test_packaging.py": "c02934dd86546a7e3773b782ec73980dc21b81d872e05d5d0762234342843b36",
+    "tests/test_preference_alignment.py": "83665225a872c55e3c862ac4fd39684db4e549f29a8ae6dad26a0c26c408e3d0",
+    "tests/test_provider_config.py": "bece98d5ad41843ed5b57e6ba1d28fcadc22891ebb39602938494375402532c4",
+    "tests/test_release_verification.py": "b476b8a81e5c0d84ae646d2d80facb110426f9ed7999cf146b1415f04234c384",
+    "tests/test_request_contract.py": "3b406df7cf401a64a57bd524075caa2f964c3298f3fa07fe5a7cfaca700fef56",
+    "tests/test_request_evaluation.py": "48f129d0384e43abe9e7aaa5704c1db9bb5a2698eb996a2a72bc8054871283b0",
+    "tests/test_request_quality.py": "1a8177eb7a3722fe23953714df3a04054c4b06af59db4cd29f37f72d932e2915",
+    "tests/test_retrieval_hard_cases.py": "89aea1cf6c1ae3ef329ff0b101c375e75f98031954cadc47a38baa68449f8e07",
+    "tests/test_round2.py": "77fb6527572f88f22da346fa0be5bf4311bc849877e535a549161d29167f67fc",
+    "tests/test_security_adversarial.py": "8566d5c8eedd5e8b89d4f75a8256522f03986ffeed918fddab19e938b1d9e622",
+    "tests/test_web_server.py": "064b6f8ba57098bf1a09bd47ea591f64c0badeb37a6e1792230f08caa356f041",
+    "tests/test_workload.py": "3eae42dd3a534b6891619ef40f93ff914d048d6d8de2840f3970adb9aac8b410",
+    "THIRD_PARTY_NOTICES.md": "6f25fe7455c3fcd47abf159b1ef77a181f093c2798e26901bc938790bc25fafa"
+  },
+  "test_execution_this_closeout": false,
+  "limits": [
+    "Only the current public inventory is scanned, not private controller data.",
+    "Binary media without OCR remain subject to the scanner's manual review list.",
+    "This technical check is not independent blind grading or organizer acceptance."
+  ]
+}

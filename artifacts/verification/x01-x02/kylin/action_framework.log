@@ -1,0 +1,1 @@
+{"sample_id": "cross-session-a", "protocol": {"name": "cross_session_v1", "cross_session_verified": true, "probe_files": 12, "slot_checks": 50, "label_semantics_independently_verified": false}, "execution_completed": true, "exit_code": 0, "official_accuracy_verified": false}

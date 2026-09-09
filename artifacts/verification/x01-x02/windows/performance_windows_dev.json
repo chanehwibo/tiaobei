@@ -1,0 +1,88 @@
+{
+  "benchmark": "hash_embedding_hybrid_retrieval",
+  "generated_at_utc": "2026-09-09T01:05:59+00:00",
+  "environment": {
+    "system": "Windows",
+    "release": "10",
+    "machine": "AMD64",
+    "python": "3.14.3",
+    "kylin_os": false,
+    "embedding_provider": {
+      "implementation": "os_agent_memory.embeddings.HashEmbedding",
+      "dimensions": 256,
+      "ngram": 2
+    }
+  },
+  "method": {
+    "rounds_per_size": 30,
+    "cold_definition": "first query after vector/index construction",
+    "hot_definition": "subsequent repeated in-process queries",
+    "memory_definition": "tracemalloc peak Python allocations during build and queries",
+    "disk_definition": "SQLite v2 file size after complete persistence",
+    "pass_rule": "max(cold query, hot p99) <= 500ms"
+  },
+  "results": [
+    {
+      "records": 100,
+      "top_k": 5,
+      "index_build_ms": 167.769,
+      "cold_query_ms": 9.931,
+      "hot_query_p50_ms": 10.201,
+      "hot_query_p95_ms": 19.089,
+      "hot_query_p99_ms": 20.074,
+      "throughput_qps": 85.57,
+      "peak_python_memory_mb": 2.734,
+      "sqlite_disk_mb": 0.449,
+      "returned_results": 5,
+      "meets_500ms": true
+    },
+    {
+      "records": 1000,
+      "top_k": 5,
+      "index_build_ms": 1592.451,
+      "cold_query_ms": 30.464,
+      "hot_query_p50_ms": 34.779,
+      "hot_query_p95_ms": 45.752,
+      "hot_query_p99_ms": 47.75,
+      "throughput_qps": 28.12,
+      "peak_python_memory_mb": 22.716,
+      "sqlite_disk_mb": 4.047,
+      "returned_results": 5,
+      "meets_500ms": true
+    },
+    {
+      "records": 5000,
+      "top_k": 5,
+      "index_build_ms": 7286.103,
+      "cold_query_ms": 101.019,
+      "hot_query_p50_ms": 99.27,
+      "hot_query_p95_ms": 117.484,
+      "hot_query_p99_ms": 125.345,
+      "throughput_qps": 9.93,
+      "peak_python_memory_mb": 143.642,
+      "sqlite_disk_mb": 20.02,
+      "returned_results": 5,
+      "meets_500ms": true
+    },
+    {
+      "records": 10000,
+      "top_k": 5,
+      "index_build_ms": 15028.486,
+      "cold_query_ms": 190.599,
+      "hot_query_p50_ms": 199.688,
+      "hot_query_p95_ms": 219.013,
+      "hot_query_p99_ms": 233.144,
+      "throughput_qps": 5.0,
+      "peak_python_memory_mb": 245.124,
+      "sqlite_disk_mb": 39.984,
+      "returned_results": 5,
+      "meets_500ms": true
+    }
+  ],
+  "all_meet_500ms": true,
+  "limitations": [
+    "Development-machine benchmark; not a real Galaxy Kylin OS result.",
+    "Uses deterministic HashEmbedding; real Kylin SDK must be benchmarked separately.",
+    "Synthetic records measure retrieval scaling, not end-user task completion quality."
+  ]
+}

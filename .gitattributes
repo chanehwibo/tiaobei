@@ -1,4 +1,6 @@
 # Frozen data and raw evidence must survive every platform checkout byte-for-byte.
 /data/eval/request_regression_v1.json -text
 /artifacts/verification/round5/** -text
+/artifacts/verification/x01-x02/** -text
+/artifacts/verification/x01-judge/** -text
 /deliverables/** -text

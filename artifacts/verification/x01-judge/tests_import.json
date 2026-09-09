@@ -1,0 +1,62 @@
+{
+  "scope": "byte_preserving_test_report_import_not_new_execution",
+  "passed": true,
+  "reports": [
+    {
+      "path": "artifacts/verification/x01-judge/tests-01.json",
+      "private_source": "private-lab/runs/x01-judge/tests-01.json",
+      "sha256": "99625d3794f9954108008235d217db3a71b6b6c102bd9520eea26492be1ffe6c",
+      "bytes": 14010,
+      "private_and_public_bytes_match": true,
+      "tests_run": 229,
+      "passed": false,
+      "returncode": 1,
+      "duration_ms": 103861.171,
+      "log_duration_seconds": 103.035,
+      "skipped": null
+    },
+    {
+      "path": "artifacts/verification/x01-judge/tests-02.json",
+      "private_source": "private-lab/runs/x01-judge/tests-02.json",
+      "sha256": "626fdc83d7e209b9829b47831c22145578132dbfbfb13db7eec04a416c499653",
+      "bytes": 13973,
+      "private_and_public_bytes_match": true,
+      "tests_run": 241,
+      "passed": true,
+      "returncode": 0,
+      "duration_ms": 104829.454,
+      "log_duration_seconds": 103.908,
+      "skipped": 1
+    }
+  ],
+  "private_reports_privacy_scan": {
+    "passed": true,
+    "scanned_text_files": 2,
+    "scanned_office_documents": 0,
+    "scanned_zip_archives": 0,
+    "skipped_binary_or_large_files": 0,
+    "manual_review_required": [],
+    "unexpected_findings": [],
+    "approved_synthetic_fixture_findings": [],
+    "approved_legacy_template_metadata": [],
+    "policy": "文本逐行扫描，无2MiB跳过；ZIP递归扫描有128MiB及层数上限，超限失败；Office扫描XML/元数据/拆分文本。只记录位置和类型，不记录敏感原文。媒体无OCR，须单独人工复核。"
+  },
+  "published_reports_privacy_scan": {
+    "passed": true,
+    "scanned_text_files": 2,
+    "scanned_office_documents": 0,
+    "scanned_zip_archives": 0,
+    "skipped_binary_or_large_files": 0,
+    "manual_review_required": [],
+    "unexpected_findings": [],
+    "approved_synthetic_fixture_findings": [],
+    "approved_legacy_template_metadata": [],
+    "policy": "文本逐行扫描，无2MiB跳过；ZIP递归扫描有128MiB及层数上限，超限失败；Office扫描XML/元数据/拆分文本。只记录位置和类型，不记录敏感原文。媒体无OCR，须单独人工复核。"
+  },
+  "first_failed_run_retained": true,
+  "real_model_execution": false,
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-09T03:40:14+00:00",
+  "private_audit_script_sha256": "e934afbc00588ef564ef682216265d5b78c717a743017af1a504424a20535d47",
+  "competition_ready": false
+}

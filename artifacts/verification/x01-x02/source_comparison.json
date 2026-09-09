@@ -1,0 +1,414 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-09T01:31:45+00:00",
+  "scope": "x01_x02_current_windows_installed_v11_regression_not_official_certification",
+  "passed": true,
+  "current_source_dual_environment_complete": true,
+  "competition_ready": false,
+  "x01_complete": false,
+  "x02_complete": false,
+  "comparisons": {
+    "raw_sha256": {
+      "compared_public_files": 98,
+      "differences": {
+        "windows": [],
+        "kylin": [],
+        "worktree": []
+      },
+      "passed": true,
+      "excluded_generated_outputs": {
+        "windows": {
+          "data/eval/latest_report.json": "348773598960b54cd4db2fe4cadc897e2b19323d30f7a74ad467ce2ff713a4ac"
+        },
+        "kylin": {},
+        "worktree": {
+          "data/eval/latest_report.json": "348773598960b54cd4db2fe4cadc897e2b19323d30f7a74ad467ce2ff713a4ac"
+        }
+      }
+    },
+    "lf_sha256": {
+      "compared_public_files": 98,
+      "differences": {
+        "windows": [],
+        "kylin": [],
+        "worktree": []
+      },
+      "passed": true,
+      "excluded_generated_outputs": {
+        "windows": {
+          "data/eval/latest_report.json": "6a1311ec373368e5eb53a9268be0ddbd48f4756c0f6c56cd7f45ac47ae73db4d"
+        },
+        "kylin": {},
+        "worktree": {
+          "data/eval/latest_report.json": "6a1311ec373368e5eb53a9268be0ddbd48f4756c0f6c56cd7f45ac47ae73db4d"
+        }
+      }
+    }
+  },
+  "excluded_generated_output_reason": "Only the package-blocked historical latest_report.json is excluded. No source, tests, configuration, or frozen labels are excluded.",
+  "request_gates": {
+    "windows": {
+      "passed": true,
+      "checks": {
+        "five_numeric_targets": true,
+        "required_safety_checks": true,
+        "frozen_dataset": true,
+        "frozen_request_counts": true,
+        "frozen_retrieval_configuration": true,
+        "honest_evidence_scope": true,
+        "distinct_request_rows": true,
+        "denominators_match_rows": true,
+        "summary_matches_details": true,
+        "aggregates_match_request_rows": true
+      },
+      "rubric": {
+        "metrics": {
+          "preference_accuracy": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 68,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "knowledge_recall": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "conflict_accuracy": {
+            "value": 1.0,
+            "target": 0.88,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "retrieval_p95_ms": {
+            "value": 87.2805998660624,
+            "target": 500.0,
+            "operator": "le",
+            "requests": 80,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "sensitive_f1": {
+            "value": 1.0,
+            "target": 0.9,
+            "operator": "ge",
+            "requests": 50,
+            "minimum_requests": 50,
+            "passed": true
+          }
+        },
+        "all_targets_met": true,
+        "scope": "developer_held_measurements_not_official_certification"
+      },
+      "scope": "frozen_public_synthetic_regression_not_independent_blind_or_official_certification"
+    },
+    "kylin": {
+      "passed": true,
+      "checks": {
+        "five_numeric_targets": true,
+        "required_safety_checks": true,
+        "frozen_dataset": true,
+        "frozen_request_counts": true,
+        "frozen_retrieval_configuration": true,
+        "honest_evidence_scope": true,
+        "distinct_request_rows": true,
+        "denominators_match_rows": true,
+        "summary_matches_details": true,
+        "aggregates_match_request_rows": true
+      },
+      "rubric": {
+        "metrics": {
+          "preference_accuracy": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 68,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "knowledge_recall": {
+            "value": 1.0,
+            "target": 0.85,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "conflict_accuracy": {
+            "value": 1.0,
+            "target": 0.88,
+            "operator": "ge",
+            "requests": 60,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "retrieval_p95_ms": {
+            "value": 130.62746800005698,
+            "target": 500.0,
+            "operator": "le",
+            "requests": 80,
+            "minimum_requests": 50,
+            "passed": true
+          },
+          "sensitive_f1": {
+            "value": 1.0,
+            "target": 0.9,
+            "operator": "ge",
+            "requests": 50,
+            "minimum_requests": 50,
+            "passed": true
+          }
+        },
+        "all_targets_met": true,
+        "scope": "developer_held_measurements_not_official_certification"
+      },
+      "scope": "frozen_public_synthetic_regression_not_independent_blind_or_official_certification"
+    }
+  },
+  "metrics": {
+    "windows": {
+      "preference_accuracy": 1.0,
+      "knowledge_recall": 1.0,
+      "conflict_accuracy": 1.0,
+      "retrieval_p95_ms": 87.2805998660624,
+      "sensitive_f1": 1.0
+    },
+    "kylin": {
+      "preference_accuracy": 1.0,
+      "knowledge_recall": 1.0,
+      "conflict_accuracy": 1.0,
+      "retrieval_p95_ms": 130.62746800005698,
+      "sensitive_f1": 1.0
+    }
+  },
+  "observation_counts": {
+    "windows": {
+      "preference_accuracy": 68,
+      "knowledge_recall": 60,
+      "conflict_accuracy": 60,
+      "retrieval_p95_ms": 80,
+      "sensitive_f1": 50
+    },
+    "kylin": {
+      "preference_accuracy": 68,
+      "knowledge_recall": 60,
+      "conflict_accuracy": 60,
+      "retrieval_p95_ms": 80,
+      "sensitive_f1": 50
+    }
+  },
+  "unit_tests": {
+    "windows": {
+      "tests_run": 190,
+      "skipped": 1,
+      "passed": true
+    },
+    "kylin": {
+      "tests_run": 190,
+      "skipped": 0,
+      "passed": true,
+      "duration_seconds": 21.696
+    }
+  },
+  "reference_reports": {
+    "artifacts/verification/x01-x02/windows/final_verification.json": "bd06f8e656597dab8def190322992fc9ecdec94c62bb8b812d8ec94d1e2f60d1",
+    "artifacts/verification/x01-x02/kylin/kylin_vm.json": "8e461e0cf608e23b5c4864df847e3472bb33a868d4979e20a0cbeb3456bbc2f5",
+    "artifacts/verification/x01-x02/v11_import_privacy.json": "b4ca252532e519bb11590ad1aa3d9b3328501f602c89b68543b4334baf070816",
+    "artifacts/verification/x01-x02/windows/requests.json": "eeef07c5f19095e6ef9a1f083fd369d5a838e498ce105b0405e3160cf4300c97",
+    "artifacts/verification/x01-x02/kylin/requests.json": "67119b252b83619283840d127ef1d6dd537b884bf9003886c56067501c440106",
+    "artifacts/verification/x01-x02/windows/actions.json": "c6b94b097124643f0d1e50e1a7af6c8821f6cea287521b703bd9e127208601cb",
+    "artifacts/verification/x01-x02/kylin/actions.json": "78a47466bc867b60adbfc98fc38892429ef65d8b0e4f5b4ad0799b9593b8f385",
+    "artifacts/verification/x01-x02/windows-runtime.json": "7544e3de13cb80317b511c7b0bdcbff4662d793e42717ef988db5927c757ee7a",
+    "artifacts/verification/x01-x02/kylin/action-runtime.json": "837251c930a5f0b7c38f217198ca6fd456609e2e53e05fc35c5993df9bb9d896"
+  },
+  "transfer": {
+    "tar_sha256": "f4065a4cb4fe33caa6c0360af663117643a4a06998fa2dc61602831fa21463d5",
+    "iso_sha256": "604140707cac7ed51d33e527c2fcf6aa36b357d02f8cfea2247740276158d7d1",
+    "public_file_count": 382,
+    "source_and_office_files_compared": 100,
+    "differences": [],
+    "guest_and_decoded_evidence_tar_sha256": "41aacdfed123100b0e446d87b7721044594c4e675d967bafa61b4a99872b40d8",
+    "serial_offset_before_export": 8,
+    "evidence_files": [
+      {
+        "path": "action-runtime.json",
+        "bytes": 1346,
+        "sha256": "837251c930a5f0b7c38f217198ca6fd456609e2e53e05fc35c5993df9bb9d896",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "action_framework.log",
+        "bytes": 276,
+        "sha256": "4a7bac25b470aa82df14238066dd0f96da5ac427b8a978ab403f7cfc6f22a086",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "action_runtime.log",
+        "bytes": 1164,
+        "sha256": "5506368ff26b4aeebb32438ecb73ca6240018cd86d29e075a97f20de2bddb58e",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "actions.json",
+        "bytes": 17758,
+        "sha256": "78a47466bc867b60adbfc98fc38892429ef65d8b0e4f5b4ad0799b9593b8f385",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "installed_sdk_packages.log",
+        "bytes": 395,
+        "sha256": "7f2b3138570599f6064578366780449b3551dd8d1e5ca38931374fbfa940bcc3",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "kylin_vm.json",
+        "bytes": 28063,
+        "sha256": "8e461e0cf608e23b5c4864df847e3472bb33a868d4979e20a0cbeb3456bbc2f5",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "native-sdk.json",
+        "bytes": 1114,
+        "sha256": "7f7a0664cf461e63ad3eb0cb13a06af0e070efb7a2596274e40b8733465308d9",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "native_sdk.log",
+        "bytes": 1006,
+        "sha256": "16c6fbc7086d131d90aa3ed83441b4650022c2da34c0438f6c37b2205620997d",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "official.json",
+        "bytes": 17785,
+        "sha256": "ff257b6ebebba4706b690453956957b527050d4e87db57a3f38123920f6a0074",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "official_diagnostics.log",
+        "bytes": 327,
+        "sha256": "97d390e1277a854cf3daea37f881129dee94a936c956ef7dbfbf4e0fc089ace3",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "request_metrics.log",
+        "bytes": 2331,
+        "sha256": "dcdd6678d76c2fbc92113328c0ee7ca29fa69b86413353e2d35bd3f98d3bb87f",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "requests.json",
+        "bytes": 95593,
+        "sha256": "67119b252b83619283840d127ef1d6dd537b884bf9003886c56067501c440106",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "retrieval_v3.log",
+        "bytes": 326,
+        "sha256": "036e867bb1ccd48d9db4a39b833864923cae8d4228cbd9965b1f7cc2c65a9df9",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "root_filesystem.log",
+        "bytes": 111,
+        "sha256": "c7fdc5d855e6c49c9288588764398601f1815fe93f676399c742ef013cd8fc31",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "source_check.log",
+        "bytes": 55,
+        "sha256": "c7fcc0b6bf9aab78d705b4046ee96168dd2094f834b5ec7940ef729bc34a9ddb",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "unit_tests.log",
+        "bytes": 30429,
+        "sha256": "ef0d2528aa5caadfca5d29c40f86503957bcbe9f2f65047cd71eec1f4244c30b",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      },
+      {
+        "path": "virtualization.log",
+        "bytes": 7,
+        "sha256": "982a698aea678befdb27602825fb9a5d38d744f0a6e59585e48381010d52766b",
+        "private_import_matches_export": true,
+        "public_copy_matches_export": true
+      }
+    ],
+    "guest_exit_status_observed": 0
+  },
+  "dataset_sha256": "51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98",
+  "sealed_archives": [
+    {
+      "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "e109ef0d9f501cdd9e203c48821cf1e8c17a413304a14cf13677964b3a240227",
+      "matches_sealed_sidecar": true
+    },
+    {
+      "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "3eedda8e6416fa29be160fd1bacb9f3adc4c68ea955c5c8bcdf2e9ffb0ce0716",
+      "matches_sealed_sidecar": true
+    },
+    {
+      "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip",
+      "sha256": "6bce17e442630fa5a3d2e45aef502f2896d8ae3ca1f91c9ce1be586526478da1",
+      "matches_sealed_sidecar": true
+    },
+    {
+      "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip",
+      "sha256": "5b47d71af6a13e4f16c7b8aa604431225d087c761e8282b90fe422a5887123f4",
+      "matches_sealed_sidecar": true
+    },
+    {
+      "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "631ecbf2045d1bd3a42d5205a564be72007b649cd8cdd4a106b0b16bfeba7e35",
+      "matches_sealed_sidecar": true
+    }
+  ],
+  "checks": {
+    "windows_all_14_release_checks_passed": true,
+    "windows_190_tests_with_one_posix_only_skip": true,
+    "v11_all_190_tests_passed_no_skips": true,
+    "v11_all_core_checks_passed": true,
+    "installed_v11_actually_verified": true,
+    "sources_unchanged_during_both_runs": true,
+    "current_sources_match_both_environments": true,
+    "both_frozen_request_gates_passed": true,
+    "frozen_dataset_unchanged": true,
+    "transfer_sources_and_office_match_current": true,
+    "transfer_identity_matches_guest_observation": true,
+    "all_17_evidence_files_byte_identical": true,
+    "import_privacy_passed_for_exact_evidence": true,
+    "five_sealed_archives_unchanged": true,
+    "strict_cross_session_fixture_passed_both_environments": true,
+    "guest_runtime_inventory_executed": true,
+    "no_native_or_official_acceptance_substitution": true
+  },
+  "remaining": [
+    "X01: actual reviewed agent/container, independent judge and third-party-held blind labels",
+    "X02: organizer deployment acceptance and matching approved runtime/scoring resources",
+    "Current edits are not a new sealed package, commit, remote publication or CI run"
+  ]
+}

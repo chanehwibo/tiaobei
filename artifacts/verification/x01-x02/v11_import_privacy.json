@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "scanned_text_files": 17,
+  "scanned_office_documents": 0,
+  "scanned_zip_archives": 0,
+  "skipped_binary_or_large_files": 0,
+  "manual_review_required": [],
+  "unexpected_findings": [],
+  "approved_synthetic_fixture_findings": [],
+  "approved_legacy_template_metadata": [],
+  "policy": "文本逐行扫描，无2MiB跳过；ZIP递归扫描有128MiB及层数上限，超限失败；Office扫描XML/元数据/拆分文本。只记录位置和类型，不记录敏感原文。媒体无OCR，须单独人工复核。",
+  "generated_at_utc": "2026-09-09T01:31:45+00:00",
+  "scope": "exact_guest_export_before_public_copy",
+  "archive_sha256": "41aacdfed123100b0e446d87b7721044594c4e675d967bafa61b4a99872b40d8",
+  "public_inventory": [
+    {
+      "path": "artifacts/verification/x01-x02/kylin/action-runtime.json",
+      "sha256": "837251c930a5f0b7c38f217198ca6fd456609e2e53e05fc35c5993df9bb9d896"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/action_framework.log",
+      "sha256": "4a7bac25b470aa82df14238066dd0f96da5ac427b8a978ab403f7cfc6f22a086"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/action_runtime.log",
+      "sha256": "5506368ff26b4aeebb32438ecb73ca6240018cd86d29e075a97f20de2bddb58e"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/actions.json",
+      "sha256": "78a47466bc867b60adbfc98fc38892429ef65d8b0e4f5b4ad0799b9593b8f385"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/installed_sdk_packages.log",
+      "sha256": "7f2b3138570599f6064578366780449b3551dd8d1e5ca38931374fbfa940bcc3"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/kylin_vm.json",
+      "sha256": "8e461e0cf608e23b5c4864df847e3472bb33a868d4979e20a0cbeb3456bbc2f5"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/native-sdk.json",
+      "sha256": "7f7a0664cf461e63ad3eb0cb13a06af0e070efb7a2596274e40b8733465308d9"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/native_sdk.log",
+      "sha256": "16c6fbc7086d131d90aa3ed83441b4650022c2da34c0438f6c37b2205620997d"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/official.json",
+      "sha256": "ff257b6ebebba4706b690453956957b527050d4e87db57a3f38123920f6a0074"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/official_diagnostics.log",
+      "sha256": "97d390e1277a854cf3daea37f881129dee94a936c956ef7dbfbf4e0fc089ace3"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/request_metrics.log",
+      "sha256": "dcdd6678d76c2fbc92113328c0ee7ca29fa69b86413353e2d35bd3f98d3bb87f"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/requests.json",
+      "sha256": "67119b252b83619283840d127ef1d6dd537b884bf9003886c56067501c440106"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/retrieval_v3.log",
+      "sha256": "036e867bb1ccd48d9db4a39b833864923cae8d4228cbd9965b1f7cc2c65a9df9"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/root_filesystem.log",
+      "sha256": "c7fdc5d855e6c49c9288588764398601f1815fe93f676399c742ef013cd8fc31"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/source_check.log",
+      "sha256": "c7fcc0b6bf9aab78d705b4046ee96168dd2094f834b5ec7940ef729bc34a9ddb"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/unit_tests.log",
+      "sha256": "ef0d2528aa5caadfca5d29c40f86503957bcbe9f2f65047cd71eec1f4244c30b"
+    },
+    {
+      "path": "artifacts/verification/x01-x02/kylin/virtualization.log",
+      "sha256": "982a698aea678befdb27602825fb9a5d38d744f0a6e59585e48381010d52766b"
+    }
+  ]
+}
