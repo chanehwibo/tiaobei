@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "display_status": "已完成初版，待赛事验收",
+  "latency_status": "待复测风险项",
+  "scope": "historical_single_probe_not_native_latency_acceptance",
+  "source": "artifacts/verification/round5/native/legacy_runtime_started.json",
+  "source_sha256": "0d75ff37cc7966d22c266fa40a1913b87c47ed00e54af047d8aa9e0abae85306",
+  "real_embedding_executed": true,
+  "probe_mode": "legacy_runtime_default",
+  "dimensions": 768,
+  "single_probe_ms": 13390.614526000036,
+  "observations": 1,
+  "timing_includes": [
+    "child_process",
+    "session",
+    "model_initialization",
+    "embedding"
+  ],
+  "native_p95_ms": null,
+  "native_latency_passed": false,
+  "competition_ready": false,
+  "model_identity_verified": false,
+  "model_version_verified": false,
+  "vector_database_connected": false,
+  "hash_results_are_native_evidence": false,
+  "risks": [
+    "Single probe exceeds 500ms; one observation cannot estimate P95.",
+    "The current isolated-call provider initializes a process/session per call.",
+    "Installed legacy ABI cannot verify the model; required new ABI symbols are absent.",
+    "Native end-to-end search quality/latency and vector database roundtrip are unverified."
+  ],
+  "retest_requirements": [
+    "Record installed V11, CPU/RAM, SDK/runtime/model versions and binary/configuration hashes.",
+    "Verify the actually selected native model, dimensions and no HashEmbedding fallback.",
+    "Freeze at least 50 distinct requests, corpus, top_k and threshold before measuring.",
+    "Report startup/initialization, first search and full service search separately.",
+    "Retain all per-request errors/timeouts and all repetitions; do not drop slow requests.",
+    "Run the five metric/safety gates on the native provider, including distractors and negatives.",
+    "Require service-search P95 <= 500ms with zero discarded failures in the declared profile.",
+    "Verify vector database create/write/search/delete separately if claimed as integrated."
+  ]
+}

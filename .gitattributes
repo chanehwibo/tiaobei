@@ -4,4 +4,5 @@
 /artifacts/verification/x01-x02/** -text
 /artifacts/verification/x01-judge/** -text
 /artifacts/verification/takeover/** -text
+/artifacts/verification/feedback/** -text
 /deliverables/** -text
