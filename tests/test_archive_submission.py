@@ -32,11 +32,13 @@ class SubmissionArchiveTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             staging = self.make_staging(root)
-            archive = root / "release_INCOMPLETE.zip"
+            archive = root / "release_待赛事验收.zip"
             try:
                 report = create_archive(staging=staging, archive=archive, allow_incomplete=True)
                 self.assertTrue(report["archive_read_only"])
                 self.assertTrue(report["build_manifest_verified"])
+                self.assertEqual(report["display_status"], "已完成初版，待赛事验收")
+                self.assertIs(report["competition_ready"], False)
                 self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(), report["archive_sha256"])
                 with zipfile.ZipFile(archive) as bundle:
                     self.assertEqual(bundle.read("source.txt"), b"synthetic artifact")

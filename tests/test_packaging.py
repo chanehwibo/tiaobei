@@ -33,9 +33,12 @@ class SubmissionPackagingTest(unittest.TestCase):
             )
 
             self.assertEqual(report["status"], "incomplete_draft")
+            self.assertEqual(report["display_status"], "已完成初版，待赛事验收")
+            self.assertIs(report["competition_ready"], False)
             self.assertEqual(len(report["missing_external"]), 4)
             status = (output / "PACKAGE_STATUS.md").read_text(encoding="utf-8")
             self.assertIn("禁止改名或宣称为完整正式包", status)
+            self.assertIn("已完成初版，待赛事验收", status)
             self.assertTrue((output / "03_源代码与说明" / "project" / "src" / "os_agent_memory" / "service.py").is_file())
             packaged_root = output / "03_源代码与说明" / "project"
             for required in (

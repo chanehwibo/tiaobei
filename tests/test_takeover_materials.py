@@ -10,6 +10,7 @@ from scripts.generate_takeover_materials import (
     controller_source_identity, file_hashes, main, render_markdown, sections, verify_outputs,
 )
 from os_agent_memory.experiments import decay_diagnostics
+from scripts.material_status import INITIAL_STATUS
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -87,7 +88,7 @@ class TakeoverMaterialsTest(unittest.TestCase):
         self.assertEqual(len(sections(summary)), 15)
         self.assertEqual(len(OFFICE_NAMES), 2)
         text = render_markdown(summary)
-        for value in ("INCOMPLETE", "HashEmbedding", "V11", "68", "60", "80", "50", "500ms",
+        for value in (INITIAL_STATUS, "HashEmbedding", "V11", "68", "60", "80", "50", "500ms",
                       "独立", "7分钟", "--output", "半衰期", "生命周期峰值"):
             self.assertIn(value, text)
 

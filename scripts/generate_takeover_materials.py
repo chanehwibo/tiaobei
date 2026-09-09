@@ -18,6 +18,7 @@ from os_agent_memory.experiments import assess_decay_diagnostics
 from os_agent_memory.official_contract import environment_identity
 from os_agent_memory.request_contract import FROZEN_DATASET_SHA256, assess_frozen_requests
 from scripts.check_deliverables import inspect_ooxml
+from scripts.material_status import INITIAL_STATUS, SDK_RISK_STATUS
 from scripts.verify_kylin_guest import CORE_CHECKS, file_hashes, guest_passed, installed_root
 from scripts.verify_release import EXTERNAL_BLOCKERS
 
@@ -168,7 +169,7 @@ def build_summary(root=ROOT):
     return {
         "schema_version": 1, "generated_at_utc": max(windows["generated_at_utc"], kylin["generated_at_utc"]),
         "scope": "current_matching_source_public_synthetic_regression_not_official_certification",
-        "competition_ready": False, "package_status": "INCOMPLETE",
+        "competition_ready": False, "package_status": INITIAL_STATUS,
         "test_results": tests, "requests": requests, "services": services, "decay": decay,
         "actions": actions, "readiness": readiness, "organizer_acceptance": acceptance,
         "v11": {"installed": True, "required_v11_verified": True, "system": kylin["system"],
@@ -205,7 +206,7 @@ def sections(summary):
             "赛题 XA-202612 | 当前双环境验证补充版 | " + summary["generated_at_utc"][:10],
             "公开合成冻结回归，HashEmbedding；不是第三方盲测或官方认证。",
             "V11虚拟机部署、运行资源及评分认可按参赛者确认处理，原始凭证待归档。",
-            "状态：INCOMPLETE。原生模型、真实Agent及独立Judge验收未完成。",
+            "状态：" + INITIAL_STATUS + "。原生模型、真实Agent及独立Judge仍待验证。",
         ]),
         ("问题与记忆分层", [
             "六类输入统一携带租户、用户、场景、时间、来源和隐私级别。",
@@ -293,7 +294,7 @@ def sections(summary):
             "X02：已认可作为工作前提；归档主办方原始凭证及适用配置。",
             "X03：经授权且匿名化的真实应用案例。",
             "X04：不超过7分钟的最终视频复核、平台审核和盖章报名表。",
-            "X05：负责人核准后的正式提交和回执。赛事材料不自动发送；INCOMPLETE。",
+            "X05：负责人核准后的正式提交和回执。赛事材料不自动发送；" + INITIAL_STATUS + "。",
         ]),
     ]
 
@@ -337,7 +338,7 @@ def build_office(summary, output):
         style.font.size = DocPt(size)
     _add_markdown(document, output / "current_report.md")
     footer = section.footer.paragraphs[0]
-    footer.text = "OS Agent | 当前双环境内部验证 | INCOMPLETE"
+    footer.text = "OS Agent | 当前双环境内部验证 | " + INITIAL_STATUS
     footer.runs[0].font.size = DocPt(8)
     document.core_properties.author = ""
     document.core_properties.last_modified_by = ""
@@ -386,7 +387,7 @@ def build_office(summary, output):
                     cell.fill.fore_color.rgb = RGBColor(*( (32, 104, 91) if row_index == 0 else (246, 248, 247)))
                     for paragraph in cell.text_frame.paragraphs:
                         style_paragraph(paragraph, 16, (255, 255, 255) if row_index == 0 else (37, 43, 42))
-        text_box(.7, 6.92, 10.8, .35, ["公开合成回归 | HashEmbedding | 非官方认证 | INCOMPLETE"], 11, (149, 51, 53))
+        text_box(.7, 6.92, 10.8, .35, ["公开合成回归 | HashEmbedding | " + INITIAL_STATUS], 11, (149, 51, 53))
         text_box(12, 6.92, .65, .35, [f"{index}/15"], 11)
     presentation.save(output / OFFICE_NAMES[0])
 
@@ -401,7 +402,7 @@ def verify_outputs(root, output, *, require_office=True):
         issues.append("markdown_does_not_match_evidence")
     reports = {}
     if require_office:
-        expected = ["INCOMPLETE", "V11", "HashEmbedding", "P95"]
+        expected = [INITIAL_STATUS, "V11", "HashEmbedding", "P95"]
         expected += [value for row in metric_rows(summary) for value in row[2:]]
         expected += [str(row["tests_run"]) for row in summary["test_results"].values()]
         for name in OFFICE_NAMES:

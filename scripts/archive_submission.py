@@ -13,6 +13,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+try:
+    from scripts.material_status import ARCHIVE_REVIEW_MARKER, INITIAL_STATUS
+except ModuleNotFoundError:
+    from material_status import ARCHIVE_REVIEW_MARKER, INITIAL_STATUS
+
 
 FIXED_ZIP_TIME = (2026, 9, 5, 0, 0, 0)
 
@@ -140,8 +145,8 @@ def create_archive(*, staging: Path, archive: Path, allow_incomplete: bool = Fal
     incomplete = report["status"] == "incomplete_draft"
     if incomplete and not allow_incomplete:
         raise ArchiveError("暂存包不完整；如仅归档开发机草案，必须显式传入 --allow-incomplete")
-    if incomplete and "INCOMPLETE" not in archive.name.upper():
-        raise ArchiveError("不完整草案的归档文件名必须包含 INCOMPLETE")
+    if incomplete and ARCHIVE_REVIEW_MARKER not in archive.name and "INCOMPLETE" not in archive.name.upper():
+        raise ArchiveError("初版技术审阅包的归档文件名必须包含 待赛事验收")
 
     files = _collect_files(staging)
     manifest_text, rows = _content_manifest(staging, files)
@@ -165,6 +170,8 @@ def create_archive(*, staging: Path, archive: Path, allow_incomplete: bool = Fal
         "schema_version": 1,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "package_status": report["status"],
+        "display_status": INITIAL_STATUS,
+        "competition_ready": False,
         "archive": archive.name,
         "archive_bytes": archive.stat().st_size,
         "archive_sha256": archive_sha256,
@@ -177,7 +184,7 @@ def create_archive(*, staging: Path, archive: Path, allow_incomplete: bool = Fal
         "build_manifest_verified": True,
         "missing_external": report.get("missing_external", []),
         "warning": (
-            "开发机不完整草案，不得作为全部完成的正式提交包。"
+            "已完成初版，待赛事验收；外部缺项另列，不得作为赛事验收通过证明。"
             if incomplete
             else "已通过本地归档检查，仍需负责人核对赛事文件名、格式、大小和平台/邮件状态。"
         ),

@@ -12,6 +12,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+try:
+    from scripts.material_status import INITIAL_STATUS
+except ModuleNotFoundError:
+    from material_status import INITIAL_STATUS
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = PROJECT_ROOT / "submission" / "submission_manifest.json"
@@ -209,13 +214,13 @@ def build_submission(
         status_lines = [
             "# 提交包状态",
             "",
-            f"- 状态：`{status}`",
+            f"- 状态：**{INITIAL_STATUS}**",
             "- 说明：该状态由本地清单校验产生，不代表平台审核通过或邮件发送成功。",
         ]
         if missing:
             status_lines.extend(["", "## 缺失的外部材料", ""])
             status_lines.extend(f"- {item['label']} (`{item['key']}`)" for item in missing)
-            status_lines.extend(["", "本目录是开发机交付草案，禁止改名或宣称为完整正式包。"])
+            status_lines.extend(["", "本目录供初版技术审阅，禁止改名或宣称为完整正式包。"])
         status_path = temporary / "PACKAGE_STATUS.md"
         status_path.write_text("\n".join(status_lines) + "\n", encoding="utf-8")
         copied.append(status_path)
@@ -225,6 +230,8 @@ def build_submission(
             "schema_version": 1,
             "package_name": manifest["package_name"],
             "status": status,
+            "display_status": INITIAL_STATUS,
+            "competition_ready": False,
             "built_at_utc": datetime.now(timezone.utc).isoformat(),
             "missing_external": missing,
             "files": [],
@@ -257,7 +264,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--allow-incomplete",
         action="store_true",
-        help="生成明确标记为 incomplete_draft 的开发机草案",
+        help="生成标明已完成初版、待赛事验收的技术审阅包；保留外部缺项",
     )
     return parser
 
