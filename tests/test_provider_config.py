@@ -1,12 +1,17 @@
 import sys
+import sqlite3
 import tempfile
 import unittest
+from contextlib import closing
 from pathlib import Path
 from threading import Event
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from os_agent_memory.provider_config import CheckedProvider
 from os_agent_memory.service import MemoryService
 from os_agent_memory.workload import workload_event
+from os_agent_memory.memory_store import MemoryStore
+from os_agent_memory.persistence import SQLiteMemoryPersistence
+from os_agent_memory.schemas import KnowledgeMemory
 
 
 class ProviderConfigTest(unittest.TestCase):
@@ -38,3 +43,26 @@ class ProviderConfigTest(unittest.TestCase):
                 provider.encode("probe")
         finally:
             released.set()
+
+    def test_old_text_normalization_invalidates_vectors_without_changing_memory(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "memory.sqlite"
+            store = MemoryStore()
+            item = KnowledgeMemory(
+                id="wide", title="PDF", content="ＩＮＶＯＩＣＥ　ＰＤＦ　ｅｘｐｏｒｔ",
+                tags=[], source_ids=["source"], version=1,
+                created_at="2026-01-01T00:00:00Z", updated_at="2026-01-01T00:00:00Z")
+            store.upsert_knowledge(item)
+            persistence = SQLiteMemoryPersistence(path)
+            persistence.save(store)
+            with closing(sqlite3.connect(path)) as connection:
+                with connection:
+                    connection.execute("DELETE FROM runtime_state WHERE key='search_text_normalization'")
+                    connection.execute("UPDATE knowledge SET embedding='[0.0]'")
+            loaded = persistence.load()
+            self.assertEqual(loaded.knowledge["wide"].content, item.content)
+            self.assertEqual(loaded.knowledge["wide"].embedding, item.embedding)
+            self.assertEqual(loaded.search_knowledge("invoice pdf export")[0].memory_id, "wide")
+            persistence.save(loaded)
+            reloaded = persistence.load()
+            self.assertEqual(reloaded.runtime_state["search_text_normalization"], MemoryStore.SEARCH_TEXT_NORMALIZATION)

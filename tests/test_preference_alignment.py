@@ -1,10 +1,12 @@
 import sys
 import unittest
 import json
+from dataclasses import replace
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from os_agent_memory.ingestion import DataIngestionPipeline
 from os_agent_memory.preference import PreferenceExtractor
+from os_agent_memory.schemas import SourceType
 from os_agent_memory.service import MemoryService
 
 
@@ -79,3 +81,45 @@ class PreferenceAlignmentTest(unittest.TestCase):
         result = evaluate_preferences(suite["preferences"])
         self.assertGreaterEqual(result["accuracy"], .85)
         self.assertTrue(result["durable_checks_passed"])
+
+    def test_half_life_requires_a_finite_positive_number(self):
+        for value in (0, -1, True, False, float("nan"), float("inf"), -float("inf"), "30"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                PreferenceExtractor(half_life_days=value)
+        self.assertIsNone(PreferenceExtractor(half_life_days=None).half_life_days)
+        self.assertEqual(PreferenceExtractor(half_life_days=30).half_life_days, 30)
+
+    def test_implicit_evidence_decays_without_overriding_explicit_settings(self):
+        raw = [{
+            "id": f"old-{i}", "source_type": "user_behavior",
+            "content": "用户要求后续回答保持简洁，直接给结论。",
+            "timestamp": f"2025-01-{i + 1:02d}T00:00:00Z", "metadata": {"topic": "style"},
+        } for i in range(8)]
+        raw.append({"id": "new", "source_type": "user_behavior",
+                    "content": "用户要求后续回答详细展开说明，给出原因。",
+                    "timestamp": "2026-09-01T00:00:00Z", "metadata": {"topic": "style"}})
+        records = DataIngestionPipeline().ingest(raw)
+        self.assertEqual(PreferenceExtractor().extract(records)[0].value, "detailed")
+        self.assertEqual(PreferenceExtractor(half_life_days=None).extract(records)[0].value, "brief")
+        records[0] = replace(records[0], source_type=SourceType.MANUAL_CONFIG)
+        self.assertEqual(PreferenceExtractor().extract(records)[0].value, "brief")
+
+    def test_reference_time_and_memory_ids_are_scope_isolated(self):
+        records = DataIngestionPipeline().ingest([{
+            "id": "choice", "source_type": "tool_result", "tool_status": "succeeded",
+            "tenant_id": "tenant-a", "user_id": "user-a", "scene": "office",
+            "content": "成功工具返回了可供用户采用的完整结果。",
+            "timestamp": "2026-01-01T00:00:00Z", "metadata": {"tool_name": "editor"},
+        }])
+        expected = PreferenceExtractor().extract(records)[0]
+        for tenant, user in (("tenant-b", "user-a"), ("tenant-a", "user-b")):
+            unrelated = replace(records[0], id="unrelated", tenant_id=tenant, user_id=user,
+                                timestamp="2036-01-01T00:00:00+00:00")
+            result = PreferenceExtractor().extract([*records, unrelated])
+            actual = next(p for p in result if (p.tenant_id, p.user_id) == ("tenant-a", "user-a"))
+            self.assertEqual(actual.confidence, expected.confidence)
+            self.assertEqual(actual.score_components, expected.score_components)
+            self.assertEqual(len({p.id for p in result}), 2)
+        risky = replace(records[0], id="risky", timestamp="2036-01-01T00:00:00+00:00",
+                        risk_flags=["untrusted_instruction"])
+        self.assertEqual(PreferenceExtractor().extract([*records, risky])[0].confidence, expected.confidence)

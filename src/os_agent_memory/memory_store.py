@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from collections import Counter
 from dataclasses import replace
 from datetime import datetime, timedelta, timezone
@@ -18,12 +19,19 @@ from .schemas import (
     utc_now,
 )
 
+def _normalize_search_text(text: str) -> str:
+    # Preserve punctuation used by the frozen hash scorer. Only width variants
+    # of Latin letters, digits and spaces are equivalent at this boundary.
+    return re.sub(r"[\uff10-\uff19\uff21-\uff3a\uff41-\uff5a\u3000]+",
+                  lambda match: unicodedata.normalize("NFKC", match.group()), text)
+
 
 class MemoryStore:
     """In-memory store for prototype preference and knowledge memory."""
 
     # Frozen on v3 dev, not test; recalibrate for a different SDK/domain.
     DEFAULT_MIN_SCORE = 0.265
+    SEARCH_TEXT_NORMALIZATION = "latin-width-v1"
 
     FORGET_ATOMS = {
         "报销",
@@ -265,7 +273,7 @@ class MemoryStore:
             raise ValueError("unknown retrieval_mode")
         if top_k <= 0:
             raise ValueError("top_k must be positive")
-        query = query.strip()
+        query = _normalize_search_text(query).strip()
         if not query:
             return []
         if candidate_limit is None:
@@ -336,7 +344,7 @@ class MemoryStore:
                 *(eligible[key] for key in character_ids)
             ]}.values())
 
-        scored: list[SearchResult] = []
+        scored: list[tuple[float, SearchResult]] = []
         for item in candidates:
             if not item.embedding and retrieval_mode != "lexical":
                 item.embedding = self.embedding.encode(self._knowledge_text(item))
@@ -355,7 +363,8 @@ class MemoryStore:
                 score = semantic_score
             if score < min_score:
                 continue
-            scored.append(
+            scored.append((
+                score,
                 SearchResult(
                     memory_id=item.id,
                     score=round(score, 4),
@@ -367,9 +376,9 @@ class MemoryStore:
                     character_score=round(character_score, 4),
                     status=item.status,
                 )
-            )
-        scored.sort(key=lambda result: (-result.score, result.memory_id))
-        return scored[:top_k]
+            ))
+        scored.sort(key=lambda item: (-item[0], item[1].memory_id))
+        return [result for _score, result in scored[:top_k]]
 
     def expire_knowledge(self, *, now: str | None = None) -> list[str]:
         """Close expired active/pending records and remove their retrieval data."""
@@ -654,7 +663,8 @@ class MemoryStore:
 
     @staticmethod
     def _knowledge_text(memory: KnowledgeMemory) -> str:
-        return f"{memory.title} {memory.content} {' '.join(memory.tags)} {memory.scene} {memory.knowledge_type}"
+        text = f"{memory.title} {memory.content} {' '.join(memory.tags)} {memory.scene} {memory.knowledge_type}"
+        return _normalize_search_text(text)
 
     def _index_knowledge(self, memory: KnowledgeMemory) -> None:
         if memory.status not in {MemoryStatus.ACTIVE, MemoryStatus.CONFLICT_PENDING}:
@@ -724,7 +734,7 @@ class MemoryStore:
 
     @staticmethod
     def _lexical_tokens(text: str) -> set[str]:
-        normalized = text.lower()
+        normalized = _normalize_search_text(text).lower()
         tokens = set(re.findall(r"[a-z0-9_]+", normalized))
         for segment in re.findall(r"[\u3400-\u9fff]+", normalized):
             if len(segment) <= 4:

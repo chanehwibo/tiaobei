@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from datetime import datetime
+import math
 import re
 
 from .schemas import DataRecord, PreferenceMemory, SourceType, ToolStatus, stable_id, utc_now
@@ -11,8 +12,13 @@ class PreferenceExtractor:
     """Conservative rule extraction with explicit-setting precedence."""
 
     def __init__(self, *, half_life_days: float | None = 30.0):
-        if half_life_days is not None and half_life_days <= 0:
-            raise ValueError("half_life_days must be positive")
+        if half_life_days is not None and (
+            isinstance(half_life_days, bool)
+            or not isinstance(half_life_days, (int, float))
+            or not math.isfinite(half_life_days)
+            or half_life_days <= 0
+        ):
+            raise ValueError("half_life_days must be finite and positive, or None")
         self.half_life_days = half_life_days
 
     OUTPUT_PREFERENCE_RULES: tuple[tuple[str, str, tuple[str, ...]], ...] = (
@@ -47,14 +53,21 @@ class PreferenceExtractor:
     CORRECTION = re.compile(r"改为|改用|换成|而是|还是|但(?:是)?|instead", re.IGNORECASE)
 
     def extract(self, records: list[DataRecord]) -> list[PreferenceMemory]:
-        if not records:
-            return []
-        ordered = sorted(records, key=lambda record: record.timestamp)
-        reference_time = max(self._parse_timestamp(record.timestamp) for record in ordered)
-        rule_candidates: list[PreferenceMemory] = []
-        rule_candidates.extend(self._extract_output_style(ordered, reference_time))
-        rule_candidates.extend(self._extract_security_policy(ordered, reference_time))
-        return [*self._aggregate_candidates(rule_candidates), *self._extract_tool_choice(ordered, reference_time)]
+        scopes: dict[tuple[str, str], list[DataRecord]] = defaultdict(list)
+        for record in records:
+            if not record.risk_flags:
+                scopes[(record.tenant_id, record.user_id)].append(record)
+        memories = []
+        for scope in sorted(scopes):
+            ordered = sorted(scopes[scope], key=lambda record: self._parse_timestamp(record.timestamp))
+            reference_time = self._parse_timestamp(ordered[-1].timestamp)
+            candidates = [
+                *self._extract_output_style(ordered, reference_time),
+                *self._extract_security_policy(ordered, reference_time),
+            ]
+            memories.extend(self._aggregate_candidates(candidates))
+            memories.extend(self._extract_tool_choice(ordered, reference_time))
+        return memories
 
     def _extract_output_style(
         self,
@@ -156,7 +169,7 @@ class PreferenceExtractor:
                     record=representative,
                     key=f"preferred_tool:{scene}",
                     value=tool_name,
-                    confidence=confidence,
+                    confidence=round(confidence, 3),
                     evidence_ids=[item.id for item in source_records],
                     score_components={
                         "evidence_weight": round(totals[tool_name], 4),
@@ -225,11 +238,11 @@ class PreferenceExtractor:
         score_components: dict[str, float] | None = None,
     ) -> PreferenceMemory:
         return PreferenceMemory(
-            id=stable_id("preference", record.user_id, key, value),
+            id=stable_id("preference", record.tenant_id, record.user_id, key, value),
             user_id=record.user_id,
             key=key,
             value=value,
-            confidence=round(min(confidence, 0.99), 3),
+            confidence=min(confidence, 0.99),
             version=1,
             scenes=[record.scene],
             evidence_ids=evidence_ids or [record.id],
@@ -248,7 +261,11 @@ class PreferenceExtractor:
     def _record_score(self, record: DataRecord, reference_time: datetime) -> tuple[float, dict[str, float]]:
         event_time = self._parse_timestamp(record.timestamp)
         age_days = max((reference_time - event_time).total_seconds() / 86400.0, 0.0)
-        recency = 0.5 ** (age_days / self.half_life_days) if self.half_life_days else 1.0
+        recency = 0.5 ** (age_days / self.half_life_days) if self.half_life_days is not None else 1.0
+        # Manual settings persist until explicitly replaced. Implicit evidence
+        # loses its entire weight, not just an additive recency bonus.
+        if record.source_type == SourceType.MANUAL_CONFIG:
+            recency = 1.0
         explicitness = {
             SourceType.MANUAL_CONFIG: 1.0,
             SourceType.USER_BEHAVIOR: 0.8,
@@ -260,10 +277,10 @@ class PreferenceExtractor:
         score = (
             0.3 * record.quality_score
             + 0.35 * record.authority
-            + 0.2 * recency
+            + 0.2
             + 0.15 * explicitness
         )
-        return min(score, 0.99), {
+        return min(score, 0.99) * recency, {
             "quality": round(record.quality_score, 4),
             "authority": round(record.authority, 4),
             "recency": round(recency, 4),

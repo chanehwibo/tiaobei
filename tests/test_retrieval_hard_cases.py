@@ -2,7 +2,7 @@ import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from os_agent_memory.memory_store import MemoryStore
+from os_agent_memory.memory_store import MemoryStore, _normalize_search_text
 from os_agent_memory.schemas import KnowledgeMemory, MemoryStatus
 
 
@@ -70,3 +70,32 @@ class RetrievalHardCaseTest(unittest.TestCase):
         store.upsert_knowledge(memory("first", "流程允许读取归档文件并保留审计。", "personal"))
         second = store.upsert_knowledge(memory("second", "流程禁止读取归档文件并保留审计。", "restricted"))
         self.assertEqual(second.status.value, "active")
+
+    def test_full_width_query_matches_ascii_without_changing_stored_content(self):
+        store = MemoryStore()
+        item = memory("target", "Report export procedure with PDF output")
+        store.upsert_knowledge(item)
+        for mode in ("lexical", "semantic", "hybrid"):
+            with self.subTest(mode=mode):
+                ascii_hits = store.search_knowledge("PDF report", retrieval_mode=mode)
+                width_hits = store.search_knowledge("ＰＤＦ　ｒｅｐｏｒｔ", retrieval_mode=mode)
+                self.assertTrue(ascii_hits)
+                self.assertEqual(ascii_hits, width_hits)
+        original = "ＩＮＶＯＩＣＥ　ＰＤＦ　ｅｘｐｏｒｔ"
+        store.upsert_knowledge(memory("wide", original))
+        self.assertEqual(store.knowledge["wide"].content, original)
+        self.assertEqual(store.search_knowledge("invoice", retrieval_mode="lexical")[0].memory_id, "wide")
+        self.assertEqual(_normalize_search_text("ＡＢＣ１２３　保留，。；！"), "ABC123 保留，。；！")
+
+    def test_ranking_uses_unrounded_scores_then_stable_ids_for_exact_ties(self):
+        class Provider:
+            def encode(self, text):
+                return [1.0, 0.0]
+        store = MemoryStore(embedding=Provider())
+        for identifier, score in (("a-lower", .60001), ("z-higher", .60004), ("y-tied", .60004)):
+            item = memory(identifier, "neutral document")
+            item.embedding = [score, (1 - score * score) ** .5]
+            store.upsert_knowledge(item)
+        hits = store.search_knowledge("query", retrieval_mode="semantic", top_k=3)
+        self.assertEqual([hit.memory_id for hit in hits], ["y-tied", "z-higher", "a-lower"])
+        self.assertEqual([hit.score for hit in hits], [.6, .6, .6])

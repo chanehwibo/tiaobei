@@ -126,6 +126,62 @@ def write_json(path, value):
     target.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def decay_diagnostics():
+    """Targeted developer regressions, not a sample of real user effectiveness."""
+    def events(prefix, source, value, count, date):
+        content = {
+            "brief": "用户要求后续回答保持简洁，直接给结论。",
+            "detailed": "用户要求后续回答详细展开说明，给出原因。",
+        }.get(value, "成功工具返回了可供用户采用的完整结果。")
+        return [{
+            "id": f"{prefix}-{i}", "source_type": source, "content": content,
+            "timestamp": f"{date}T00:00:{i:02d}+00:00", "scene": "office",
+            "tool_status": "succeeded" if source == "tool_result" else "unknown",
+            "metadata": {"topic": "diagnostic", "tool_name": value},
+        } for i in range(count)]
+
+    old_style = events("old-style", "user_behavior", "brief", 8, "2025-01-01")
+    new_style = events("new-style", "user_behavior", "detailed", 2, "2026-09-01")
+    explicit = events("manual", "manual_config", "brief", 1, "2025-01-01")
+    cases = [
+        ("implicit_reversal", "output.verbosity", "detailed", old_style + new_style),
+        ("tool_reversal", "preferred_tool:office", "current_editor",
+         events("old-tool", "tool_result", "old_editor", 8, "2025-01-01")
+         + events("new-tool", "tool_result", "current_editor", 2, "2026-09-01")),
+        ("stable_control", "output.verbosity", "brief",
+         old_style + events("stable", "user_behavior", "brief", 2, "2026-09-01")),
+        ("manual_setting_persists", "output.verbosity", "brief", explicit + new_style),
+        ("manual_revision", "output.verbosity", "detailed",
+         explicit + events("revision", "manual_config", "detailed", 1, "2026-09-01")),
+        ("failed_tool_negative_control", "preferred_tool:office", None,
+         [{**row, "tool_status": "failed"} for row in
+          events("failed", "tool_result", "broken_editor", 8, "2026-09-01")]),
+    ]
+    rows = []
+    for identifier, key, expected, raw in cases:
+        records = DataIngestionPipeline().ingest(raw)
+        results = []
+        for half_life in (30.0, None):
+            memories = PreferenceExtractor(half_life_days=half_life).extract(records)
+            predicted = next((p.value for p in memories if p.key == key), None)
+            results.append({"half_life_days": half_life, "prediction": predicted,
+                            "passed": predicted == expected})
+        rows.append({"id": identifier, "key": key, "expected": expected,
+                     "input_records": len(raw), "accepted_records": len(records), "results": results})
+    return {
+        "scope": "developer_authored_targeted_regressions_not_independent_requests",
+        "independent_blind": False, "cases": rows,
+        "comparison": {
+            "case_count": len(rows),
+            "with_decay_passed": sum(row["results"][0]["passed"] for row in rows),
+            "without_decay_passed": sum(row["results"][1]["passed"] for row in rows),
+            "improved": sum(row["results"][0]["passed"] and not row["results"][1]["passed"] for row in rows),
+            "regressed": sum(not row["results"][0]["passed"] and row["results"][1]["passed"] for row in rows),
+            "tied": sum(row["results"][0]["passed"] == row["results"][1]["passed"] for row in rows),
+        },
+    }
+
+
 def run_ablations(suite):
     comparisons = []
     for mode in ("lexical", "semantic", "hybrid"):
@@ -164,7 +220,9 @@ def run_ablations(suite):
         isolation.append({"include_pending": include,
                           "pending_returned": len(pending & {r.memory_id for r in results})})
     return {"independent_blind": False, "retrieval_comparisons": comparisons,
-            "without_cache": uncached, "decay_probe": decay, "conflict_isolation_probe": isolation,
+            "without_cache": uncached, "decay_probe": decay, "decay_diagnostics": decay_diagnostics(),
+            "conflict_isolation_probe": isolation,
             "limitations": ["Single-factor diagnostic probes are not broad effectiveness estimates.",
                             "Both decay settings may pass: report ties without claiming improvement.",
+                            "The six new decay cases target known edge conditions; they are not official requests.",
                             "Timing is descriptive; encode-call counts measure cache work directly."]}

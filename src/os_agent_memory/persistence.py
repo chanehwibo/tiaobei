@@ -22,6 +22,7 @@ class SQLiteMemoryPersistence:
 
     def save(self, store: MemoryStore) -> None:
         store.runtime_state["embedding_identity"] = provider_identity(store.embedding)
+        store.runtime_state["search_text_normalization"] = MemoryStore.SEARCH_TEXT_NORMALIZATION
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with closing(sqlite3.connect(self.path)) as connection:
             self._initialize(connection)
@@ -156,7 +157,8 @@ class SQLiteMemoryPersistence:
             store.runtime_state = {key: json.loads(payload) for key, payload in
                                    connection.execute("SELECT key, payload FROM runtime_state")}
 
-        if store.runtime_state.get("embedding_identity") != provider_identity(store.embedding):
+        if (store.runtime_state.get("embedding_identity") != provider_identity(store.embedding)
+                or store.runtime_state.get("search_text_normalization") != MemoryStore.SEARCH_TEXT_NORMALIZATION):
             for memory in store.knowledge.values():
                 memory.embedding = []
         else:

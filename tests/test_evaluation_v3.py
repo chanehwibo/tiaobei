@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 from generate_eval_v3 import generate, audit_splits
-from os_agent_memory.experiments import select_threshold, evaluate_frozen, run_ablations, quality_targets
+from os_agent_memory.experiments import select_threshold, evaluate_frozen, run_ablations, quality_targets, decay_diagnostics
 from os_agent_memory.memory_store import MemoryStore
 from os_agent_memory.evaluation import build_store_from_raw_records
 from os_agent_memory.experiments import split_rows
@@ -67,3 +67,13 @@ class SplitIsolationTest(unittest.TestCase):
         self.assertLess(cached["query_phase_encode_calls"], uncached["query_phase_encode_calls"])
         self.assertEqual(report["conflict_isolation_probe"][0]["pending_returned"], 0)
         self.assertGreater(report["conflict_isolation_probe"][1]["pending_returned"], 0)
+
+    def test_decay_diagnostics_include_discriminating_cases_ties_and_negative_control(self):
+        report = decay_diagnostics()
+        self.assertFalse(report["independent_blind"])
+        self.assertEqual(report["comparison"], {
+            "case_count": 6, "with_decay_passed": 6, "without_decay_passed": 4,
+            "improved": 2, "regressed": 0, "tied": 4,
+        })
+        self.assertTrue(all(row["input_records"] == row["accepted_records"] for row in report["cases"]))
+        self.assertEqual(report, decay_diagnostics())
