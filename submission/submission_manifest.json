@@ -240,6 +240,8 @@
         "docs/35_接管实施与交付记录.md",
         "docs/36_正式评测资源与外部交接.md",
         "docs/37_出题方反馈落实.md",
+        "docs/38_相关工作与创新边界.md",
+        "docs/39_评测口径与可信度.md",
         "artifacts/verification/takeover/t04_partial_audit.json",
         "artifacts/verification/takeover/v11_initial_privacy.json"
       ]
