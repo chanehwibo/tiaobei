@@ -74,6 +74,7 @@ def verify(output):
                             "--require-frozen", "--output", str(output / "requests.json")],
         "official_diagnostics": [sys.executable, "-S", "scripts/evaluate_official.py", "--size", "10000", "--output", str(output / "official.json")],
         "action_framework": [sys.executable, "-S", "scripts/evaluate_actions.py", "--workspace", str(output / "action-workspace"), "--output", str(output / "actions.json")],
+        "action_runtime": [sys.executable, "-S", "scripts/check_action_runtime.py", "--output", str(output / "action-runtime.json")],
         "native_sdk": [sys.executable, "-S", "scripts/check_kylin_native.py", "--output", str(output / "native-sdk.json")],
         "root_filesystem": ["findmnt", "-n", "-o", "SOURCE,FSTYPE", "/"],
         "virtualization": ["systemd-detect-virt"],

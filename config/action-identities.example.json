@@ -1,0 +1,25 @@
+{
+  "run_id": "replace-with-unique-private-run-id",
+  "purpose": "integration",
+  "roles": {
+    "agent_operator": "agent-operator",
+    "judge_operator": "judge-operator",
+    "label_custodian": "label-custodian"
+  },
+  "agent": {
+    "image": "sha256:REPLACE_WITH_REVIEWED_LOCAL_IMAGE_ID",
+    "model": {
+      "id": "replace-with-agent-model-id",
+      "revision": "replace-with-frozen-version",
+      "artifact_sha256": "REPLACE_WITH_64_LOWERCASE_HEX_DIGITS"
+    }
+  },
+  "judge": {
+    "image": "sha256:REPLACE_WITH_REVIEWED_LOCAL_IMAGE_ID",
+    "model": {
+      "id": "replace-with-exact-preloaded-model-tag",
+      "revision": "replace-with-frozen-version",
+      "artifact_sha256": "REPLACE_WITH_64_LOWERCASE_HEX_DIGITS"
+    }
+  }
+}
