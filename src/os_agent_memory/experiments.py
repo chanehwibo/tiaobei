@@ -182,6 +182,43 @@ def decay_diagnostics():
     }
 
 
+def assess_decay_diagnostics(report):
+    """Recount diagnostic outcomes instead of trusting an aggregate flag."""
+    checks = {}
+    comparison = {}
+    try:
+        rows = report["decay_diagnostics"]["cases"]
+        checks["nonempty_distinct_cases"] = bool(rows) and len({row["id"] for row in rows}) == len(rows)
+        checks["paired_settings"] = all(
+            len(row["results"]) == 2
+            and row["results"][0]["half_life_days"] == 30.0
+            and row["results"][1]["half_life_days"] is None for row in rows
+        )
+        outcomes = [
+            [result["prediction"] == row["expected"] for result in row["results"]]
+            for row in rows
+        ]
+        checks["flags_match_predictions"] = all(
+            result["passed"] is passed
+            for row, pair in zip(rows, outcomes) for result, passed in zip(row["results"], pair)
+        )
+        comparison = {
+            "case_count": len(rows),
+            "with_decay_passed": sum(pair[0] for pair in outcomes),
+            "without_decay_passed": sum(pair[1] for pair in outcomes),
+            "improved": sum(pair[0] and not pair[1] for pair in outcomes),
+            "regressed": sum(not pair[0] and pair[1] for pair in outcomes),
+            "tied": sum(pair[0] == pair[1] for pair in outcomes),
+        }
+        checks["summary_matches_cases"] = comparison == report["decay_diagnostics"]["comparison"]
+        checks["enabled_cases_pass"] = comparison["with_decay_passed"] == len(rows) and bool(rows)
+        checks["no_regressions"] = comparison["regressed"] == 0
+        checks["honest_scope"] = report["decay_diagnostics"]["independent_blind"] is False
+    except (KeyError, TypeError, IndexError):
+        checks["valid_diagnostic_rows"] = False
+    return {"passed": bool(checks) and all(checks.values()), "checks": checks, "comparison": comparison}
+
+
 def run_ablations(suite):
     comparisons = []
     for mode in ("lexical", "semantic", "hybrid"):

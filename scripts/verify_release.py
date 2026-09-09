@@ -12,6 +12,7 @@ import shutil
 import stat
 import subprocess
 import sys
+import tempfile
 import time
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
@@ -31,10 +32,11 @@ from os_agent_memory.benchmark import run_scale_benchmark, write_benchmark_repor
 from os_agent_memory.compatibility import collect_compatibility_report, write_compatibility_report
 from os_agent_memory.diagnostics import run_preflight
 from os_agent_memory.evaluation import run_evaluation_suite
-from os_agent_memory.experiments import evaluate_frozen, run_ablations
+from os_agent_memory.experiments import assess_decay_diagnostics, evaluate_frozen, run_ablations
 from os_agent_memory.official_diagnostics import run_official_diagnostics
 from os_agent_memory.request_contract import FROZEN_DATASET_SHA256, assess_frozen_requests
 from os_agent_memory.request_evaluation import run_request_evaluation
+from os_agent_memory.workload import run_service_workload
 from scripts.check_deliverables import check_deliverables
 from scripts.verify_kylin_guest import file_hashes
 
@@ -429,6 +431,7 @@ def run_release_verification(
     suite_v3 = json.loads((project_root / "data/eval/office_memory_eval_v3.json").read_text(encoding="utf-8"))
     evaluation_v3 = evaluate_frozen(suite_v3)
     ablations = run_ablations(suite_v3)
+    ablations["diagnostic_gate"] = assess_decay_diagnostics(ablations)
     _write_json(artifact_dir / "evaluation_v3.json", evaluation_v3)
     _write_json(artifact_dir / "ablations.json", ablations)
     official = run_official_diagnostics(project_root, size=max(1000, max(benchmark_sizes)))
@@ -439,6 +442,19 @@ def run_release_verification(
         benchmark,
         json_path=artifact_dir / "performance_windows_dev.json",
         markdown_path=artifact_dir / "performance_windows_dev.md",
+    )
+    service_workload = run_service_workload((100, 1000), rounds=max(3, benchmark_rounds))
+    _write_json(artifact_dir / "service_workload.json", service_workload)
+    with tempfile.TemporaryDirectory(prefix=".action-workspace-", dir=artifact_dir) as workspace:
+        action_framework = _run_command(
+            [sys.executable, "-X", "utf8", "-S", "scripts/evaluate_actions.py",
+             "--workspace", workspace, "--output", str(artifact_dir / "actions.json")],
+            cwd=project_root, env=environment,
+        )
+    action_readiness = _run_command(
+        [sys.executable, "-X", "utf8", "-S", "scripts/check_action_readiness.py",
+         "--output", str(artifact_dir / "action-readiness.json")],
+        cwd=project_root, env=environment,
     )
 
     compatibility = collect_compatibility_report(artifact_dir)
@@ -479,6 +495,9 @@ def run_release_verification(
         ),
         "internal_quality_85": all(evaluation_v3["quality_targets"].values()),
         "benchmark_500ms": benchmark["all_meet_500ms"],
+        "service_workload_integrity": service_workload["integrity_passed"],
+        "decay_diagnostics": ablations["diagnostic_gate"]["passed"],
+        "action_framework": action_framework["passed"],
         "local_preflight": preflight["ready_for_local_demo"],
         "materials": materials["passed"],
         "editable_materials": editable_materials["passed"],
@@ -524,6 +543,11 @@ def run_release_verification(
             },
         },
         "benchmark": benchmark,
+        "service_workload": service_workload,
+        "decay_diagnostic_gate": ablations["diagnostic_gate"],
+        "action_framework": action_framework,
+        "action_readiness": action_readiness,
+        "action_readiness_is_external_diagnostic": True,
         "compatibility_verdict": compatibility["verdict"],
         "preflight": preflight,
         "materials": materials,

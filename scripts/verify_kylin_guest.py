@@ -16,8 +16,9 @@ from os_agent_memory.compatibility import collect_compatibility_report
 
 CORE_CHECKS = (
     "unit_tests", "source_check", "retrieval_v3", "request_metrics",
-    "official_diagnostics", "action_framework",
+    "official_diagnostics", "action_framework", "service_workload", "ablations",
 )
+GENERATED_SNAPSHOT_EXCLUSIONS = {"data/eval/latest_report.json"}
 
 
 def installed_root(value):
@@ -43,6 +44,7 @@ def file_hashes(root):
         for folder in ("src", "tests", "scripts", "data/eval", "data/samples", "config")
         for path in (root / folder).rglob("*")
         if path.is_file() and path.suffix in {".py", ".json", ".jsonl", ".html", ".ps1", ".sh", ".js", ".cjs", ".css"}
+        and path.relative_to(root).as_posix() not in GENERATED_SNAPSHOT_EXCLUSIONS
     } | {root / name for name in ("pyproject.toml", ".gitattributes") if (root / name).is_file()})
     # Raw hashes prove the transfer; LF hashes permit Git platform checkouts.
     return {
@@ -52,6 +54,7 @@ def file_hashes(root):
             for p in paths
         },
         "normalization": "CRLF to LF only; no other bytes changed",
+        "excluded_generated_outputs": sorted(GENERATED_SNAPSHOT_EXCLUSIONS),
     }
 
 
@@ -74,7 +77,11 @@ def verify(output):
                             "--require-frozen", "--output", str(output / "requests.json")],
         "official_diagnostics": [sys.executable, "-S", "scripts/evaluate_official.py", "--size", "10000", "--output", str(output / "official.json")],
         "action_framework": [sys.executable, "-S", "scripts/evaluate_actions.py", "--workspace", str(output / "action-workspace"), "--output", str(output / "actions.json")],
+        "service_workload": [sys.executable, "-S", "scripts/benchmark_service.py", "--sizes", "100,1000", "--rounds", "30",
+                             "--require-integrity", "--output", str(output / "service_workload.json")],
+        "ablations": [sys.executable, "-S", "scripts/run_ablations.py", "--require-diagnostics", "--output", str(output / "ablations.json")],
         "action_runtime": [sys.executable, "-S", "scripts/check_action_runtime.py", "--output", str(output / "action-runtime.json")],
+        "action_readiness": [sys.executable, "-S", "scripts/check_action_readiness.py", "--output", str(output / "action-readiness.json")],
         "native_sdk": [sys.executable, "-S", "scripts/check_kylin_native.py", "--output", str(output / "native-sdk.json")],
         "root_filesystem": ["findmnt", "-n", "-o", "SOURCE,FSTYPE", "/"],
         "virtualization": ["systemd-detect-virt"],

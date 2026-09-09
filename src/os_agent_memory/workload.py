@@ -114,7 +114,7 @@ def run_service_workload(sizes=(100, 1000), *, rounds=30, embedding_config=None)
         "rounds": rounds, "results": results,
         "integrity_passed": all(row["integrity_passed"] for row in results),
         "method": "MemoryService ingestion including lifecycle, conflict detection and SQLite commit; diverse queries; restart; 4 threads mixed reads/writes; localhost HTTP",
-        "limitations": ["Developer machine only; no real Kylin SDK evidence.",
+        "limitations": ["Measured environment only; no real model or native Kylin SDK execution.",
                         "Service API is a single-process serialized writer; cross-process writers are unsupported.",
                         "Small samples describe this workload; p99 is empirical, not a production SLA."],
     }

@@ -25,6 +25,9 @@ class KylinGuestVerificationTest(unittest.TestCase):
             self.assertFalse(guest.guest_passed({**report, key: False}))
         self.assertFalse(guest.guest_passed({}))
         self.assertIn("request_metrics", guest.CORE_CHECKS)
+        self.assertIn("service_workload", guest.CORE_CHECKS)
+        self.assertIn("ablations", guest.CORE_CHECKS)
+        self.assertNotIn("action_readiness", guest.CORE_CHECKS)
 
     def test_transfer_hashes_and_cross_platform_hashes_are_separate(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -37,6 +40,17 @@ class KylinGuestVerificationTest(unittest.TestCase):
             linux = guest.file_hashes(root)
         self.assertNotEqual(windows["raw_sha256"], linux["raw_sha256"])
         self.assertEqual(windows["lf_sha256"], linux["lf_sha256"])
+
+    def test_only_known_generated_report_is_excluded_from_snapshot(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            data = root / "data/eval"
+            data.mkdir(parents=True)
+            (data / "latest_report.json").write_text("{}", encoding="utf-8")
+            (data / "frozen_report.json").write_text("{}", encoding="utf-8")
+            snapshot = guest.file_hashes(root)
+        self.assertEqual(set(snapshot["raw_sha256"]), {"data/eval/frozen_report.json"})
+        self.assertEqual(snapshot["excluded_generated_outputs"], ["data/eval/latest_report.json"])
 
 
 if __name__ == "__main__":
