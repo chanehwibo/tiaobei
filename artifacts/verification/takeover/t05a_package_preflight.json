@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-09T12:16:49+00:00",
+  "scope": "independent_partial_draft_preflight_not_final_release_or_official_acceptance",
+  "preflight_integrity_passed": true,
+  "final_release_gate_passed": false,
+  "current_source_dual_environment_complete": false,
+  "competition_ready": false,
+  "public_delivery_archive_created": false,
+  "private_archive": {
+    "name": "PRIVATE_PREFLIGHT_INCOMPLETE.zip",
+    "sha256": "108eb1bd6cbfc0545beb4572adee6bc3071d9068bd332f1fa1302ac3cab81bd5",
+    "bytes": 2122453,
+    "content_files": 606,
+    "zip_members": 607,
+    "status": "incomplete_draft",
+    "missing_external": [
+      {
+        "key": "video",
+        "label": "人工复核后的最终演示视频"
+      },
+      {
+        "key": "registration_form",
+        "label": "与平台一致的盖章报名表"
+      },
+      {
+        "key": "real_case",
+        "label": "经授权且脱敏的真实应用案例证明"
+      },
+      {
+        "key": "kylin_report",
+        "label": "真实银河麒麟环境与SDK验证报告"
+      }
+    ]
+  },
+  "checks": {
+    "complete_package_refuses_missing_real_inputs": true,
+    "partial_package_labels_and_four_external_gaps_preserved": true,
+    "zip_crc_and_all_content_sha256_match": true,
+    "independent_extraction_and_rebuild_match": true,
+    "all_115_measured_source_files_match_raw_and_lf": true,
+    "explicit_public_file_mirrors_match": true,
+    "all_existing_takeover_evidence_in_allowlist": true,
+    "new_test_and_material_dependencies_present": true,
+    "historical_office_bytes_unchanged": true,
+    "five_historical_public_zips_unchanged": true,
+    "extracted_windows_275_tests_and_17_engineering_checks_passed": true,
+    "extracted_frozen_request_details_passed": true,
+    "extracted_service_integrity_and_rss_passed": true,
+    "final_material_gate_still_blocks_missing_successful_v11": true,
+    "extracted_privacy_and_default_binary_templates_passed": true,
+    "new_windows_evidence_scan_and_exact_public_copy_passed": true,
+    "sources_manifest_and_prior_evidence_unchanged_during_checks": true
+  },
+  "source_commit": "f02cdeb",
+  "measured_source_files": 115,
+  "manifest_sha256": "dd3898502438364c4101bcbaa8af4c9ff94555e4f6ba34cc04ff64398692e2e0",
+  "mirrored_public_files": 255,
+  "takeover_evidence_files": 78,
+  "new_dependencies": [
+    "artifacts/verification/takeover/t01-service.json",
+    "artifacts/verification/takeover/t03-windows-readiness.json",
+    "artifacts/verification/x01-x02/organizer_acceptance_reported_20260909.json"
+  ],
+  "test_results": {
+    "tests_run": 275,
+    "skipped": 1,
+    "duration_seconds": 109.454,
+    "passed": true
+  },
+  "windows_checks": {
+    "compile": true,
+    "unit_tests": true,
+    "source_syntax_and_privacy": true,
+    "frozen_request_gate": true,
+    "frozen_dataset_bytes": true,
+    "source_unchanged_during_checks": true,
+    "request_source_snapshot": true,
+    "evaluation_protocol": true,
+    "internal_quality_85": true,
+    "benchmark_500ms": true,
+    "service_workload_integrity": true,
+    "decay_diagnostics": true,
+    "action_framework": true,
+    "local_preflight": true,
+    "materials": true,
+    "editable_materials": true,
+    "privacy_scan": true
+  },
+  "requests": {
+    "metrics": {
+      "preference_accuracy": 1.0,
+      "knowledge_recall": 1.0,
+      "conflict_accuracy": 1.0,
+      "retrieval_p95_ms": 67.5050001591444,
+      "sensitive_f1": 1.0
+    },
+    "observation_counts": {
+      "preference_accuracy": 68,
+      "knowledge_recall": 60,
+      "conflict_accuracy": 60,
+      "retrieval_p95_ms": 80,
+      "sensitive_f1": 50
+    }
+  },
+  "final_material_gate": {
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "-S",
+      "scripts/generate_takeover_materials.py",
+      "--check-only",
+      "--report",
+      "artifacts/runtime/t05-current-materials.json"
+    ],
+    "returncode": 1,
+    "passed": false,
+    "cause": "missing_successful_current_v11_evidence",
+    "unmodified_workflow_would_not_pass": true,
+    "private_log_sha256": "cba01a70ff3b28ff4188125c78bc509d7dcfdd138bdebca8df0d095d46d9a1ad"
+  },
+  "privacy": {
+    "passed": true,
+    "scanned_text_files": 618,
+    "scanned_office_documents": 4,
+    "scanned_zip_archives": 0,
+    "unexpected_findings": [],
+    "resolved_default_template_members": 6,
+    "unresolved_binary_members": 0,
+    "private_report_sha256": "a93ca455f8d0f299324e361683046533393e92347090fabe95e21e10cdc6917a"
+  },
+  "windows_evidence_sha256": {
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/ablations.json": "40d93ba5bac910883343dafe4182b7e403ac1e70563b75c1aa4456d51f8ab977",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/action-readiness.json": "d8a972aeb800cab50e2b4c1c42f80181d2077e0979b843fa46538d73bdf28e88",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/actions.json": "63b7bed637e44d0fcbaeecd0f0f81f3fccdda3315689d84b0d5a95f530b0420e",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/compatibility_windows_dev.json": "3754158117701222b24074a735267964f9f83fcc9b04deea245c942120632763",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/compatibility_windows_dev.md": "e917ec22f0428d25a5adc3bec1b6c73f1f5b6ffcbf21b6b4ab24287487308fe7",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/evaluation_v1_final.json": "edcc77a4bf4287a353ae2ac908bd737553a22ba71104230145813a46a4131a56",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/evaluation_v2_test_final.json": "a4ab29b9bd3f91fdbab7d937ab0e9cc074c20eec8d2b679eb6a62bf210cf30bb",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/evaluation_v3.json": "170d5163450bd12724201a2688616d37c806e54ec872eb89a8855bd2665d6c36",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/final_verification.json": "12cb2003b3ca957fbca7c1c3c044c9459c53e922af51e3f2c6f7607e137df665",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/final_verification.md": "ee179698fee3e7a37ccb126b7c69f434efdc797b283249004727bf6fb830ad4b",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/official_diagnostics.json": "c9b498397443ecaa47d045a4b21c23b3d36622740162c81418895ef459cefbb4",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/performance_windows_dev.json": "702a6eb27734b7584f187b8f55c43517b378157f6f7f30924224e89ee464c1a6",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/performance_windows_dev.md": "8c68fd5bbd3c52e2fdf93843c23ccfc263c47cfea432f00da6ff6a448d241225",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/requests.json": "8af3347727c8febc1919297130022e225eae31c9121deb08dd5cb54bc2f7cf13",
+    "artifacts/verification/takeover/takeover-t05-preflight-01-windows/service_workload.json": "f540242718e1c17d59bd1766905871b239c4a55f875bae4cc4cbfb75cf43c744"
+  },
+  "historical_office_sha256": {
+    "deliverables/doc/OS_Agent_记忆优化_技术方案与测试报告.docx": "69f6807b91059e120719a9ce6ec35adabc335871760aec35e4b51f54424d0c0f",
+    "deliverables/ppt/OS_Agent_记忆优化_答辩稿.pptx": "37b023e406a3086e76993dd0d3b52d67b0cd6d94bd28ac1ca641a058a31a62df"
+  },
+  "sealed_archives": [
+    {
+      "path": "artifacts/release/OS_Agent_第三轮_85目标_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "e109ef0d9f501cdd9e203c48821cf1e8c17a413304a14cf13677964b3a240227"
+    },
+    {
+      "path": "artifacts/release/OS_Agent_第二轮_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "3eedda8e6416fa29be160fd1bacb9f3adc4c68ea955c5c8bcdf2e9ffb0ce0716"
+    },
+    {
+      "path": "artifacts/release/OS_Agent_第五轮_双环境_交付草案_INCOMPLETE.zip",
+      "sha256": "6bce17e442630fa5a3d2e45aef502f2896d8ae3ca1f91c9ce1be586526478da1"
+    },
+    {
+      "path": "artifacts/release/OS_Agent_第五轮_续作双环境_交付草案_INCOMPLETE.zip",
+      "sha256": "5b47d71af6a13e4f16c7b8aa604431225d087c761e8282b90fe422a5887123f4"
+    },
+    {
+      "path": "artifacts/release/OS_Agent_记忆优化_开发机交付草案_INCOMPLETE.zip",
+      "sha256": "631ecbf2045d1bd3a42d5205a564be72007b649cd8cdd4a106b0b16bfeba7e35"
+    }
+  ],
+  "audit_script_sha256": "c203a27cd68c94f6723a5d9af74fba1cd457f492e0ced764702b074a72df1489",
+  "post_preflight_reports_and_status_updates_are_external_to_private_zip": true
+}

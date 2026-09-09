@@ -232,6 +232,123 @@
         "artifacts/verification/round5/resume_doc_tests_01.json",
         "artifacts/verification/round5/resume_doc_visual_review.json"
       ]
+    },
+    {
+      "target": "02_技术方案与测试/接管补验/说明与核对",
+      "files": [
+        "docs/34_X01_X02推进与外部验收.md",
+        "docs/35_接管实施与交付记录.md",
+        "docs/36_正式评测资源与外部交接.md",
+        "artifacts/verification/takeover/t04_partial_audit.json",
+        "artifacts/verification/takeover/v11_initial_privacy.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/接管补验/主办方认可记录",
+      "files": [
+        "artifacts/verification/x01-x02/organizer_acceptance_reported_20260909.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/接管补验/T01至T03",
+      "files": [
+        "artifacts/verification/takeover/t01-service.json",
+        "artifacts/verification/takeover/t01-tests.json",
+        "artifacts/verification/takeover/t02-ablations.json",
+        "artifacts/verification/takeover/t02-tests.json",
+        "artifacts/verification/takeover/t02-tests-corrected.json",
+        "artifacts/verification/takeover/t02-tests-final.json",
+        "artifacts/verification/takeover/t02-tests-verified.json",
+        "artifacts/verification/takeover/t03-tests.json",
+        "artifacts/verification/takeover/t03-windows-readiness.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/接管补验/Windows",
+      "files": [
+        "artifacts/verification/takeover/windows/ablations.json",
+        "artifacts/verification/takeover/windows/action-readiness.json",
+        "artifacts/verification/takeover/windows/actions.json",
+        "artifacts/verification/takeover/windows/compatibility_windows_dev.json",
+        "artifacts/verification/takeover/windows/compatibility_windows_dev.md",
+        "artifacts/verification/takeover/windows/evaluation_v1_final.json",
+        "artifacts/verification/takeover/windows/evaluation_v2_test_final.json",
+        "artifacts/verification/takeover/windows/evaluation_v3.json",
+        "artifacts/verification/takeover/windows/final_verification.json",
+        "artifacts/verification/takeover/windows/final_verification.md",
+        "artifacts/verification/takeover/windows/official_diagnostics.json",
+        "artifacts/verification/takeover/windows/performance_windows_dev.json",
+        "artifacts/verification/takeover/windows/performance_windows_dev.md",
+        "artifacts/verification/takeover/windows/requests.json",
+        "artifacts/verification/takeover/windows/service_workload.json"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/接管补验/V11失败第一轮",
+      "files": [
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/ablations.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/ablations.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/action-readiness.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/action-runtime.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/action_framework.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/action_readiness.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/action_runtime.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/actions.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/installed_sdk_packages.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/kylin_vm.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/native-sdk.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/native_sdk.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/official.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/official_diagnostics.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/request_metrics.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/requests.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/retrieval_v3.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/root_filesystem.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/service_workload.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/source_check.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/unit_tests.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-01-evidence/virtualization.log"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/接管补验/V11失败第二轮",
+      "files": [
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/ablations.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/ablations.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/action-readiness.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/action-runtime.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/action_framework.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/action_readiness.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/action_runtime.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/actions.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/installed_sdk_packages.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/kylin_vm.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/native-sdk.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/native_sdk.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/official.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/official_diagnostics.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/request_metrics.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/requests.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/retrieval_v3.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/root_filesystem.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/service_workload.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/source_check.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/unit_tests.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-02-evidence/virtualization.log"
+      ]
+    },
+    {
+      "target": "02_技术方案与测试/接管补验/V11跟踪诊断非最终验收",
+      "files": [
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-kernel-diagnostic.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-network.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-network-1000.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-network-combined.log",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-service-diagnostic-02.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-service-diagnostic-03.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-service-diagnostic-04.json",
+        "artifacts/verification/takeover/kylin_initial/takeover-t04-service-diagnostic-04.log"
+      ]
     }
   ],
   "source_section": {

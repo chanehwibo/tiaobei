@@ -1,0 +1,719 @@
+{
+  "scope": "internal_development_diagnostics_not_official_validation",
+  "metrics": {
+    "preference_accuracy": 0.4615,
+    "knowledge_recall": 0.9167,
+    "conflict_accuracy": 1.0,
+    "retrieval_p95_ms": 85.06330009549856,
+    "sensitive_f1": 1.0
+  },
+  "observation_counts": {
+    "preference_accuracy": 13,
+    "knowledge_recall": 12,
+    "conflict_accuracy": 2,
+    "retrieval_p95_ms": 50,
+    "sensitive_f1": 50
+  },
+  "count_units": {
+    "preference_accuracy": "labeled slots, NOT independent requests",
+    "knowledge_recall": "positive queries",
+    "conflict_accuracy": "conflict case pairs",
+    "retrieval_p95_ms": "distinct synthetic topic queries",
+    "sensitive_f1": "public synthetic requests"
+  },
+  "rubric_diagnostic": {
+    "metrics": {
+      "preference_accuracy": {
+        "value": 0.4615,
+        "target": 0.85,
+        "operator": "ge",
+        "requests": 13,
+        "minimum_requests": 50,
+        "passed": false
+      },
+      "knowledge_recall": {
+        "value": 0.9167,
+        "target": 0.85,
+        "operator": "ge",
+        "requests": 12,
+        "minimum_requests": 50,
+        "passed": false
+      },
+      "conflict_accuracy": {
+        "value": 1.0,
+        "target": 0.88,
+        "operator": "ge",
+        "requests": 2,
+        "minimum_requests": 50,
+        "passed": false
+      },
+      "retrieval_p95_ms": {
+        "value": 85.06330009549856,
+        "target": 500.0,
+        "operator": "le",
+        "requests": 50,
+        "minimum_requests": 50,
+        "passed": true
+      },
+      "sensitive_f1": {
+        "value": 1.0,
+        "target": 0.9,
+        "operator": "ge",
+        "requests": 50,
+        "minimum_requests": 50,
+        "passed": true
+      }
+    },
+    "all_targets_met": false,
+    "scope": "developer_held_measurements_not_official_certification"
+  },
+  "official_validation_ready": false,
+  "independent_blind": false,
+  "latency": {
+    "records": 10000,
+    "requests": 50,
+    "unique_queries": 50,
+    "p95_ms": 85.06330009549856,
+    "p99_ms": 111.53399990871549,
+    "cold_first_ms": 83.40210001915693,
+    "rows": [
+      {
+        "id": "latency-000",
+        "query": "专项主题 topic000 办公审批流程",
+        "elapsed_ms": 83.40210001915693,
+        "results": 5
+      },
+      {
+        "id": "latency-001",
+        "query": "专项主题 topic001 办公审批流程",
+        "elapsed_ms": 81.0678000561893,
+        "results": 5
+      },
+      {
+        "id": "latency-002",
+        "query": "专项主题 topic002 办公审批流程",
+        "elapsed_ms": 80.96750034019351,
+        "results": 5
+      },
+      {
+        "id": "latency-003",
+        "query": "专项主题 topic003 办公审批流程",
+        "elapsed_ms": 82.35989976674318,
+        "results": 5
+      },
+      {
+        "id": "latency-004",
+        "query": "专项主题 topic004 办公审批流程",
+        "elapsed_ms": 84.91089986637235,
+        "results": 5
+      },
+      {
+        "id": "latency-005",
+        "query": "专项主题 topic005 办公审批流程",
+        "elapsed_ms": 81.56159985810518,
+        "results": 5
+      },
+      {
+        "id": "latency-006",
+        "query": "专项主题 topic006 办公审批流程",
+        "elapsed_ms": 80.03129996359348,
+        "results": 5
+      },
+      {
+        "id": "latency-007",
+        "query": "专项主题 topic007 办公审批流程",
+        "elapsed_ms": 81.68569998815656,
+        "results": 5
+      },
+      {
+        "id": "latency-008",
+        "query": "专项主题 topic008 办公审批流程",
+        "elapsed_ms": 82.34119974076748,
+        "results": 5
+      },
+      {
+        "id": "latency-009",
+        "query": "专项主题 topic009 办公审批流程",
+        "elapsed_ms": 80.91939985752106,
+        "results": 5
+      },
+      {
+        "id": "latency-010",
+        "query": "专项主题 topic010 办公审批流程",
+        "elapsed_ms": 82.93669996783137,
+        "results": 5
+      },
+      {
+        "id": "latency-011",
+        "query": "专项主题 topic011 办公审批流程",
+        "elapsed_ms": 82.21579995006323,
+        "results": 5
+      },
+      {
+        "id": "latency-012",
+        "query": "专项主题 topic012 办公审批流程",
+        "elapsed_ms": 82.60519988834858,
+        "results": 5
+      },
+      {
+        "id": "latency-013",
+        "query": "专项主题 topic013 办公审批流程",
+        "elapsed_ms": 82.65019999817014,
+        "results": 5
+      },
+      {
+        "id": "latency-014",
+        "query": "专项主题 topic014 办公审批流程",
+        "elapsed_ms": 83.94380006939173,
+        "results": 5
+      },
+      {
+        "id": "latency-015",
+        "query": "专项主题 topic015 办公审批流程",
+        "elapsed_ms": 79.84700007364154,
+        "results": 5
+      },
+      {
+        "id": "latency-016",
+        "query": "专项主题 topic016 办公审批流程",
+        "elapsed_ms": 82.42399990558624,
+        "results": 5
+      },
+      {
+        "id": "latency-017",
+        "query": "专项主题 topic017 办公审批流程",
+        "elapsed_ms": 84.19800037518144,
+        "results": 5
+      },
+      {
+        "id": "latency-018",
+        "query": "专项主题 topic018 办公审批流程",
+        "elapsed_ms": 80.82599984481931,
+        "results": 5
+      },
+      {
+        "id": "latency-019",
+        "query": "专项主题 topic019 办公审批流程",
+        "elapsed_ms": 85.06330009549856,
+        "results": 5
+      },
+      {
+        "id": "latency-020",
+        "query": "专项主题 topic020 办公审批流程",
+        "elapsed_ms": 111.53399990871549,
+        "results": 5
+      },
+      {
+        "id": "latency-021",
+        "query": "专项主题 topic021 办公审批流程",
+        "elapsed_ms": 81.86879986897111,
+        "results": 5
+      },
+      {
+        "id": "latency-022",
+        "query": "专项主题 topic022 办公审批流程",
+        "elapsed_ms": 79.98010003939271,
+        "results": 5
+      },
+      {
+        "id": "latency-023",
+        "query": "专项主题 topic023 办公审批流程",
+        "elapsed_ms": 80.99190006032586,
+        "results": 5
+      },
+      {
+        "id": "latency-024",
+        "query": "专项主题 topic024 办公审批流程",
+        "elapsed_ms": 91.17210004478693,
+        "results": 5
+      },
+      {
+        "id": "latency-025",
+        "query": "专项主题 topic025 办公审批流程",
+        "elapsed_ms": 80.88249992579222,
+        "results": 5
+      },
+      {
+        "id": "latency-026",
+        "query": "专项主题 topic026 办公审批流程",
+        "elapsed_ms": 80.06420033052564,
+        "results": 5
+      },
+      {
+        "id": "latency-027",
+        "query": "专项主题 topic027 办公审批流程",
+        "elapsed_ms": 78.46669992431998,
+        "results": 5
+      },
+      {
+        "id": "latency-028",
+        "query": "专项主题 topic028 办公审批流程",
+        "elapsed_ms": 81.11789962276816,
+        "results": 5
+      },
+      {
+        "id": "latency-029",
+        "query": "专项主题 topic029 办公审批流程",
+        "elapsed_ms": 81.7986000329256,
+        "results": 5
+      },
+      {
+        "id": "latency-030",
+        "query": "专项主题 topic030 办公审批流程",
+        "elapsed_ms": 83.62619997933507,
+        "results": 5
+      },
+      {
+        "id": "latency-031",
+        "query": "专项主题 topic031 办公审批流程",
+        "elapsed_ms": 80.2035997621715,
+        "results": 5
+      },
+      {
+        "id": "latency-032",
+        "query": "专项主题 topic032 办公审批流程",
+        "elapsed_ms": 80.95049997791648,
+        "results": 5
+      },
+      {
+        "id": "latency-033",
+        "query": "专项主题 topic033 办公审批流程",
+        "elapsed_ms": 80.85769973695278,
+        "results": 5
+      },
+      {
+        "id": "latency-034",
+        "query": "专项主题 topic034 办公审批流程",
+        "elapsed_ms": 81.40970021486282,
+        "results": 5
+      },
+      {
+        "id": "latency-035",
+        "query": "专项主题 topic035 办公审批流程",
+        "elapsed_ms": 81.65440009906888,
+        "results": 5
+      },
+      {
+        "id": "latency-036",
+        "query": "专项主题 topic036 办公审批流程",
+        "elapsed_ms": 83.9681001380086,
+        "results": 5
+      },
+      {
+        "id": "latency-037",
+        "query": "专项主题 topic037 办公审批流程",
+        "elapsed_ms": 84.82169965282083,
+        "results": 5
+      },
+      {
+        "id": "latency-038",
+        "query": "专项主题 topic038 办公审批流程",
+        "elapsed_ms": 84.35459993779659,
+        "results": 5
+      },
+      {
+        "id": "latency-039",
+        "query": "专项主题 topic039 办公审批流程",
+        "elapsed_ms": 78.76989990472794,
+        "results": 5
+      },
+      {
+        "id": "latency-040",
+        "query": "专项主题 topic040 办公审批流程",
+        "elapsed_ms": 81.6567000001669,
+        "results": 5
+      },
+      {
+        "id": "latency-041",
+        "query": "专项主题 topic041 办公审批流程",
+        "elapsed_ms": 84.08050006255507,
+        "results": 5
+      },
+      {
+        "id": "latency-042",
+        "query": "专项主题 topic042 办公审批流程",
+        "elapsed_ms": 84.81170004233718,
+        "results": 5
+      },
+      {
+        "id": "latency-043",
+        "query": "专项主题 topic043 办公审批流程",
+        "elapsed_ms": 83.59949989244342,
+        "results": 5
+      },
+      {
+        "id": "latency-044",
+        "query": "专项主题 topic044 办公审批流程",
+        "elapsed_ms": 84.37220007181168,
+        "results": 5
+      },
+      {
+        "id": "latency-045",
+        "query": "专项主题 topic045 办公审批流程",
+        "elapsed_ms": 82.31709990650415,
+        "results": 5
+      },
+      {
+        "id": "latency-046",
+        "query": "专项主题 topic046 办公审批流程",
+        "elapsed_ms": 82.54460012540221,
+        "results": 5
+      },
+      {
+        "id": "latency-047",
+        "query": "专项主题 topic047 办公审批流程",
+        "elapsed_ms": 82.695999648422,
+        "results": 5
+      },
+      {
+        "id": "latency-048",
+        "query": "专项主题 topic048 办公审批流程",
+        "elapsed_ms": 81.67940005660057,
+        "results": 5
+      },
+      {
+        "id": "latency-049",
+        "query": "专项主题 topic049 办公审批流程",
+        "elapsed_ms": 83.0800998955965,
+        "results": 5
+      }
+    ],
+    "provider": "HashEmbedding",
+    "system": "Windows",
+    "machine": "AMD64",
+    "python": "3.14.3",
+    "method": "nearest-rank P95; 50 distinct topic IDs, one query per topic after index build; no warmup",
+    "limitations": "single synthetic template; varied query IDs do not establish task diversity; in-process not HTTP/SDK latency"
+  },
+  "sensitive": {
+    "requests": 50,
+    "positive": 25,
+    "negative": 25,
+    "tp": 25,
+    "fp": 0,
+    "fn": 0,
+    "tn": 25,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "rows": [
+      {
+        "id": "p01",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p02",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p03",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p04",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p05",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p06",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p07",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p08",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p09",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p10",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p11",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p12",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p13",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p14",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p15",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p16",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p17",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p18",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p19",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p20",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p21",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p22",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p23",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p24",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "p25",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "id": "n01",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n02",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n03",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n04",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n05",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n06",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n07",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n08",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n09",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n10",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n11",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n12",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n13",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n14",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n15",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n16",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n17",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n18",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n19",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n20",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n21",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n22",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n23",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n24",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "id": "n25",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      }
+    ],
+    "definition": "request-level sensitive classification; NOT entity/span-level F1"
+  },
+  "dataset_sha256": {
+    "office_memory_eval_v2.json": "f7f1e3f6d99a0f3acc528c6ceb00bd8a4692bcdf5cd1dfddd8e20034d50a7db2",
+    "office_memory_eval_v3.json": "641a6af67005a80e0e3108505307822630d8f1c7b7122de7da0e80fe10188213",
+    "sensitive_official_diagnostic.json": "db1140b22708006be6e6c1c971b61c1363598f4c6b39fd014fd66e6feab36e13"
+  },
+  "sources": {
+    "preference_accuracy": "unchanged v2 test labels, through real lifecycle gate",
+    "knowledge_recall": "v3 test Recall@3, dev-only threshold selection",
+    "conflict_accuracy": "v2 test detection plus labeled resolution assertions"
+  },
+  "gaps": [
+    "Preference accuracy below 85%; do not weaken lifecycle gates to conceal this.",
+    "Preference/retrieval/conflict sets lack 50 independent requests each.",
+    "Sensitive F1 is request-level, not a certified official definition.",
+    "Public synthetic labels with HashEmbedding; no real SDK/model end-to-end evidence."
+  ]
+}
