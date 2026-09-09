@@ -24,5 +24,8 @@ jobs:
       - run: python scripts/evaluate_v3.py --require-quality
       - run: python -X utf8 -S scripts/evaluate_requests.py --size 10000 --require-frozen --output artifacts/runtime/ci-requests.json
       - run: python -X utf8 -S scripts/check_deliverables.py --output artifacts/runtime/ci-materials.json
+      - run: python -X utf8 -S scripts/generate_takeover_materials.py --check-only --report artifacts/runtime/ci-current-materials.json
+      - run: python -X utf8 -S scripts/run_ablations.py --require-diagnostics --output artifacts/runtime/ci-ablations.json
+      - run: python -X utf8 -S scripts/benchmark_service.py --sizes 100,1000 --rounds 30 --require-integrity --output artifacts/runtime/ci-service.json
       - run: python -S scripts/evaluate_official.py --output artifacts/runtime/ci-official.json
       - run: python -S scripts/evaluate_actions.py --workspace artifacts/runtime/ci-actions --output artifacts/runtime/ci-actions.json
