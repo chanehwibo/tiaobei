@@ -205,11 +205,31 @@ def _is_approved_fixture(relative: str) -> bool:
     return relative in SYNTHETIC_ALLOWLIST_FILES or relative.startswith(SYNTHETIC_ALLOWLIST_PREFIXES)
 
 
+def _is_probability_metric(line: str, relative: str) -> bool:
+    if not relative.lower().endswith(".json"):
+        return False
+    member = line.strip()
+    if member.endswith(","):
+        member = member[:-1]
+    try:
+        value = json.loads("{" + member + "}")
+    except (ValueError, TypeError):
+        return False
+    probability_keys = {
+        "macro_recall_at_3", "precision_at_3", "recall_at_3", "mrr_at_3", "ndcg_at_3",
+        "full_evidence_accuracy", "no_answer_accuracy", "false_answer_rate", "distractor_return_rate",
+        "before_recall_at_3", "after_recall_at_3", "before_no_answer_accuracy", "after_no_answer_accuracy",
+    }
+    return (len(value) == 1 and next(iter(value)) in probability_keys
+            and type(next(iter(value.values()))) is float and 0 <= next(iter(value.values())) <= 1)
+
+
 def scan_sensitive_text(project_root: Path, files: Iterable[Path] | None = None) -> dict[str, Any]:
     project_root = project_root.resolve()
     candidates = list(files) if files is not None else discover_public_files(project_root)
     unexpected: list[dict[str, Any]] = []
     fixtures: list[dict[str, Any]] = []
+    numeric_metrics: list[dict[str, Any]] = []
     scanned = 0
     office_scanned = 0
     archives_scanned = 0
@@ -223,6 +243,11 @@ def scan_sensitive_text(project_root: Path, files: Iterable[Path] | None = None)
                 matches = list(pattern.finditer(line))
                 if matches:
                     finding = {"path": relative, "line": line_number, "kind": kind}
+                    # Repeating decimal probabilities can have 18 fractional digits.
+                    # Strings, unknown keys, integers and out-of-range values still fail.
+                    if kind in {"cn_id", "cn_phone"} and _is_probability_metric(line, relative):
+                        numeric_metrics.append(finding)
+                        continue
                     known = approved and all(match.group() in SYNTHETIC_VALUES for match in matches)
                     (fixtures if known else unexpected).append(finding)
 
@@ -358,6 +383,7 @@ def scan_sensitive_text(project_root: Path, files: Iterable[Path] | None = None)
         "manual_review_required": manual_review,
         "unexpected_findings": unexpected,
         "approved_synthetic_fixture_findings": fixtures,
+        "approved_numeric_metric_findings": numeric_metrics,
         "approved_legacy_template_metadata": legacy_templates,
         "policy": "文本逐行扫描，无2MiB跳过；ZIP递归扫描有128MiB及层数上限，超限失败；Office扫描XML/元数据/拆分文本。只记录位置和类型，不记录敏感原文。媒体无OCR，须单独人工复核。",
     }
