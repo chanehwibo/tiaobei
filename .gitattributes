@@ -3,4 +3,5 @@
 /artifacts/verification/round5/** -text
 /artifacts/verification/x01-x02/** -text
 /artifacts/verification/x01-judge/** -text
+/artifacts/verification/takeover/** -text
 /deliverables/** -text

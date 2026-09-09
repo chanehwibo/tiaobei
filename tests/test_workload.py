@@ -13,3 +13,6 @@ class ServiceWorkloadTest(unittest.TestCase):
         self.assertGreater(row["service_ingest_ms"], 0)
         self.assertGreater(row["http_query_p99_ms"], 0)
         self.assertEqual(row["concurrent_operations"], 6)
+        self.assertTrue(report["integrity_passed"], row["integrity_checks"])
+        self.assertEqual(row["correct_queries"], {"sequential": 3, "concurrent": 3, "http": 3})
+        self.assertIn("process_resources", row)

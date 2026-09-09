@@ -15,6 +15,7 @@ from .memory_store import MemoryStore
 from .persistence import SQLiteMemoryPersistence
 from .schemas import KnowledgeMemory, stable_id
 from .provider_config import create_provider, provider_identity
+from .resources import resource_snapshot, resource_usage
 
 
 def _percentile(values: list[float], quantile: float) -> float:
@@ -63,6 +64,7 @@ def run_scale_benchmark(
 
     rows: list[dict[str, object]] = []
     for size in normalized_sizes:
+        resources_before = resource_snapshot()
         tracemalloc.start()
         store = MemoryStore(embedding=create_provider(embedding_config))
         start = time.perf_counter()
@@ -112,6 +114,7 @@ def run_scale_benchmark(
                 "sqlite_disk_mb": round(sqlite_bytes / 1024 / 1024, 3),
                 "returned_results": len(cold_results),
                 "meets_500ms": max(cold_query_ms, p99_ms) <= 500.0,
+                "process_resources": resource_usage(resources_before, resource_snapshot()),
             }
         )
 
@@ -131,6 +134,9 @@ def run_scale_benchmark(
             "cold_definition": "first query after vector/index construction",
             "hot_definition": "subsequent repeated in-process queries",
             "memory_definition": "tracemalloc peak Python allocations during build and queries",
+            "process_memory_definition": "OS resident memory snapshots; peak is process-lifetime high-water mark",
+            "cpu_definition": "process CPU / elapsed wall time; 100 percent means one full CPU core",
+            "resource_scope": "build, queries and persistence in this process; separate models/containers excluded",
             "disk_definition": "SQLite v2 file size after complete persistence",
             "pass_rule": "max(cold query, hot p99) <= 500ms",
         },
@@ -167,7 +173,7 @@ def write_benchmark_report(
         "",
         "> 本报告使用 HashEmbedding 且不在银河麒麟系统运行，不能替代真实 SDK/麒麟环境报告。",
         "",
-        "| 记录数 | 建索引 ms | 冷查询 ms | 热 p50 ms | 热 p95 ms | 热 p99 ms | QPS | 峰值内存 MB | SQLite MB | 500ms |",
+        "| 记录数 | 建索引 ms | 冷查询 ms | 热 p50 ms | 热 p95 ms | 热 p99 ms | QPS | Python 峰值 MB | SQLite MB | 500ms |",
         "| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | :---: |",
     ]
     for row in rows:
@@ -183,6 +189,8 @@ def write_benchmark_report(
         [
             "",
             "判定口径：冷查询与热查询 p99 的较大值不超过 500ms。数据、方法和原始精确值见同目录 JSON。",
+            "JSON 的 process_resources 另含进程 RSS、进程生命周期峰值及 CPU；不包含独立模型服务或其他进程。"
+            "生命周期峰值不能当作本轮或容器峰值，Python 分配量不能当作总内存。",
             "",
         ]
     )
