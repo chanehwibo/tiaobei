@@ -1,0 +1,87 @@
+{
+  "metrics": {
+    "preference_accuracy": 1.0,
+    "knowledge_recall": 1.0,
+    "conflict_accuracy": 1.0,
+    "retrieval_p95_ms": 139.98109599998543,
+    "sensitive_f1": 1.0
+  },
+  "observation_counts": {
+    "preference_accuracy": 68,
+    "knowledge_recall": 60,
+    "conflict_accuracy": 60,
+    "retrieval_p95_ms": 80,
+    "sensitive_f1": 50
+  },
+  "safety_checks": {
+    "durable_preferences": true,
+    "knowledge_ingestion": true,
+    "no_scope_leaks": true,
+    "no_answer_85": true,
+    "no_redaction_leaks": true
+  },
+  "all_targets_met": true,
+  "official_validation_ready": false,
+  "release_gate": {
+    "passed": true,
+    "checks": {
+      "five_numeric_targets": true,
+      "required_safety_checks": true,
+      "frozen_dataset": true,
+      "frozen_request_counts": true,
+      "frozen_retrieval_configuration": true,
+      "honest_evidence_scope": true,
+      "distinct_request_rows": true,
+      "denominators_match_rows": true,
+      "summary_matches_details": true,
+      "aggregates_match_request_rows": true
+    },
+    "rubric": {
+      "metrics": {
+        "preference_accuracy": {
+          "value": 1.0,
+          "target": 0.85,
+          "operator": "ge",
+          "requests": 68,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "knowledge_recall": {
+          "value": 1.0,
+          "target": 0.85,
+          "operator": "ge",
+          "requests": 60,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "conflict_accuracy": {
+          "value": 1.0,
+          "target": 0.88,
+          "operator": "ge",
+          "requests": 60,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "retrieval_p95_ms": {
+          "value": 139.98109599998543,
+          "target": 500.0,
+          "operator": "le",
+          "requests": 80,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "sensitive_f1": {
+          "value": 1.0,
+          "target": 0.9,
+          "operator": "ge",
+          "requests": 50,
+          "minimum_requests": 50,
+          "passed": true
+        }
+      },
+      "all_targets_met": true,
+      "scope": "developer_held_measurements_not_official_certification"
+    },
+    "scope": "frozen_public_synthetic_regression_not_independent_blind_or_official_certification"
+  }
+}

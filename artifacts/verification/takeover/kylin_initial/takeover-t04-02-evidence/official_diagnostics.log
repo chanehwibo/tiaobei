@@ -1,0 +1,1 @@
+{"metrics": {"preference_accuracy": 0.4615, "knowledge_recall": 0.9167, "conflict_accuracy": 1.0, "retrieval_p95_ms": 183.6719439997978, "sensitive_f1": 1.0}, "counts": {"preference_accuracy": 13, "knowledge_recall": 12, "conflict_accuracy": 2, "retrieval_p95_ms": 50, "sensitive_f1": 50}, "official_validation_ready": false}

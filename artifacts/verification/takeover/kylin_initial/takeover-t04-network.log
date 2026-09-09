@@ -1,0 +1,45 @@
+88990 +++ exited with 0 +++
+88988 +++ exited with 0 +++
+88987 +++ exited with 0 +++
+88979 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_IP) = 3
+88979 bind(3, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
+88989 +++ exited with 0 +++
+88979 <... bind resumed>)               = 0
+88979 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 4
+88979 connect(4, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (没有那个文件或目录)
+88979 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 4
+88979 connect(4, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (没有那个文件或目录)
+88979 listen(3, 5)                      = 0
+88979 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+88979 connect(4, {sa_family=AF_INET, sin_port=htons(44621), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+88979 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+88994 +++ exited with 0 +++
+88979 connect(4, {sa_family=AF_INET, sin_port=htons(44621), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+88979 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+88979 connect(4, {sa_family=AF_INET, sin_port=htons(44621), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+88995 +++ exited with 0 +++
+88979 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+88979 connect(4, {sa_family=AF_INET, sin_port=htons(44621), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
+88996 +++ exited with 0 +++
+88979 <... connect resumed>)            = -1 EINPROGRESS (操作现在正在进行)
+88979 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+88979 connect(4, {sa_family=AF_INET, sin_port=htons(44621), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+88997 +++ exited with 0 +++
+88979 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+88979 connect(4, {sa_family=AF_INET, sin_port=htons(44621), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+88998 +++ exited with 0 +++
+88979 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+88999 +++ exited with 0 +++
+88979 connect(4, {sa_family=AF_INET, sin_port=htons(44621), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+88979 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+89000 +++ exited with 0 +++
+88979 connect(4, {sa_family=AF_INET, sin_port=htons(44621), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+88979 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+89001 +++ exited with 0 +++
+88979 connect(4, {sa_family=AF_INET, sin_port=htons(44621), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+89002 +++ exited with 0 +++
+88979 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+88979 connect(4, {sa_family=AF_INET, sin_port=htons(44621), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+89003 +++ exited with 0 +++
+88992 +++ exited with 0 +++
+88979 +++ exited with 0 +++

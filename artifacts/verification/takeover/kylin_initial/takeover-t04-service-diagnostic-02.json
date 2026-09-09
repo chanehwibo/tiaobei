@@ -1,0 +1,62 @@
+{
+  "environment": {
+    "system": "Linux",
+    "python": "3.12.3"
+  },
+  "rounds": 30,
+  "results": [
+    {
+      "records": 100,
+      "service_ingest_ms": 569.606,
+      "single_add_ms": 288.731,
+      "restart_load_ms": 181.03,
+      "mixed_query_p50_ms": 4.79,
+      "mixed_query_p95_ms": 11.103,
+      "mixed_query_p99_ms": 11.538,
+      "http_query_p99_ms": 28.667,
+      "concurrent_operations": 33,
+      "concurrent_operations_per_second": 19.547,
+      "all_queries_nonempty": true,
+      "query_counts": {
+        "sequential": 30,
+        "concurrent": 30,
+        "http": 10
+      },
+      "correct_queries": {
+        "sequential": 30,
+        "concurrent": 30,
+        "http": 10
+      },
+      "integrity_checks": {
+        "sequential_target_recalled": true,
+        "concurrent_target_recalled": true,
+        "http_target_recalled": true,
+        "restart_record_count": true
+      },
+      "integrity_passed": true,
+      "persisted_knowledge": 104,
+      "sqlite_bytes": 593920,
+      "retrieval_under_500ms": true,
+      "process_resources": {
+        "wall_ms": 3928.269,
+        "cpu_ms": 1248.085,
+        "cpu_percent_one_core": 31.772,
+        "rss_before_bytes": 32854016,
+        "rss_after_bytes": 48140288,
+        "lifetime_peak_rss_bytes": 48140288,
+        "source": "proc_self_status",
+        "available": true,
+        "error_type": null,
+        "scope": "current_process_only; excludes separate model servers and child processes",
+        "peak_definition": "OS high-water mark since process start, not a per-workload peak"
+      }
+    }
+  ],
+  "integrity_passed": true,
+  "method": "MemoryService ingestion including lifecycle, conflict detection and SQLite commit; diverse queries; restart; 4 threads mixed reads/writes; localhost HTTP",
+  "limitations": [
+    "Measured environment only; no real model or native Kylin SDK execution.",
+    "Service API is a single-process serialized writer; cross-process writers are unsupported.",
+    "Small samples describe this workload; p99 is empirical, not a production SLA."
+  ]
+}

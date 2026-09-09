@@ -1,0 +1,1 @@
+{"split": "test", "mode": "hybrid", "threshold": 0.265, "cache": true, "positive_queries": 12, "no_answer_queries": 6, "positive_queries_fully_recalled": 11, "no_answer_correct": 6, "positive_recall_at_3": 0.9167, "no_answer_accuracy": 1.0, "balanced_score": 0.9583, "mean_latency_ms": 0.4876, "query_phase_encode_calls": 18}

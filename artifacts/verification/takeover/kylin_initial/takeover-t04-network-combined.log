@@ -1,0 +1,84 @@
+95080 +++ exited with 0 +++
+95079 +++ exited with 0 +++
+95081 +++ exited with 0 +++
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_IP) = 3
+95069 bind(3, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
+95078 +++ exited with 0 +++
+95069 <... bind resumed>)               = 0
+95069 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 4
+95069 connect(4, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (没有那个文件或目录)
+95069 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 4
+95069 connect(4, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (没有那个文件或目录)
+95069 listen(3, 5)                      = 0
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(36867), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP <unfinished ...>
+95088 +++ exited with 0 +++
+95069 <... socket resumed>)             = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(36867), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95089 +++ exited with 0 +++
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(36867), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95090 +++ exited with 0 +++
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(36867), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(36867), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95091 +++ exited with 0 +++
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95092 +++ exited with 0 +++
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(36867), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95093 +++ exited with 0 +++
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(36867), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95094 +++ exited with 0 +++
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(36867), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP <unfinished ...>
+95095 +++ exited with 0 +++
+95069 <... socket resumed>)             = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(36867), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(36867), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95096 +++ exited with 0 +++
+95097 +++ exited with 0 +++
+95086 +++ exited with 0 +++
+95119 +++ exited with 0 +++
+95120 +++ exited with 0 +++
+95121 +++ exited with 0 +++
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_IP) = 3
+95069 bind(3, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+95122 +++ exited with 0 +++
+95069 listen(3, 5)                      = 0
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(42419), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95142 +++ exited with 0 +++
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(42419), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95143 +++ exited with 0 +++
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(42419), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95144 +++ exited with 0 +++
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(42419), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(42419), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95145 +++ exited with 0 +++
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95146 +++ exited with 0 +++
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(42419), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(42419), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95147 +++ exited with 0 +++
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(42419), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95148 +++ exited with 0 +++
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95149 +++ exited with 0 +++
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(42419), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95069 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_TCP) = 4
+95069 connect(4, {sa_family=AF_INET, sin_port=htons(42419), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (操作现在正在进行)
+95150 +++ exited with 0 +++
+95151 +++ exited with 0 +++
+95139 +++ exited with 0 +++
+95069 +++ exited with 0 +++

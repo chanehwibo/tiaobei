@@ -1,0 +1,1 @@
+{"exit_code": 2, "static_prerequisites_passed": false, "missing_static_prerequisites": ["frozen_manifest_valid", "controller_source_matches_freeze", "local_engine_reachable", "linux_engine_matches_host_architecture", "engine_has_minimum_container_capacity", "agent_image_matches_pin", "judge_image_matches_pin"], "competition_submission_ready": false}
