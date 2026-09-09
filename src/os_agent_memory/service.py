@@ -153,6 +153,7 @@ class MemoryService:
         top_k: int = 5,
         min_score: float = MemoryStore.DEFAULT_MIN_SCORE,
         include_pending: bool = False,
+        retrieval_mode: str = "hybrid",
     ) -> list[dict[str, Any]]:
         results = self.store.search_knowledge(
             query,
@@ -162,6 +163,7 @@ class MemoryService:
             scene=scene,
             min_score=min_score,
             include_pending=include_pending,
+            retrieval_mode=retrieval_mode,
         )
         return to_primitive(results)
 
