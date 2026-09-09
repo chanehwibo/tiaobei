@@ -20,6 +20,7 @@ CURRENT_DOCUMENTS = (
     "docs/37_出题方反馈落实.md",
     "docs/38_相关工作与创新边界.md",
     "docs/39_评测口径与可信度.md",
+    "docs/40_复杂场景与检索性能复测.md",
     "submission/README.md",
 )
 

@@ -5,6 +5,8 @@ import unicodedata
 from collections import Counter
 from dataclasses import replace
 from datetime import datetime, timedelta, timezone
+from functools import lru_cache
+from heapq import nlargest, nsmallest
 
 from .embeddings import EmbeddingProvider, HashEmbedding, cosine_similarity
 from .schemas import (
@@ -304,32 +306,40 @@ class MemoryStore:
             return []
         query_embedding = self.embedding.encode(query) if retrieval_mode != "lexical" else []
         eligible = {item.id: item for item in candidates}
-        lexical_ids = set().union(*(self._token_index.get(token, set()) for token in query_tokens)) if query_tokens else set()
+        lexical_postings = [self._token_index.get(token, ()) for token in query_tokens]
+        # Keep the original set iteration for stable candidate ties. Count shared
+        # postings once instead of allocating one token intersection per record.
+        lexical_ids = set().union(*lexical_postings)
         lexical_ids &= eligible.keys()
+        lexical_counts = Counter()
+        for posting in lexical_postings:
+            lexical_counts.update(posting)
         lexical_scores = {
-            key: self._lexical_similarity(query_tokens, self._tokens_for(eligible[key]))
+            key: lexical_counts[key] / ((len(query_tokens) * len(self._tokens_for(eligible[key]))) ** 0.5)
             for key in lexical_ids
         }
         lexical_matches = [eligible[key] for key in lexical_ids]
         character_scores = {}
         if retrieval_mode == "hybrid" and query_characters:
-            character_ids = set().union(*(self._character_index.get(c, set()) for c in query_characters))
+            character_counts = Counter()
+            for character in query_characters:
+                character_counts.update(self._character_index.get(character, ()))
             character_scores = {
-                key: self._lexical_similarity(query_characters, self._document_characters[key])
-                for key in character_ids & eligible.keys()
+                key: character_counts[key] / ((len(query_characters) * len(self._document_characters[key])) ** 0.5)
+                for key in character_counts.keys() & eligible.keys()
             }
         if lexical_matches and retrieval_mode != "semantic":
-            candidates = sorted(
+            candidates = nlargest(
+                candidate_limit,
                 lexical_matches,
                 key=lambda item: (lexical_scores[item.id], item.authority, item.updated_at),
-                reverse=True,
-            )[:candidate_limit]
+            )
         elif len(candidates) > candidate_limit and retrieval_mode != "semantic":
-            candidates = sorted(
+            candidates = nlargest(
+                candidate_limit,
                 candidates,
                 key=lambda item: (item.authority, item.updated_at),
-                reverse=True,
-            )[:candidate_limit]
+            )
 
         # Union lexical candidates with an independent approximate semantic path.
         # Top signed dimensions are cheap postings; exact reranking follows.
@@ -337,14 +347,15 @@ class MemoryStore:
             votes = Counter()
             for key in self._projection_keys(query_embedding):
                 votes.update(self._vector_index.get(key, set()) & eligible.keys())
-            semantic_ids = sorted(votes, key=lambda key: (-votes[key], key))[:candidate_limit]
-            character_ids = sorted(character_scores, key=lambda key: (-character_scores[key], key))[:candidate_limit]
+            semantic_ids = nsmallest(candidate_limit, votes, key=lambda key: (-votes[key], key))
+            character_ids = nsmallest(candidate_limit, character_scores,
+                                      key=lambda key: (-character_scores[key], key))
             candidates = list({item.id: item for item in [
                 *candidates, *(eligible[key] for key in semantic_ids),
                 *(eligible[key] for key in character_ids)
             ]}.values())
 
-        scored: list[tuple[float, SearchResult]] = []
+        scored: list[tuple[float, KnowledgeMemory, float, float, float]] = []
         for item in candidates:
             if not item.embedding and retrieval_mode != "lexical":
                 item.embedding = self.embedding.encode(self._knowledge_text(item))
@@ -363,22 +374,22 @@ class MemoryStore:
                 score = semantic_score
             if score < min_score:
                 continue
-            scored.append((
-                score,
-                SearchResult(
-                    memory_id=item.id,
-                    score=round(score, 4),
-                    title=item.title,
-                    content=item.content,
-                    tags=item.tags,
-                    lexical_score=round(lexical_score, 4),
-                    semantic_score=round(semantic_score, 4),
-                    character_score=round(character_score, 4),
-                    status=item.status,
-                )
-            ))
-        scored.sort(key=lambda item: (-item[0], item[1].memory_id))
-        return [result for _score, result in scored[:top_k]]
+            scored.append((score, item, lexical_score, semantic_score, character_score))
+        ranked = nsmallest(top_k, scored, key=lambda row: (-row[0], row[1].id))
+        return [
+            SearchResult(
+                memory_id=item.id,
+                score=round(score, 4),
+                title=item.title,
+                content=item.content,
+                tags=item.tags,
+                lexical_score=round(lexical_score, 4),
+                semantic_score=round(semantic_score, 4),
+                character_score=round(character_score, 4),
+                status=item.status,
+            )
+            for score, item, lexical_score, semantic_score, character_score in ranked
+        ]
 
     def expire_knowledge(self, *, now: str | None = None) -> list[str]:
         """Close expired active/pending records and remove their retrieval data."""
@@ -399,6 +410,8 @@ class MemoryStore:
         user_id: str | None,
         allowed_statuses: set[MemoryStatus],
     ) -> tuple[str, str]:
+        if tenant_id is not None and user_id is not None:
+            return tenant_id, user_id
         visible = [item for item in self.knowledge.values() if item.status in allowed_statuses]
         if tenant_id is None:
             tenants = {item.tenant_id for item in visible}
@@ -635,7 +648,9 @@ class MemoryStore:
         return merged
 
     @staticmethod
+    @lru_cache(maxsize=4096)
     def _parse_time(value: str) -> datetime:
+        # Cache immutable parsing only, never time-dependent record eligibility.
         return datetime.fromisoformat(value.replace("Z", "+00:00"))
 
     @classmethod
