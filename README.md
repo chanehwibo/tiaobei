@@ -12,7 +12,7 @@
 
 强制部署环境为V11，SDK是推荐项。2026-09-09参赛者已确认主办方认可虚拟机部署、运行资源和评分口径；不重复申请，原始凭证及适用配置另行归档。真实Agent/Judge运行资源、独立盲测及人工复核仍按[正式评测交接](docs/36_正式评测资源与外部交接.md)推进，正式提交保持 `INCOMPLETE`。
 
-已发布基线为 `d8f2fee`，[该提交的四组CI](https://github.com/chanehwibo/tiaobei/actions/runs/34317093327)通过。本次接管改动尚未统一推送，不能沿用基线CI；当前工作流的新版材料检查因成功V11证据缺失仍受阻。
+本轮开始时的已发布基线为 `d8f2fee`，[该提交的四组CI](https://github.com/chanehwibo/tiaobei/actions/runs/34317093327)通过。本次发布前另完成[独立Git检出审计](artifacts/verification/takeover/t06a_git_checkout.json)：558个文件、115项源码核对及275项测试通过。该报告只对应它注明的内容提交；统一推送后的新HEAD与CI须单独核验，不能沿用基线CI。当前工作流的新版材料检查因成功V11证据缺失仍受阻。
 
 ### 已有能力与历史基线
 
