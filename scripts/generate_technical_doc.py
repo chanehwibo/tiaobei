@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import json
 import re
 from pathlib import Path
 
@@ -13,9 +12,14 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt
 
+try:
+    from scripts.material_status import INITIAL_STATUS, SDK_RISK_STATUS
+except ModuleNotFoundError:
+    from material_status import INITIAL_STATUS, SDK_RISK_STATUS
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_OUTPUT = PROJECT_ROOT / "deliverables" / "doc" / "OS_Agent_记忆优化_技术方案与测试报告.docx"
+DEFAULT_OUTPUT = PROJECT_ROOT / "deliverables" / "review_source" / "OS_Agent_技术方案正文.docx"
 
 
 def _plain_markdown(text: str) -> str:
@@ -71,6 +75,7 @@ def _add_markdown(document: Document, source: Path) -> None:
             if in_code:
                 paragraph = document.add_paragraph()
                 paragraph.style = document.styles["No Spacing"]
+                paragraph.paragraph_format.keep_together = True
                 run = paragraph.add_run("\n".join(code_lines))
                 run.font.name = "Consolas"
                 run.font.size = Pt(8)
@@ -139,6 +144,8 @@ def _add_markdown(document: Document, source: Path) -> None:
 
 
 def build_document(solution_path: Path, report_path: Path, output: Path) -> None:
+    if output.exists():
+        raise ValueError("refusing to overwrite existing material; use a fresh output")
     document = Document()
     section = document.sections[0]
     section.top_margin = Cm(2.4)
@@ -163,17 +170,17 @@ def build_document(solution_path: Path, report_path: Path, output: Path) -> None
     _set_run_font(run, 26, True)
     subtitle = document.add_paragraph()
     subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run = subtitle.add_run("技术方案与测试报告（第五轮内部验证版）")
+    run = subtitle.add_run("技术方案与测试报告")
     _set_run_font(run, 16, True)
     meta = document.add_paragraph()
     meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    evidence = json.loads((PROJECT_ROOT / "artifacts/verification/round5/evidence_summary.json").read_text(encoding="utf-8"))
-    run = meta.add_run("对应赛题：XA-202612\n第五轮证据日期：" + evidence["generated_at_utc"][:10])
+    run = meta.add_run("对应赛题：XA-202612\n" + INITIAL_STATUS)
     _set_run_font(run, 11)
     boundary = document.add_paragraph()
     boundary.alignment = WD_ALIGN_PARAGRAPH.CENTER
     boundary.paragraph_format.space_before = Pt(80)
-    run = boundary.add_run("边界：Windows/V11公开合成回归五项达标；原生模型、独立盲测及赛事验收未完成。INCOMPLETE")
+    run = boundary.add_run("结论以正文注明的被测源码与环境为准。\n真实SDK：" + SDK_RISK_STATUS
+                          + "；V11当前版、独立盲测及赛事验收需另行验证。")
     _set_run_font(run, 10, True)
 
     document.add_page_break()
@@ -184,11 +191,11 @@ def build_document(solution_path: Path, report_path: Path, output: Path) -> None
     # Both sections inherit this footer, so populate the shared part only once.
     footer = document.sections[0].footer.paragraphs[0]
     footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run = footer.add_run("OS Agent 记忆优化 · 第五轮内部验证 · 结论边界见正文")
+    run = footer.add_run("OS Agent | " + INITIAL_STATUS + " | 结论边界见正文")
     _set_run_font(run, 8)
 
     document.core_properties.title = "OS Agent 多源融合记忆优化系统：技术方案与测试报告"
-    document.core_properties.subject = "挑战杯揭榜挂帅 XA-202612 第五轮内部验证材料"
+    document.core_properties.subject = "挑战杯揭榜挂帅 XA-202612 初版技术审阅材料"
     document.core_properties.author = ""
     document.core_properties.last_modified_by = ""
     document.core_properties.comments = "由仓库脚本从 Markdown 正文生成，可编辑；不构成真实麒麟 SDK 验收。"
