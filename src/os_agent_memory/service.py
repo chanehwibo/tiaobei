@@ -155,6 +155,7 @@ class MemoryService:
         include_pending: bool = False,
         retrieval_mode: str = "hybrid",
         required_terms: list[str] | tuple[str, ...] | None = None,
+        evidence_policy: str = "similarity",
     ) -> list[dict[str, Any]]:
         results = self.store.search_knowledge(
             query,
@@ -166,6 +167,7 @@ class MemoryService:
             include_pending=include_pending,
             retrieval_mode=retrieval_mode,
             required_terms=required_terms,
+            evidence_policy=evidence_policy,
         )
         return to_primitive(results)
 

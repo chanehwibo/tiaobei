@@ -9,6 +9,7 @@ from functools import lru_cache
 from heapq import nlargest, nsmallest
 
 from .embeddings import EmbeddingProvider, HashEmbedding, cosine_similarity
+from .retrieval_evidence import MIN_COVERAGE, POLICIES, content_coverage
 from .schemas import (
     AuditEvent,
     ForgetPlan,
@@ -271,9 +272,12 @@ class MemoryStore:
         now: str | None = None,
         retrieval_mode: str = "hybrid",
         required_terms: list[str] | tuple[str, ...] | None = None,
+        evidence_policy: str = "similarity",
     ) -> list[SearchResult]:
         if retrieval_mode not in {"hybrid", "lexical", "semantic"}:
             raise ValueError("unknown retrieval_mode")
+        if evidence_policy not in POLICIES:
+            raise ValueError("unknown evidence_policy")
         constraints = self._evidence_constraints(required_terms)
         if top_k <= 0:
             raise ValueError("top_k must be positive")
@@ -401,6 +405,13 @@ class MemoryStore:
                 continue
             scored.append((score, item, lexical_score, semantic_score, character_score))
         ranked = nsmallest(top_k, scored, key=lambda row: (-row[0], row[1].id))
+        if evidence_policy == "content_coverage_v1":
+            documents = [
+                tuple(_normalize_search_text(text).lower() for text in (item.title, item.content))
+                for _score, item, *_components in ranked
+            ]
+            if content_coverage(query.lower(), documents, constraints=constraints) < MIN_COVERAGE:
+                return []
         return [
             SearchResult(
                 memory_id=item.id,

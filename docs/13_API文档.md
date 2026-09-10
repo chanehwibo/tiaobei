@@ -26,7 +26,7 @@ service = MemoryService(database_path="artifacts/runtime/memory.sqlite")
 
 返回当前 active 偏好，按 key 排序。scene 存在时只返回全局或适用该场景的偏好。
 
-### `search(query, tenant_id, user_id, scene=None, top_k=5, min_score=0.265, include_pending=False, retrieval_mode="hybrid", required_terms=None)`
+### `search(query, tenant_id, user_id, scene=None, top_k=5, min_score=0.265, include_pending=False, retrieval_mode="hybrid", required_terms=None, evidence_policy="similarity")`
 
 返回带综合、词法、语义分数的知识列表。业务回答不得把 `include_pending` 设为 true；该选项仅用于冲突诊断。
 
@@ -39,6 +39,14 @@ service = MemoryService(database_path="artifacts/runtime/memory.sqlite")
 这不是自动抽取条件、语义蕴含判断或可靠拒答器。调用方不得从评测标签反推约束；
 出现词项不代表文档支持其中的条件关系，也不代表内容可信。多条知识分别提供不同证据时，
 应拆分请求或只指定各条共同的实体约束，不能要求每条同时包含所有答案词。
+
+`evidence_policy` 默认`similarity`，原排序及阈值不变。
+实验值`content_coverage_v1`会对top_k结果的标题/正文做查询词面覆盖检查，
+折扣共同标题和显式实体词，覆盖不足0.5时返回空数组；不重排、不改分，
+不把标签或其他作用域的材料当作证据。HTTP支持同名字段，未知值返回400。
+**该实验策略有明显误拒答，不建议作为默认业务策略**，详见
+[正文证据检查与反例](44_正文证据检查与反例.md)。
+词面覆盖通过不等于关系正确、否定推理通过或答案已经核验。
 
 ### conflicts(tenant_id, user_id) / resolve_conflict(memory_id, tenant_id, user_id, strategy="auto")
 

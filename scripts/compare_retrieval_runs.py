@@ -15,7 +15,8 @@ from os_agent_memory.complex_retrieval import (
     CONFIGURATION, FROZEN_SHA256, SUITE_PATH, SUITES, grouped_summaries,
     make_corpus, score_request, summarize_rows, validate_suite, visible,
 )
-from os_agent_memory.memory_store import MemoryStore
+from os_agent_memory.memory_store import MemoryStore, _normalize_search_text
+from os_agent_memory.retrieval_evidence import MIN_COVERAGE, POLICIES, content_coverage
 from os_agent_memory.schemas import KnowledgeMemory
 
 
@@ -37,7 +38,12 @@ def validate_report(report, suite):
     for profile in report["profiles"]:
         corpus = profile["corpus"]
         constrained = profile.get("required_terms_enabled", False)
-        key = (corpus["records"], corpus["requested_hard_fraction_of_fillers"], profile["mode"], constrained)
+        policy = profile.get("evidence_policy", "similarity")
+        key = (corpus["records"], corpus["requested_hard_fraction_of_fillers"], profile["mode"], constrained, policy)
+        if (policy not in POLICIES
+                or profile.get("minimum_evidence_coverage") != (MIN_COVERAGE if policy != "similarity" else None)
+                or policy not in report["method"].get("evidence_policies", ["similarity"])):
+            raise ValueError("evidence policy or coverage threshold is inconsistent")
         if key in seen or profile["configuration"] != CONFIGURATION or profile["mode"] not in {"hybrid", "lexical", "semantic"}:
             raise ValueError("duplicate profile or changed configuration")
         if type(constrained) is not bool or (constrained and not all("required_terms" in q for q in suite["queries"])):
@@ -72,6 +78,13 @@ def validate_report(report, suite):
                         )
                         if not MemoryStore._supports_constraints(evidence, constraints):
                             raise ValueError("returned record violates explicit evidence constraints")
+                if policy == "content_coverage_v1" and row["returned"] and not invalid:
+                    fields = [tuple(_normalize_search_text(by_id[key][field]).lower()
+                                    for field in ("title", "content")) for key in row["returned"]]
+                    constraints = MemoryStore._evidence_constraints(query.get("required_terms")) if constrained else []
+                    if content_coverage(_normalize_search_text(query["query"]).lower(), fields,
+                                        constraints=constraints) < MIN_COVERAGE:
+                        raise ValueError("returned set violates declared content coverage policy")
                 recounted = score_request(
                     query, [{"memory_id": key, "score": score} for key, score in zip(row["returned"], row["scores"])],
                     elapsed_ms=row["elapsed_ms"], invalid_ids=invalid, error_type=row["error_type"],
@@ -104,6 +117,9 @@ def compare_reports(before, after, suite):
         raise ValueError("historical speed comparator only accepts the original unconstrained suite")
     validate_report(before, suite)
     validate_report(after, suite)
+    if any(profile.get("evidence_policy", "similarity") != "similarity"
+           for report in (before, after) for profile in report["profiles"]):
+        raise ValueError("changed evidence policies are not an equivalent-output speed comparison")
     for key in ("dataset", "environment", "evaluator_sha256", "method"):
         if before[key] != after[key]:
             raise ValueError("cannot pair runs with different " + key)

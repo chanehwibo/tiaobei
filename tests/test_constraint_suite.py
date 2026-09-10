@@ -94,3 +94,20 @@ class ConstraintSuiteTest(unittest.TestCase):
                 changed["method"]["constraint_source"] = "answer labels"
             with self.subTest(field=field), self.assertRaises(ValueError):
                 validate_current_complex(ROOT, snapshot, changed, self.suite, **arguments)
+
+    def test_coverage_policy_is_compared_without_changing_queries_or_constraints(self):
+        report = run_complex_evaluation(
+            ROOT, suite_name="complex_constraints_v1", sizes=(78,), hard_fractions=(0,),
+            rounds=1, constraint_modes=(True,), evidence_policies=("similarity", "content_coverage_v1"),
+        )
+        validate_report(report, self.suite)
+        first, guarded = report["profiles"]
+        self.assertEqual(first["corpus"], guarded["corpus"])
+        for original, result in zip(first["rounds"][0]["rows"], guarded["rounds"][0]["rows"]):
+            self.assertTrue(not result["returned"] or
+                            (result["returned"], result["scores"]) == (original["returned"], original["scores"]))
+        for policy, threshold in (("unknown", .5), ("content_coverage_v1", .1)):
+            changed = deepcopy(report)
+            changed["profiles"][1].update(evidence_policy=policy, minimum_evidence_coverage=threshold)
+            with self.assertRaises(ValueError):
+                validate_report(changed, self.suite)

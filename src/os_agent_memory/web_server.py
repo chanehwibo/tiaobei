@@ -83,6 +83,7 @@ def create_server(
                         min_score=float(body.get("min_score", MemoryStore.DEFAULT_MIN_SCORE)),
                         retrieval_mode=body.get("retrieval_mode", "hybrid"),
                         required_terms=body.get("required_terms"),
+                        evidence_policy=body.get("evidence_policy", "similarity"),
                     )
                 elif parsed.path == "/api/conflicts/resolve":
                     result = service.resolve_conflict(

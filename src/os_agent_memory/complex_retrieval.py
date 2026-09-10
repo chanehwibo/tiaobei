@@ -17,6 +17,7 @@ from .resources import resource_snapshot, resource_usage
 from .schemas import KnowledgeMemory, MemoryStatus
 from .service import MemoryService
 from .memory_store import MemoryStore, _normalize_search_text
+from .retrieval_evidence import MIN_COVERAGE, POLICIES
 
 FROZEN_SHA256 = "04b9a5266535e40a4542ae4647a4bba51aabf8edc32bd3a169713a4c4c1f2212"
 CONFIGURATION = {"top_k": 3, "min_score": .265, "dimensions": 256, "ngram": 2}
@@ -203,8 +204,10 @@ def grouped_summaries(rows):
     }
 
 
-def run_profile(suite, *, size, hard_fraction, mode, rounds, use_constraints=False):
-    if mode not in MODES or type(rounds) is not int or rounds <= 0 or type(use_constraints) is not bool:
+def run_profile(suite, *, size, hard_fraction, mode, rounds, use_constraints=False,
+                evidence_policy="similarity"):
+    if (mode not in MODES or type(rounds) is not int or rounds <= 0
+            or type(use_constraints) is not bool or evidence_policy not in POLICIES):
         raise ValueError("invalid retrieval mode or repetition count")
     resources_before = resource_snapshot()
     started = perf_counter()
@@ -224,6 +227,7 @@ def run_profile(suite, *, size, hard_fraction, mode, rounds, use_constraints=Fal
                     query["query"], tenant_id=query["tenant_id"], user_id=query["user_id"],
                     scene=query["scene"], top_k=3, min_score=.265, retrieval_mode=mode,
                     required_terms=query.get("required_terms") if use_constraints else None,
+                    evidence_policy=evidence_policy,
                 )
             except Exception as exc:
                 error = type(exc).__name__
@@ -248,6 +252,8 @@ def run_profile(suite, *, size, hard_fraction, mode, rounds, use_constraints=Fal
         "resources": resource_usage(resources_before, resource_snapshot()),
         "quality_targets_met": quality, "safety_passed": safety, "latency_target_met": latency,
         "all_targets_met": quality and safety and latency,
+        "evidence_policy": evidence_policy,
+        "minimum_evidence_coverage": MIN_COVERAGE if evidence_policy != "similarity" else None,
     }
     if any("required_terms" in query for query in suite["queries"]):
         result["required_terms_enabled"] = use_constraints
@@ -256,7 +262,8 @@ def run_profile(suite, *, size, hard_fraction, mode, rounds, use_constraints=Fal
 
 def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .75),
                            rounds=3, modes=("hybrid",), progress=None,
-                           suite_name="complex_retrieval_v1", constraint_modes=(False,)):
+                           suite_name="complex_retrieval_v1", constraint_modes=(False,),
+                           evidence_policies=("similarity",)):
     root = Path(root)
     suite_path, suite_sha256 = SUITES[suite_name]
     if (not constraint_modes or any(type(value) is not bool for value in constraint_modes)
@@ -269,15 +276,19 @@ def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .7
     source_snapshot = {path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
                        for path in sorted((root / "src").rglob("*.py"))}
     profiles = []
-    combinations = [(size, fraction, mode, constrained)
-                    for size in sizes for fraction in hard_fractions for mode in modes for constrained in constraint_modes]
+    if not evidence_policies or any(value not in POLICIES for value in evidence_policies):
+        raise ValueError("unknown or empty evidence policies")
+    combinations = [(size, fraction, mode, constrained, policy)
+                    for size in sizes for fraction in hard_fractions for mode in modes
+                    for constrained in constraint_modes for policy in evidence_policies]
     if not combinations or len(set(combinations)) != len(combinations):
         raise ValueError("empty or duplicate evaluation profiles")
-    for size, fraction, mode, constrained in combinations:
+    for size, fraction, mode, constrained, policy in combinations:
         if progress:
-            progress(f"start size={size} hard_fraction={fraction} mode={mode} constraints={constrained}")
+            progress(f"start size={size} hard_fraction={fraction} mode={mode} "
+                     f"constraints={constrained} evidence_policy={policy}")
         profiles.append(run_profile(suite, size=size, hard_fraction=fraction, mode=mode,
-                                    rounds=rounds, use_constraints=constrained))
+                                    rounds=rounds, use_constraints=constrained, evidence_policy=policy))
         if progress:
             summary = profiles[-1]["rounds"][0]["summary"]
             progress(f"done recall={summary['macro_recall_at_3']:.4f} "
@@ -309,6 +320,7 @@ def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .7
             "percentile": "nearest_rank", "rounds": rounds, "query_order": "frozen file order, no query warmup",
             "repetition_is_independent_sample": False, "controlled_snapshot_bypasses_ingestion": True,
             "quality_thresholds": {"macro_recall_at_3": .85, "no_answer_accuracy": .85, "p95_ms": 500},
+            "evidence_policies": list(evidence_policies),
             **({"constraint_modes": list(constraint_modes),
                 "constraint_source": "explicit input terms; never generated from relevance labels"}
                if suite_name != "complex_retrieval_v1" else {}),
@@ -322,5 +334,6 @@ def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .7
             "HashEmbedding only; not native SDK performance or a new V11 verification.",
             "Fixed .265 across local ablations is diagnostic, not a separately optimized threshold for each mode.",
             "RSS is current process; high-water mark covers process lifetime and excludes external model servers.",
+            "Optional content_coverage_v1 is lexical abstention, not entailment; it can reject supported paraphrases.",
         ],
     }

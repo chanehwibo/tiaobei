@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "name": "evidence_coverage_challenge_dev_v1",
+  "provenance": "公开对照暴露词面拒答副作用后补充的开发反例，不是预先隐藏的测试。",
+  "documents_from": "data/dev/evidence_coverage_v1.json",
+  "documents_sha256": "c615c042c4c912b1296c95f485fe28e108b442d4b7b025cf3457330ee4aa7a56",
+  "queries": [
+    {"id": "scale-long", "query": "昨天下午新来的同事把样品、空纸盒和登记簿堆在一起，隔壁型号的秤显示正常，经理正在催交报告；我需要计量台CAL-B9校准前静置和三次测量的规定", "expected": ["scale-operation"]},
+    {"id": "attachment-long", "query": "售后群聊里有客户催促、物流跟踪、私人聊天截图和另一台设备的照片，工程师担心漏传；我只查询维修工单附件中人员姓名和设备口令的处理方法", "expected": ["attachment-operation"]},
+    {"id": "keys-long", "query": "交班的人还没回来，走廊来了临时访客，楼下会议室有活动，我找到了贴有相近标签的钥匙；这次只查设备间钥匙领取时的工单和登记要求", "expected": ["keys-operation"]},
+    {"id": "clock-long", "query": "屏幕同时显示网络延迟、磁盘占用、交换机提示和员工考勤提醒，旁边测试电脑也重启了；我查询测量站时钟源切换后时间戳倒序的恢复方法", "expected": ["clock-evidence"]},
+    {"id": "scale-paraphrase", "query": "计量台测出的数值忽大忽小，可以只挑正常几项算均值再交结果吗", "expected": ["scale-evidence"]},
+    {"id": "keys-paraphrase", "query": "设备间借出去的开门用具少了一把，交班时应该找哪位负责安全的同事", "expected": ["keys-evidence"]},
+    {"id": "clock-procedure-absent", "query": "测量站时钟源受到太阳风暴影响时怎样计算电离层模型和卫星钟差", "expected": []},
+    {"id": "attachment-procedure-absent", "query": "维修工单附件如何根据模糊照片自动推导从未登记过的零件内部裂纹尺寸", "expected": []},
+    {"id": "keys-relation-absent", "query": "设备间钥匙当班工单借用登记都存在时，允许离岗转借的临时授权编号是什么", "expected": []},
+    {"id": "scale-relation-absent", "query": "计量台CAL-B9保留原始读数并提交检修后，下一次无需标准砝码校准的豁免记录编号是什么", "expected": []}
+  ]
+}

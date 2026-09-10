@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "name": "evidence_coverage_dev_v1",
+  "provenance": "开发者编写的虚构开发用例，不是现场事件、独立盲测或赛事样本。",
+  "policy": "在旧冻结集对照前固定0.5多数覆盖门槛；不更改相似度阈值0.265。",
+  "documents": [
+    {"id": "scale-operation", "title": "计量台CAL-B9的零点校准", "content": "计量台CAL-B9校准前静置十分钟，清空载物台，用标准砝码进行三次测量。记录三次读数和室温；未达到稳定状态时停止校准。"},
+    {"id": "scale-evidence", "title": "计量台CAL-B9的零点校准", "content": "三次读数偏差超过0.2克时，隔离本次结果并提交检修；保留原始读数，不能将异常值删除后重新计算平均值。"},
+    {"id": "attachment-operation", "title": "维修工单附件处理", "content": "维修工单附件先在本地去掉人员姓名和设备口令，再压缩上传。接收方仅能读取脱敏副本，原件保存在受限目录。"},
+    {"id": "attachment-evidence", "title": "维修工单附件处理", "content": "上传后检查附件数量和摘要，发现口令残留立即撤销分享链接，重新脱敏；保留撤回原因和新副本摘要。"},
+    {"id": "keys-operation", "title": "设备间钥匙借还", "content": "领取设备间钥匙需出示当班工单，由值班员核对门号并登记借用时间。钥匙禁止转借；离岗前交回值班柜。"},
+    {"id": "keys-evidence", "title": "设备间钥匙借还", "content": "交回钥匙时核对门号和数量，并由两人签收。发现钥匙缺失时通知安全员，暂停该门禁通道。"},
+    {"id": "clock-operation", "title": "测量站时钟源变更", "content": "切换测量站时钟源前暂停采样，保存当前偏移，确认候选时间源的签名。相差超过两秒时先校正，禁止直接回拨生产时间。"},
+    {"id": "clock-evidence", "title": "测量站时钟源变更", "content": "切换后检查采样时间戳单调递增，发现倒序时恢复原时钟源，保留变更前后的偏移及告警记录。"},
+    {"id": "english-operation", "title": "Laboratory cabinet handover", "content": "Cabinet handover requires a signed inventory and two reviewers. Keep the original inventory in the read-only archive."},
+    {"id": "english-evidence", "title": "Laboratory cabinet handover", "content": "After handover, compare the inventory count and record missing containers. A mismatch suspends further distribution."}
+  ],
+  "queries": [
+    {"id": "scale-1", "query": "计量台CAL-B9校准前静置多久，用标准砝码进行几次测量", "expected": ["scale-operation"]},
+    {"id": "scale-2", "query": "计量台CAL-B9三次读数偏差超过0.2克时怎样处理，是否保留原始读数", "expected": ["scale-evidence"]},
+    {"id": "scale-3", "query": "计量台CAL-B9的标准砝码采购单价和供应商税号是什么", "expected": []},
+    {"id": "scale-4", "query": "计量台CAL-B9的长期精度漂移保证和终身赔付额度是多少", "expected": []},
+    {"id": "attachment-1", "query": "维修工单附件怎样去掉人员姓名和设备口令，原件保存在什么目录", "expected": ["attachment-operation"]},
+    {"id": "attachment-2", "query": "维修工单附件上传后检查哪些内容，口令残留时怎样撤销分享链接", "expected": ["attachment-evidence"]},
+    {"id": "attachment-3", "query": "维修工单附件的图像压缩算法专利归属和授权费用是多少", "expected": []},
+    {"id": "attachment-4", "query": "维修工单附件上传到境外机房的电费分摊比例是多少", "expected": []},
+    {"id": "keys-1", "query": "设备间钥匙领取时需出示什么工单，借用时间由谁登记", "expected": ["keys-operation"]},
+    {"id": "keys-2", "query": "设备间钥匙交回后怎样核对门号和数量，钥匙缺失通知谁", "expected": ["keys-evidence"]},
+    {"id": "keys-3", "query": "设备间钥匙材料的热膨胀系数和冶炼温度是多少", "expected": []},
+    {"id": "keys-4", "query": "设备间钥匙丢失后的商业保险承保金额与免责条款是什么", "expected": []},
+    {"id": "clock-1", "query": "测量站时钟源变更前如何暂停采样和保存偏移，何时先校正", "expected": ["clock-operation"]},
+    {"id": "clock-2", "query": "测量站时钟源切换后时间戳倒序时怎样恢复并保留告警记录", "expected": ["clock-evidence"]},
+    {"id": "clock-3", "query": "测量站时钟源的卫星轨道倾角和地面天线采购预算是什么", "expected": []},
+    {"id": "clock-4", "query": "测量站时钟源的供应商破产后保证金清算日期是什么", "expected": []},
+    {"id": "english-1", "query": "What inventory and reviewers are required for Laboratory cabinet handover", "expected": ["english-operation"]},
+    {"id": "english-2", "query": "After Laboratory cabinet handover how should missing containers and a count mismatch be recorded", "expected": ["english-evidence"]},
+    {"id": "english-3", "query": "What is the patented thermal insulation coefficient of the Laboratory cabinet handover equipment", "expected": []},
+    {"id": "english-4", "query": "Which insurance settlement currency covers bankruptcy during Laboratory cabinet handover", "expected": []}
+  ]
+}
