@@ -14,8 +14,10 @@ from typing import Any
 
 try:
     from scripts.material_status import INITIAL_STATUS
+    from scripts.submission_links import planned_public_markdown
 except ModuleNotFoundError:
     from material_status import INITIAL_STATUS
+    from submission_links import planned_public_markdown
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -84,45 +86,6 @@ def _assert_local_source(project_root: Path, source: Path) -> None:
             raise PackagingError(f"公开来源包含链接: {source.name}")
 
 
-def _copy_public_file(
-    project_root: Path, source_text: str, target_root: Path, *, preserve_path: bool = False
-) -> Path:
-    relative = _safe_relative(source_text)
-    _assert_safe_public_file(relative)
-    source = project_root / relative
-    _assert_local_source(project_root, source)
-    if not source.is_file():
-        raise PackagingError(f"清单中的公开文件不存在: {relative.as_posix()}")
-    target = target_root / (relative if preserve_path else relative.name)
-    if target.exists():
-        raise PackagingError(f"清单目标重复: {target.name}")
-    target.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(source, target)
-    return target
-
-
-def _copy_public_tree(project_root: Path, source_text: str, target_root: Path) -> list[Path]:
-    relative = _safe_relative(source_text)
-    _assert_safe_public_file(relative)
-    source_root = project_root / relative
-    _assert_local_source(project_root, source_root)
-    if not source_root.is_dir():
-        raise PackagingError(f"清单中的公开目录不存在: {relative.as_posix()}")
-    copied: list[Path] = []
-    for source in sorted(path for path in source_root.rglob("*") if path.is_file()):
-        inner = source.relative_to(source_root)
-        if _is_blocked_public_file(inner):
-            continue
-        _assert_local_source(project_root, source)
-        target = target_root / relative / inner
-        if target.exists():
-            raise PackagingError(f"清单目标重复: {target.name}")
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, target)
-        copied.append(target)
-    return copied
-
-
 def _load_manifest(path: Path) -> dict[str, Any]:
     try:
         manifest = json.loads(path.read_text(encoding="utf-8"))
@@ -131,6 +94,80 @@ def _load_manifest(path: Path) -> dict[str, Any]:
     if manifest.get("schema_version") != 1:
         raise PackagingError("仅支持 schema_version=1 的打包清单")
     return manifest
+
+
+def plan_submission(project_root: Path, manifest: dict[str, Any]) -> list[dict[str, str]]:
+    """Validate an allowlist and resolve its layout without creating any output."""
+    project_root = project_root.resolve()
+    entries: dict[str, dict[str, str]] = {}
+
+    def add(source_text: str, target: Path, kind: str) -> None:
+        relative = _safe_relative(source_text)
+        _assert_safe_public_file(relative)
+        source = project_root / relative
+        _assert_local_source(project_root, source)
+        if not source.is_file():
+            raise PackagingError(f"清单中的公开文件不存在: {relative.as_posix()}")
+        _safe_relative(target.as_posix())
+        key = target.as_posix().casefold()
+        row = {"source": relative.as_posix(), "target": target.as_posix(), "kind": kind}
+        if key in entries and (kind == "public" or entries[key] != row):
+            raise PackagingError(f"清单目标重复: {target.as_posix()}")
+        entries[key] = row
+
+    for section in manifest["public_sections"]:
+        target = _safe_relative(section["target"])
+        for name in section["files"]:
+            add(name, target / _safe_relative(name).name, "public")
+    section = manifest["source_section"]
+    target = _safe_relative(section["target"])
+    mirrored = section["files"] + section.get("docs", [])
+    mirrored += [name for public in manifest["public_sections"] for name in public["files"]]
+    for name in sorted(set(mirrored)):
+        add(name, target / _safe_relative(name), "source")
+    for name in section["trees"]:
+        relative = _safe_relative(name)
+        _assert_safe_public_file(relative)
+        tree = project_root / relative
+        _assert_local_source(project_root, tree)
+        if not tree.is_dir():
+            raise PackagingError(f"清单中的公开目录不存在: {relative.as_posix()}")
+        for path in sorted(tree.rglob("*")):
+            if path.is_file() and not _is_blocked_public_file(path.relative_to(project_root)):
+                name = path.relative_to(project_root).as_posix()
+                add(name, target / name, "source")
+    for external in manifest["external_inputs"]:
+        _safe_relative(external["target"])
+    return list(entries.values())
+
+
+def preflight_submission(project_root: Path, manifest_path: Path) -> dict[str, Any]:
+    """Check future public links and files, not an archive that does not exist yet."""
+    manifest = _load_manifest(manifest_path)
+    entries = plan_submission(project_root, manifest)
+    try:
+        _texts, links = planned_public_markdown(project_root, entries)
+    except ValueError as exc:
+        raise PackagingError(str(exc)) from exc
+    return {
+        "schema_version": 1,
+        "passed": True,
+        "scope": "allowlist_and_public_markdown_layout_only_no_package_created",
+        "display_status": INITIAL_STATUS,
+        "competition_ready": False,
+        "planned_files": len(entries),
+        "public_markdown_links": links,
+        "source_mirror_is_byte_preserving": True,
+        "post_archive_companions": [
+            "<archive>.zip.sha256", "<archive>_CONTENTS_SHA256.txt", "<archive>_archive_report.json",
+        ],
+        "post_archive_rule": (
+            "Archive digests and post-seal audits live next to the ZIP, not inside the ZIP they hash. "
+            "Historical audits may be bundled only as evidence about their explicitly named older archive. "
+            "A later extraction/rebuild audit is a separate sidecar and is not implied by this preflight."
+        ),
+        "missing_external": [{"key": row["key"], "label": row["label"]} for row in manifest["external_inputs"]],
+    }
 
 
 def _validate_output(project_root: Path, output: Path) -> None:
@@ -181,23 +218,24 @@ def build_submission(
         labels = "、".join(item["label"] for item in missing)
         raise PackagingError(f"缺少正式提交所需外部材料: {labels}")
 
+    entries = plan_submission(project_root, manifest)
+    try:
+        public_markdown, links = planned_public_markdown(project_root, entries)
+    except ValueError as exc:
+        raise PackagingError(str(exc)) from exc
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = Path(tempfile.mkdtemp(prefix=f".{output.name}.building-", dir=output.parent)).resolve()
 
     copied: list[Path] = []
     try:
-        for section in manifest["public_sections"]:
-            target_root = temporary / section["target"]
-            for source_text in section["files"]:
-                copied.append(_copy_public_file(project_root, source_text, target_root))
-
-        source_root = temporary / source_section["target"]
-        mirrored_files = source_section["files"] + source_section.get("docs", [])
-        mirrored_files += [source for section in manifest["public_sections"] for source in section["files"]]
-        for source_text in sorted(set(mirrored_files)):
-            copied.append(_copy_public_file(project_root, source_text, source_root, preserve_path=True))
-        for source_text in source_section["trees"]:
-            copied.extend(_copy_public_tree(project_root, source_text, source_root))
+        for row in entries:
+            target = temporary / row["target"]
+            target.parent.mkdir(parents=True, exist_ok=True)
+            if row["target"] in public_markdown:
+                target.write_text(public_markdown[row["target"]], encoding="utf-8")
+            else:
+                shutil.copy2(project_root / row["source"], target)
+            copied.append(target)
 
         for item in manifest["external_inputs"]:
             source = supplied.get(item["key"])
@@ -234,6 +272,8 @@ def build_submission(
             "competition_ready": False,
             "built_at_utc": datetime.now(timezone.utc).isoformat(),
             "missing_external": missing,
+            "public_markdown_links": links,
+            "source_mirror_is_byte_preserving": True,
             "files": [],
         }
         for path in sorted(copied):
@@ -262,6 +302,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--registration-form", type=Path)
     parser.add_argument("--real-case", type=Path)
     parser.add_argument("--kylin-report", type=Path)
+    parser.add_argument("--preflight-only", action="store_true",
+                        help="只核对允许列表和公开文档链接，不创建暂存目录或压缩包")
+    parser.add_argument("--preflight-report", type=Path,
+                        help="可选：将预检结果写入新的JSON文件，拒绝覆盖")
     parser.add_argument(
         "--allow-incomplete",
         action="store_true",
@@ -283,9 +327,19 @@ def main(argv: list[str] | None = None) -> int:
             sys.path.insert(0, str(PROJECT_ROOT))
             from scripts.build_review_submission import MANIFEST
             from scripts.generate_review_materials import OUTPUT, verify_outputs
-            if not verify_outputs(PROJECT_ROOT, PROJECT_ROOT / OUTPUT)["passed"]:
+            if not args.preflight_only and not verify_outputs(PROJECT_ROOT, PROJECT_ROOT / OUTPUT)["passed"]:
                 raise PackagingError("当前材料与源码校验失败，请先重生成审阅材料")
             args.manifest = PROJECT_ROOT / MANIFEST
+        if args.preflight_report and not args.preflight_only:
+            raise PackagingError("--preflight-report 只能与 --preflight-only 一起使用")
+        if args.preflight_only:
+            report = preflight_submission(PROJECT_ROOT, args.manifest)
+            if args.preflight_report:
+                args.preflight_report.parent.mkdir(parents=True, exist_ok=True)
+                with args.preflight_report.open("x", encoding="utf-8") as stream:
+                    stream.write(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+            print(json.dumps(report, ensure_ascii=False, indent=2))
+            return 0
         report = build_submission(
             project_root=PROJECT_ROOT,
             output=args.output,

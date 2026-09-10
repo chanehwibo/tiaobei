@@ -390,7 +390,9 @@
       "docs/12_部署手册.md",
       "docs/13_API文档.md",
       "docs/14_可复现指南.md",
-      "docs/15_源代码模块说明.md"
+      "docs/15_源代码模块说明.md",
+      "docs/41_复杂约束场景补测.md",
+      "docs/42_四项反馈复核与验收.md"
     ]
   },
   "external_inputs": [
