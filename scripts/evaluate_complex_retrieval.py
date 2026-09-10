@@ -9,7 +9,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from os_agent_memory.complex_retrieval import SUITES, run_complex_evaluation
-from os_agent_memory.retrieval_evidence import POLICIES
+from os_agent_memory.retrieval_evidence import DEFAULT_POLICY, POLICIES
 
 
 def main(argv=None):
@@ -21,7 +21,7 @@ def main(argv=None):
     parser.add_argument("--rounds", type=int, default=3)
     parser.add_argument("--suite", choices=tuple(SUITES), default="complex_retrieval_v1")
     parser.add_argument("--constraints", choices=("none", "enforce", "compare"), default="none")
-    parser.add_argument("--evidence-policy", choices=(*POLICIES, "compare"), default="similarity")
+    parser.add_argument("--evidence-policy", choices=(*POLICIES, "compare"), default=DEFAULT_POLICY)
     parser.add_argument("--require-targets", action="store_true")
     args = parser.parse_args(argv)
     if args.output.exists():
@@ -39,7 +39,8 @@ def main(argv=None):
     with args.output.open("x", encoding="utf-8") as stream:
         stream.write(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps({key: report[key] for key in
-                      ("dataset", "quality_targets_met", "safety_passed", "latency_target_met", "all_targets_met")},
+                      ("dataset", "quality_targets_met", "strict_quality_targets_met",
+                       "safety_passed", "latency_target_met", "all_targets_met")},
                      ensure_ascii=False, indent=2))
     valid = report["source_unchanged_during_run"] and report["safety_passed"]
     return 0 if valid and (not args.require_targets or report["all_targets_met"]) else 2

@@ -1,18 +1,63 @@
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from os_agent_memory.focused_evidence import (
-    POLICY, answer_facets, bundle_supported, normalize_quantities, query_focus, select_evidence, subject_key,
+    POLICY, answer_facets, bundle_supported, is_answer_request, normalize_quantities, query_focus,
+    select_evidence, subject_key,
 )
 from os_agent_memory.memory_store import MemoryStore
+from os_agent_memory.retrieval_evidence import DEFAULT_POLICY
 from os_agent_memory.schemas import MemoryStatus
+from os_agent_memory.service import MemoryService, to_primitive
 from tests.test_evidence_constraints import document
 
 
 class FocusedEvidenceTest(unittest.TestCase):
+    def test_default_store_service_and_reload_use_focused_policy(self):
+        store = MemoryStore()
+        store.upsert_knowledge(document("seed", "calibration readout procedure",
+                                        title="Sensor H7 procedure"))
+        store.upsert_knowledge(document("support", "two reviewers approve calibration",
+                                        title="Sensor H7 requirements"))
+        options = dict(tenant_id="tenant", user_id="operator", top_k=3, min_score=0)
+        query = "what calibration readout and reviewers are required for sensor h7"
+        explicit = store.search_knowledge(query, evidence_policy=POLICY, **options)
+        self.assertEqual(DEFAULT_POLICY, POLICY)
+        self.assertEqual({row.memory_id for row in explicit}, {"seed", "support"})
+        self.assertEqual(store.search_knowledge(query, **options), explicit)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "memory.sqlite"
+            service = MemoryService(store, database_path=path)
+            self.assertEqual(service.search(query, **options), to_primitive(explicit))
+            service.save()
+            reloaded = MemoryService(database_path=path)
+            self.assertEqual(reloaded.search(query, **options), to_primitive(explicit))
+            unsupported = "what insurance settlement currency covers sensor h7"
+            self.assertEqual(reloaded.search(unsupported, **options), [])
+            self.assertTrue(reloaded.search(unsupported, evidence_policy="similarity", **options))
+
+    def test_keyword_lookup_preserves_scores_without_claiming_answer_support(self):
+        store = MemoryStore()
+        store.upsert_knowledge(document("one", "inventory signoff count", title="cabinet handover"))
+        options = dict(tenant_id="tenant", user_id="operator", min_score=0)
+        query = "cabinet handover"
+        results = to_primitive(store.search_knowledge(query, **options))
+        legacy = to_primitive(store.search_knowledge(query, evidence_policy="similarity", **options))
+        for current, original in zip(results, legacy):
+            self.assertEqual({k: v for k, v in current.items() if k != "evidence"},
+                             {k: v for k, v in original.items() if k != "evidence"})
+            self.assertEqual(current["evidence"]["origin"], "ranked_lookup")
+            self.assertIsNone(current["evidence"]["coverage"])
+        self.assertTrue(results)
+        for question in ("what inventory is required", "\u4f55\u65f6\u5f52\u8fd8",
+                         "\u6211\u9700\u8981\u5f52\u8fd8\u6d41\u7a0b", "sensor prerequisites"):
+            self.assertTrue(is_answer_request(question), question)
+        self.assertFalse(is_answer_request("automobile maintenance"))
+
     def test_focus_drops_narration_but_not_an_earlier_question(self):
         self.assertEqual(query_focus("\u80cc\u666f\u8bb0\u5f55\uff1b\u6211\u53ea\u67e5\u8be2\u5de5\u5177\u89c4\u5b9a"),
                          "\u5de5\u5177\u89c4\u5b9a")
@@ -107,7 +152,7 @@ class FocusedEvidenceTest(unittest.TestCase):
                                         title="Cabinet H7 policy"))
         options = dict(tenant_id="tenant", user_id="operator", scene="office",
                        evidence_policy=POLICY, min_score=0)
-        query = "cabinet h7 inventory insurance settlement currency"
+        query = "what inventory insurance settlement currency covers cabinet h7"
         self.assertTrue(store.search_knowledge(query, **options))
         store.upsert_knowledge(document("support", "unrelated maintenance diagram", title="Cabinet H7 policy"))
         store.rebuild_index()
@@ -126,7 +171,7 @@ class FocusedEvidenceTest(unittest.TestCase):
         store.upsert_knowledge(document("support", "AE-170 insurance settlement currency",
                                         title="Cabinet H7 policy"))
         self.assertEqual(store.search_knowledge(
-            "AE-17 insurance settlement currency", tenant_id="tenant", user_id="operator",
+            "what insurance settlement currency covers AE-17", tenant_id="tenant", user_id="operator",
             evidence_policy=POLICY, required_terms=["AE-17"], min_score=0), [])
 
     def test_scope_lifecycle_and_metadata_cannot_supply_support(self):
@@ -141,7 +186,7 @@ class FocusedEvidenceTest(unittest.TestCase):
             store.upsert_knowledge(document(str(number), "insurance settlement currency",
                                             title="Cabinet H7 requirements", **values))
         self.assertEqual(store.search_knowledge(
-            "cabinet h7 insurance settlement currency", tenant_id="tenant", user_id="operator",
+            "what insurance settlement currency covers cabinet h7", tenant_id="tenant", user_id="operator",
             scene="office", evidence_policy=POLICY, min_score=0), [])
 
 

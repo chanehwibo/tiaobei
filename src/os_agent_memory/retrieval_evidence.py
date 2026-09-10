@@ -4,7 +4,8 @@ from __future__ import annotations
 import re
 
 
-POLICIES = ("similarity", "content_coverage_v1", "focused_evidence_v2")
+DEFAULT_POLICY = "focused_evidence_v2"
+POLICIES = ("similarity", "content_coverage_v1", DEFAULT_POLICY)
 MIN_COVERAGE = 0.5
 PARTS = re.compile(r"[a-z0-9_]+|[\u3400-\u9fff]+")
 CJK = re.compile(r"[\u3400-\u9fff]+")

@@ -16,7 +16,7 @@ from os_agent_memory.complex_retrieval import (
     grouped_summaries, make_corpus, score_request, strict_quality_passed, summarize_rows, validate_suite, visible,
 )
 from os_agent_memory.focused_evidence import (
-    POLICY as FOCUSED_EVIDENCE, bundle_supported, normalize_quantities, query_focus, subject_key,
+    POLICY as FOCUSED_EVIDENCE, bundle_supported, is_answer_request, normalize_quantities, query_focus, subject_key,
     support_coverage, support_focus,
 )
 from os_agent_memory.memory_store import MemoryStore, _normalize_search_text
@@ -39,6 +39,15 @@ def validate_evidence_row(query, row, documents, policy, *, constrained=False, r
         return
     if not row["returned"]:
         return
+    keys = {"policy", "direct_score", "origin", "seed_id", "coverage", "document_score", "passage_score"}
+    if not is_answer_request(_normalize_search_text(query["query"])):
+        for identifier, item, score in zip(row["returned"], metadata, row["scores"]):
+            if (not isinstance(item, dict) or set(item) != keys or item["policy"] != policy
+                    or item["origin"] != "ranked_lookup" or item["seed_id"] != identifier
+                    or item["coverage"] is not None or score < CONFIGURATION["min_score"]
+                    or any(item[key] != score for key in ("direct_score", "document_score", "passage_score"))):
+                raise ValueError("invalid ranked lookup attribution")
+        return
     fields = [tuple(_normalize_search_text(documents[key][field]).lower()
                     for field in ("title", "content")) for key in row["returned"]]
     text = normalize_quantities(query_focus(_normalize_search_text(query["query"]))).lower()
@@ -48,7 +57,6 @@ def validate_evidence_row(query, row, documents, policy, *, constrained=False, r
     coverage = round(support_coverage(support_focus(text), fields, constraints=constraints), 4)
     seed_id = row["returned"][0]
     subject = subject_key(fields[0][0])
-    keys = {"policy", "direct_score", "origin", "seed_id", "coverage", "document_score", "passage_score"}
     for index, (item, score) in enumerate(zip(metadata, row["scores"])):
         if not isinstance(item, dict) or set(item) != keys:
             raise ValueError("invalid evidence attribution fields")

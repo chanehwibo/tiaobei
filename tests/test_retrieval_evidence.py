@@ -35,19 +35,18 @@ class RetrievalEvidenceTest(unittest.TestCase):
                                          [(t.lower(), c.lower()) for t, c in docs],
                                          constraints=constraints), 0)
 
-    def test_default_is_unchanged_and_guard_only_abstains_without_rescoring(self):
+    def test_legacy_guard_only_abstains_without_rescoring(self):
         store = MemoryStore()
         store.upsert_knowledge(document("one", "inventory signoff count", title="cabinet handover"))
         options = {"tenant_id": "tenant", "user_id": "operator", "min_score": 0}
         service = MemoryService(store)
         query = "cabinet handover insurance settlement currency"
-        original = service.search(query, **options)
+        original = service.search(query, evidence_policy="similarity", **options)
         self.assertTrue(original)
-        self.assertEqual(service.search(query, evidence_policy="similarity", **options), original)
         self.assertEqual(service.search(query, evidence_policy="content_coverage_v1", **options), [])
         query = "cabinet handover inventory count"
         self.assertEqual(service.search(query, evidence_policy="content_coverage_v1", **options),
-                         service.search(query, **options))
+                         service.search(query, evidence_policy="similarity", **options))
 
     def test_hidden_records_and_tags_cannot_supply_coverage(self):
         store = MemoryStore()

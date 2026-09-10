@@ -11,9 +11,9 @@ from heapq import nlargest, nsmallest
 from .embeddings import EmbeddingProvider, HashEmbedding, cosine_similarity
 from .focused_evidence import (
     POLICY as FOCUSED_EVIDENCE, body_passages, evidence_text, normalize_quantities,
-    query_focus, select_evidence, support_focus,
+    is_answer_request, lookup_attribution, query_focus, select_evidence, support_focus,
 )
-from .retrieval_evidence import MIN_COVERAGE, POLICIES, content_coverage
+from .retrieval_evidence import DEFAULT_POLICY, MIN_COVERAGE, POLICIES, content_coverage
 from .schemas import (
     AuditEvent,
     ForgetPlan,
@@ -276,7 +276,7 @@ class MemoryStore:
         now: str | None = None,
         retrieval_mode: str = "hybrid",
         required_terms: list[str] | tuple[str, ...] | None = None,
-        evidence_policy: str = "similarity",
+        evidence_policy: str = DEFAULT_POLICY,
     ) -> list[SearchResult]:
         if retrieval_mode not in {"hybrid", "lexical", "semantic"}:
             raise ValueError("unknown retrieval_mode")
@@ -288,7 +288,8 @@ class MemoryStore:
         query = _normalize_search_text(query).strip()
         if not query:
             return []
-        if evidence_policy == FOCUSED_EVIDENCE:
+        focused_answer = evidence_policy == FOCUSED_EVIDENCE and is_answer_request(query)
+        if focused_answer:
             query = normalize_quantities(query_focus(query))
         if candidate_limit is None:
             candidate_limit = max(64, top_k * 12)
@@ -392,7 +393,7 @@ class MemoryStore:
 
         scored: list[tuple[float, KnowledgeMemory, float, float, float]] = []
         direct_details = {}
-        if evidence_policy == FOCUSED_EVIDENCE:
+        if focused_answer:
             focused = evidence_text(support_focus(query.lower()))
             focused_tokens = self._lexical_tokens(focused)
             focused_characters = self._chinese_characters(focused)
@@ -412,7 +413,7 @@ class MemoryStore:
                 score = lexical_score
             elif retrieval_mode == "semantic":
                 score = semantic_score
-            if evidence_policy == FOCUSED_EVIDENCE:
+            if focused_answer:
                 document_score = score
                 passage_score = score
                 if retrieval_mode == "hybrid":
@@ -425,17 +426,19 @@ class MemoryStore:
                     score = passage_score
                 direct_details[item.id] = {"document_score": document_score,
                                           "passage_score": passage_score}
-            if score < min_score and evidence_policy != FOCUSED_EVIDENCE:
+            if score < min_score and not focused_answer:
                 continue
             scored.append((score, item, lexical_score, semantic_score, character_score))
         ranked = nsmallest(top_k, scored, key=lambda row: (-row[0], row[1].id))
         evidence = {}
-        if evidence_policy == FOCUSED_EVIDENCE:
+        if focused_answer:
             ranked, evidence = select_evidence(
                 query, scored, top_k=top_k, min_score=min_score, constraints=constraints,
                 normalize=lambda text: _normalize_search_text(text).lower(),
                 direct_details=direct_details,
             )
+        elif evidence_policy == FOCUSED_EVIDENCE:
+            evidence = lookup_attribution(ranked)
         if evidence_policy == "content_coverage_v1":
             documents = [
                 tuple(_normalize_search_text(text).lower() for text in (item.title, item.content))

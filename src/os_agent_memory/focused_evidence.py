@@ -18,7 +18,7 @@ FOCUS_CUE = re.compile(
 )
 INTERROGATIVE = re.compile(
     r"\u4ec0\u4e48|\u5982\u4f55|\u600e\u6837|\u600e\u4e48|\u54ea|\u8c01|"
-    r"\u591a\u5c11|\u591a\u4e45|\u80fd\u5426|\u662f\u5426|[?\uff1f]|"
+    r"\u591a\u5c11|\u591a\u4e45|\u80fd\u5426|\u662f\u5426|\u4f55\u65f6|\u51e0\u6b21|\u5417|[?\uff1f]|"
     r"\b(?:what|which|how|where|when|why)\b"
 )
 SCAFFOLDING = re.compile(
@@ -56,6 +56,24 @@ PREREQUISITE_BODY = re.compile(
     r"\u6267\u884c\u6761\u4ef6|\u4ec5\u5728|\u53ea\u6709.+\u624d|"
     r"\b(?:only if|provided that|preconditions|prerequisites)\b"
 )
+DIRECTIVE = re.compile(r"(?:^|[,\uff0c;\uff1b\u3002.!?\n])\s*(?:\u8bf7|\u67e5(?:\u8be2)?)")
+
+
+def is_answer_request(query: str) -> bool:
+    """Separate explicit questions/instructions from ordinary keyword lookup."""
+    query = query.lower()
+    return bool(INTERROGATIVE.search(query) or FOCUS_CUE.search(query)
+                or PREREQUISITE_REQUEST.search(query) or DIRECTIVE.search(query))
+
+
+def lookup_attribution(ranked):
+    """A similarity lookup is not evidence that an unstated question is answered."""
+    return {
+        row[1].id: {"policy": POLICY, "origin": "ranked_lookup", "seed_id": row[1].id,
+                    "direct_score": round(row[0], 4), "document_score": round(row[0], 4),
+                    "passage_score": round(row[0], 4), "coverage": None}
+        for row in ranked
+    }
 
 
 def normalize_quantities(text: str) -> str:

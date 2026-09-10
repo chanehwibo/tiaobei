@@ -17,6 +17,7 @@ from .lifecycle import MemoryLifecycleManager
 from .schemas import DataRecord, SourceType, ToolStatus, ForgetPlan, IngestionIssue, stable_id
 from .provider_config import create_provider, provider_identity
 from .demo import DEMO_TENANT, DEMO_USER, scenario_records
+from .retrieval_evidence import DEFAULT_POLICY
 
 
 def to_primitive(value: Any) -> Any:
@@ -155,7 +156,7 @@ class MemoryService:
         include_pending: bool = False,
         retrieval_mode: str = "hybrid",
         required_terms: list[str] | tuple[str, ...] | None = None,
-        evidence_policy: str = "similarity",
+        evidence_policy: str = DEFAULT_POLICY,
     ) -> list[dict[str, Any]]:
         results = self.store.search_knowledge(
             query,

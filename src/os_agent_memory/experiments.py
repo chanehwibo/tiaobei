@@ -9,14 +9,19 @@ from time import perf_counter
 from .evaluation import build_store_from_raw_records
 from .ingestion import DataIngestionPipeline
 from .preference import PreferenceExtractor
+from .retrieval_evidence import DEFAULT_POLICY
 from .service import MemoryService
+
+
+CALIBRATION_POLICY = "similarity"
 
 
 def split_rows(suite, section, split):
     return [row for row in suite.get(section, []) if row["split"] == split]
 
 
-def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, include_pending=False, embedding_config=None):
+def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, include_pending=False,
+                    embedding_config=None, evidence_policy=DEFAULT_POLICY):
     store = build_store_from_raw_records(split_rows(suite, "records", split), embedding_config=embedding_config)
     underlying = store.embedding
     class CountingProvider:
@@ -37,6 +42,7 @@ def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, inclu
         hits = store.search_knowledge(
             query["query"], tenant_id=query["tenant_id"], user_id=query["user_id"],
             top_k=3, min_score=threshold, include_pending=include_pending,
+            evidence_policy=evidence_policy,
             **({"retrieval_mode": mode} if mode != "hybrid" else {}),
         )
         elapsed = (perf_counter() - started) * 1000
@@ -57,6 +63,7 @@ def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, inclu
     empty_accuracy = sum(negatives) / len(negatives) if negatives else 0
     return {
         "split": split, "mode": mode, "threshold": threshold, "cache": cache,
+        "evidence_policy": evidence_policy,
         "positive_queries": len(positives), "no_answer_queries": len(negatives),
         "positive_queries_fully_recalled": sum(value == 1 for value in positives),
         "no_answer_correct": sum(negatives),
@@ -70,8 +77,11 @@ def retrieval_trial(suite, split, threshold, *, mode="hybrid", cache=True, inclu
 
 
 def select_threshold(suite, *, mode="hybrid", embedding_config=None):
-    # Does not inspect test records, queries or labels.
-    trials = [retrieval_trial(suite, "dev", value / 100, mode=mode, embedding_config=embedding_config) for value in range(8, 81)]
+    # Reproduce the original dev calibration; a new evidence policy must not
+    # silently retune the deployed .265 threshold or inspect test labels.
+    trials = [retrieval_trial(suite, "dev", value / 100, mode=mode,
+                              embedding_config=embedding_config, evidence_policy=CALIBRATION_POLICY)
+              for value in range(8, 81)]
     def objective(row):
         return (row["balanced_score"], min(row["positive_recall_at_3"], row["no_answer_accuracy"]),
                 row["positive_recall_at_3"])
@@ -94,6 +104,7 @@ def select_threshold(suite, *, mode="hybrid", embedding_config=None):
     return {
         "selected_on": "dev", "mode": mode, "threshold": threshold,
         "scoring_version": "hybrid-cjk-character-v1",
+        "calibration_evidence_policy": CALIBRATION_POLICY,
         "dev_operating_region": [plateau[0], plateau[-1]],
         "dev_targets_feasible": bool(feasible), "minimum_per_metric": .85,
         "dev_sha256": digest, "selection": "widest dev region meeting both 85% targets, midpoint; balanced fallback if infeasible",
@@ -108,6 +119,8 @@ def evaluate_frozen(suite, *, embedding_config=None):
         "dataset": suite["name"], "independent_blind": False, "configuration": config,
         "dataset_sha256": hashlib.sha256(json.dumps(suite, ensure_ascii=False, sort_keys=True).encode()).hexdigest(),
         "test": trial, "quality_targets": quality_targets(trial),
+        "evaluation_evidence_policy": DEFAULT_POLICY,
+        "threshold_boundary": "historical similarity dev calibration retained; current policy evaluated without retuning",
         "limitations": suite.get("limitations", []),
     }
 
@@ -223,10 +236,11 @@ def run_ablations(suite):
     comparisons = []
     for mode in ("lexical", "semantic", "hybrid"):
         config = select_threshold(suite, mode=mode)
-        trial = retrieval_trial(suite, "test", config["threshold"], mode=mode)
+        trial = retrieval_trial(suite, "test", config["threshold"], mode=mode,
+                                evidence_policy=CALIBRATION_POLICY)
         comparisons.append({"configuration": config, "result": trial})
     threshold = comparisons[-1]["configuration"]["threshold"]
-    uncached = retrieval_trial(suite, "test", threshold, cache=False)
+    uncached = retrieval_trial(suite, "test", threshold, cache=False, evidence_policy=CALIBRATION_POLICY)
     raw = []
     for index, (content, timestamp) in enumerate((
         ("偏好：输出保持简洁，直接给结论。", "2025-01-01T00:00:00+00:00"),

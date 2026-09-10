@@ -17,7 +17,8 @@ class RetrievalComparisonTest(unittest.TestCase):
     def setUpClass(cls):
         cls.suite = json.loads((ROOT / "data/eval/complex_retrieval_v1.json").read_bytes())
         with patch.dict(os.environ, {"PYTHONHASHSEED": "0"}):
-            cls.before = run_complex_evaluation(ROOT, sizes=(132,), hard_fractions=(0,), rounds=1)
+            cls.before = run_complex_evaluation(ROOT, sizes=(132,), hard_fractions=(0,), rounds=1,
+                                                evidence_policies=("similarity",))
         # Synthetic paired timings test the verifier, not a performance claim.
         cls.after = deepcopy(cls.before)
         cls.after["source_sha256"]["src/os_agent_memory/memory_store.py"] = "0" * 64

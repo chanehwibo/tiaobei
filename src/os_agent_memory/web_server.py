@@ -8,6 +8,7 @@ from urllib.parse import parse_qs, urlparse
 
 from .service import MemoryService
 from .memory_store import MemoryStore
+from .retrieval_evidence import DEFAULT_POLICY
 
 
 MAX_REQUEST_BYTES = 1_000_000
@@ -83,7 +84,7 @@ def create_server(
                         min_score=float(body.get("min_score", MemoryStore.DEFAULT_MIN_SCORE)),
                         retrieval_mode=body.get("retrieval_mode", "hybrid"),
                         required_terms=body.get("required_terms"),
-                        evidence_policy=body.get("evidence_policy", "similarity"),
+                        evidence_policy=body.get("evidence_policy", DEFAULT_POLICY),
                     )
                 elif parsed.path == "/api/conflicts/resolve":
                     result = service.resolve_conflict(

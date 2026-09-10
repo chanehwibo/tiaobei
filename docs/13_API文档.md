@@ -26,7 +26,7 @@ service = MemoryService(database_path="artifacts/runtime/memory.sqlite")
 
 返回当前 active 偏好，按 key 排序。scene 存在时只返回全局或适用该场景的偏好。
 
-### `search(query, tenant_id, user_id, scene=None, top_k=5, min_score=0.265, include_pending=False, retrieval_mode="hybrid", required_terms=None, evidence_policy="similarity")`
+### `search(query, tenant_id, user_id, scene=None, top_k=5, min_score=0.265, include_pending=False, retrieval_mode="hybrid", required_terms=None, evidence_policy="focused_evidence_v2")`
 
 返回带综合、词法、语义分数的知识列表。业务回答不得把 `include_pending` 设为 true；该选项仅用于冲突诊断。
 
@@ -40,13 +40,24 @@ service = MemoryService(database_path="artifacts/runtime/memory.sqlite")
 出现词项不代表文档支持其中的条件关系，也不代表内容可信。多条知识分别提供不同证据时，
 应拆分请求或只指定各条共同的实体约束，不能要求每条同时包含所有答案词。
 
-`evidence_policy` 默认`similarity`，原排序及阈值不变。
-实验值`content_coverage_v1`会对top_k结果的标题/正文做查询词面覆盖检查，
-折扣共同标题和显式实体词，覆盖不足0.5时返回空数组；不重排、不改分，
-不把标签或其他作用域的材料当作证据。HTTP支持同名字段，未知值返回400。
-**该实验策略有明显误拒答，不建议作为默认业务策略**，详见
-[正文证据检查与反例](44_正文证据检查与反例.md)。
-词面覆盖通过不等于关系正确、否定推理通过或答案已经核验。
+`evidence_policy` 默认`focused_evidence_v2`，库、服务、HTTP及复杂评测入口保持一致：
+
+- 明确问句、指令及前置条件请求：聚焦所问内容，允许中文数量等价，检查授权标题/正文的支持。
+  主种子须达到固定0.265门槛；同一精确主题的不同章节按新增证据补全，最多返回top_k条。
+  仅实际返回的文档可证明覆盖，不能借用未返回、已删除或其他作用域的文档。
+- 普通关键词查找：保留原候选、分数及排序，结果标记为`ranked_lookup`，不宣称已回答问题。
+- 属性问题另检查正文片段；覆盖不足0.5时返回空数组。标签、来源ID和评测标签均不充当支持。
+
+结果增加`evidence`字段：`origin`区分`direct`、`subject_companion`及`ranked_lookup`；
+`seed_id`给出主题束的种子；`document_score`、`passage_score`和`direct_score`保留计分来源。
+章节补全的顶层`score`为主题束相关度，**不等于该章节独立相似度或答案正确概率**。
+`coverage`只表示词面支持比例；关键词查找时为null。片段计分复用已有查询向量，不新增模型调用。
+
+显式`similarity`仍可复现旧相似度检索；`content_coverage_v1`保留为非默认历史实验，
+只检查原top_k且不改排序，其已知误拒与召回损失见[正文证据检查与反例](44_正文证据检查与反例.md)。
+HTTP支持同名字段，未知值返回400。0.265沿用旧v3开发集校准，新策略未重新调阈值。
+词面检查和精确标题章节关联不是语义蕴含、否定推理或通用多跳推理；调用方仍须核验答案，
+真实SDK或新领域不能直接沿用本地合成回归结论。
 
 ### conflicts(tenant_id, user_id) / resolve_conflict(memory_id, tenant_id, user_id, strategy="auto")
 

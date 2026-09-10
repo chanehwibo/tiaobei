@@ -20,7 +20,7 @@ class FocusedEvidenceReportTest(unittest.TestCase):
         cls.suite = json.loads((ROOT / CONSTRAINT_SUITE_PATH).read_bytes())
         cls.report = run_complex_evaluation(
             ROOT, suite_name="complex_constraints_v1", sizes=(78,), hard_fractions=(0,),
-            rounds=1, constraint_modes=(True,), evidence_policies=(POLICY,),
+            rounds=1, constraint_modes=(True,),
         )
 
     def test_recounts_complete_evidence_separately_from_average_recall(self):
@@ -44,6 +44,7 @@ class FocusedEvidenceReportTest(unittest.TestCase):
     def test_current_evidence_is_recountable_with_no_quality_failures(self):
         validate_report(self.report, self.suite)
         self.assertEqual(self.report["schema_version"], 2)
+        self.assertEqual(self.report["method"]["evidence_policies"], [POLICY])
         self.assertTrue(self.report["strict_quality_targets_met"])
         self.assertFalse(self.report["independent_blind"])
         self.assertFalse(self.report["competition_ready"])

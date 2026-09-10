@@ -17,7 +17,7 @@ from .resources import resource_snapshot, resource_usage
 from .schemas import KnowledgeMemory, MemoryStatus
 from .service import MemoryService
 from .memory_store import MemoryStore, _normalize_search_text
-from .retrieval_evidence import MIN_COVERAGE, POLICIES
+from .retrieval_evidence import DEFAULT_POLICY, MIN_COVERAGE, POLICIES
 
 FROZEN_SHA256 = "04b9a5266535e40a4542ae4647a4bba51aabf8edc32bd3a169713a4c4c1f2212"
 CONFIGURATION = {"top_k": 3, "min_score": .265, "dimensions": 256, "ngram": 2}
@@ -232,7 +232,7 @@ def strict_quality_passed(completion):
 
 
 def run_profile(suite, *, size, hard_fraction, mode, rounds, use_constraints=False,
-                evidence_policy="similarity"):
+                evidence_policy=DEFAULT_POLICY):
     if (mode not in MODES or type(rounds) is not int or rounds <= 0
             or type(use_constraints) is not bool or evidence_policy not in POLICIES):
         raise ValueError("invalid retrieval mode or repetition count")
@@ -293,7 +293,7 @@ def run_profile(suite, *, size, hard_fraction, mode, rounds, use_constraints=Fal
 def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .75),
                            rounds=3, modes=("hybrid",), progress=None,
                            suite_name="complex_retrieval_v1", constraint_modes=(False,),
-                           evidence_policies=("similarity",)):
+                           evidence_policies=(DEFAULT_POLICY,)):
     root = Path(root)
     suite_path, suite_sha256 = SUITES[suite_name]
     if (not constraint_modes or any(type(value) is not bool for value in constraint_modes)

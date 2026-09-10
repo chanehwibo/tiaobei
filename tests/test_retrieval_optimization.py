@@ -109,6 +109,7 @@ class RetrievalOptimizationTest(unittest.TestCase):
                                 query, retrieval_mode=mode, top_k=top_k, candidate_limit=limit, min_score=threshold,
                                 include_pending=pending, include_shared=shared, scene=scene,
                                 tenant_id="tenant", user_id="user", now=NOW,
+                                evidence_policy="similarity",
                             )
                             self.assertEqual(expected, [(hit.memory_id, hit.score, hit.lexical_score,
                                                          hit.semantic_score, hit.character_score) for hit in hits])

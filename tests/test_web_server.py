@@ -13,7 +13,9 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from os_agent_memory.service import MemoryService
 from os_agent_memory.schemas import KnowledgeMemory
+from os_agent_memory.retrieval_evidence import DEFAULT_POLICY
 from os_agent_memory.web_server import create_server, dashboard_html
+from tests.test_evidence_constraints import document
 
 
 class WebServerTest(unittest.TestCase):
@@ -118,6 +120,21 @@ class WebServerTest(unittest.TestCase):
                 self.post_json("/api/search", {**body, **change})
             self.assertEqual(caught.exception.code, 400)
             caught.exception.close()
+
+    def test_http_default_completes_evidence_and_rejects_unsupported_property(self):
+        self.service.store.upsert_knowledge(document(
+            "seed", "calibration readout procedure", title="Sensor H7 procedure"))
+        self.service.store.upsert_knowledge(document(
+            "support", "two reviewers approve calibration", title="Sensor H7 requirements"))
+        body = {"query": "what calibration readout and reviewers are required for sensor h7",
+                "tenant_id": "tenant", "user_id": "operator", "top_k": 3, "min_score": 0}
+        results = self.post_json("/api/search", body)
+        self.assertEqual({row["memory_id"] for row in results}, {"seed", "support"})
+        self.assertTrue(all(row["evidence"]["policy"] == DEFAULT_POLICY for row in results))
+        self.assertEqual(results, self.post_json("/api/search", {**body, "evidence_policy": DEFAULT_POLICY}))
+        body["query"] = "what insurance settlement currency covers sensor h7"
+        self.assertEqual(self.post_json("/api/search", body), [])
+        self.assertTrue(self.post_json("/api/search", {**body, "evidence_policy": "similarity"}))
 
     def test_confirm_rejects_another_user_and_null_scope(self):
         preview = self.post_json("/api/forget/preview", {

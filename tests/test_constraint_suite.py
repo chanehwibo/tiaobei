@@ -23,7 +23,7 @@ class ConstraintSuiteTest(unittest.TestCase):
         cls.suite = json.loads((ROOT / CONSTRAINT_SUITE_PATH).read_bytes())
         cls.report = run_complex_evaluation(
             ROOT, suite_name="complex_constraints_v1", sizes=(78,), hard_fractions=(0,),
-            rounds=1, constraint_modes=(False, True),
+            rounds=1, constraint_modes=(False, True), evidence_policies=("similarity",),
         )
 
     def test_frozen_data_and_independent_denominators(self):

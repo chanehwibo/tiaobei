@@ -20,6 +20,9 @@ class SplitIsolationTest(unittest.TestCase):
         self.assertEqual(report["test"]["positive_queries"], 12)
         self.assertEqual(report["test"]["no_answer_queries"], 6)
         self.assertEqual(report["configuration"]["threshold"], MemoryStore.DEFAULT_MIN_SCORE)
+        self.assertEqual(report["configuration"]["calibration_evidence_policy"], "similarity")
+        self.assertEqual(report["evaluation_evidence_policy"], "focused_evidence_v2")
+        self.assertEqual(report["test"]["evidence_policy"], report["evaluation_evidence_policy"])
         store = build_store_from_raw_records(split_rows(suite, "records", "test"))
         for query, row in zip(split_rows(suite, "retrieval_queries", "test"), report["test"]["rows"]):
             hits = store.search_knowledge(query["query"], tenant_id=query["tenant_id"], user_id=query["user_id"], top_k=3)
