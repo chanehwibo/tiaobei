@@ -17,6 +17,15 @@
 固定保留`native_p95_ms=null`、`native_latency_passed=false`及原始文件SHA256。
 它只生成风险披露，不执行SDK，也不能被当作新一轮测试通过。
 
+当前诊断脚本也固定输出初版状态和`latency_status=待复测风险项`，
+保持`native_p95_ms=null`、`native_latency_passed=false`及`competition_ready=false`。
+配置探针、显式模型探针和旧ABI探针均记录单次调用耗时，失败/超时也保留；
+`observations`是探针尝试次数，不是成功数或独立性能样本数。
+仅发现库、未调用时为0次，耗时为null。输出拒绝覆盖，复测必须使用新文件名。
+本次Windows发现结果位于
+`artifacts/verification/feedback/implementation-20260910/native_windows_discovery.json`，
+没有原生库/向量调用，不补算为V11或原生性能测试。
+
 ## 解除风险标记的条件
 
 1. 固定并记录V11、CPU/内存、SDK/runtime/模型版本、二进制及配置摘要，
@@ -57,7 +66,7 @@
 将 `config/embedding.kylin-native.example.json` 复制到客户机私有运行目录，按实际安装内容填写库的绝对路径、模型名、模型版本和维度。示例路径和768维均需核对，不承诺公开镜像自带该版本。然后执行：
 
 ```bash
-python3 -S scripts/check_kylin_native.py --embedding-config /home/tiaobei/native-config.json --output /home/tiaobei/native-sdk.json
+python3 -S scripts/check_kylin_native.py --embedding-config /home/tiaobei/native-config.json --output /home/tiaobei/native-embedding.json
 ```
 
 只有真实库返回合规向量才报告 `real_embedding_executed=true`。单次自检也不等于官方性能验收、模型质量达标或向量数据库连接成功。服务部署继续通过统一 `create_provider` 配置入口注入。
