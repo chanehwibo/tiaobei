@@ -8,7 +8,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from os_agent_memory.complex_retrieval import run_complex_evaluation
+from os_agent_memory.complex_retrieval import SUITES, run_complex_evaluation
 
 
 def main(argv=None):
@@ -18,6 +18,8 @@ def main(argv=None):
     parser.add_argument("--hard-fractions", default="0,0.75")
     parser.add_argument("--modes", default="hybrid")
     parser.add_argument("--rounds", type=int, default=3)
+    parser.add_argument("--suite", choices=tuple(SUITES), default="complex_retrieval_v1")
+    parser.add_argument("--constraints", choices=("none", "enforce", "compare"), default="none")
     parser.add_argument("--require-targets", action="store_true")
     args = parser.parse_args(argv)
     if args.output.exists():
@@ -27,6 +29,8 @@ def main(argv=None):
         hard_fractions=tuple(float(value) for value in args.hard_fractions.split(",")),
         modes=tuple(args.modes.split(",")), rounds=args.rounds,
         progress=lambda text: print(text, file=sys.stderr, flush=True),
+        suite_name=args.suite,
+        constraint_modes={"none": (False,), "enforce": (True,), "compare": (False, True)}[args.constraints],
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x", encoding="utf-8") as stream:

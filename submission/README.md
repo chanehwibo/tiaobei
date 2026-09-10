@@ -10,8 +10,9 @@
 
 ## 构建与归档
 
-默认清单供工程复现，含历史测试所需材料；对外技术审阅使用本次独立清单，
-具体路径见反馈落实记录。构建示例：
+默认命令使用当前技术审阅清单，并包含工程复现所需历史测试材料。
+四项意见复核包另用`submission/review_audit_manifest.json`，纳入逐项复核和近期工作补充；
+显式指定旧清单仅用于历史重建。当前材料构建示例：
 
 ```powershell
 python scripts/build_submission.py --allow-incomplete --output dist/initial-review
@@ -19,6 +20,13 @@ python scripts/archive_submission.py `
   --staging dist/initial-review `
   --archive artifacts/release/OS_Agent_初版_待赛事验收.zip `
   --allow-incomplete
+```
+
+生成含四项意见复核及近期工作补充的包：
+
+```powershell
+python -X utf8 -S scripts/generate_review_materials.py --check-only
+python -X utf8 -S scripts/build_submission.py --manifest submission/review_audit_manifest.json --allow-incomplete --output dist/feedback-audit-review
 ```
 
 输出路径必须不存在。新包显示“已完成初版，待赛事验收”，逐项列出外部缺项，

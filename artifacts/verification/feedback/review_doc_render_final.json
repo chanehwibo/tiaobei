@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T01:39:25.247241+00:00",
+  "scope": "docx_wps_pdf_text_and_rasters_not_official_or_human_acceptance",
+  "source_sha256": "3b1d8f0bb24fa9b494a51728af42af887af2f2be039aba318ba5fd5959a81bf5",
+  "checker_sha256": "2ef9f2d6643d4fb6e8b466b59a82d99dd5cc81fc45822c73115df5df0fc5d244",
+  "pdf_sha256": "4326701ebb4e10591836242f1983556504b34b5ecae7e328d5ccbdab78389f63",
+  "page_count": 23,
+  "body_paragraphs_checked": 721,
+  "missing_paragraphs": [],
+  "geometric_paragraph_matches": [],
+  "pages": [
+    {
+      "page": 1,
+      "lines": 55,
+      "outside": [],
+      "ink_fraction": 0.08290929983269185,
+      "image_sha256": "d8b3e0f65b57ae8c2f5f84da6b0bef5bd26e93488b38d458fa68afc54b2cdc04",
+      "passed": true
+    },
+    {
+      "page": 2,
+      "lines": 87,
+      "outside": [],
+      "ink_fraction": 0.08700112336737127,
+      "image_sha256": "ab1663dd0f3f5e0ad7fc1c9c5cb609591212053064cfb5df77248af9eef56987",
+      "passed": true
+    },
+    {
+      "page": 3,
+      "lines": 76,
+      "outside": [],
+      "ink_fraction": 0.09347001708546902,
+      "image_sha256": "b78163257b2a559739ed0576dfdf4d810d9a9de86b46a31810be6d8a61e471c1",
+      "passed": true
+    },
+    {
+      "page": 4,
+      "lines": 10,
+      "outside": [],
+      "ink_fraction": 0.019814533554282938,
+      "image_sha256": "72dcabf852a3a5c5f7fbd18f00f0ac8f911e9e01f50178dc2270aa63e99b06a8",
+      "passed": true
+    },
+    {
+      "page": 5,
+      "lines": 27,
+      "outside": [],
+      "ink_fraction": 0.0961423369410538,
+      "image_sha256": "442730a0795fae390d182cb2cfdde803f7fdcc9ad8f1b29691fa5943430d46f8",
+      "passed": true
+    },
+    {
+      "page": 6,
+      "lines": 69,
+      "outside": [],
+      "ink_fraction": 0.08806242624299669,
+      "image_sha256": "b5a24b0e1dfcc329e11d8304e1e4ae2aa7c84ebce988024972f18cf51a333f98",
+      "passed": true
+    },
+    {
+      "page": 7,
+      "lines": 53,
+      "outside": [],
+      "ink_fraction": 0.059450693748066025,
+      "image_sha256": "0860b7148956a23215310a167677f5876800e14785accbefd7f788ffbbae35a3",
+      "passed": true
+    },
+    {
+      "page": 8,
+      "lines": 40,
+      "outside": [],
+      "ink_fraction": 0.08623418352826018,
+      "image_sha256": "27465ce7d4f785b64e12483740ad64d43a2c1ba1ac37d6a238e79dcd79570c9b",
+      "passed": true
+    },
+    {
+      "page": 9,
+      "lines": 33,
+      "outside": [],
+      "ink_fraction": 0.0926064339602734,
+      "image_sha256": "ddccc866f3ca56a364105cf2107db60cab34b0d6703a20bbfb34b57e5167b0de",
+      "passed": true
+    },
+    {
+      "page": 10,
+      "lines": 31,
+      "outside": [],
+      "ink_fraction": 0.10259704448871712,
+      "image_sha256": "0fc6176f3777127955864d2914256919e7d4cf4bd671c400f646f1830f5bb916",
+      "passed": true
+    },
+    {
+      "page": 11,
+      "lines": 63,
+      "outside": [],
+      "ink_fraction": 0.09932890547488649,
+      "image_sha256": "859f615d3b3c9a16090facee75812f35e510ffac24f55537a5b9710f8fe9f707",
+      "passed": true
+    },
+    {
+      "page": 12,
+      "lines": 38,
+      "outside": [],
+      "ink_fraction": 0.09064874244032277,
+      "image_sha256": "75bc45646610e0f3987700e7cc28e4a1474237ec2183b51efb08897398948f2e",
+      "passed": true
+    },
+    {
+      "page": 13,
+      "lines": 80,
+      "outside": [],
+      "ink_fraction": 0.10479058109214007,
+      "image_sha256": "168d0091b409a649eedfa4139651f32ffc5425464c1c49b116f38ccc662f4c81",
+      "passed": true
+    },
+    {
+      "page": 14,
+      "lines": 51,
+      "outside": [],
+      "ink_fraction": 0.09112309251422385,
+      "image_sha256": "ac6df7b9ff36499492317448a600ee804ef03e1864833263f1bb714e707cfe38",
+      "passed": true
+    },
+    {
+      "page": 15,
+      "lines": 33,
+      "outside": [],
+      "ink_fraction": 0.047472246087498525,
+      "image_sha256": "678d7de34021a5048fa9e405bb159e7c057b892409be272831f2394829b1cdba",
+      "passed": true
+    },
+    {
+      "page": 16,
+      "lines": 72,
+      "outside": [],
+      "ink_fraction": 0.09812662753056899,
+      "image_sha256": "2aa794abdd6743929ac1bc901c3f7869a33347f9e94733530bd4fdcf4cab2237",
+      "passed": true
+    },
+    {
+      "page": 17,
+      "lines": 32,
+      "outside": [],
+      "ink_fraction": 0.09184392729942306,
+      "image_sha256": "cc3bfa01252c41b2545ed77e1772f59738c61d68ae1cb85e4192102ee12c095e",
+      "passed": true
+    },
+    {
+      "page": 18,
+      "lines": 46,
+      "outside": [],
+      "ink_fraction": 0.09572561818454257,
+      "image_sha256": "e3b7213da2696b3ae80a1ab01283638e83a79af9d468c048fddf64599498ec8d",
+      "passed": true
+    },
+    {
+      "page": 19,
+      "lines": 2,
+      "outside": [],
+      "ink_fraction": 0.005148693232044077,
+      "image_sha256": "b8f0bf319e06dfbf42864681e4dbb52c5a30f4c64c97c4bc0641712d3ee70832",
+      "passed": true
+    },
+    {
+      "page": 20,
+      "lines": 30,
+      "outside": [],
+      "ink_fraction": 0.07882279611192534,
+      "image_sha256": "999955198af9c9c983e3514aa9d3e91180636145a33707509c6071480f011cad",
+      "passed": true
+    },
+    {
+      "page": 21,
+      "lines": 57,
+      "outside": [],
+      "ink_fraction": 0.08864760577341671,
+      "image_sha256": "490a6f788ede576b7e720bab9c818731d259f711bdc7ee333d713ddf1c31a5a6",
+      "passed": true
+    },
+    {
+      "page": 22,
+      "lines": 70,
+      "outside": [],
+      "ink_fraction": 0.084905116685685,
+      "image_sha256": "2ce1d202b27ed4b0034505d971c32d64e312be04f98f36e8076e00e5ea0294a7",
+      "passed": true
+    },
+    {
+      "page": 23,
+      "lines": 17,
+      "outside": [],
+      "ink_fraction": 0.037413364613839144,
+      "image_sha256": "bc066425bb42a794809a8fef3750ad7455320635d4c4ed154abefb6fc58a55aa",
+      "passed": true
+    }
+  ],
+  "checks": {
+    "all_pages_nonblank_and_in_bounds": true,
+    "all_docx_body_paragraphs_present": true,
+    "expected_slide_count": true
+  },
+  "passed": true,
+  "visual_review": "Agent raster review is recorded separately.",
+  "competition_ready": false,
+  "contact_sheets": [
+    "contact-01.png",
+    "contact-02.png",
+    "contact-03.png",
+    "contact-04.png",
+    "contact-05.png",
+    "contact-06.png"
+  ]
+}

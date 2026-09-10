@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-09T15:51:23.065822+00:00",
+  "scope": "pptx_wps_rasters_not_official_or_human_acceptance",
+  "source_sha256": "6867917ce24916050d26886432afb10034a93a2d989a4c3de54fdcde155c40c1",
+  "checker_sha256": "2ef9f2d6643d4fb6e8b466b59a82d99dd5cc81fc45822c73115df5df0fc5d244",
+  "pdf_sha256": null,
+  "page_count": 15,
+  "body_paragraphs_checked": 0,
+  "missing_paragraphs": [],
+  "geometric_paragraph_matches": [],
+  "pages": [
+    {
+      "page": 1,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.043935416666666664,
+      "image_sha256": "6c25b94fec9015ab25eda63d68360e2baf238f274e1b37216c4ac6c1ff82c1d1",
+      "passed": true
+    },
+    {
+      "page": 2,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.0476375,
+      "image_sha256": "73cc71f2ea3a1d75302acf8583069e8cc79c7d0696f2e46a24901eb2f4ddc4c6",
+      "passed": true
+    },
+    {
+      "page": 3,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04289305555555555,
+      "image_sha256": "5ef554ae3109842095bc5e5c6785c6c43dbc9806cf3f73959162ad37ff83c26a",
+      "passed": true
+    },
+    {
+      "page": 4,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04894097222222222,
+      "image_sha256": "64f2edee836b55fc562c601ef0d00ee6415afc0bdf225425eb22708cc380427c",
+      "passed": true
+    },
+    {
+      "page": 5,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04442361111111111,
+      "image_sha256": "08b3548b9e09fdc2d5794fba342845d730891a381c5426920a2147db80b5ecc3",
+      "passed": true
+    },
+    {
+      "page": 6,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.09647013888888889,
+      "image_sha256": "72b568949b14167e9a5bda4333733a7d26b1ba9603d82730d79a199a92d5bffa",
+      "passed": true
+    },
+    {
+      "page": 7,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.045254861111111114,
+      "image_sha256": "4d7781d83fde1d794aebbbf76140173b4338e98d96165a86a74fe8eebbcdc200",
+      "passed": true
+    },
+    {
+      "page": 8,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.11164722222222222,
+      "image_sha256": "c190a555f79fef85738eecac42995dba8b00b3e8787520f1c62a39dd8a1976ce",
+      "passed": true
+    },
+    {
+      "page": 9,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.042320138888888886,
+      "image_sha256": "daaa53bdf091cf64b52f19984bf655d039b4fa70f9c52d0d48d28e970b8f5869",
+      "passed": true
+    },
+    {
+      "page": 10,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.10990277777777778,
+      "image_sha256": "33dc6f093b2aaff8a6bfc65cb1682139cfd7a0634cfd8503ae40d6ceb86cac67",
+      "passed": true
+    },
+    {
+      "page": 11,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.1273277777777778,
+      "image_sha256": "9856ca7678ba1db45d0f0fc6bb900de82e447fd775b8f169b9401508f6040667",
+      "passed": true
+    },
+    {
+      "page": 12,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04577847222222222,
+      "image_sha256": "648d173b953e0b008008b6d54eb09f088ddb44bd55dc1af7252f9a15073daa77",
+      "passed": true
+    },
+    {
+      "page": 13,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04431319444444445,
+      "image_sha256": "ba8d1c3bb7f45f0ce5566e236c2d3addf25583495e69bd3794193d031a65061b",
+      "passed": true
+    },
+    {
+      "page": 14,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04542430555555556,
+      "image_sha256": "2495a4c9b57f3e7ea0742758dae74cb14996a44e136a38a78ec8d75e1eae7191",
+      "passed": true
+    },
+    {
+      "page": 15,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.049875694444444445,
+      "image_sha256": "d0bf549c768c21c273c0a9216369f559a3467e64c5a87eba6f16f6016f448eb3",
+      "passed": true
+    }
+  ],
+  "checks": {
+    "all_pages_nonblank_and_in_bounds": true,
+    "all_docx_body_paragraphs_present": true,
+    "expected_slide_count": true
+  },
+  "passed": true,
+  "visual_review": "Agent raster review is recorded separately.",
+  "competition_ready": false,
+  "contact_sheets": [
+    "contact-01.png",
+    "contact-02.png",
+    "contact-03.png",
+    "contact-04.png"
+  ]
+}

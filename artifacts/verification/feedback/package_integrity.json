@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T01:44:56.701555+00:00",
+  "scope": "independent_review_package_integrity_not_v11_or_competition_acceptance",
+  "passed": true,
+  "competition_ready": false,
+  "v11_current_source_verified": false,
+  "archive": {
+    "name": "OS_Agent_反馈落实_已完成初版_待赛事验收_20260910.zip",
+    "sha256": "224b2f5c09aa7d3bb1455b202f37e3865406da130094171a4be947e3600614a5",
+    "bytes": 2396345,
+    "content_files": 461,
+    "zip_members": 462
+  },
+  "checks": {
+    "zip_paths_crc_sha256_and_extraction": true,
+    "source_raw_and_lf_identity": true,
+    "independent_rebuild": true,
+    "full_windows_release": true,
+    "source_bound_review_materials": true,
+    "missing_external_inputs_rejected": true,
+    "strict_v11_gate_preserved": true,
+    "privacy_and_office_templates": true,
+    "original_and_historical_archives_unchanged": true
+  },
+  "measured_source_files": 131,
+  "unit_tests": {
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "-S",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "returncode": 0,
+    "passed": true,
+    "error_type": null,
+    "duration_ms": 103310.671,
+    "output_tail": "test_extra_slots_fail_whole_request) ... ok\ntest_ingestion_failure_is_reported_without_changing_query_denominator (test_request_evaluation.RequestEvaluationTest.test_ingestion_failure_is_reported_without_changing_query_denominator) ... ok\ntest_sensitive_scores_entities_not_just_positive_requests (test_request_evaluation.RequestEvaluationTest.test_sensitive_scores_entities_not_just_positive_requests) ... ok\ntest_weak_temporary_preference_is_not_durable (test_request_evaluation.RequestEvaluationTest.test_weak_temporary_preference_is_not_durable) ... ok\ntest_cjk_adjacent_credentials_and_repeated_entities (test_request_quality.RequestQualityTest.test_cjk_adjacent_credentials_and_repeated_entities) ... ok\ntest_credential_owns_embedded_email_and_private_key_body (test_request_quality.RequestQualityTest.test_credential_owns_embedded_email_and_private_key_body) ... ok\ntest_field_name_substrings_and_placeholders_are_not_credentials (test_request_quality.RequestQualityTest.test_field_name_substrings_and_placeholders_are_not_credentials) ... ok\ntest_frozen_sensitive_entities_and_zero_leaks (test_request_quality.RequestQualityTest.test_frozen_sensitive_entities_and_zero_leaks) ... ok\ntest_overlapping_id_and_bank_patterns_produce_one_entity (test_request_quality.RequestQualityTest.test_overlapping_id_and_bank_patterns_produce_one_entity) ... ok\ntest_reusable_rules_obey_production_lifecycle_and_risk_gate (test_request_quality.RequestQualityTest.test_reusable_rules_obey_production_lifecycle_and_risk_gate) ... ok\ntest_changed_protocol_sources_environment_or_profile_rejected (test_retrieval_comparison.RetrievalComparisonTest.test_changed_protocol_sources_environment_or_profile_rejected) ... ok\ntest_edited_summary_missing_request_or_forged_label_rejected (test_retrieval_comparison.RetrievalComparisonTest.test_edited_summary_missing_request_or_forged_label_rejected) ... ok\ntest_identical_outputs_and_faster_timings_do_not_erase_quality_failure (test_retrieval_comparison.RetrievalComparisonTest.test_identical_outputs_and_faster_timings_do_not_erase_quality_failure) ... ok\ntest_character_candidates_without_shared_bigrams (test_retrieval_hard_cases.RetrievalHardCaseTest.test_character_candidates_without_shared_bigrams) ... ok\ntest_character_index_replacement_deletion_and_rebuild (test_retrieval_hard_cases.RetrievalHardCaseTest.test_character_index_replacement_deletion_and_rebuild) ... ok\ntest_full_width_query_matches_ascii_without_changing_stored_content (test_retrieval_hard_cases.RetrievalHardCaseTest.test_full_width_query_matches_ascii_without_changing_stored_content) ... ok\ntest_metadata_and_invisible_owners_do_not_supply_character_evidence (test_retrieval_hard_cases.RetrievalHardCaseTest.test_metadata_and_invisible_owners_do_not_supply_character_evidence) ... ok\ntest_numeric_conditions_and_scene_boundaries (test_retrieval_hard_cases.RetrievalHardCaseTest.test_numeric_conditions_and_scene_boundaries) ... ok\ntest_ranking_uses_unrounded_scores_then_stable_ids_for_exact_ties (test_retrieval_hard_cases.RetrievalHardCaseTest.test_ranking_uses_unrounded_scores_then_stable_ids_for_exact_ties) ... ok\ntest_semantic_candidate_survives_unrelated_lexical_match (test_retrieval_hard_cases.RetrievalHardCaseTest.test_semantic_candidate_survives_unrelated_lexical_match) ... ok\ntest_explicit_and_implicit_scope_rules_unchanged (test_retrieval_optimization.RetrievalOptimizationTest.test_explicit_and_implicit_scope_rules_unchanged) ... ok\ntest_full_sort_reference_all_routes_scopes_limits_and_ties (test_retrieval_optimization.RetrievalOptimizationTest.test_full_sort_reference_all_routes_scopes_limits_and_ties) ... ok\ntest_replacement_hard_delete_and_rebuild_keep_reference_results (test_retrieval_optimization.RetrievalOptimizationTest.test_replacement_hard_delete_and_rebuild_keep_reference_results) ... ok\ntest_time_parse_cache_is_bounded_and_does_not_cache_visibility (test_retrieval_optimization.RetrievalOptimizationTest.test_time_parse_cache_is_bounded_and_does_not_cache_visibility) ... ok\ntest_allowlist_separates_current_public_material_from_historical_dependencies (test_review_materials.ReviewMaterialsTest.test_allowlist_separates_current_public_material_from_historical_dependencies) ... ok\ntest_current_summary_is_bound_and_outputs_refuse_overwrite (test_review_materials.ReviewMaterialsTest.test_current_summary_is_bound_and_outputs_refuse_overwrite) ... ok\ntest_five_metric_block_is_derived_from_evidence (test_review_materials.ReviewMaterialsTest.test_five_metric_block_is_derived_from_evidence) ... ok\ntest_official_flag_is_not_inferred_from_local_passes (test_review_materials.ReviewMaterialsTest.test_official_flag_is_not_inferred_from_local_passes) ... ok\ntest_reported_windows_and_service_counts_must_be_genuine (test_review_materials.ReviewMaterialsTest.test_reported_windows_and_service_counts_must_be_genuine) ... ok\ntest_request_details_and_test_count_are_recomputed (test_review_materials.ReviewMaterialsTest.test_request_details_and_test_count_are_recomputed) ... ok\ntest_review_windows_validation_does_not_invent_v11_success (test_review_materials.ReviewMaterialsTest.test_review_windows_validation_does_not_invent_v11_success) ... ok\ntest_stale_source_or_failed_check_rejected (test_review_materials.ReviewMaterialsTest.test_stale_source_or_failed_check_rejected) ... ok\ntest_deleted_vectors_stay_absent_after_rebuild_and_reload (test_round2.DeletedIndexTest.test_deleted_vectors_stay_absent_after_rebuild_and_reload) ... ok\ntest_distinct_repeated_evidence_promotes_across_requests (test_round2.LifecycleIntegrationTest.test_distinct_repeated_evidence_promotes_across_requests) ... ok\ntest_service_and_evaluation_reject_single_weak_event (test_round2.LifecycleIntegrationTest.test_service_and_evaluation_reject_single_weak_event) ... ok\ntest_failed_delete_is_retryable_and_does_not_consume_plan (test_round2.TransactionTest.test_failed_delete_is_retryable_and_does_not_consume_plan) ... ok\ntest_failed_ingestion_rolls_back_memory_and_lifecycle (test_round2.TransactionTest.test_failed_ingestion_rolls_back_memory_and_lifecycle) ... ok\ntest_explicit_high_authority_configuration_promotes (test_round2.ValidityTest.test_explicit_high_authority_configuration_promotes) ... ok\ntest_validity_is_start_inclusive_end_exclusive_and_cleans_index (test_round2.ValidityTest.test_validity_is_start_inclusive_end_exclusive_and_cleans_index) ... ok\ntest_hash_or_invalid_timing_cannot_be_presented_as_native_evidence (test_sdk_risk.SDKRiskTest.test_hash_or_invalid_timing_cannot_be_presented_as_native_evidence) ... ok\ntest_native_single_probe_never_becomes_p95_or_acceptance (test_sdk_risk.SDKRiskTest.test_native_single_probe_never_becomes_p95_or_acceptance) ... ok\ntest_failed_tool_cannot_override_successful_user_selected_tool (test_security_adversarial.SecurityAdversarialTest.test_failed_tool_cannot_override_successful_user_selected_tool) ... ok\ntest_hard_delete_has_no_orphan_after_database_reload (test_security_adversarial.SecurityAdversarialTest.test_hard_delete_has_no_orphan_after_database_reload) ... ok\ntest_nested_credentials_are_redacted_before_any_extraction (test_security_adversarial.SecurityAdversarialTest.test_nested_credentials_are_redacted_before_any_extraction) ... ok\ntest_prompt_injection_is_neither_preference_nor_knowledge (test_security_adversarial.SecurityAdversarialTest.test_prompt_injection_is_neither_preference_nor_knowledge) ... ok\ntest_same_user_identifier_cannot_cross_tenant_search_or_forget (test_security_adversarial.SecurityAdversarialTest.test_same_user_identifier_cannot_cross_tenant_search_or_forget) ... ok\ntest_current_materials_refuse_overwrite_and_detect_evidence_byte_changes (test_takeover_materials.TakeoverMaterialsTest.test_current_materials_refuse_overwrite_and_detect_evidence_byte_changes) ... ok\ntest_matching_evidence_generates_fifteen_sections_with_honest_limits (test_takeover_materials.TakeoverMaterialsTest.test_matching_evidence_generates_fifteen_sections_with_honest_limits) ... ok\ntest_readiness_and_fixture_cannot_claim_official_execution (test_takeover_materials.TakeoverMaterialsTest.test_readiness_and_fixture_cannot_claim_official_execution) ... ok\ntest_stale_source_snapshot_is_rejected (test_takeover_materials.TakeoverMaterialsTest.test_stale_source_snapshot_is_rejected) ... ok\ntest_summary_flags_cannot_override_failed_request_details (test_takeover_materials.TakeoverMaterialsTest.test_summary_flags_cannot_override_failed_request_details) ... ok\ntest_test_count_must_match_actual_completion_log (test_takeover_materials.TakeoverMaterialsTest.test_test_count_must_match_actual_completion_log) ... ok\ntest_v11_name_or_aggregate_flag_is_not_installation_evidence (test_takeover_materials.TakeoverMaterialsTest.test_v11_name_or_aggregate_flag_is_not_installation_evidence) ... ok\ntest_workload_needs_target_counts_and_available_process_rss (test_takeover_materials.TakeoverMaterialsTest.test_workload_needs_target_counts_and_available_process_rss) ... ok\ntest_api_rejects_missing_scope (test_web_server.WebServerTest.test_api_rejects_missing_scope) ... ok\ntest_confirm_rejects_another_user_and_null_scope (test_web_server.WebServerTest.test_confirm_rejects_another_user_and_null_scope) ... ok\ntest_conflict_resolution_rejects_wrong_scope (test_web_server.WebServerTest.test_conflict_resolution_rejects_wrong_scope) ... ok\ntest_dashboard_and_read_apis_are_available (test_web_server.WebServerTest.test_dashboard_and_read_apis_are_available) ... ok\ntest_scenarios_and_reset_preserve_other_tenants (test_web_server.WebServerTest.test_scenarios_and_reset_preserve_other_tenants) ... ok\ntest_search_and_two_phase_forget_work_through_http (test_web_server.WebServerTest.test_search_and_two_phase_forget_work_through_http) ... ok\ntest_real_ingest_restart_http_and_concurrent_writes (test_workload.ServiceWorkloadTest.test_real_ingest_restart_http_and_concurrent_writes) ... ok\n\n----------------------------------------------------------------------\nRan 306 tests in 102.522s\n\nOK (skipped=1)",
+    "tests_run": 306
+  },
+  "engineering_checks": {
+    "compile": true,
+    "unit_tests": true,
+    "source_syntax_and_privacy": true,
+    "frozen_request_gate": true,
+    "frozen_dataset_bytes": true,
+    "source_unchanged_during_checks": true,
+    "request_source_snapshot": true,
+    "evaluation_protocol": true,
+    "internal_quality_85": true,
+    "benchmark_500ms": true,
+    "service_workload_integrity": true,
+    "decay_diagnostics": true,
+    "action_framework": true,
+    "local_preflight": true,
+    "materials": true,
+    "editable_materials": true,
+    "privacy_scan": true
+  },
+  "requests": {
+    "metrics": {
+      "preference_accuracy": 1.0,
+      "knowledge_recall": 1.0,
+      "conflict_accuracy": 1.0,
+      "retrieval_p95_ms": 35.857700000633486,
+      "sensitive_f1": 1.0
+    },
+    "observation_counts": {
+      "preference_accuracy": 68,
+      "knowledge_recall": 60,
+      "conflict_accuracy": 60,
+      "retrieval_p95_ms": 80,
+      "sensitive_f1": 50
+    }
+  },
+  "strict_materials_gate": {
+    "passed": false,
+    "returncode": 1,
+    "reason": "missing_successful_current_v11_evidence",
+    "log_sha256": "e422da0266b57e4d54a1b74705501a5569d33f478bbc8f8614889daa22fd0c15"
+  },
+  "privacy": {
+    "passed": true,
+    "scanned_text_files": 472,
+    "scanned_office_documents": 6,
+    "scanned_zip_archives": 0,
+    "unexpected_findings": []
+  },
+  "resolved_default_template_members": 9,
+  "missing_external": [
+    {
+      "key": "video",
+      "label": "人工复核后的最终演示视频"
+    },
+    {
+      "key": "registration_form",
+      "label": "与平台一致的盖章报名表"
+    },
+    {
+      "key": "real_case",
+      "label": "经授权且脱敏的真实应用案例证明"
+    },
+    {
+      "key": "kylin_report",
+      "label": "真实银河麒麟环境与SDK验证报告"
+    }
+  ],
+  "private_log_sha256": {
+    "release": "cc1c3f2837a7379a638fcb927a5f5137bbd67a33edcc6a8b8948f586fe283809",
+    "review_materials": "6fc5285b3f9b02682d537d20bd08fe3b52d950d31ad2825d552683c358c92bc5",
+    "privacy": "d5d256cd75c281e366955fecd9888d6d1d5b0c70be6371143a6022d58bedd0ca",
+    "privacy_report": "2261626673320d9a640dad7dfa554b72b6b735649b07681a3ec2a9c3d0c3fa7a"
+  },
+  "evidence_sha256": {
+    "ablations.json": "9a501826ded0ed182d9aa2699f1d6703368c480d23b57064356c158e871ca06e",
+    "action-readiness.json": "125ff9bbca0313d69391ecd0f0dc59d1a864a71caadaa9481c118b45ed727921",
+    "actions.json": "48ca64197d08406e5ae853e960d06b6ba42c184dfdc3d288c3580376d074bf41",
+    "compatibility_windows_dev.json": "e1cd9f13e8d75f0c38be48a2b6a2c8030010d72e5f51cead59b29c861a6fc8e0",
+    "compatibility_windows_dev.md": "9370e82abe5f8f80938d07c2bc319d54f462b5df6c5834aa7e26d093f1fa138c",
+    "evaluation_v1_final.json": "d96352042f5fc2c15ed6d333e57528439ecb3201fa39393944dc1d31a6abe61c",
+    "evaluation_v2_test_final.json": "81ac61cfb3a880e89f3b33f66825bc59e8884670f671ab2c0cb0261fc9b3475d",
+    "evaluation_v3.json": "8493fcf5e9158d939a0617ebf36677607bb0a4c5ef17189124e8de83ddce9ce3",
+    "final_verification.json": "cc1c3f2837a7379a638fcb927a5f5137bbd67a33edcc6a8b8948f586fe283809",
+    "final_verification.md": "9a5f4b4a1c95cca697dc6d05dcc4306ec75b533bc535f236bc34e634887075bf",
+    "official_diagnostics.json": "4f6f94058dec3e3059c646dd7e380a1e7699f705e0dc832c4852b967f5e88c9d",
+    "performance_windows_dev.json": "9c0ff66fa43f3ed710d6127b3dede8fa4ad5a383919de4519a500ba676ce3527",
+    "performance_windows_dev.md": "6cad8001805d4b7bfec0db41ccb8b1d53d693fa138edaff754c38ed3fe0c9963",
+    "requests.json": "5dc2746f8a1784ee1a6dc39b5281aecf8c09b77ce95503c4e397988ac662a374",
+    "service_workload.json": "1a2c961ef49e2c202d3271b83e14c4b44a20ddbd7ab7e6e179c91278a0c4178f"
+  },
+  "audit_script_sha256": "65afdb9a90eb86f9142dcfc0ad0643b5e99f7ba6e36cf4c65d27fb1c3c36fe4c",
+  "post_seal_audit_is_external_to_zip": true
+}

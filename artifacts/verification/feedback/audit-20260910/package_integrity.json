@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T08:31:09.942355+00:00",
+  "passed": true,
+  "scope": "documentation_extension_independent_package_rebuild_targeted_tests_and_privacy_not_new_full_benchmark",
+  "competition_ready": false,
+  "native_latency_passed": false,
+  "complex_quality_targets_met": false,
+  "archive": {
+    "name": "OS_Agent_四项反馈逐条落实_已完成初版_待赛事验收_20260910.zip",
+    "sha256": "59b38e5b11d4c17acc5a4fb15764bbe8ec017a75a0fe2b8387cd9a1d1a319b2f",
+    "bytes": 3593403,
+    "content_files": 484,
+    "zip_members": 485,
+    "read_only": true
+  },
+  "checks": {
+    "safe_zip_crc_all_sha256_and_extraction": true,
+    "independent_rebuild": true,
+    "runtime_tests_data_and_office_byte_identical_to_previous_verified_package": true,
+    "current_source_matches_existing_full_release": true,
+    "source_bound_office_materials": true,
+    "four_feedback_document_hashes": true,
+    "targeted_tests": true,
+    "missing_external_inputs_rejected": true,
+    "privacy_and_default_office_binary_templates": true,
+    "original_archive_unchanged": true
+  },
+  "changes_from_prior_archive": {
+    "baseline_archive": {
+      "name": "OS_Agent_复杂场景补测_已完成初版_待赛事验收_20260910_复核版.zip",
+      "sha256": "ccd9853730dadbeeb2d2cffdcbf5270bbe6f5e409b573ee1298d13b54ac9030a",
+      "bytes": 3551561,
+      "content_files": 477,
+      "zip_members": 478,
+      "read_only": true
+    },
+    "added": [
+      "00_阅读说明/42_四项反馈复核与验收.md",
+      "01_当前技术材料/43_近期相关工作与评测对照.md",
+      "02_复测证据/四项意见复核/four_feedback_audit.json",
+      "03_源代码与说明/project/artifacts/verification/feedback/audit-20260910/four_feedback_audit.json",
+      "03_源代码与说明/project/docs/42_四项反馈复核与验收.md",
+      "03_源代码与说明/project/docs/43_近期相关工作与评测对照.md",
+      "03_源代码与说明/project/submission/review_audit_manifest.json"
+    ],
+    "removed": [],
+    "changed": [
+      "00_阅读说明/REVIEW_README.md",
+      "03_源代码与说明/project/README.md",
+      "03_源代码与说明/project/docs/05_整改任务总清单.md",
+      "03_源代码与说明/project/docs/29_续作任务清单.md",
+      "03_源代码与说明/project/submission/README.md",
+      "03_源代码与说明/project/submission/REVIEW_README.md",
+      "SHA256SUMS.txt",
+      "build_report.json"
+    ]
+  },
+  "new_targeted_tests": {
+    "patterns": [
+      "test_packaging.py",
+      "test_material_status.py",
+      "test_review_materials.py",
+      "test_sdk_risk.py",
+      "test_constraint_suite.py"
+    ],
+    "tests_run": 23,
+    "passed": true,
+    "log_sha256": "17afaca688056b961ace6a82e3074b41ced900f901da0222f0c36b916cdb0241",
+    "output_tail": "_terms) ... ok\ntest_current_review_requires_source_grouping_provider_and_input_attribution (test_constraint_suite.ConstraintSuiteTest.test_current_review_requires_source_grouping_provider_and_input_attribution) ... ok\ntest_forged_group_measurements_and_constraint_policy_are_rejected (test_constraint_suite.ConstraintSuiteTest.test_forged_group_measurements_and_constraint_policy_are_rejected) ... ok\ntest_frozen_data_and_independent_denominators (test_constraint_suite.ConstraintSuiteTest.test_frozen_data_and_independent_denominators) ... ok\ntest_missing_version_refuses_but_unsupported_relations_are_not_hidden (test_constraint_suite.ConstraintSuiteTest.test_missing_version_refuses_but_unsupported_relations_are_not_hidden) ... ok\ntest_same_queries_evaluated_with_and_without_constraints (test_constraint_suite.ConstraintSuiteTest.test_same_queries_evaluated_with_and_without_constraints) ... ok\n\n----------------------------------------------------------------------\nRan 23 tests in 17.185s\n\nOK\n"
+  },
+  "inherited_full_runtime_verification": {
+    "source": "baseline_independent_test_report",
+    "unit_tests": {
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "passed": true,
+      "error_type": null,
+      "duration_ms": 130911.829,
+      "output_tail": "temporary_preference_is_not_durable) ... ok\ntest_cjk_adjacent_credentials_and_repeated_entities (test_request_quality.RequestQualityTest.test_cjk_adjacent_credentials_and_repeated_entities) ... ok\ntest_credential_owns_embedded_email_and_private_key_body (test_request_quality.RequestQualityTest.test_credential_owns_embedded_email_and_private_key_body) ... ok\ntest_field_name_substrings_and_placeholders_are_not_credentials (test_request_quality.RequestQualityTest.test_field_name_substrings_and_placeholders_are_not_credentials) ... ok\ntest_frozen_sensitive_entities_and_zero_leaks (test_request_quality.RequestQualityTest.test_frozen_sensitive_entities_and_zero_leaks) ... ok\ntest_overlapping_id_and_bank_patterns_produce_one_entity (test_request_quality.RequestQualityTest.test_overlapping_id_and_bank_patterns_produce_one_entity) ... ok\ntest_reusable_rules_obey_production_lifecycle_and_risk_gate (test_request_quality.RequestQualityTest.test_reusable_rules_obey_production_lifecycle_and_risk_gate) ... ok\ntest_changed_protocol_sources_environment_or_profile_rejected (test_retrieval_comparison.RetrievalComparisonTest.test_changed_protocol_sources_environment_or_profile_rejected) ... ok\ntest_edited_summary_missing_request_or_forged_label_rejected (test_retrieval_comparison.RetrievalComparisonTest.test_edited_summary_missing_request_or_forged_label_rejected) ... ok\ntest_identical_outputs_and_faster_timings_do_not_erase_quality_failure (test_retrieval_comparison.RetrievalComparisonTest.test_identical_outputs_and_faster_timings_do_not_erase_quality_failure) ... ok\ntest_character_candidates_without_shared_bigrams (test_retrieval_hard_cases.RetrievalHardCaseTest.test_character_candidates_without_shared_bigrams) ... ok\ntest_character_index_replacement_deletion_and_rebuild (test_retrieval_hard_cases.RetrievalHardCaseTest.test_character_index_replacement_deletion_and_rebuild) ... ok\ntest_full_width_query_matches_ascii_without_changing_stored_content (test_retrieval_hard_cases.RetrievalHardCaseTest.test_full_width_query_matches_ascii_without_changing_stored_content) ... ok\ntest_metadata_and_invisible_owners_do_not_supply_character_evidence (test_retrieval_hard_cases.RetrievalHardCaseTest.test_metadata_and_invisible_owners_do_not_supply_character_evidence) ... ok\ntest_numeric_conditions_and_scene_boundaries (test_retrieval_hard_cases.RetrievalHardCaseTest.test_numeric_conditions_and_scene_boundaries) ... ok\ntest_ranking_uses_unrounded_scores_then_stable_ids_for_exact_ties (test_retrieval_hard_cases.RetrievalHardCaseTest.test_ranking_uses_unrounded_scores_then_stable_ids_for_exact_ties) ... ok\ntest_semantic_candidate_survives_unrelated_lexical_match (test_retrieval_hard_cases.RetrievalHardCaseTest.test_semantic_candidate_survives_unrelated_lexical_match) ... ok\ntest_explicit_and_implicit_scope_rules_unchanged (test_retrieval_optimization.RetrievalOptimizationTest.test_explicit_and_implicit_scope_rules_unchanged) ... ok\ntest_full_sort_reference_all_routes_scopes_limits_and_ties (test_retrieval_optimization.RetrievalOptimizationTest.test_full_sort_reference_all_routes_scopes_limits_and_ties) ... ok\ntest_replacement_hard_delete_and_rebuild_keep_reference_results (test_retrieval_optimization.RetrievalOptimizationTest.test_replacement_hard_delete_and_rebuild_keep_reference_results) ... ok\ntest_time_parse_cache_is_bounded_and_does_not_cache_visibility (test_retrieval_optimization.RetrievalOptimizationTest.test_time_parse_cache_is_bounded_and_does_not_cache_visibility) ... ok\ntest_allowlist_separates_current_public_material_from_historical_dependencies (test_review_materials.ReviewMaterialsTest.test_allowlist_separates_current_public_material_from_historical_dependencies) ... ok\ntest_current_summary_is_bound_and_outputs_refuse_overwrite (test_review_materials.ReviewMaterialsTest.test_current_summary_is_bound_and_outputs_refuse_overwrite) ... ok\ntest_default_packaging_cli_uses_current_material_not_legacy_manifest (test_review_materials.ReviewMaterialsTest.test_default_packaging_cli_uses_current_material_not_legacy_manifest) ... ok\ntest_five_metric_block_is_derived_from_evidence (test_review_materials.ReviewMaterialsTest.test_five_metric_block_is_derived_from_evidence) ... ok\ntest_official_flag_is_not_inferred_from_local_passes (test_review_materials.ReviewMaterialsTest.test_official_flag_is_not_inferred_from_local_passes) ... ok\ntest_ppt_entrypoint_uses_source_bound_current_generator (test_review_materials.ReviewMaterialsTest.test_ppt_entrypoint_uses_source_bound_current_generator) ... ok\ntest_reported_windows_and_service_counts_must_be_genuine (test_review_materials.ReviewMaterialsTest.test_reported_windows_and_service_counts_must_be_genuine) ... ok\ntest_request_details_and_test_count_are_recomputed (test_review_materials.ReviewMaterialsTest.test_request_details_and_test_count_are_recomputed) ... ok\ntest_review_windows_validation_does_not_invent_v11_success (test_review_materials.ReviewMaterialsTest.test_review_windows_validation_does_not_invent_v11_success) ... ok\ntest_stale_source_or_failed_check_rejected (test_review_materials.ReviewMaterialsTest.test_stale_source_or_failed_check_rejected) ... ok\ntest_deleted_vectors_stay_absent_after_rebuild_and_reload (test_round2.DeletedIndexTest.test_deleted_vectors_stay_absent_after_rebuild_and_reload) ... ok\ntest_distinct_repeated_evidence_promotes_across_requests (test_round2.LifecycleIntegrationTest.test_distinct_repeated_evidence_promotes_across_requests) ... ok\ntest_service_and_evaluation_reject_single_weak_event (test_round2.LifecycleIntegrationTest.test_service_and_evaluation_reject_single_weak_event) ... ok\ntest_failed_delete_is_retryable_and_does_not_consume_plan (test_round2.TransactionTest.test_failed_delete_is_retryable_and_does_not_consume_plan) ... ok\ntest_failed_ingestion_rolls_back_memory_and_lifecycle (test_round2.TransactionTest.test_failed_ingestion_rolls_back_memory_and_lifecycle) ... ok\ntest_explicit_high_authority_configuration_promotes (test_round2.ValidityTest.test_explicit_high_authority_configuration_promotes) ... ok\ntest_validity_is_start_inclusive_end_exclusive_and_cleans_index (test_round2.ValidityTest.test_validity_is_start_inclusive_end_exclusive_and_cleans_index) ... ok\ntest_hash_or_invalid_timing_cannot_be_presented_as_native_evidence (test_sdk_risk.SDKRiskTest.test_hash_or_invalid_timing_cannot_be_presented_as_native_evidence) ... ok\ntest_native_single_probe_never_becomes_p95_or_acceptance (test_sdk_risk.SDKRiskTest.test_native_single_probe_never_becomes_p95_or_acceptance) ... ok\ntest_failed_tool_cannot_override_successful_user_selected_tool (test_security_adversarial.SecurityAdversarialTest.test_failed_tool_cannot_override_successful_user_selected_tool) ... ok\ntest_hard_delete_has_no_orphan_after_database_reload (test_security_adversarial.SecurityAdversarialTest.test_hard_delete_has_no_orphan_after_database_reload) ... ok\ntest_nested_credentials_are_redacted_before_any_extraction (test_security_adversarial.SecurityAdversarialTest.test_nested_credentials_are_redacted_before_any_extraction) ... ok\ntest_prompt_injection_is_neither_preference_nor_knowledge (test_security_adversarial.SecurityAdversarialTest.test_prompt_injection_is_neither_preference_nor_knowledge) ... ok\ntest_same_user_identifier_cannot_cross_tenant_search_or_forget (test_security_adversarial.SecurityAdversarialTest.test_same_user_identifier_cannot_cross_tenant_search_or_forget) ... ok\ntest_current_materials_refuse_overwrite_and_detect_evidence_byte_changes (test_takeover_materials.TakeoverMaterialsTest.test_current_materials_refuse_overwrite_and_detect_evidence_byte_changes) ... ok\ntest_matching_evidence_generates_fifteen_sections_with_honest_limits (test_takeover_materials.TakeoverMaterialsTest.test_matching_evidence_generates_fifteen_sections_with_honest_limits) ... ok\ntest_readiness_and_fixture_cannot_claim_official_execution (test_takeover_materials.TakeoverMaterialsTest.test_readiness_and_fixture_cannot_claim_official_execution) ... ok\ntest_stale_source_snapshot_is_rejected (test_takeover_materials.TakeoverMaterialsTest.test_stale_source_snapshot_is_rejected) ... ok\ntest_summary_flags_cannot_override_failed_request_details (test_takeover_materials.TakeoverMaterialsTest.test_summary_flags_cannot_override_failed_request_details) ... ok\ntest_test_count_must_match_actual_completion_log (test_takeover_materials.TakeoverMaterialsTest.test_test_count_must_match_actual_completion_log) ... ok\ntest_v11_name_or_aggregate_flag_is_not_installation_evidence (test_takeover_materials.TakeoverMaterialsTest.test_v11_name_or_aggregate_flag_is_not_installation_evidence) ... ok\ntest_workload_needs_target_counts_and_available_process_rss (test_takeover_materials.TakeoverMaterialsTest.test_workload_needs_target_counts_and_available_process_rss) ... ok\ntest_api_rejects_missing_scope (test_web_server.WebServerTest.test_api_rejects_missing_scope) ... ok\ntest_confirm_rejects_another_user_and_null_scope (test_web_server.WebServerTest.test_confirm_rejects_another_user_and_null_scope) ... ok\ntest_conflict_resolution_rejects_wrong_scope (test_web_server.WebServerTest.test_conflict_resolution_rejects_wrong_scope) ... ok\ntest_dashboard_and_read_apis_are_available (test_web_server.WebServerTest.test_dashboard_and_read_apis_are_available) ... ok\ntest_scenarios_and_reset_preserve_other_tenants (test_web_server.WebServerTest.test_scenarios_and_reset_preserve_other_tenants) ... ok\ntest_search_and_two_phase_forget_work_through_http (test_web_server.WebServerTest.test_search_and_two_phase_forget_work_through_http) ... ok\ntest_search_evidence_constraints_and_modes_reach_the_service (test_web_server.WebServerTest.test_search_evidence_constraints_and_modes_reach_the_service) ... ok\ntest_real_ingest_restart_http_and_concurrent_writes (test_workload.ServiceWorkloadTest.test_real_ingest_restart_http_and_concurrent_writes) ... ok\n\n----------------------------------------------------------------------\nRan 327 tests in 130.066s\n\nOK (skipped=1)",
+      "tests_run": 327
+    },
+    "engineering_checks": {
+      "compile": true,
+      "unit_tests": true,
+      "source_syntax_and_privacy": true,
+      "frozen_request_gate": true,
+      "frozen_dataset_bytes": true,
+      "source_unchanged_during_checks": true,
+      "request_source_snapshot": true,
+      "evaluation_protocol": true,
+      "internal_quality_85": true,
+      "benchmark_500ms": true,
+      "service_workload_integrity": true,
+      "decay_diagnostics": true,
+      "action_framework": true,
+      "local_preflight": true,
+      "materials": true,
+      "editable_materials": true,
+      "privacy_scan": true
+    },
+    "requests": {
+      "metrics": {
+        "preference_accuracy": 1.0,
+        "knowledge_recall": 1.0,
+        "conflict_accuracy": 1.0,
+        "retrieval_p95_ms": 46.94580000068527,
+        "sensitive_f1": 1.0
+      },
+      "observation_counts": {
+        "preference_accuracy": 68,
+        "knowledge_recall": 60,
+        "conflict_accuracy": 60,
+        "retrieval_p95_ms": 80,
+        "sensitive_f1": 50
+      }
+    }
+  },
+  "full_benchmark_repeated_for_documentation_only_change": false,
+  "privacy": {
+    "passed": true,
+    "scanned_text_files": 479,
+    "scanned_office_documents": 6,
+    "scanned_zip_archives": 0,
+    "unexpected_findings": []
+  },
+  "resolved_default_template_members": 9,
+  "private_privacy_sha256": "2e92cb8d2017fcee80c08c346888bbe9921836dc154a7705e1a3f0c16cc18992",
+  "audit_script_sha256": "3d40e8b161f23215b3d707c8121932d7fe87a82adc3db10ecb4ff25993848524",
+  "post_seal_audit_is_external_to_zip": true
+}

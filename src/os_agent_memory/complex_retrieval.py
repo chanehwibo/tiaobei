@@ -16,10 +16,17 @@ from .provider_config import provider_identity
 from .resources import resource_snapshot, resource_usage
 from .schemas import KnowledgeMemory, MemoryStatus
 from .service import MemoryService
+from .memory_store import MemoryStore, _normalize_search_text
 
 FROZEN_SHA256 = "04b9a5266535e40a4542ae4647a4bba51aabf8edc32bd3a169713a4c4c1f2212"
 CONFIGURATION = {"top_k": 3, "min_score": .265, "dimensions": 256, "ngram": 2}
 SUITE_PATH = Path("data/eval/complex_retrieval_v1.json")
+CONSTRAINT_SUITE_PATH = Path("data/eval/complex_constraints_v1.json")
+CONSTRAINT_SHA256 = "9f03254a21bd93d24e217f470524f55569776ce46a263fc4e53ddb48d44cb5fc"
+SUITES = {
+    "complex_retrieval_v1": (SUITE_PATH, FROZEN_SHA256),
+    "complex_constraints_v1": (CONSTRAINT_SUITE_PATH, CONSTRAINT_SHA256),
+}
 MODES = ("lexical", "semantic", "hybrid")
 
 
@@ -67,6 +74,11 @@ def validate_suite(suite, *, now=None):
             raise ValueError("invalid complex relevance labels")
         if not all(visible(by_id[key], row, now) for key in expected):
             raise ValueError("positive label is not visible in its requested scope")
+        if "required_terms" in row:
+            constraints = MemoryStore._evidence_constraints(row["required_terms"])
+            text = _normalize_search_text(row["query"]).lower()
+            if not constraints or not all(pattern.search(text) for _term, pattern in constraints):
+                raise ValueError("explicit constraints must be present in the request, not derived from labels")
     return suite
 
 
@@ -183,8 +195,16 @@ def summarize_rows(rows):
     }
 
 
-def run_profile(suite, *, size, hard_fraction, mode, rounds):
-    if mode not in MODES or type(rounds) is not int or rounds <= 0:
+def grouped_summaries(rows):
+    return {
+        field: {value: summarize_rows([row for row in rows if row[field] == value])
+                for value in sorted({row[field] for row in rows})}
+        for field in ("kind", "scenario")
+    }
+
+
+def run_profile(suite, *, size, hard_fraction, mode, rounds, use_constraints=False):
+    if mode not in MODES or type(rounds) is not int or rounds <= 0 or type(use_constraints) is not bool:
         raise ValueError("invalid retrieval mode or repetition count")
     resources_before = resource_snapshot()
     started = perf_counter()
@@ -203,6 +223,7 @@ def run_profile(suite, *, size, hard_fraction, mode, rounds):
                 returned = service.search(
                     query["query"], tenant_id=query["tenant_id"], user_id=query["user_id"],
                     scene=query["scene"], top_k=3, min_score=.265, retrieval_mode=mode,
+                    required_terms=query.get("required_terms") if use_constraints else None,
                 )
             except Exception as exc:
                 error = type(exc).__name__
@@ -215,43 +236,53 @@ def run_profile(suite, *, size, hard_fraction, mode, rounds):
         measurements.append({
             "round": repeat + 1, "phase": "first_pass_no_query_warmup" if repeat == 0 else "subsequent_pass",
             "first_query_ms": rows[0]["elapsed_ms"], "summary": summarize_rows(rows),
-            "categories": categories, "rows": rows,
+            "categories": categories, "groups": grouped_summaries(rows), "rows": rows,
         })
     quality = all(row["summary"]["macro_recall_at_3"] >= .85 and row["summary"]["no_answer_accuracy"] >= .85
                   for row in measurements)
     safety = all(row["summary"]["leaked_records"] == 0 and row["summary"]["errors"] == 0 for row in measurements)
     latency = all(row["summary"]["latency_valid"] and row["summary"]["p95_ms"] <= 500 for row in measurements)
-    return {
+    result = {
         "corpus": corpus, "mode": mode, "configuration": CONFIGURATION,
         "provider": provider_identity(service.store.embedding), "build_ms": build_ms, "rounds": measurements,
         "resources": resource_usage(resources_before, resource_snapshot()),
         "quality_targets_met": quality, "safety_passed": safety, "latency_target_met": latency,
         "all_targets_met": quality and safety and latency,
     }
+    if any("required_terms" in query for query in suite["queries"]):
+        result["required_terms_enabled"] = use_constraints
+    return result
 
 
 def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .75),
-                           rounds=3, modes=("hybrid",), progress=None):
+                           rounds=3, modes=("hybrid",), progress=None,
+                           suite_name="complex_retrieval_v1", constraint_modes=(False,)):
     root = Path(root)
-    payload = (root / SUITE_PATH).read_bytes()
-    if hashlib.sha256(payload).hexdigest() != FROZEN_SHA256:
+    suite_path, suite_sha256 = SUITES[suite_name]
+    if (not constraint_modes or any(type(value) is not bool for value in constraint_modes)
+            or (suite_name == "complex_retrieval_v1" and tuple(constraint_modes) != (False,))):
+        raise ValueError("constraint modes must be explicit and cannot change the original frozen suite")
+    payload = (root / suite_path).read_bytes()
+    if hashlib.sha256(payload).hexdigest() != suite_sha256:
         raise ValueError("complex dataset bytes differ from the frozen version")
     suite = validate_suite(json.loads(payload))
     source_snapshot = {path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
                        for path in sorted((root / "src").rglob("*.py"))}
     profiles = []
-    combinations = [(size, fraction, mode) for size in sizes for fraction in hard_fractions for mode in modes]
+    combinations = [(size, fraction, mode, constrained)
+                    for size in sizes for fraction in hard_fractions for mode in modes for constrained in constraint_modes]
     if not combinations or len(set(combinations)) != len(combinations):
         raise ValueError("empty or duplicate evaluation profiles")
-    for size, fraction, mode in combinations:
+    for size, fraction, mode, constrained in combinations:
         if progress:
-            progress(f"start size={size} hard_fraction={fraction} mode={mode}")
-        profiles.append(run_profile(suite, size=size, hard_fraction=fraction, mode=mode, rounds=rounds))
+            progress(f"start size={size} hard_fraction={fraction} mode={mode} constraints={constrained}")
+        profiles.append(run_profile(suite, size=size, hard_fraction=fraction, mode=mode,
+                                    rounds=rounds, use_constraints=constrained))
         if progress:
             summary = profiles[-1]["rounds"][0]["summary"]
             progress(f"done recall={summary['macro_recall_at_3']:.4f} "
                      f"no_answer={summary['no_answer_accuracy']:.4f} p95_ms={summary['p95_ms']:.3f}")
-    evaluator_files = (SUITE_PATH, Path("src/os_agent_memory/complex_retrieval.py"),
+    evaluator_files = (suite_path, Path("src/os_agent_memory/complex_retrieval.py"),
                        Path("scripts/evaluate_complex_retrieval.py"))
     unchanged = source_snapshot == {
         path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
@@ -260,7 +291,7 @@ def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .7
     return {
         "schema_version": 1, "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "scope": "public_complex_retrieval_regression_not_official_acceptance",
-        "dataset": {"path": SUITE_PATH.as_posix(), "sha256": FROZEN_SHA256,
+        "dataset": {"path": suite_path.as_posix(), "sha256": suite_sha256,
                     "documents": len(suite["documents"]), "distinct_requests": len(suite["queries"]),
                     "kinds": dict(Counter(row["kind"] for row in suite["queries"]))},
         "environment": {
@@ -278,6 +309,9 @@ def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .7
             "percentile": "nearest_rank", "rounds": rounds, "query_order": "frozen file order, no query warmup",
             "repetition_is_independent_sample": False, "controlled_snapshot_bypasses_ingestion": True,
             "quality_thresholds": {"macro_recall_at_3": .85, "no_answer_accuracy": .85, "p95_ms": 500},
+            **({"constraint_modes": list(constraint_modes),
+                "constraint_source": "explicit input terms; never generated from relevance labels"}
+               if suite_name != "complex_retrieval_v1" else {}),
         },
         "profiles": profiles, "quality_targets_met": all(row["quality_targets_met"] for row in profiles),
         "safety_passed": all(row["safety_passed"] for row in profiles),

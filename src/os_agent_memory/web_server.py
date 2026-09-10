@@ -81,6 +81,8 @@ def create_server(
                         scene=str(body.get("scene") or "") or None,
                         top_k=int(body.get("top_k", 5)),
                         min_score=float(body.get("min_score", MemoryStore.DEFAULT_MIN_SCORE)),
+                        retrieval_mode=body.get("retrieval_mode", "hybrid"),
+                        required_terms=body.get("required_terms"),
                     )
                 elif parsed.path == "/api/conflicts/resolve":
                     result = service.resolve_conflict(

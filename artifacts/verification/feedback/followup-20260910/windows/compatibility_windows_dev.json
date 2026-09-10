@@ -1,0 +1,49 @@
+{
+  "generated_at_utc": "2026-09-10T07:27:49+00:00",
+  "operating_system": {
+    "system": "Windows",
+    "release": "10",
+    "version": "10.0.19045",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "os_release": {},
+    "is_galaxy_kylin": false,
+    "is_required_v11": false
+  },
+  "runtime": {
+    "python": "3.14.3",
+    "implementation": "CPython",
+    "python_supported": true,
+    "machine": "AMD64",
+    "architecture_supported": true
+  },
+  "resources": {
+    "logical_cpu_count": 8,
+    "physical_memory_gb": 15.771,
+    "filesystem": {
+      "path": "<artifact_dir>",
+      "writable": true,
+      "free_disk_gb": 133.952,
+      "error": null
+    }
+  },
+  "sqlite": {
+    "version": "3.50.4",
+    "threadsafety": 3,
+    "fts5": true,
+    "json1": true,
+    "errors": []
+  },
+  "embedding_sdk": {
+    "status": "not_checked",
+    "compatible": false,
+    "reason": "No real SDK configuration supplied."
+  },
+  "verdict": {
+    "local_runtime_ready": true,
+    "real_galaxy_kylin_verified": false,
+    "required_v11_verified": false,
+    "real_embedding_sdk_verified": false,
+    "sdk_is_recommended_not_mandatory": true,
+    "competition_environment_ready": false
+  }
+}

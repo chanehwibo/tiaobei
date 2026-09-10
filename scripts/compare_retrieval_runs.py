@@ -12,15 +12,22 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from os_agent_memory.complex_retrieval import (
-    CONFIGURATION, FROZEN_SHA256, SUITE_PATH, make_corpus, score_request, summarize_rows, validate_suite, visible,
+    CONFIGURATION, FROZEN_SHA256, SUITE_PATH, SUITES, grouped_summaries,
+    make_corpus, score_request, summarize_rows, validate_suite, visible,
 )
+from os_agent_memory.memory_store import MemoryStore
+from os_agent_memory.schemas import KnowledgeMemory
 
 
 def validate_report(report, suite):
     """Never accept a summary that disagrees with the frozen query-level evidence."""
+    identity = SUITES.get(suite.get("name"))
     if (report.get("schema_version") != 1 or not report.get("source_unchanged_during_run")
             or report.get("competition_ready") is not False or report.get("independent_blind") is not False
-            or report["dataset"]["sha256"] != FROZEN_SHA256 or report["dataset"]["distinct_requests"] != 120):
+            or identity is None or report["dataset"]["sha256"] != identity[1]
+            or report["dataset"]["path"] != identity[0].as_posix()
+            or report["dataset"]["distinct_requests"] != len(suite["queries"])
+            or report["dataset"]["documents"] != len(suite["documents"])):
         raise ValueError("invalid report identity or readiness boundary")
     if not report["profiles"] or not report["source_sha256"] or not report["evaluator_sha256"]:
         raise ValueError("empty report evidence")
@@ -29,9 +36,12 @@ def validate_report(report, suite):
     seen = set()
     for profile in report["profiles"]:
         corpus = profile["corpus"]
-        key = (corpus["records"], corpus["requested_hard_fraction_of_fillers"], profile["mode"])
+        constrained = profile.get("required_terms_enabled", False)
+        key = (corpus["records"], corpus["requested_hard_fraction_of_fillers"], profile["mode"], constrained)
         if key in seen or profile["configuration"] != CONFIGURATION or profile["mode"] not in {"hybrid", "lexical", "semantic"}:
             raise ValueError("duplicate profile or changed configuration")
+        if type(constrained) is not bool or (constrained and not all("required_terms" in q for q in suite["queries"])):
+            raise ValueError("constraint policy does not match frozen inputs")
         seen.add(key)
         documents, expected_corpus = make_corpus(suite, *key[:2])
         if corpus != expected_corpus:
@@ -52,6 +62,16 @@ def validate_report(report, suite):
                         or any(type(score) not in (float, int) or not math.isfinite(score) for score in row["scores"])):
                     raise ValueError("invalid timing or returned scores")
                 invalid = [key for key in row["returned"] if key not in by_id or not visible(by_id[key], query, now)]
+                if constrained:
+                    constraints = MemoryStore._evidence_constraints(query["required_terms"])
+                    for identifier in row["returned"]:
+                        document = by_id.get(identifier, {})
+                        evidence = KnowledgeMemory(
+                            id=identifier, title=document.get("title", ""), content=document.get("content", ""),
+                            tags=[], source_ids=[], version=1, created_at="", updated_at="",
+                        )
+                        if not MemoryStore._supports_constraints(evidence, constraints):
+                            raise ValueError("returned record violates explicit evidence constraints")
                 recounted = score_request(
                     query, [{"memory_id": key, "score": score} for key, score in zip(row["returned"], row["scores"])],
                     elapsed_ms=row["elapsed_ms"], invalid_ids=invalid, error_type=row["error_type"],
@@ -62,6 +82,8 @@ def validate_report(report, suite):
                           for category in sorted({row["category"] for row in repeat["rows"]})}
             if repeat["summary"] != summarize_rows(repeat["rows"]) or repeat["categories"] != categories:
                 raise ValueError("summary or category counts disagree with requests")
+            if "groups" in repeat and repeat["groups"] != grouped_summaries(repeat["rows"]):
+                raise ValueError("group counts or latency disagree with requests")
             if repeat["first_query_ms"] != repeat["rows"][0]["elapsed_ms"]:
                 raise ValueError("first query timing mismatch")
         summaries = [repeat["summary"] for repeat in repeats]
@@ -78,6 +100,8 @@ def validate_report(report, suite):
 
 
 def compare_reports(before, after, suite):
+    if suite.get("name") != "complex_retrieval_v1":
+        raise ValueError("historical speed comparator only accepts the original unconstrained suite")
     validate_report(before, suite)
     validate_report(after, suite)
     for key in ("dataset", "environment", "evaluator_sha256", "method"):

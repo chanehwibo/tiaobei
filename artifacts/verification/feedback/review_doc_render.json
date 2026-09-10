@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-09T15:51:24.373784+00:00",
+  "scope": "docx_wps_pdf_text_and_rasters_not_official_or_human_acceptance",
+  "source_sha256": "480a2f9094362dd8ac1087403bfa4ab0c346f6cfb9ef2723941447ca63275216",
+  "checker_sha256": "2ef9f2d6643d4fb6e8b466b59a82d99dd5cc81fc45822c73115df5df0fc5d244",
+  "pdf_sha256": "04437f5d8b2c995460858514b863f21d890847ff419787c154c0bf161a35d852",
+  "page_count": 24,
+  "body_paragraphs_checked": 721,
+  "missing_paragraphs": [],
+  "geometric_paragraph_matches": [],
+  "pages": [
+    {
+      "page": 1,
+      "lines": 55,
+      "outside": [],
+      "ink_fraction": 0.08293057908834349,
+      "image_sha256": "6d044b0800882e7431c8e39c631fb7f187d79bf8588cd1b55be8978fc8f0ca99",
+      "passed": true
+    },
+    {
+      "page": 2,
+      "lines": 87,
+      "outside": [],
+      "ink_fraction": 0.08699580355345837,
+      "image_sha256": "51ac1f9f47cd8650ab1eff4941947fc1ce2c15d1a7eb388dfe36a0eef09c62c1",
+      "passed": true
+    },
+    {
+      "page": 3,
+      "lines": 76,
+      "outside": [],
+      "ink_fraction": 0.09353562812372823,
+      "image_sha256": "279cee4d60390f59e0d2e8e168e36f9e51f9686bf4ed62d7269fd7204e3ad478",
+      "passed": true
+    },
+    {
+      "page": 4,
+      "lines": 10,
+      "outside": [],
+      "ink_fraction": 0.019814533554282938,
+      "image_sha256": "72dcabf852a3a5c5f7fbd18f00f0ac8f911e9e01f50178dc2270aa63e99b06a8",
+      "passed": true
+    },
+    {
+      "page": 5,
+      "lines": 29,
+      "outside": [],
+      "ink_fraction": 0.10010914484877986,
+      "image_sha256": "e8d36870d2ff15cd164d98902cfd1f886c3790b8c528cc8c77c658cd839f791a",
+      "passed": true
+    },
+    {
+      "page": 6,
+      "lines": 81,
+      "outside": [],
+      "ink_fraction": 0.08908383051427528,
+      "image_sha256": "54aa74874a8a0ac629a9175b8bcd123439fef4b4daac8c45a1e4364151f5058c",
+      "passed": true
+    },
+    {
+      "page": 7,
+      "lines": 46,
+      "outside": [],
+      "ink_fraction": 0.06648614764788861,
+      "image_sha256": "20b4b81e64122e117347b28fea757f4859f7d74e5a07a7a3ac0839dd7f00b7a9",
+      "passed": true
+    },
+    {
+      "page": 8,
+      "lines": 33,
+      "outside": [],
+      "ink_fraction": 0.0742353432476932,
+      "image_sha256": "0e06baa9748e295a542225b1f5d378b0d4ab924644ccf3f9d57afc2abb9019f1",
+      "passed": true
+    },
+    {
+      "page": 9,
+      "lines": 33,
+      "outside": [],
+      "ink_fraction": 0.0926064339602734,
+      "image_sha256": "ddccc866f3ca56a364105cf2107db60cab34b0d6703a20bbfb34b57e5167b0de",
+      "passed": true
+    },
+    {
+      "page": 10,
+      "lines": 31,
+      "outside": [],
+      "ink_fraction": 0.10259704448871712,
+      "image_sha256": "0fc6176f3777127955864d2914256919e7d4cf4bd671c400f646f1830f5bb916",
+      "passed": true
+    },
+    {
+      "page": 11,
+      "lines": 63,
+      "outside": [],
+      "ink_fraction": 0.09869052780533737,
+      "image_sha256": "e3eae39531f6d48b64e9e186fc3e76b96efce0fd12770f1b5362dbcdc8843166",
+      "passed": true
+    },
+    {
+      "page": 12,
+      "lines": 38,
+      "outside": [],
+      "ink_fraction": 0.09064874244032277,
+      "image_sha256": "75bc45646610e0f3987700e7cc28e4a1474237ec2183b51efb08897398948f2e",
+      "passed": true
+    },
+    {
+      "page": 13,
+      "lines": 0,
+      "outside": [],
+      "ink_fraction": 0.0012607958973595104,
+      "image_sha256": "edc10ca8aa60fdd34baf30887350d68b6b51062dedd4ffc4b415da74053236e6",
+      "passed": false
+    },
+    {
+      "page": 14,
+      "lines": 80,
+      "outside": [],
+      "ink_fraction": 0.10479767417735728,
+      "image_sha256": "db44a92ebeef57556dca49b60a6dc2d1433ee773a9c02972d480090c2d1dca1b",
+      "passed": true
+    },
+    {
+      "page": 15,
+      "lines": 51,
+      "outside": [],
+      "ink_fraction": 0.09111954597161524,
+      "image_sha256": "70e62ca31f7c982ed1d64ed51dec355f611f186fb37008f9bfe75a2e36997e7f",
+      "passed": true
+    },
+    {
+      "page": 16,
+      "lines": 33,
+      "outside": [],
+      "ink_fraction": 0.04747579263010713,
+      "image_sha256": "832272cb6d25529f4a3e78a96858fd788da44cf6ec6107f81cb477df23ce0c70",
+      "passed": true
+    },
+    {
+      "page": 17,
+      "lines": 72,
+      "outside": [],
+      "ink_fraction": 0.09810534827491735,
+      "image_sha256": "bfe5884ad3b7b81ee2b6aa9c434bddafd633b3a32e6da66639a4f8047419d245",
+      "passed": true
+    },
+    {
+      "page": 18,
+      "lines": 32,
+      "outside": [],
+      "ink_fraction": 0.09187318627594407,
+      "image_sha256": "4bc4d1438945d9b9bbedba715ad817ed69507f3fe32cbb76bee2709f3a66dfd8",
+      "passed": true
+    },
+    {
+      "page": 19,
+      "lines": 46,
+      "outside": [],
+      "ink_fraction": 0.09572295827758612,
+      "image_sha256": "c0b517d9c6b4a0dd445b83f90c467259f968f96d753d633d873a858bece8bfcf",
+      "passed": true
+    },
+    {
+      "page": 20,
+      "lines": 2,
+      "outside": [],
+      "ink_fraction": 0.005154899681609137,
+      "image_sha256": "96f6eeb506179df33a215a24c6498436b69cc1b3af4d5cd01dada1654f7e00dc",
+      "passed": true
+    },
+    {
+      "page": 21,
+      "lines": 30,
+      "outside": [],
+      "ink_fraction": 0.07880417676323015,
+      "image_sha256": "6aa9b88d522abf66c8dd5155ed81c7433fe24638e58cac57dd568f6e2ab707a9",
+      "passed": true
+    },
+    {
+      "page": 22,
+      "lines": 57,
+      "outside": [],
+      "ink_fraction": 0.08865913203689468,
+      "image_sha256": "cb560f04c3946d75ac8ee085540d80e1aaa3cad7ee5714011877b2a67d98efe9",
+      "passed": true
+    },
+    {
+      "page": 23,
+      "lines": 70,
+      "outside": [],
+      "ink_fraction": 0.084905116685685,
+      "image_sha256": "003b2307bbe57c7446dd7e41ca0c516683030e80889c8a86f8e8b35da38bce92",
+      "passed": true
+    },
+    {
+      "page": 24,
+      "lines": 17,
+      "outside": [],
+      "ink_fraction": 0.03742045769905635,
+      "image_sha256": "942c5ba20bc9b6baf4de632fca50ef71b1aa4152bade732674641c44e12d9775",
+      "passed": true
+    }
+  ],
+  "checks": {
+    "all_pages_nonblank_and_in_bounds": false,
+    "all_docx_body_paragraphs_present": true,
+    "expected_slide_count": true
+  },
+  "passed": false,
+  "visual_review": "Agent raster review is recorded separately.",
+  "competition_ready": false,
+  "contact_sheets": [
+    "contact-01.png",
+    "contact-02.png",
+    "contact-03.png",
+    "contact-04.png",
+    "contact-05.png",
+    "contact-06.png"
+  ]
+}

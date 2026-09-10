@@ -29,11 +29,18 @@ def fixture_summary():
     ]}
     return {
         "generated_at_utc": "2026-09-09T00:00:00Z",
-        "windows": {"tests_run": 7, "engineering_checks": len(WINDOWS_CHECKS), "metrics": requests["metrics"],
+        "windows": {"tests_run": 7, "tests_skipped": 1, "engineering_checks": len(WINDOWS_CHECKS), "metrics": requests["metrics"],
                     "observation_counts": requests["observation_counts"], "service": service["results"][-1]},
         "complex": {"quality_targets_met": False, "profiles": [
             {"records": 10000, "hard_fraction": .75, "rounds": [quality]}],
             "comparison": comparison, "ablations": [{"mode": "hybrid", **quality}]},
+        "constraints": {"quality_targets_met": False, "profiles": [
+            {"records": 10000, "hard_fraction": .75, "required_terms_enabled": enabled, "rounds": [quality],
+             "categories": [{"absent_version": {"no_answer_correct": 6},
+                             "unsupported_relation": {"no_answer_correct": 0}}],
+             "groups": [{"kind": {kind: {"requests": count, "p95_ms": 42}
+                                  for kind, count in (("positive", 24), ("no_answer", 12), ("scope", 12))}}]}
+            for enabled in (False, True)]},
         "sdk": {"single_probe_ms": 13390.615, "native_latency_passed": False},
     }
 
@@ -64,14 +71,16 @@ class ReviewMaterialsTest(unittest.TestCase):
         self.assertTrue(self.validate()["passed"])
         summary = fixture_summary()
         text = render_markdown(summary)
-        self.assertEqual(len(slide_sections(summary)), 15)
+        self.assertEqual(len(slide_sections(summary)), 18)
         for value in (INITIAL_STATUS, SDK_RISK_STATUS, "MemGPT", "FAISS", "nearest-rank", "V11待当前版复验",
                       "仅为反馈组织依据", "不能概括", "13,390.615"):
             self.assertIn(value, text)
         for value in ("INCOMPLETE", "第五轮", "未完成"):
             self.assertNotIn(value, text)
         self.assertEqual(len(OFFICE_NAMES), 2)
-        self.assertEqual(len(DOCUMENTS), 4)
+        self.assertEqual(len(DOCUMENTS), 5)
+        for value in ("历史配对", "不是等输出加速", "required_terms", "关系缺证据", "跳过1项"):
+            self.assertIn(value, text)
 
     def test_five_metric_block_is_derived_from_evidence(self):
         summary = fixture_summary()
@@ -79,7 +88,7 @@ class ReviewMaterialsTest(unittest.TestCase):
         for row in metric_rows(summary):
             for value in row:
                 self.assertIn(value, text)
-        self.assertIn("Windows 7项通过", text)
+        self.assertIn("Windows运行7项，无失败，跳过1项", text)
         self.assertIn("V11部署待独立复验", text)
 
     def test_stale_source_or_failed_check_rejected(self):
@@ -141,3 +150,21 @@ class ReviewMaterialsTest(unittest.TestCase):
         self.assertTrue(set(DOCUMENTS).issubset(public))
         self.assertEqual(manifest["source_section"]["target"], "03_源代码与说明/project")
         self.assertEqual(manifest["external_inputs"], legacy["external_inputs"])
+        current = next(section["files"] for section in manifest["public_sections"]
+                       if section["target"].endswith("/当前源码"))
+        self.assertTrue(any(name.endswith("/complex_constraints.json") for name in current))
+        self.assertFalse(any(name.endswith("/complex_before.json") for name in current))
+
+    def test_ppt_entrypoint_uses_source_bound_current_generator(self):
+        from scripts.generate_ppt import main as ppt_main
+        with patch("scripts.generate_ppt.generate_review", return_value=0) as generate:
+            self.assertEqual(ppt_main(["--output-dir", "example"]), 0)
+            generate.assert_called_once_with(["--output-dir", "example", "--office"])
+
+    def test_default_packaging_cli_uses_current_material_not_legacy_manifest(self):
+        from scripts.build_review_submission import MANIFEST
+        from scripts.build_submission import main as package_main
+        with patch("scripts.generate_review_materials.verify_outputs", return_value={"passed": True}), \
+                patch("scripts.build_submission.build_submission", return_value={}) as build:
+            self.assertEqual(package_main(["--output", "example", "--allow-incomplete"]), 0)
+            self.assertEqual(build.call_args.kwargs["manifest_path"], ROOT / MANIFEST)

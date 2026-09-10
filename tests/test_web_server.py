@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from os_agent_memory.service import MemoryService
+from os_agent_memory.schemas import KnowledgeMemory
 from os_agent_memory.web_server import create_server, dashboard_html
 
 
@@ -96,6 +97,23 @@ class WebServerTest(unittest.TestCase):
         payload = json.loads(caught.exception.read().decode("utf-8"))
         caught.exception.close()
         self.assertIn("tenant_id is required", payload["error"])
+
+    def test_search_evidence_constraints_and_modes_reach_the_service(self):
+        for identifier in ("AE-17", "AE-170"):
+            self.service.store.upsert_knowledge(KnowledgeMemory(
+                id=identifier, title="procedure", content=identifier + " v2.4 installation",
+                tags=["procedure"], source_ids=[identifier], version=1,
+                created_at="2026-01-01T00:00:00+00:00", updated_at="2026-01-01T00:00:00+00:00",
+                tenant_id="constraints", user_id="operator"))
+        body = {"query": "procedure", "tenant_id": "constraints", "user_id": "operator",
+                "required_terms": ["AE-17", "v2.4"], "retrieval_mode": "lexical", "min_score": 0}
+        self.assertEqual([row["memory_id"] for row in self.post_json("/api/search", body)], ["AE-17"])
+        self.assertEqual(self.post_json("/api/search", {**body, "required_terms": ["v2.40"]}), [])
+        for change in ({"required_terms": "AE-17"}, {"required_terms": [""]}, {"retrieval_mode": "unknown"}):
+            with self.assertRaises(HTTPError) as caught:
+                self.post_json("/api/search", {**body, **change})
+            self.assertEqual(caught.exception.code, 400)
+            caught.exception.close()
 
     def test_confirm_rejects_another_user_and_null_scope(self):
         preview = self.post_json("/api/forget/preview", {

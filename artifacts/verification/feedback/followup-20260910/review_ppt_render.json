@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T08:05:57.147454+00:00",
+  "scope": "pptx_wps_rasters_not_official_or_human_acceptance",
+  "source_sha256": "f5bc73d5159c25a4a9ebd7a69ac290b34de6377bf89e9d96d2ebbd15b2a7d864",
+  "checker_sha256": "a3d7fa57db7ffdae7cad518a8237a89560dd02875540234a3d200ca5c870bc11",
+  "pdf_sha256": null,
+  "page_count": 18,
+  "body_paragraphs_checked": 0,
+  "missing_paragraphs": [],
+  "geometric_paragraph_matches": [],
+  "pages": [
+    {
+      "page": 1,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04387222222222222,
+      "image_sha256": "0acb801df480fa75b3e364ae74664a7884a3dbc069e50ec7f95130d4669c9c21",
+      "passed": true
+    },
+    {
+      "page": 2,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.049090277777777774,
+      "image_sha256": "22ffe1ec102febe74d3ba4de54a4b3d3dfef399065bec7ae0ae14467c8493090",
+      "passed": true
+    },
+    {
+      "page": 3,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04290833333333333,
+      "image_sha256": "cb6bdb19c54fa35794a77ed2fe5213e617487ca210a8eaaf719ec5b281b2b6e2",
+      "passed": true
+    },
+    {
+      "page": 4,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04895625,
+      "image_sha256": "03e7801da3de5a5f3894c300dbd393bed8504750dee7767676eb37abd83b1dd1",
+      "passed": true
+    },
+    {
+      "page": 5,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04443888888888889,
+      "image_sha256": "ad93d9fd9dec6c9babeb8226bd2bd6eed9a73f904d7396a6087698c2da3137d7",
+      "passed": true
+    },
+    {
+      "page": 6,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.09643402777777778,
+      "image_sha256": "9ae18a9ed039668b88c02318e432f0d8dfbad9dc97394c2b6e743bfb895b12e5",
+      "passed": true
+    },
+    {
+      "page": 7,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04527013888888889,
+      "image_sha256": "479bec2956b88e62d7978dd46342f6a47d7deeeb64d625878d032b7045cd7c68",
+      "passed": true
+    },
+    {
+      "page": 8,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.11366458333333333,
+      "image_sha256": "468949716b4d0d93124756bc896bbafda40d1a2ac3ee9e7321c085c3809397ca",
+      "passed": true
+    },
+    {
+      "page": 9,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04233541666666667,
+      "image_sha256": "0108432b879d03bd3a5acf541bbfa96670090c9d985c4e5f957b5de341e12ca9",
+      "passed": true
+    },
+    {
+      "page": 10,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.10439652777777778,
+      "image_sha256": "757dfc498a97de760b50cd5aae5a9ccc682e893e8773b4daaa8a75796964d8a6",
+      "passed": true
+    },
+    {
+      "page": 11,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.12741319444444443,
+      "image_sha256": "e44901970d2a5d7db8128d95f14fc295a791339787ac1893f563d5113e3d4430",
+      "passed": true
+    },
+    {
+      "page": 12,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.054525694444444446,
+      "image_sha256": "81598df9f342a0942eab983a7a3b5ecd1993d6911505eb17625e1415e803bf7a",
+      "passed": true
+    },
+    {
+      "page": 13,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.16555277777777777,
+      "image_sha256": "9f55b0f0a48493febe25c24557375fe3ea389f28e3c97cc69261849147278409",
+      "passed": true
+    },
+    {
+      "page": 14,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.13042083333333335,
+      "image_sha256": "1a773407019ff8212a9507cf8af4c8131543540ac879f98aa8d9d99e95cbd3d1",
+      "passed": true
+    },
+    {
+      "page": 15,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04579444444444444,
+      "image_sha256": "904a1f09b700e1f356b15892bac795d3fd7fe977d132324eb8758400b976eaf3",
+      "passed": true
+    },
+    {
+      "page": 16,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04668194444444444,
+      "image_sha256": "aaf400d78e800fcdcc161e7bacf2ca3de988463febfebbef285c153a5aff62d1",
+      "passed": true
+    },
+    {
+      "page": 17,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04580694444444444,
+      "image_sha256": "23638dd263afd0b813f2c98b585a24776c781fa46951fa7362b243ec6368f872",
+      "passed": true
+    },
+    {
+      "page": 18,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.05675277777777778,
+      "image_sha256": "ec5e37a3f1125372c350386f6ac845a53863ddfcdbf0b96789aad12d1617e651",
+      "passed": true
+    }
+  ],
+  "checks": {
+    "all_pages_nonblank_and_in_bounds": true,
+    "all_docx_body_paragraphs_present": true,
+    "expected_slide_count": true
+  },
+  "passed": true,
+  "visual_review": "Agent raster review is recorded separately.",
+  "competition_ready": false,
+  "contact_sheets": [
+    "contact-01.png",
+    "contact-02.png",
+    "contact-03.png",
+    "contact-04.png",
+    "contact-05.png"
+  ]
+}

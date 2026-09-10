@@ -1,0 +1,2 @@
+# Preserve the new frozen suite's exact bytes across Git platform checkouts.
+complex_constraints_v1.json -text

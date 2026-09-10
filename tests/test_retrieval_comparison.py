@@ -8,7 +8,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts.compare_retrieval_runs import compare_reports, validate_report
-from os_agent_memory.complex_retrieval import run_complex_evaluation, summarize_rows
+from os_agent_memory.complex_retrieval import grouped_summaries, run_complex_evaluation, summarize_rows
 import json
 
 
@@ -30,6 +30,7 @@ class RetrievalComparisonTest(unittest.TestCase):
                     category: summarize_rows([row for row in repeat["rows"] if row["category"] == category])
                     for category in repeat["categories"]
                 }
+                repeat["groups"] = grouped_summaries(repeat["rows"])
                 repeat["first_query_ms"] = repeat["rows"][0]["elapsed_ms"]
 
     def test_identical_outputs_and_faster_timings_do_not_erase_quality_failure(self):
@@ -40,7 +41,7 @@ class RetrievalComparisonTest(unittest.TestCase):
         self.assertFalse(result["competition_ready"])
 
     def test_edited_summary_missing_request_or_forged_label_rejected(self):
-        for kind in ("summary", "missing", "label", "scope", "nan", "gate"):
+        for kind in ("summary", "missing", "label", "scope", "nan", "gate", "groups"):
             report = deepcopy(self.after)
             repeat = report["profiles"][0]["rounds"][0]
             if kind == "summary":
@@ -55,6 +56,8 @@ class RetrievalComparisonTest(unittest.TestCase):
                 repeat["rows"][0]["elapsed_ms"] = float("nan")
             elif kind == "gate":
                 report["quality_targets_met"] = True
+            elif kind == "groups":
+                repeat["groups"]["kind"]["positive"]["p95_ms"] = 0
             with self.subTest(kind=kind), self.assertRaises(ValueError):
                 validate_report(report, self.suite)
 

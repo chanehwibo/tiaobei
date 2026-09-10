@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "scope": "current_windows_source_and_review_evidence_not_current_v11_or_official_acceptance",
+  "issues": [],
+  "deliverables": {
+    "OS_Agent_反馈落实答辩稿.pptx": {
+      "passed": true,
+      "issues": [],
+      "slide_count": 15,
+      "missing_values": [],
+      "obsolete_status": [],
+      "sha256": "6867917ce24916050d26886432afb10034a93a2d989a4c3de54fdcde155c40c1"
+    },
+    "OS_Agent_技术方案与复测报告.docx": {
+      "passed": true,
+      "issues": [],
+      "slide_count": 0,
+      "missing_values": [],
+      "obsolete_status": [],
+      "sha256": "480a2f9094362dd8ac1087403bfa4ab0c346f6cfb9ef2723941447ca63275216"
+    }
+  },
+  "visual_render_verified": false,
+  "complex_quality_targets_met": false,
+  "native_latency_passed": false,
+  "v11_current_source_verified": false,
+  "competition_ready": false
+}

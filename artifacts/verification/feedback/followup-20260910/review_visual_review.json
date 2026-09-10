@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T08:09:14.439794+00:00",
+  "scope": "agent_visual_review_of_actual_wps_rasters_not_human_or_official_acceptance",
+  "passed": true,
+  "human_review_performed": false,
+  "competition_ready": false,
+  "deliverables": {
+    "OS_Agent_技术方案与复测报告.docx": {
+      "sha256": "4a2378e7fd4938acde570063923d105b6c5813297312af8a1f7fb5be47db4601",
+      "render_report_sha256": "eb2c4b3a31dbf6182917bf24a7640e7df52afbfdbd40a9c4fc4ff94005c522ce",
+      "page_count": 29,
+      "reviewed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "review_method": "All actual WPS page rasters visually inspected through contact sheets; DOCX paragraph presence and page bounds additionally checked.",
+      "passed": true
+    },
+    "OS_Agent_反馈落实答辩稿.pptx": {
+      "sha256": "f5bc73d5159c25a4a9ebd7a69ac290b34de6377bf89e9d96d2ebbd15b2a7d864",
+      "render_report_sha256": "b8ddae5b2e85e5d6db459ea422cc6cc5c59ece84fa01f4c086627c089c9ae790",
+      "page_count": 18,
+      "reviewed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "review_method": "All actual WPS page rasters visually inspected through contact sheets; DOCX paragraph presence and page bounds additionally checked.",
+      "passed": true
+    }
+  },
+  "checks": {
+    "all_pages_accounted_for": true,
+    "no_footer_only_blank_page": true,
+    "architecture_diagram_on_single_page_7": true,
+    "no_observed_clipping_or_overlap": true,
+    "continued_table_headers_present": true,
+    "all_978_docx_body_paragraphs_present": true,
+    "current_metrics_and_risk_labels_visible": true
+  },
+  "notes": [
+    "Every contact sheet was inspected, covering all 29 document pages and 18 slides.",
+    "Cross-page tables repeat headers; short chapter tail pages remain without loss of content.",
+    "Current 327-test results and both complex suites are separated from historical paired timing."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T08:12:19.375550+00:00",
+  "scope": "isolated_git_index_checkout_with_core_autocrlf_true_not_remote_ci",
+  "passed": true,
+  "dataset": "data/eval/complex_constraints_v1.json",
+  "attribute": "data/eval/complex_constraints_v1.json: text: unset",
+  "source_sha256": "9f03254a21bd93d24e217f470524f55569776ce46a263fc4e53ddb48d44cb5fc",
+  "checkout_sha256": "9f03254a21bd93d24e217f470524f55569776ce46a263fc4e53ddb48d44cb5fc",
+  "attribute_file_sha256": "2869074bd86e40ccafeb8b2af5ff1ba33216ca753c387495c241b4d7436a5589",
+  "competition_ready": false
+}

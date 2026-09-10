@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T01:41:14.793642+00:00",
+  "scope": "agent_visual_review_of_actual_wps_rasters_not_human_or_official_acceptance",
+  "passed": true,
+  "human_review_performed": false,
+  "competition_ready": false,
+  "deliverables": {
+    "OS_Agent_技术方案与复测报告.docx": {
+      "sha256": "3b1d8f0bb24fa9b494a51728af42af887af2f2be039aba318ba5fd5959a81bf5",
+      "render_report_sha256": "1106ecdbe7422f6bf1e648cd29fae315374d6c96f86db610ce4706ccb68e5047",
+      "page_count": 23,
+      "reviewed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "review_method": "All previous rasters inspected; every changed final page re-inspected; unchanged rasters verified by SHA256.",
+      "unchanged_raster_pages": [
+        1,
+        4,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "changed_pages_reinspected": [
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "passed": true
+    },
+    "OS_Agent_反馈落实答辩稿.pptx": {
+      "sha256": "29a601dab11016ea6d4b4ec9b8e2e6f366ed95e31eba31d1fec0c2f0f592eb49",
+      "render_report_sha256": "19e88280e06d85995bbc7ace94841c7e247c78a212c996869f70e9ac930df508",
+      "page_count": 15,
+      "reviewed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "review_method": "All previous rasters inspected; every changed final page re-inspected; unchanged rasters verified by SHA256.",
+      "unchanged_raster_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15
+      ],
+      "changed_pages_reinspected": [
+        6,
+        13
+      ],
+      "passed": true
+    }
+  },
+  "checks": {
+    "all_pages_accounted_for": true,
+    "no_footer_only_blank_page": true,
+    "architecture_diagram_on_single_page_7": true,
+    "no_observed_clipping_or_overlap": true,
+    "continued_table_headers_present": true,
+    "all_721_docx_body_paragraphs_present": true,
+    "current_metrics_and_risk_labels_visible": true
+  },
+  "notes": [
+    "Cross-page tables repeat headers; short tail pages remain without loss of content.",
+    "Original blank-page failure and intermediate renders are preserved separately."
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "schema": "action_readiness_v1",
+  "generated_at_utc": "2026-09-09T15:41:03+00:00",
+  "scope": "read_only_local_prerequisites_not_model_execution_or_official_acceptance",
+  "controller_source_sha256": "ff5efbce411be793b904bbbe6b51cf37f35b799d8b01b511dd221426ec18d75d",
+  "manifest_sha256": null,
+  "manifest_error": "frozen_run_inputs_missing",
+  "environment_identity": {
+    "is_galaxy_kylin": false,
+    "is_required_v11": false
+  },
+  "host_architecture": "amd64",
+  "engine": {
+    "name": "docker",
+    "valid": false,
+    "error_code": "engine_inventory_unavailable_or_invalid"
+  },
+  "images": {
+    "agent": {
+      "valid": false,
+      "error_code": "frozen_manifest_or_engine_unavailable",
+      "matches_pinned_linux_image": false
+    },
+    "judge": {
+      "valid": false,
+      "error_code": "frozen_manifest_or_engine_unavailable",
+      "matches_pinned_linux_image": false
+    }
+  },
+  "checks": {
+    "frozen_manifest_valid": false,
+    "controller_source_matches_freeze": false,
+    "required_v11_identity": false,
+    "local_engine_reachable": false,
+    "linux_engine_matches_host_architecture": false,
+    "engine_has_minimum_container_capacity": false,
+    "agent_image_matches_pin": false,
+    "judge_image_matches_pin": false,
+    "source_unchanged_during_inspection": true
+  },
+  "static_prerequisites_passed": false,
+  "missing_static_prerequisites": [
+    "frozen_manifest_valid",
+    "controller_source_matches_freeze",
+    "required_v11_identity",
+    "local_engine_reachable",
+    "linux_engine_matches_host_architecture",
+    "engine_has_minimum_container_capacity",
+    "agent_image_matches_pin",
+    "judge_image_matches_pin"
+  ],
+  "runtime_requirements_not_verified": {
+    "per_container_cpu_limit": 2,
+    "per_container_memory_limit_bytes": 2147483648,
+    "judge_context_tokens": 32768,
+    "judge_max_output_tokens": 12288,
+    "maximum_adapter_wall_seconds": 600,
+    "model_bytes_and_digest_inside_image": false,
+    "adapter_entrypoints_and_permissions": false,
+    "model_peak_rss_and_context_fit": false,
+    "host_overhead_and_available_memory_fit": false,
+    "independent_labels_and_human_review": false,
+    "organizer_original_and_applicable_configuration": false
+  },
+  "images_started_or_pulled": false,
+  "model_endpoints_contacted": false,
+  "agent_executed": false,
+  "independent_judge_executed": false,
+  "competition_submission_ready": false,
+  "limitations": [
+    "Image size is storage, not process RSS, model memory or a context-window fit measurement.",
+    "Engine totals are not currently available resources; no workload was launched.",
+    "Pinned declarations and local metadata do not authenticate external roles or organizer documents."
+  ]
+}

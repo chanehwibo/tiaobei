@@ -11,7 +11,9 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "src")]
 
-from os_agent_memory.complex_retrieval import FROZEN_SHA256, SUITE_PATH
+from os_agent_memory.complex_retrieval import CONSTRAINT_SHA256, CONSTRAINT_SUITE_PATH, FROZEN_SHA256, SUITE_PATH
+from os_agent_memory.embeddings import HashEmbedding
+from os_agent_memory.provider_config import provider_identity
 from os_agent_memory.request_contract import FROZEN_DATASET_SHA256, assess_frozen_requests
 from scripts.check_deliverables import inspect_ooxml
 from scripts.compare_retrieval_runs import compare_reports, validate_report
@@ -21,14 +23,16 @@ from scripts.summarize_sdk_risk import summarize_sdk_risk
 from scripts.verify_kylin_guest import file_hashes
 
 EVIDENCE = Path("artifacts/verification/feedback")
-WINDOWS_EVIDENCE = EVIDENCE / "windows-final-03"
-OUTPUT = Path("deliverables/review")
+CURRENT_EVIDENCE = EVIDENCE / "followup-20260910"
+WINDOWS_EVIDENCE = CURRENT_EVIDENCE / "windows"
+OUTPUT = Path("deliverables/review-20260910-followup")
 OFFICE_NAMES = ("OS_Agent_反馈落实答辩稿.pptx", "OS_Agent_技术方案与复测报告.docx")
 DOCUMENTS = (
     "docs/09_技术方案正文.md",
     "docs/38_相关工作与创新边界.md",
     "docs/39_评测口径与可信度.md",
     "docs/40_复杂场景与检索性能复测.md",
+    "docs/41_复杂约束场景补测.md",
 )
 OBSOLETE = ("INCOMPLETE", "第五轮", "未完成")
 
@@ -73,7 +77,8 @@ def frozen_block(windows):
         "| --- | --- | --- | --- |",
         *["| " + " | ".join(row) + " |" for row in metric_rows({"windows": windows})],
         "",
-        f"自动化测试：Windows {windows['tests_run']}项通过；{windows['engineering_checks']}项工程检查通过。",
+        f"自动化测试：Windows运行{windows['tests_run']}项，无失败，跳过{windows['tests_skipped']}项；"
+        f"{windows['engineering_checks']}项工程检查通过。",
         "当前源码的V11部署待独立复验，不沿用历史V11通过数据。原生SDK仍是待复测风险项。",
         "五项及附加安全门槛均通过；敏感识别为实体级微平均，不代表任意敏感实体均可识别。",
         "",
@@ -83,6 +88,55 @@ def frozen_block(windows):
         "<!-- END CURRENT WINDOWS EVIDENCE -->",
     ]
     return "\n".join(lines)
+
+
+def validate_current_complex(root, current, report, suite, *, expected_profiles, rounds):
+    validate_report(report, suite)
+    actual = {(row["corpus"]["records"], row["corpus"]["requested_hard_fraction_of_fillers"],
+               row["mode"], row.get("required_terms_enabled", False)) for row in report["profiles"]}
+    require(actual == expected_profiles and report["method"]["rounds"] == rounds,
+            "current complex profiles or repetitions changed")
+    expected_method = {
+        "boundary": "MemoryService.search: lock, query encoding, retrieval, reranking, serialization; no HTTP/Agent",
+        "filler_fraction_denominator": "generated fillers only; fixed difficult documents always present",
+        "percentile": "nearest_rank", "query_order": "frozen file order, no query warmup",
+        "repetition_is_independent_sample": False, "controlled_snapshot_bypasses_ingestion": True,
+        "quality_thresholds": {"macro_recall_at_3": .85, "no_answer_accuracy": .85, "p95_ms": 500},
+    }
+    require(all(report["method"].get(key) == value for key, value in expected_method.items())
+            and all(row["provider"] == provider_identity(HashEmbedding()) for row in report["profiles"]),
+            "current complex measurement boundary or provider changed")
+    source = {key: value for key, value in current["raw_sha256"].items()
+              if key.startswith("src/") and key.endswith(".py")}
+    require(report["source_sha256"] == source, "complex measured source does not match current source")
+    paths = {report["dataset"]["path"], "src/os_agent_memory/complex_retrieval.py",
+             "scripts/evaluate_complex_retrieval.py"}
+    require(set(report["evaluator_sha256"]) == paths
+            and all(digest(root / key) == value for key, value in report["evaluator_sha256"].items()),
+            "complex evaluator source changed")
+    require(report["environment"]["system"] == "Windows"
+            and report["environment"]["python_hash_seed"] == "0"
+            and report["safety_passed"] is True and report["latency_target_met"] is True,
+            "current complex environment, safety or latency check failed")
+    require(all("groups" in repeat for row in report["profiles"] for repeat in row["rounds"]),
+            "current complex reports require grouped timing and quality")
+    if suite["name"] == "complex_constraints_v1":
+        require(report["method"].get("constraint_modes") == [False, True]
+                and report["method"].get("constraint_source")
+                == "explicit input terms; never generated from relevance labels",
+                "constraint comparison must preserve both modes and explicit input attribution")
+
+
+def profile_summary(report):
+    return [{
+        "records": profile["corpus"]["records"],
+        "hard_fraction": profile["corpus"]["requested_hard_fraction_of_fillers"],
+        "mode": profile["mode"],
+        "required_terms_enabled": profile.get("required_terms_enabled", False),
+        "rounds": [repeat["summary"] for repeat in profile["rounds"]],
+        "categories": [repeat["categories"] for repeat in profile["rounds"]],
+        "groups": [repeat["groups"] for repeat in profile["rounds"]],
+    } for profile in report["profiles"]]
 
 
 def build_summary(root=ROOT):
@@ -98,7 +152,8 @@ def build_summary(root=ROOT):
 
     current = file_hashes(root)
     require(digest(root / "data/eval/request_regression_v1.json") == FROZEN_DATASET_SHA256
-            and digest(root / SUITE_PATH) == FROZEN_SHA256, "frozen dataset bytes changed")
+            and digest(root / SUITE_PATH) == FROZEN_SHA256
+            and digest(root / CONSTRAINT_SUITE_PATH) == CONSTRAINT_SHA256, "frozen dataset bytes changed")
     windows = read(WINDOWS_EVIDENCE / "final_verification.json")
     requests = read(WINDOWS_EVIDENCE / "requests.json")
     service = read(WINDOWS_EVIDENCE / "service_workload.json")
@@ -116,24 +171,23 @@ def build_summary(root=ROOT):
             and comparison["identical_ranked_results_and_scores"] is True
             and after["safety_passed"] is True and after["latency_target_met"] is True,
             "paired performance or unchanged-output claim is unsupported")
-    expected_profiles = {(size, fraction, "hybrid") for size in (1000, 10000) for fraction in (0, .75)}
+    expected_profiles = {(size, fraction, "hybrid", False) for size in (1000, 10000) for fraction in (0, .75)}
     require({(row["corpus"]["records"], row["corpus"]["requested_hard_fraction_of_fillers"], row["mode"])
-             for row in after["profiles"]} == expected_profiles and after["method"]["rounds"] == 3,
+             for row in after["profiles"]} == {row[:3] for row in expected_profiles}
+            and after["method"]["rounds"] == 3,
             "paired review needs all four profiles and three repetitions")
-    ablations = read(EVIDENCE / "complex_ablations.json")
-    validate_report(ablations, suite)
-    require({(row["corpus"]["records"], row["corpus"]["requested_hard_fraction_of_fillers"], row["mode"])
-             for row in ablations["profiles"]} == {(1000, .75, mode) for mode in ("lexical", "semantic", "hybrid")}
-            and ablations["method"]["rounds"] == 1, "ablation profile or repetition changed")
-    source = {key: value for key, value in current["raw_sha256"].items()
-              if key.startswith("src/") and key.endswith(".py")}
-    evaluator_paths = {SUITE_PATH.as_posix(), "src/os_agent_memory/complex_retrieval.py",
-                       "scripts/evaluate_complex_retrieval.py"}
-    for report in (after, ablations):
-        require(report["source_sha256"] == source, "complex measured source does not match current source")
-        require(set(report["evaluator_sha256"]) == evaluator_paths
-                and all(digest(root / key) == value for key, value in report["evaluator_sha256"].items()),
-                "complex evaluator source changed")
+    measured = read(CURRENT_EVIDENCE / "complex_current.json")
+    validate_current_complex(root, current, measured, suite, expected_profiles=expected_profiles, rounds=3)
+    ablations = read(CURRENT_EVIDENCE / "complex_ablations.json")
+    validate_current_complex(root, current, ablations, suite,
+                             expected_profiles={(1000, .75, mode, False)
+                                                for mode in ("lexical", "semantic", "hybrid")}, rounds=1)
+    constraint_suite = read(CONSTRAINT_SUITE_PATH)
+    constraints = read(CURRENT_EVIDENCE / "complex_constraints.json")
+    validate_current_complex(root, current, constraints, constraint_suite,
+                             expected_profiles={(size, fraction, "hybrid", enabled)
+                                                for size in (1000, 10000) for fraction in (0, .75)
+                                                for enabled in (False, True)}, rounds=3)
     sdk = read(EVIDENCE / "sdk_risk.json")
     require(sdk == summarize_sdk_risk(root), "SDK risk does not match the raw probe")
     read(sdk["source"])
@@ -143,6 +197,8 @@ def build_summary(root=ROOT):
             "organizer acceptance attribution changed")
     windows_summary = {
         "tests_run": windows["unit_tests"]["tests_run"], "engineering_checks": len(windows["checks"]),
+        "tests_skipped": int(match.group(1)) if (match := re.search(
+            r"OK \(skipped=(\d+)\)", windows["unit_tests"]["output_tail"])) else 0,
         "metrics": requests["metrics"], "observation_counts": requests["observation_counts"],
         "environment": requests["environment"], "service": service["results"][-1],
     }
@@ -153,17 +209,12 @@ def build_summary(root=ROOT):
         require("ROUND5 EVIDENCE" not in text, "replace the historical current-metrics block first")
         if relative == DOCUMENTS[0]:
             require(frozen_block(windows_summary) in text, "solution metrics do not match current Windows evidence")
-    profiles = [{
-        "records": profile["corpus"]["records"],
-        "hard_fraction": profile["corpus"]["requested_hard_fraction_of_fillers"],
-        "mode": profile["mode"],
-        "rounds": [repeat["summary"] for repeat in profile["rounds"]],
-    } for profile in after["profiles"]]
+    profiles = profile_summary(measured)
     ablation_rows = [{
         "mode": profile["mode"], **profile["rounds"][0]["summary"],
     } for profile in ablations["profiles"]]
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at_utc": windows["generated_at_utc"],
         "scope": "current_windows_hash_public_synthetic_review_not_official_acceptance",
         "display_status": INITIAL_STATUS,
@@ -176,9 +227,19 @@ def build_summary(root=ROOT):
             "dataset_sha256": FROZEN_SHA256, "distinct_requests": 120,
             "positive_requests": 72, "no_answer_requests": 24, "scope_requests": 24,
             "profiles": profiles, "comparison": comparison, "ablations": ablation_rows,
-            "quality_targets_met": after["quality_targets_met"],
-            "safety_passed": after["safety_passed"],
-            "latency_target_met": after["latency_target_met"],
+            "comparison_scope": "historical_paired_optimization_not_current_source_timing",
+            "quality_targets_met": measured["quality_targets_met"],
+            "safety_passed": measured["safety_passed"],
+            "latency_target_met": measured["latency_target_met"],
+        },
+        "constraints": {
+            "dataset_sha256": CONSTRAINT_SHA256, "distinct_requests": 48,
+            "positive_requests": 24, "no_answer_requests": 12, "scope_requests": 12,
+            "profiles": profile_summary(constraints),
+            "quality_targets_met": constraints["quality_targets_met"],
+            "safety_passed": constraints["safety_passed"],
+            "latency_target_met": constraints["latency_target_met"],
+            "scope": "explicit_input_constraint_ablation_not_general_answerability_or_identical_output_speedup",
         },
         "organizer_acceptance": acceptance,
         "source_lf_sha256": current["lf_sha256"],
@@ -189,6 +250,12 @@ def build_summary(root=ROOT):
 def main_complex(summary):
     return next(row["rounds"][0] for row in summary["complex"]["profiles"]
                 if row["records"] == 10000 and row["hard_fraction"] == .75)
+
+
+def main_constraints(summary, enabled):
+    return next(row for row in summary["constraints"]["profiles"]
+                if row["records"] == 10000 and row["hard_fraction"] == .75
+                and row["required_terms_enabled"] is enabled)
 
 
 def metric_rows(summary):
@@ -202,7 +269,8 @@ def slide_sections(summary):
     windows, complex_result = summary["windows"], summary["complex"]
     service, quality = windows["service"], main_complex(summary)
     paired = complex_result["comparison"]
-    count = sum(row["rounds"][0]["requests"] * len(row["rounds"]) for row in complex_result["profiles"])
+    constrained = main_constraints(summary, True)
+    constrained_quality = constrained["rounds"][0]
     return [
         ("OS Agent 多源融合记忆优化系统", [
             "XA-202612 | 出题方反馈落实与当前源码复测 | " + summary["generated_at_utc"][:10],
@@ -215,7 +283,7 @@ def slide_sections(summary):
             "状态：当前材料和新审阅包统一为“" + INITIAL_STATUS + "”。",
             "SDK：保留真实慢调用，明确复测风险和解除条件。",
             "创新与可信度：补五项一手文献对比、分母和时延口径。",
-            "复杂干扰：冻结12场景120请求，分层报告质量和延迟。",
+            "复杂干扰：原12场景120请求；新增6场景48请求及显式约束对照。",
             "新增难例揭示近主题误答风险；不能概括为所有复杂质量达标。",
         ]),
         ("方案与工程贡献", [
@@ -249,9 +317,9 @@ def slide_sections(summary):
             "1,000/10,000条规模；0/75%相似填充，固定难例始终存在。",
             "75%的分母仅为生成填充记录；数据由开发者编写，不是盲测。",
         ]),
-        ("相同结果下的检索延迟优化", [
-            f"{count:,}对返回ID、排序和分数一致：{paired['identical_ranked_results_and_scores']}。",
-            "下表为各配置首轮P95；完整三轮及首查询耗时随包保留。",
+        ("历史配对：相同结果下的检索优化", [
+            f"历史1,440对返回ID、排序和分数一致：{paired['identical_ranked_results_and_scores']}。",
+            "这是旧源码配对证据；当前源码另测，不沿用历史时延。",
         ]),
         ("优化做了什么", [
             "倒排交集计数，替代逐候选重复构造集合。",
@@ -268,6 +336,22 @@ def slide_sections(summary):
             "1,000条、75%相似填充、同一阈值0.265、各一次完整运行。",
             "这是固定阈值诊断，不是调参后的最优基线或论文复现。",
         ]),
+        ("新增复杂运维与显式证据约束", [
+            "6场景48请求：离线升级、故障转移、LSN恢复、证书、单位导出、IPC。",
+            "78条固定记录；24正例、12无答案、12作用域检查；6例需双证据。",
+            "相似编号/版本、元数据诱饵、混合日志及失效/越域记录作为干扰。",
+            "required_terms由调用方显式提供，标题/正文逐项匹配后再取top-k。",
+            "没有匹配授权记录时跳过编码；不从答案标签推导约束。",
+        ]),
+        ("显式约束开关对照：质量与时延", [
+            "新集、当前同一源码、1万条/75%相似填充、首轮48请求。",
+            "返回集合会改变；不是等输出加速或通用可回答性判断。",
+        ]),
+        ("约束效果的分母与剩余风险", [
+            f"缺版本正确拒答{constrained['categories'][0]['absent_version']['no_answer_correct']}/6；"
+            f"关系缺证据正确拒答{constrained['categories'][0]['unsupported_relation']['no_answer_correct']}/6。",
+            "下表按请求类型单列P95；空作用域快返回不替代正例响应时延。",
+        ]),
         ("真实SDK：待复测风险项", [
             f"旧ABI真实执行1次，768维；总耗时{summary['sdk']['single_probe_ms']:,.3f}ms。",
             "含隔离进程、会话及模型初始化；单次不是P95。",
@@ -276,7 +360,8 @@ def slide_sections(summary):
             "解除条件：核验模型，冻结至少50不同请求，全服务P95<=500ms。",
         ]),
         ("工程验证与部署边界", [
-            f"Windows：{windows['tests_run']}项测试、{windows['engineering_checks']}项工程检查通过。",
+            f"Windows运行{windows['tests_run']}项测试，无失败，跳过{windows['tests_skipped']}项；"
+            f"{windows['engineering_checks']}项工程检查通过。",
             f"1,000条真实服务负载：查询P95 {service['mixed_query_p95_ms']:.3f}ms；"
             f"HTTP P99 {service['http_query_p99_ms']:.3f}ms。",
             f"进程RSS末值 {service['process_resources']['rss_after_bytes']} bytes；不含模型服务。",
@@ -286,14 +371,16 @@ def slide_sections(summary):
         ("复现与证据绑定", [
             "源码、冻结数据、逐请求结果、对比报告分别记录SHA256。",
             "运行unittest、check_source、evaluate_requests、verify_release。",
-            "复杂回归使用PYTHONHASHSEED=0；四种规模/干扰配置各三轮。",
+            "复杂回归使用PYTHONHASHSEED=0；两套数据按规模/干扰各三轮。",
             "审阅包采用允许列表；解包后重新校验、运行测试和冻结五项。",
             "旧ZIP和失败记录只作追溯，不覆盖、不冒充当前版通过。",
         ]),
         ("当前结论与验收边界", [
             f"复杂正例Recall@3 {quality['macro_recall_at_3']:.2%}；"
             f"近主题无答案正确率 {quality['no_answer_accuracy']:.2%}。",
-            "延迟优化有配对证据；复杂拒答、真实SDK和V11当前版仍有风险。",
+            f"新集显式约束后Recall@3 {constrained_quality['macro_recall_at_3']:.2%}；"
+            f"无答案正确率 {constrained_quality['no_answer_accuracy']:.2%}。",
+            "显式约束改善特定干扰；复杂拒答、真实SDK和V11当前版仍有风险。",
             "独立Agent/Judge、保密标签、授权真实案例和赛事材料需外部证据。",
             "技术创新性30分、性能可信度25分仅为反馈组织依据，不是自评得分。",
             INITIAL_STATUS + "；不自动提交或发送邮件。",
@@ -316,10 +403,20 @@ def slide_tables(summary):
              ["近主题无答案", f"{quality['no_answer_accuracy']:.2%}",
               f"{quality['no_answer_correct']}/{quality['no_answer_requests']}正确，{quality['false_answers']}例误答"],
              ["干扰返回占比", f"{quality['distractor_return_rate']:.2%}", "正例返回片段中的无关项"],
-             ["跨域泄漏 / 异常", f"{quality['leaked_records']} / {quality['errors']}", "不能覆盖近主题误答风险"]],
+             ["跨域泄漏 / 异常", f"{quality['leaked_records']} / {quality['errors']}", "不能覆盖近主题误答风险"],
+             ["当前服务P95", f"{quality['p95_ms']:.3f}ms", "120个不同请求，非HTTP"]],
         11: [["模式", "Recall@3", "无答案正确率", "P95"],
              *[[row["mode"], f"{row['macro_recall_at_3']:.2%}", f"{row['no_answer_accuracy']:.2%}",
                 f"{row['p95_ms']:.3f}ms"] for row in summary["complex"]["ablations"]]],
+        13: [["显式约束", "Recall@3", "无答案正确率", "全请求P95"],
+             *[["启用" if enabled else "关闭", f"{quality['macro_recall_at_3']:.2%}",
+                f"{quality['no_answer_accuracy']:.2%}", f"{quality['p95_ms']:.3f}ms"]
+               for enabled in (False, True)
+               for quality in [main_constraints(summary, enabled)["rounds"][0]]]],
+        14: [["类型", "请求数", "约束开启P95"],
+             *[[label, str(row["requests"]), f"{row['p95_ms']:.3f}ms"]
+               for kind, label in (("positive", "正例"), ("no_answer", "无答案"), ("scope", "作用域"))
+               for row in [main_constraints(summary, True)["groups"][0]["kind"][kind]]]],
     }
 
 
@@ -338,6 +435,7 @@ def render_markdown(summary):
     lines += ["## 可追溯证据", "",
               "冻结五项SHA256：`" + FROZEN_DATASET_SHA256 + "`。",
               "复杂数据SHA256：`" + FROZEN_SHA256 + "`。",
+              "显式约束数据SHA256：`" + CONSTRAINT_SHA256 + "`。",
               "完整文件摘要与当前源码LF摘要见同目录evidence_summary.json。", ""]
     return "\n".join(lines)
 
@@ -397,7 +495,8 @@ def build_office(root, summary, output):
         east_asia.set("typeface", "Microsoft YaHei")
         font._rPr.append(east_asia)
 
-    for index, (title, body) in enumerate(slide_sections(summary), 1):
+    sections = slide_sections(summary)
+    for index, (title, body) in enumerate(sections, 1):
         slide = presentation.slides.add_slide(presentation.slide_layouts[6])
 
         def text_box(x, y, width, height, lines, size, color=(35, 42, 42), bold=False):
@@ -429,7 +528,7 @@ def build_office(root, summary, output):
                     for paragraph in cell.text_frame.paragraphs:
                         style_paragraph(paragraph, 16, (255, 255, 255) if row_index == 0 else (35, 42, 42))
         text_box(.7, 6.92, 11, .35, ["公开合成回归 | HashEmbedding | " + INITIAL_STATUS], 11, (145, 51, 54))
-        text_box(12, 6.92, .65, .35, [f"{index}/15"], 11)
+        text_box(12, 6.92, .65, .35, [f"{index}/{len(sections)}"], 11)
     presentation.save(output / OFFICE_NAMES[0])
 
 
@@ -448,9 +547,11 @@ def verify_outputs(root, output, *, require_office=True):
                     f"{summary['sdk']['single_probe_ms']:,.3f}",
                     str(summary["windows"]["tests_run"])]
         expected += [row[2] for row in metric_rows(summary)]
+        expected += ["required_terms", "48请求", "关系缺证据",
+                     f"{main_constraints(summary, True)['rounds'][0]['no_answer_accuracy']:.2%}"]
         for name in OFFICE_NAMES:
             path = output / name
-            report = inspect_ooxml(path)
+            report = inspect_ooxml(path, expected_slide_count=len(slide_sections(summary)))
             text = "\n".join(report.pop("texts"))
             report["missing_values"] = sorted({value for value in expected if value not in text})
             report["obsolete_status"] = [value for value in OBSOLETE if value in text]
@@ -462,6 +563,7 @@ def verify_outputs(root, output, *, require_office=True):
         "scope": "current_windows_source_and_review_evidence_not_current_v11_or_official_acceptance",
         "issues": issues, "deliverables": reports, "visual_render_verified": False,
         "complex_quality_targets_met": summary["complex"]["quality_targets_met"],
+        "constraint_quality_targets_met": summary["constraints"]["quality_targets_met"],
         "native_latency_passed": summary["sdk"]["native_latency_passed"],
         "v11_current_source_verified": False, "competition_ready": False,
     }

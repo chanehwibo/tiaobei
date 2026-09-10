@@ -21,7 +21,7 @@ NS = {
 }
 
 
-def inspect_ooxml(path: Path) -> dict:
+def inspect_ooxml(path: Path, *, expected_slide_count: int = 15) -> dict:
     issues = []
     texts = []
     slide_count = 0
@@ -61,7 +61,7 @@ def inspect_ooxml(path: Path) -> dict:
                     w, h = int(extent.get("cx")), int(extent.get("cy"))
                     if min(x, y, w, h) < 0 or x + w > width or y + h > height:
                         issues.append(f"shape_outside_canvas:{name}")
-            if slide_count != 15:
+            if slide_count != expected_slide_count:
                 issues.append(f"slide_count:{slide_count}")
         if any("ROUND5 EVIDENCE" in text for text in texts):
             issues.append("unrendered_evidence_marker")

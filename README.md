@@ -7,6 +7,9 @@
 **已完成初版，待赛事验收。** 四项出题方反馈及本次改动以
 [反馈落实记录](docs/37_出题方反馈落实.md)为准。该状态不等于原生SDK或赛事验收通过。
 
+2026-09-10重新对照已发送版本的结论见[四项反馈复核](docs/42_四项反馈复核与验收.md)，
+近期记忆系统和公开基准的机制对比见[相关工作补充](docs/43_近期相关工作与评测对照.md)。
+
 已有多源记忆、显式授权的Markdown/YAML、偏好修正、混合检索、冲突隔离、可审计遗忘、
 SQLite与本地HTTP服务；支持5会话50轮行动评测框架及逐请求指标核验。
 真实Agent、独立Judge和第三方隐藏标签评测仍按
@@ -16,15 +19,23 @@ SQLite与本地HTTP服务；支持5会话50轮行动评测框架及逐请求指�
 初始化成本，不是P95；新ABI缺符号，模型身份及向量数据库往返待核验。
 HashEmbedding的成绩不代表原生SDK成绩，详见[SDK证据边界](docs/27_真实SDK接入与证据边界.md)。
 
-新增12场景、120请求的复杂回归。1万条/75%相似填充下，首轮P95从67.755ms降至
-39.023ms，1,440对结果完全一致；正例Recall@3为94.44%，但近主题无答案正确率仅
-4.17%，不能宣称复杂质量全部通过。数据、消融和失败明细见
+原复杂回归有12场景、120请求。本轮当前源码在1万条/75%相似填充下首轮P95为
+38.248ms，正例Recall@3为94.44%，但近主题无答案正确率仅4.17%。
+历史等输出优化的67.755ms至39.023ms、1,440对结果一致另作追溯，不冒充当前时延。
+数据、消融和失败明细见
 [复杂检索复测](docs/40_复杂场景与检索性能复测.md)。
 
-接续前的源码`f02cdeb`已有Windows 275项测试（1项预期POSIX跳过）及17项工程检查；
-V11两轮275项测试通过，但HTTP连接被系统网络管控拒绝，核心仅7/8通过。
-这组历史实测的四项冻结质量均100%，P95为Windows 67.730ms、V11 139.981/132.803ms。
-本次代码变更后需要新源码复验，不将上述历史数据冒充新版本的双环境验收。
+再新增6个复杂运维场景、48请求及显式`required_terms`约束对照。同一源码、1万条/75%
+相似填充下，约束关闭/开启的首轮P95为41.244/16.795ms，正例Recall@3为91.67%/95.83%，
+无答案正确率为16.67%/66.67%。关系缺证据和多文档漏召回仍有失败，不宣称复杂质量全部通过；
+详见[复杂约束补测](docs/41_复杂约束场景补测.md)。
+
+当前Windows源码运行327项测试，无失败、1项平台条件跳过，17项工程检查通过。
+冻结五项的四项质量为100%，80个不同服务查询的P95为41.485ms；仅代表固定公开合成回归。
+原始证据见`artifacts/verification/feedback/followup-20260910/windows/`，
+新技术材料位于`deliverables/review-20260910-followup/`。
+历史V11的HTTP连接曾被系统网络管控拒绝，核心仅7/8通过；当前源码的V11部署仍待复验，
+不以Windows新结果或历史V11数值替代双环境验收。
 
 V11磁盘安装、虚拟机资源和评分口径已按参赛者确认获主办方认可，不重复申请；
 原始凭证待归档。客户机当前保留挂起快照，恢复和原入口服务复验见
@@ -87,15 +98,17 @@ python -X utf8 -S scripts/evaluate_requests.py --size 10000 --require-frozen --o
 python .\scripts\verify_release.py --artifact-dir artifacts/runtime/verification --sizes 100,1000,5000,10000 --rounds 30
 ```
 
-当前Windows固定证据位于 `artifacts/verification/takeover/windows/`，V11失败轮次位于 `takeover/kylin_initial/`；`round5/`、`x01-x02/` 和 `x01-judge/` 保留各自历史版本的结果。逐请求命令对五项数值、样本数和附加安全门槛执行硬检查，未达标返回非零。完整验收还执行源码编译、全部测试、v1/v2 历史诊断、v3 检索回归、衰减消融、真实服务命中与RSS、规模性能、兼容性、演示预检、材料及隐私检查，通常需数分钟。CI另执行当前版源绑定材料检查，当前该项尚未通过。`local_release_checks_passed` 与 `competition_submission_ready` 分开；真实 SDK/新领域需重新校准，0.265 不保证通用。
+当前Windows固定证据位于 `artifacts/verification/feedback/followup-20260910/windows/`，V11失败轮次位于 `takeover/kylin_initial/`；`round5/`、`takeover/windows/`、`x01-x02/` 和 `x01-judge/` 保留各自历史版本的结果。逐请求命令对五项数值、样本数和附加安全门槛执行硬检查，未达标返回非零。完整验收还执行源码编译、全部测试、v1/v2 历史诊断、v3 检索回归、衰减消融、真实服务命中与RSS、规模性能、兼容性、演示预检、材料及隐私检查，通常需数分钟。CI另执行严格双环境源绑定材料检查，当前该项尚未通过；Windows审阅材料用`generate_review_materials.py --check-only`独立校验，不替代或放宽双环境门禁。`local_release_checks_passed` 与 `competition_submission_ready` 分开；真实 SDK/新领域需重新校准，0.265 不保证通用。
 
 ## 初版技术审阅包
 
 ```powershell
-python .\scripts\build_submission.py --allow-incomplete
+python -X utf8 -S scripts/generate_review_materials.py --check-only
+python -X utf8 -S scripts/build_review_submission.py --output dist/review_submission_new
 ```
 
-默认输出到 Git 忽略的 `dist/competition_submission_draft/`，展示状态为“已完成初版，待赛事验收”。
+当前材料及阅读顺序见 [审阅包说明](submission/REVIEW_README.md)。上述命令输出到 Git 忽略的
+`dist/review_submission_new/`，拒绝覆盖已有目录，展示状态为“已完成初版，待赛事验收”。
 真实视频、报名表、授权案例或部署验证有缺项时，构建报告逐项列明并保持
 `competition_ready=false`，不会自动变成正式包。结构和完整参数见 `submission/README.md`。
 

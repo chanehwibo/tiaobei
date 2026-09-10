@@ -94,3 +94,17 @@ class DeliverableTest(unittest.TestCase):
             report = inspect_ooxml(path)
             self.assertIn("shape_outside_canvas:ppt/slides/slide1.xml", report["issues"])
             self.assertIn("slide_count:1", report["issues"])
+
+    def test_current_slide_count_is_explicit_without_relaxing_historical_default(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "fixture.pptx"
+            with ZipFile(path, "w") as archive:
+                archive.writestr("docProps/core.xml", "<core/>")
+                archive.writestr("ppt/presentation.xml",
+                                 '<p:presentation xmlns:p="http://schemas.openxmlformats.org/'
+                                 'presentationml/2006/main"><p:sldSz cx="100" cy="100"/></p:presentation>')
+                for index in range(1, 19):
+                    archive.writestr(f"ppt/slides/slide{index}.xml", "<slide/>")
+            self.assertIn("slide_count:18", inspect_ooxml(path)["issues"])
+            self.assertTrue(inspect_ooxml(path, expected_slide_count=18)["passed"])
+            self.assertIn("slide_count:18", inspect_ooxml(path, expected_slide_count=17)["issues"])

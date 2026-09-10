@@ -270,9 +270,11 @@ class MemoryStore:
         include_shared: bool = True,
         now: str | None = None,
         retrieval_mode: str = "hybrid",
+        required_terms: list[str] | tuple[str, ...] | None = None,
     ) -> list[SearchResult]:
         if retrieval_mode not in {"hybrid", "lexical", "semantic"}:
             raise ValueError("unknown retrieval_mode")
+        constraints = self._evidence_constraints(required_terms)
         if top_k <= 0:
             raise ValueError("top_k must be positive")
         query = _normalize_search_text(query).strip()
@@ -300,6 +302,29 @@ class MemoryStore:
             and (item.user_id == user_id or (include_shared and item.user_id == "*"))
             and (scene is None or item.scene in {scene, "default", "global"})
         ]
+        if constraints:
+            # Narrow before top-k so a high-scoring near-match cannot crowd out
+            # the requested entity/version. Metadata alone is not evidence.
+            postings = []
+            for term, _pattern in constraints:
+                postings.extend(self._token_index.get(token, set())
+                                for token in re.findall(r"[a-z0-9_]+", term))
+                for segment in re.findall(r"[\u3400-\u9fff]+", term):
+                    if len(segment) == 1:
+                        postings.append(self._character_index.get(segment, set()))
+                    else:
+                        postings.extend(self._token_index.get(segment[index:index + 2], set())
+                                        for index in range(len(segment) - 1))
+            matched_ids = {item.id for item in candidates}
+            for posting in sorted(postings, key=len):
+                matched_ids.intersection_update(posting)
+                if not matched_ids:
+                    return []
+            candidates = [item for item in candidates if item.id in matched_ids
+                          and self._supports_constraints(item, constraints)]
+        # Do not start a model process for an empty authorized candidate set.
+        if not candidates:
+            return []
         query_tokens = self._lexical_tokens(query)
         query_characters = self._chinese_characters(query)
         if not query_tokens and not query_characters:
@@ -756,6 +781,32 @@ class MemoryStore:
                 tokens.add(segment)
             tokens.update(segment[index : index + 2] for index in range(max(len(segment) - 1, 0)))
         return tokens
+
+    @staticmethod
+    def _evidence_constraints(required_terms):
+        if required_terms is None:
+            return []
+        if not isinstance(required_terms, (list, tuple)) or len(required_terms) > 16:
+            raise ValueError("required_terms must be an array of at most 16 non-empty strings")
+        constraints = {}
+        for value in required_terms:
+            if not isinstance(value, str) or not 1 <= len(value.strip()) <= 128:
+                raise ValueError("each required term must contain 1..128 characters")
+            term = _normalize_search_text(value).strip().lower()
+            if not re.search(r"[a-z0-9_\u3400-\u9fff]", term):
+                raise ValueError("required terms must contain searchable letters or digits")
+            pattern = re.escape(term)
+            if re.match(r"[a-z0-9_]", term[0]):
+                pattern = r"(?<![a-z0-9_.-])" + pattern
+            if re.match(r"[a-z0-9_]", term[-1]):
+                pattern += r"(?![a-z0-9_-]|\.[a-z0-9])"
+            constraints[term] = re.compile(pattern)
+        return list(constraints.items())
+
+    @staticmethod
+    def _supports_constraints(memory, constraints):
+        fields = [_normalize_search_text(text).lower() for text in (memory.title, memory.content)]
+        return all(any(pattern.search(text) for text in fields) for _term, pattern in constraints)
 
     @staticmethod
     def _lexical_similarity(left: set[str], right: set[str]) -> float:

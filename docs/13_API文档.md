@@ -26,9 +26,19 @@ service = MemoryService(database_path="artifacts/runtime/memory.sqlite")
 
 返回当前 active 偏好，按 key 排序。scene 存在时只返回全局或适用该场景的偏好。
 
-### `search(query, tenant_id, user_id, scene=None, top_k=5, min_score=0.265, include_pending=False)`
+### `search(query, tenant_id, user_id, scene=None, top_k=5, min_score=0.265, include_pending=False, retrieval_mode="hybrid", required_terms=None)`
 
 返回带综合、词法、语义分数的知识列表。业务回答不得把 `include_pending` 设为 true；该选项仅用于冲突诊断。
+
+`retrieval_mode` 可为 `hybrid`、`lexical`、`semantic`。`required_terms` 是调用方明确提供的
+证据约束，最多16个字符串，每个1至128字符；所有词项都必须在同一条知识的标题或正文中出现。
+例如 `["AE-17", "v2.4"]` 可以排除相似设备和其他版本，过滤发生在候选截断之前。
+全角英数字按半角处理，英文忽略大小写并要求完整词边界，标签和来源ID不能充当正文证据。
+空数组等同不启用，非法类型、空白项和纯标点返回参数错误。
+
+这不是自动抽取条件、语义蕴含判断或可靠拒答器。调用方不得从评测标签反推约束；
+出现词项不代表文档支持其中的条件关系，也不代表内容可信。多条知识分别提供不同证据时，
+应拆分请求或只指定各条共同的实体约束，不能要求每条同时包含所有答案词。
 
 ### conflicts(tenant_id, user_id) / resolve_conflict(memory_id, tenant_id, user_id, strategy="auto")
 
@@ -112,6 +122,21 @@ GET /api/preferences?tenant_id=default&user_id=u-demo&scene=office_report
 ```
 
 成功返回数组；低于阈值时返回空数组，不虚构答案。
+
+HTTP也支持 `retrieval_mode` 和 `required_terms`，例如：
+
+```json
+{
+  "query": "AE-17 v2.4升级前置条件和失败回滚依据",
+  "tenant_id": "default",
+  "user_id": "u-demo",
+  "top_k": 3,
+  "required_terms": ["AE-17", "v2.4"]
+}
+```
+
+无可见候选或所有候选均不满足证据约束时，不调用embedding模型，直接返回空数组。
+普通相似度检索仍有近主题误召回风险；非空结果不能直接视作已验证答案。
 
 默认阈值 0.265 仅按 v3 dev 校准，服务/HTTP 与内部评测一致；更换 SDK 或领域需重新校准。结果额外包含 character_score：标题及正文的汉字集合余弦覆盖值，不是置信概率。
 

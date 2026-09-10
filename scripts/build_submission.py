@@ -256,7 +256,8 @@ def build_submission(
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
+    parser.add_argument("--manifest", type=Path,
+                        help="Explicit manifest for historical rebuilds; defaults to the current review manifest")
     parser.add_argument("--video", type=Path)
     parser.add_argument("--registration-form", type=Path)
     parser.add_argument("--real-case", type=Path)
@@ -278,6 +279,13 @@ def main(argv: list[str] | None = None) -> int:
         "kylin_report": args.kylin_report,
     }
     try:
+        if args.manifest is None:
+            sys.path.insert(0, str(PROJECT_ROOT))
+            from scripts.build_review_submission import MANIFEST
+            from scripts.generate_review_materials import OUTPUT, verify_outputs
+            if not verify_outputs(PROJECT_ROOT, PROJECT_ROOT / OUTPUT)["passed"]:
+                raise PackagingError("当前材料与源码校验失败，请先重生成审阅材料")
+            args.manifest = PROJECT_ROOT / MANIFEST
         report = build_submission(
             project_root=PROJECT_ROOT,
             output=args.output,

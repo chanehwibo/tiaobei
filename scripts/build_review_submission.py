@@ -10,9 +10,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts.build_submission import build_submission
-from scripts.generate_review_materials import DOCUMENTS, EVIDENCE, OFFICE_NAMES, OUTPUT, WINDOWS_EVIDENCE, verify_outputs
+from scripts.generate_review_materials import (
+    CURRENT_EVIDENCE, DOCUMENTS, EVIDENCE, OFFICE_NAMES, OUTPUT, WINDOWS_EVIDENCE, verify_outputs,
+)
 
-MANIFEST = Path("submission/review_manifest.json")
+MANIFEST = Path("submission/review_followup_manifest.json")
 WINDOWS_FILES = (
     "ablations.json", "action-readiness.json", "actions.json",
     "compatibility_windows_dev.json", "compatibility_windows_dev.md",
@@ -37,7 +39,12 @@ def make_manifest(legacy):
                        *DOCUMENTS, "docs/测试报告.md", "docs/27_真实SDK接入与证据边界.md"]},
             {"target": "02_复测证据/Windows",
              "files": [(WINDOWS_EVIDENCE / name).as_posix() for name in WINDOWS_FILES]},
-            {"target": "02_复测证据/复杂场景",
+            {"target": "02_复测证据/复杂场景/当前源码",
+             "files": [(CURRENT_EVIDENCE / name).as_posix() for name in
+                       ("complex_current.json", "complex_ablations.json", "complex_constraints.json")]},
+            {"target": "02_复测证据/复杂场景/约束改动前基线",
+             "files": [(CURRENT_EVIDENCE / "complex_before.json").as_posix()]},
+            {"target": "02_复测证据/复杂场景/历史等输出配对",
              "files": [(EVIDENCE / name).as_posix() for name in
                        ("complex_before.json", "complex_after.json", "complex_comparison.json", "complex_ablations.json")]},
             {"target": "02_复测证据/SDK",
@@ -46,9 +53,9 @@ def make_manifest(legacy):
             {"target": "02_复测证据/主办方认可记录",
              "files": ["artifacts/verification/x01-x02/organizer_acceptance_reported_20260909.json"]},
             {"target": "02_复测证据/材料校验",
-             "files": [(EVIDENCE / name).as_posix() for name in
-                       ("review_materials_final.json", "review_doc_render_final.json",
-                        "review_ppt_render_final.json", "review_visual_review.json")]},
+             "files": [(CURRENT_EVIDENCE / name).as_posix() for name in
+                       ("review_materials.json", "review_doc_render.json",
+                        "review_ppt_render.json", "review_visual_review.json")]},
         ],
         "source_section": {
             "target": "03_源代码与说明/project",
