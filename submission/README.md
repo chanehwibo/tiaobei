@@ -2,34 +2,36 @@
 
 状态：**已完成初版，待赛事验收**。本目录只存结构和允许列表，不存身份证件、
 报名表、签字原件、真实案例原件或平台回执。
-当前版本及四项反馈以 `docs/37_出题方反馈落实.md` 为准。
+当前版本及四项反馈以 `docs/37_出题方反馈落实.md` 为准，
+复杂拒答与完整召回的最终验收见 `docs/45_复杂拒答与完整召回优化验收.md`。
 
 技术审阅材料与历史归档分别管理。既有Office、测试报告和封存ZIP保留原始字节，
 不充当当前源码成绩。不要再次直接压缩整个工程文件夹，尤其不能包含`.git/`、
 `dist/`、缓存、模型、密钥、私有案例和重复构建包。
 
-## 本轮只预检
+## 本轮工程验收
 
-本轮不创建提交目录、不生成ZIP，等待负责人审阅后另行授权。
-当前39页Word、23页PPT及摘要位于`deliverables/review-20260910-implementation/`，
-当前源码证据位于`artifacts/verification/feedback/implementation-20260910/`。
-在工程根目录执行：
+本轮不生成Office、不创建提交目录或ZIP，等待负责人审阅后另行授权。
+当前默认策略为`focused_evidence_v2`，最终源码证据位于
+`artifacts/verification/feedback/focused-20260911/`，运行392项测试，无失败、1项跳过。
+两套复杂集完整召回、拒答及逐请求不退化检查通过，适用范围与全部分母见第45号报告。
 
-```powershell
-python -B -X utf8 -S scripts/generate_review_materials.py --check-only
-python -B -X utf8 -S scripts/build_review_submission.py --preflight-only --preflight-report artifacts/runtime/review-preflight-new.json
-```
+39页Word、23页PPT及摘要位于`deliverables/review-20260910-implementation/`，
+它们绑定`implementation-20260910/`的历史源码和旧策略，不代表本轮成果。
+对应生成器、`review_implementation_manifest.json`及既有预检报告也只适用于该历史版本。
+本轮没有重新运行旧材料预检，不提供当前清单已通过的结论。
 
-该入口先核对当前材料、源码和数值，再生成
-`submission/review_implementation_manifest.json`并检查允许列表及Markdown链接。
-它不调用提交目录构建或归档，报告路径必须不存在；预检不能充当解包运行验收。
+下一次材料制作须先更新生成器和允许列表，绑定本轮源码、数据和最终证据，再生成到新目录、
+实际渲染并复核。旧入口在当前源码上因绑定不一致而拒绝是预期保护，
+不得关闭校验或回填历史文件以获得通过；预检也不能充当解包运行验收。
 
 `review_manifest.json`、`review_followup_manifest.json`、`review_audit_manifest.json`
-和通用脚本保留的默认旧清单仅用于兼容或历史重建，不是本轮最新材料入口。
+和通用脚本保留的默认清单同样仅用于兼容或历史重建，不是本轮最新材料入口。
+`submission_manifest.json`只补齐了当前Markdown链接所需源文件，不因此成为已验收的新提交清单。
 
 ## 审阅后封包边界
 
-只有负责人明确授权后，才使用当前允许列表构建到新的输出目录并另行归档。
+只有负责人明确授权且新材料及允许列表通过校验后，才构建到新的输出目录并另行归档。
 输出路径必须不存在，不能覆盖历史包。展示状态保持“已完成初版，待赛事验收”，逐项列出外部缺项，
 保留`competition_ready=false`。`--allow-incomplete`及机器状态`incomplete_draft`
 是兼容既有自动化的内部标识，不是对外标题，也不跳过完整性检查。
