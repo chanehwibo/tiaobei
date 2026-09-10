@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "scope": "allowlist_and_public_markdown_layout_only_no_package_created",
+  "display_status": "已完成初版，待赛事验收",
+  "competition_ready": false,
+  "planned_files": 506,
+  "public_markdown_links": [
+    {
+      "source": "submission/REVIEW_README.md",
+      "target": "00_阅读说明/REVIEW_README.md",
+      "original": "../docs/42_四项反馈复核与验收.md",
+      "resolved_source": "docs/42_四项反馈复核与验收.md",
+      "resolved_target": "00_阅读说明/42_四项反馈复核与验收.md",
+      "rewritten": "42_%E5%9B%9B%E9%A1%B9%E5%8F%8D%E9%A6%88%E5%A4%8D%E6%A0%B8%E4%B8%8E%E9%AA%8C%E6%94%B6.md"
+    },
+    {
+      "source": "submission/REVIEW_README.md",
+      "target": "00_阅读说明/REVIEW_README.md",
+      "original": "../docs/37_出题方反馈落实.md",
+      "resolved_source": "docs/37_出题方反馈落实.md",
+      "resolved_target": "00_阅读说明/37_出题方反馈落实.md",
+      "rewritten": "37_%E5%87%BA%E9%A2%98%E6%96%B9%E5%8F%8D%E9%A6%88%E8%90%BD%E5%AE%9E.md"
+    },
+    {
+      "source": "submission/REVIEW_README.md",
+      "target": "00_阅读说明/REVIEW_README.md",
+      "original": "../deliverables/review-20260910-implementation/OS_Agent_技术方案与复测报告.docx",
+      "resolved_source": "deliverables/review-20260910-implementation/OS_Agent_技术方案与复测报告.docx",
+      "resolved_target": "01_当前技术材料/OS_Agent_技术方案与复测报告.docx",
+      "rewritten": "../01_%E5%BD%93%E5%89%8D%E6%8A%80%E6%9C%AF%E6%9D%90%E6%96%99/OS_Agent_%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88%E4%B8%8E%E5%A4%8D%E6%B5%8B%E6%8A%A5%E5%91%8A.docx"
+    },
+    {
+      "source": "submission/REVIEW_README.md",
+      "target": "00_阅读说明/REVIEW_README.md",
+      "original": "../deliverables/review-20260910-implementation/OS_Agent_反馈落实答辩稿.pptx",
+      "resolved_source": "deliverables/review-20260910-implementation/OS_Agent_反馈落实答辩稿.pptx",
+      "resolved_target": "01_当前技术材料/OS_Agent_反馈落实答辩稿.pptx",
+      "rewritten": "../01_%E5%BD%93%E5%89%8D%E6%8A%80%E6%9C%AF%E6%9D%90%E6%96%99/OS_Agent_%E5%8F%8D%E9%A6%88%E8%90%BD%E5%AE%9E%E7%AD%94%E8%BE%A9%E7%A8%BF.pptx"
+    },
+    {
+      "source": "submission/REVIEW_README.md",
+      "target": "00_阅读说明/REVIEW_README.md",
+      "original": "../docs/测试报告.md",
+      "resolved_source": "docs/测试报告.md",
+      "resolved_target": "01_当前技术材料/测试报告.md",
+      "rewritten": "../01_%E5%BD%93%E5%89%8D%E6%8A%80%E6%9C%AF%E6%9D%90%E6%96%99/%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A.md"
+    },
+    {
+      "source": "docs/37_出题方反馈落实.md",
+      "target": "00_阅读说明/37_出题方反馈落实.md",
+      "original": "40_复杂场景与检索性能复测.md",
+      "resolved_source": "docs/40_复杂场景与检索性能复测.md",
+      "resolved_target": "01_当前技术材料/40_复杂场景与检索性能复测.md",
+      "rewritten": "../01_%E5%BD%93%E5%89%8D%E6%8A%80%E6%9C%AF%E6%9D%90%E6%96%99/40_%E5%A4%8D%E6%9D%82%E5%9C%BA%E6%99%AF%E4%B8%8E%E6%A3%80%E7%B4%A2%E6%80%A7%E8%83%BD%E5%A4%8D%E6%B5%8B.md"
+    },
+    {
+      "source": "docs/40_复杂场景与检索性能复测.md",
+      "target": "01_当前技术材料/40_复杂场景与检索性能复测.md",
+      "original": "41_复杂约束场景补测.md",
+      "resolved_source": "docs/41_复杂约束场景补测.md",
+      "resolved_target": "01_当前技术材料/41_复杂约束场景补测.md",
+      "rewritten": "41_%E5%A4%8D%E6%9D%82%E7%BA%A6%E6%9D%9F%E5%9C%BA%E6%99%AF%E8%A1%A5%E6%B5%8B.md"
+    },
+    {
+      "source": "docs/40_复杂场景与检索性能复测.md",
+      "target": "01_当前技术材料/40_复杂场景与检索性能复测.md",
+      "original": "44_正文证据检查与反例.md",
+      "resolved_source": "docs/44_正文证据检查与反例.md",
+      "resolved_target": "01_当前技术材料/44_正文证据检查与反例.md",
+      "rewritten": "44_%E6%AD%A3%E6%96%87%E8%AF%81%E6%8D%AE%E6%A3%80%E6%9F%A5%E4%B8%8E%E5%8F%8D%E4%BE%8B.md"
+    },
+    {
+      "source": "docs/测试报告.md",
+      "target": "01_当前技术材料/测试报告.md",
+      "original": "37_出题方反馈落实.md",
+      "resolved_source": "docs/37_出题方反馈落实.md",
+      "resolved_target": "00_阅读说明/37_出题方反馈落实.md",
+      "rewritten": "../00_%E9%98%85%E8%AF%BB%E8%AF%B4%E6%98%8E/37_%E5%87%BA%E9%A2%98%E6%96%B9%E5%8F%8D%E9%A6%88%E8%90%BD%E5%AE%9E.md"
+    },
+    {
+      "source": "docs/测试报告.md",
+      "target": "01_当前技术材料/测试报告.md",
+      "original": "40_复杂场景与检索性能复测.md",
+      "resolved_source": "docs/40_复杂场景与检索性能复测.md",
+      "resolved_target": "01_当前技术材料/40_复杂场景与检索性能复测.md",
+      "rewritten": "40_%E5%A4%8D%E6%9D%82%E5%9C%BA%E6%99%AF%E4%B8%8E%E6%A3%80%E7%B4%A2%E6%80%A7%E8%83%BD%E5%A4%8D%E6%B5%8B.md"
+    },
+    {
+      "source": "docs/测试报告.md",
+      "target": "01_当前技术材料/测试报告.md",
+      "original": "41_复杂约束场景补测.md",
+      "resolved_source": "docs/41_复杂约束场景补测.md",
+      "resolved_target": "01_当前技术材料/41_复杂约束场景补测.md",
+      "rewritten": "41_%E5%A4%8D%E6%9D%82%E7%BA%A6%E6%9D%9F%E5%9C%BA%E6%99%AF%E8%A1%A5%E6%B5%8B.md"
+    },
+    {
+      "source": "docs/测试报告.md",
+      "target": "01_当前技术材料/测试报告.md",
+      "original": "44_正文证据检查与反例.md",
+      "resolved_source": "docs/44_正文证据检查与反例.md",
+      "resolved_target": "01_当前技术材料/44_正文证据检查与反例.md",
+      "rewritten": "44_%E6%AD%A3%E6%96%87%E8%AF%81%E6%8D%AE%E6%A3%80%E6%9F%A5%E4%B8%8E%E5%8F%8D%E4%BE%8B.md"
+    },
+    {
+      "source": "docs/测试报告.md",
+      "target": "01_当前技术材料/测试报告.md",
+      "original": "39_评测口径与可信度.md",
+      "resolved_source": "docs/39_评测口径与可信度.md",
+      "resolved_target": "01_当前技术材料/39_评测口径与可信度.md",
+      "rewritten": "39_%E8%AF%84%E6%B5%8B%E5%8F%A3%E5%BE%84%E4%B8%8E%E5%8F%AF%E4%BF%A1%E5%BA%A6.md"
+    },
+    {
+      "source": "docs/测试报告.md",
+      "target": "01_当前技术材料/测试报告.md",
+      "original": "03_评测方案.md",
+      "resolved_source": "docs/03_评测方案.md",
+      "resolved_target": "03_源代码与说明/project/docs/03_评测方案.md",
+      "rewritten": "../03_%E6%BA%90%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%AF%B4%E6%98%8E/project/docs/03_%E8%AF%84%E6%B5%8B%E6%96%B9%E6%A1%88.md"
+    },
+    {
+      "source": "docs/测试报告.md",
+      "target": "01_当前技术材料/测试报告.md",
+      "original": "27_真实SDK接入与证据边界.md",
+      "resolved_source": "docs/27_真实SDK接入与证据边界.md",
+      "resolved_target": "01_当前技术材料/27_真实SDK接入与证据边界.md",
+      "rewritten": "27_%E7%9C%9F%E5%AE%9ESDK%E6%8E%A5%E5%85%A5%E4%B8%8E%E8%AF%81%E6%8D%AE%E8%BE%B9%E7%95%8C.md"
+    }
+  ],
+  "source_mirror_is_byte_preserving": true,
+  "post_archive_companions": [
+    "<archive>.zip.sha256",
+    "<archive>_CONTENTS_SHA256.txt",
+    "<archive>_archive_report.json"
+  ],
+  "post_archive_rule": "Archive digests and post-seal audits live next to the ZIP, not inside the ZIP they hash. Historical audits may be bundled only as evidence about their explicitly named older archive. A later extraction/rebuild audit is a separate sidecar and is not implied by this preflight.",
+  "missing_external": [
+    {
+      "key": "video",
+      "label": "人工复核后的最终演示视频"
+    },
+    {
+      "key": "registration_form",
+      "label": "与平台一致的盖章报名表"
+    },
+    {
+      "key": "real_case",
+      "label": "经授权且脱敏的真实应用案例证明"
+    },
+    {
+      "key": "kylin_report",
+      "label": "真实银河麒麟环境与SDK验证报告"
+    }
+  ]
+}
