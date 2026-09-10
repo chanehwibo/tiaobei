@@ -205,24 +205,36 @@ def _is_approved_fixture(relative: str) -> bool:
     return relative in SYNTHETIC_ALLOWLIST_FILES or relative.startswith(SYNTHETIC_ALLOWLIST_PREFIXES)
 
 
-def _is_probability_metric(line: str, relative: str) -> bool:
+def _is_unit_interval_metric(line: str, relative: str, keys: set[str]) -> bool:
     if not relative.lower().endswith(".json"):
         return False
     member = line.strip()
     if member.endswith(","):
         member = member[:-1]
     try:
-        value = json.loads("{" + member + "}")
+        pairs = json.loads("{" + member + "}", object_pairs_hook=list)
     except (ValueError, TypeError):
         return False
+    if len(pairs) != 1:
+        return False
+    key, value = pairs[0]
+    return key in keys and type(value) is float and 0 <= value <= 1
+
+
+def _is_probability_metric(line: str, relative: str) -> bool:
     probability_keys = {
         "macro_recall_at_3", "precision_at_3", "recall_at_3", "mrr_at_3", "ndcg_at_3",
         "full_evidence_accuracy", "no_answer_accuracy", "false_answer_rate", "distractor_return_rate",
         "before_recall_at_3", "after_recall_at_3", "before_no_answer_accuracy", "after_no_answer_accuracy",
         "ink_fraction",  # Raster check: fraction of nonwhite pixels, bounded to [0, 1].
     }
-    return (len(value) == 1 and next(iter(value)) in probability_keys
-            and type(next(iter(value.values()))) is float and 0 <= next(iter(value.values())) <= 1)
+    return _is_unit_interval_metric(line, relative, probability_keys)
+
+
+def _is_submillisecond_metric(line: str, relative: str) -> bool:
+    return _is_unit_interval_metric(
+        line, relative, {"elapsed_ms", "first_query_ms", "p50_ms", "p95_ms", "p99_ms", "max_ms"},
+    )
 
 
 def scan_sensitive_text(project_root: Path, files: Iterable[Path] | None = None) -> dict[str, Any]:
@@ -244,9 +256,12 @@ def scan_sensitive_text(project_root: Path, files: Iterable[Path] | None = None)
                 matches = list(pattern.finditer(line))
                 if matches:
                     finding = {"path": relative, "line": line_number, "kind": kind}
-                    # Repeating decimal probabilities can have 18 fractional digits.
-                    # Strings, unknown keys, integers and out-of-range values still fail.
-                    if kind in {"cn_id", "cn_phone"} and _is_probability_metric(line, relative):
+                    # Probabilities and sub-millisecond elapsed times can have 18
+                    # fractional digits. Only single, typed, bounded members qualify.
+                    if kind in {"cn_id", "cn_phone"} and (
+                        _is_probability_metric(line, relative)
+                        or _is_submillisecond_metric(line, relative)
+                    ):
                         numeric_metrics.append(finding)
                         continue
                     known = approved and all(match.group() in SYNTHETIC_VALUES for match in matches)
