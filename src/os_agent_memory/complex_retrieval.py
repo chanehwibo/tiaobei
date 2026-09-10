@@ -29,6 +29,9 @@ SUITES = {
     "complex_constraints_v1": (CONSTRAINT_SUITE_PATH, CONSTRAINT_SHA256),
 }
 MODES = ("lexical", "semantic", "hybrid")
+COMPLETION_THRESHOLDS = {
+    "full_evidence_accuracy": 1.0, "multi_document_accuracy": 1.0, "no_answer_accuracy": 1.0,
+}
 
 
 def _time(value):
@@ -139,7 +142,7 @@ def make_service(documents):
     return service
 
 
-def score_request(query, returned, *, elapsed_ms, invalid_ids=(), error_type=None):
+def score_request(query, returned, *, elapsed_ms, invalid_ids=(), error_type=None, include_evidence=True):
     expected = set(query["expected"])
     identifiers = [row["memory_id"] for row in returned]
     duplicate = len(set(identifiers)) != len(identifiers)
@@ -154,6 +157,7 @@ def score_request(query, returned, *, elapsed_ms, invalid_ids=(), error_type=Non
         "id": query["id"], "scenario": query["scenario"], "category": query["category"],
         "kind": query["kind"], "query": query["query"], "expected": query["expected"],
         "returned": identifiers, "scores": [row["score"] for row in returned],
+        **({"evidence": [row.get("evidence", {}) for row in returned]} if include_evidence else {}),
         "elapsed_ms": elapsed_ms, "error_type": error_type, "invalid_ids": list(invalid_ids),
         "recall_at_3": recall, "precision_at_3": len(matched) / 3 if expected else None,
         "mrr_at_3": 1 / ranks[0] if ranks else 0.0,
@@ -204,6 +208,29 @@ def grouped_summaries(rows):
     }
 
 
+def completion_summary(rows):
+    """Additional zero-failure gates; the original .85 thresholds stay intact."""
+    positives = [row for row in rows if row["kind"] == "positive"]
+    multiple = [row for row in positives if len(row["expected"]) > 1]
+    negatives = [row for row in rows if row["kind"] == "no_answer"]
+    return {
+        "positive_requests": len(positives),
+        "full_evidence_correct": sum(row["passed"] for row in positives),
+        "multi_document_requests": len(multiple),
+        "multi_document_correct": sum(row["passed"] for row in multiple),
+        "no_answer_requests": len(negatives),
+        "no_answer_correct": sum(row["passed"] for row in negatives),
+        "full_evidence_passed": bool(positives) and all(row["passed"] for row in positives),
+        "multi_document_passed": all(row["passed"] for row in multiple),
+        "abstention_passed": bool(negatives) and all(row["passed"] for row in negatives),
+    }
+
+
+def strict_quality_passed(completion):
+    return all(completion[key] for key in
+               ("full_evidence_passed", "multi_document_passed", "abstention_passed"))
+
+
 def run_profile(suite, *, size, hard_fraction, mode, rounds, use_constraints=False,
                 evidence_policy="similarity"):
     if (mode not in MODES or type(rounds) is not int or rounds <= 0
@@ -241,17 +268,20 @@ def run_profile(suite, *, size, hard_fraction, mode, rounds, use_constraints=Fal
             "round": repeat + 1, "phase": "first_pass_no_query_warmup" if repeat == 0 else "subsequent_pass",
             "first_query_ms": rows[0]["elapsed_ms"], "summary": summarize_rows(rows),
             "categories": categories, "groups": grouped_summaries(rows), "rows": rows,
+            "completion": completion_summary(rows),
         })
     quality = all(row["summary"]["macro_recall_at_3"] >= .85 and row["summary"]["no_answer_accuracy"] >= .85
                   for row in measurements)
     safety = all(row["summary"]["leaked_records"] == 0 and row["summary"]["errors"] == 0 for row in measurements)
     latency = all(row["summary"]["latency_valid"] and row["summary"]["p95_ms"] <= 500 for row in measurements)
+    strict = all(strict_quality_passed(row["completion"]) for row in measurements)
     result = {
         "corpus": corpus, "mode": mode, "configuration": CONFIGURATION,
         "provider": provider_identity(service.store.embedding), "build_ms": build_ms, "rounds": measurements,
         "resources": resource_usage(resources_before, resource_snapshot()),
         "quality_targets_met": quality, "safety_passed": safety, "latency_target_met": latency,
-        "all_targets_met": quality and safety and latency,
+        "strict_quality_targets_met": strict,
+        "all_targets_met": quality and strict and safety and latency,
         "evidence_policy": evidence_policy,
         "minimum_evidence_coverage": MIN_COVERAGE if evidence_policy != "similarity" else None,
     }
@@ -300,7 +330,7 @@ def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .7
         for path in sorted((root / "src").rglob("*.py"))
     }
     return {
-        "schema_version": 1, "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "schema_version": 2, "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "scope": "public_complex_retrieval_regression_not_official_acceptance",
         "dataset": {"path": suite_path.as_posix(), "sha256": suite_sha256,
                     "documents": len(suite["documents"]), "distinct_requests": len(suite["queries"]),
@@ -320,12 +350,15 @@ def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .7
             "percentile": "nearest_rank", "rounds": rounds, "query_order": "frozen file order, no query warmup",
             "repetition_is_independent_sample": False, "controlled_snapshot_bypasses_ingestion": True,
             "quality_thresholds": {"macro_recall_at_3": .85, "no_answer_accuracy": .85, "p95_ms": 500},
+            "completion_thresholds": dict(COMPLETION_THRESHOLDS),
             "evidence_policies": list(evidence_policies),
+            "v2_score_boundary": "direct seed >= min_score; exact-subject companions carry seed bundle relevance",
             **({"constraint_modes": list(constraint_modes),
                 "constraint_source": "explicit input terms; never generated from relevance labels"}
                if suite_name != "complex_retrieval_v1" else {}),
         },
         "profiles": profiles, "quality_targets_met": all(row["quality_targets_met"] for row in profiles),
+        "strict_quality_targets_met": all(row["strict_quality_targets_met"] for row in profiles),
         "safety_passed": all(row["safety_passed"] for row in profiles),
         "latency_target_met": all(row["latency_target_met"] for row in profiles),
         "all_targets_met": unchanged and all(row["all_targets_met"] for row in profiles),
@@ -335,5 +368,6 @@ def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .7
             "Fixed .265 across local ablations is diagnostic, not a separately optimized threshold for each mode.",
             "RSS is current process; high-water mark covers process lifetime and excludes external model servers.",
             "Optional content_coverage_v1 is lexical abstention, not entailment; it can reject supported paraphrases.",
+            "focused_evidence_v2 uses lexical support and exact-title section links, not semantic entailment.",
         ],
     }

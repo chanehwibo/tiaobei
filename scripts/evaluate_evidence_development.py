@@ -1,4 +1,4 @@
-"""Record an opt-in policy's development checks before frozen-suite comparison."""
+"""Compare versioned evidence policies on immutable, visible development cases."""
 from __future__ import annotations
 
 import argparse
@@ -28,6 +28,11 @@ METHOD = {
     "top_k": 3, "min_score": .265, "minimum_evidence_coverage": MIN_COVERAGE,
     "threshold_rule": "predeclared majority coverage; no frozen-test threshold sweep",
     "boundary": "MemoryService.search", "percentile": "nearest_rank", "rounds": 1,
+    "policies": {
+        "similarity": "legacy scoring without evidence abstention",
+        "content_coverage_v1": "legacy top-k plus strict lexical coverage; no reranking",
+        "focused_evidence_v2": "query focus, exact-subject bundles and property-specific support",
+    },
 }
 
 
@@ -90,7 +95,7 @@ def evaluate(root=ROOT, *, challenge=False):
                                       error_type=error))
         profiles.append({"evidence_policy": policy, "summary": summarize_rows(rows), "rows": rows})
     return {
-        "schema_version": 1, "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "schema_version": 2, "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "scope": "visible_development_check_not_blind_or_official_acceptance",
         "dataset": dataset, "method": dict(METHOD),
         "provider": provider_identity(service.store.embedding),
@@ -101,7 +106,8 @@ def evaluate(root=ROOT, *, challenge=False):
         "limitations": [
             "Visible development requests, not production incidents or generalization evidence.",
             "Lexical coverage is not relation entailment or negation reasoning.",
-            "The opt-in policy only abstains; the original ranking, score threshold and default are unchanged.",
+            "v1 only abstains. v2 changes query focus and evidence selection; bundle scores are not direct similarities.",
+            "The fixed .265 threshold gates direct seeds; a companion carries its seed's bundle relevance.",
         ],
     }
 

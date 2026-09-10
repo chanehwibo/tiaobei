@@ -21,7 +21,7 @@ from os_agent_memory.provider_config import provider_identity
 from os_agent_memory.request_contract import FROZEN_DATASET_SHA256, assess_frozen_requests
 from os_agent_memory.retrieval_evidence import MIN_COVERAGE, POLICIES, content_coverage
 from scripts.check_deliverables import inspect_ooxml
-from scripts.compare_retrieval_runs import compare_reports, validate_report
+from scripts.compare_retrieval_runs import compare_reports, validate_evidence_row, validate_report
 from scripts.evaluate_evidence_development import (
     CHALLENGE_DATA, DATA as DEVELOPMENT_DATA, METHOD as DEVELOPMENT_METHOD, evaluation_query, load_suite,
 )
@@ -155,8 +155,9 @@ def validate_abstention_comparison(report):
                profile["mode"], profile.get("required_terms_enabled", False))
         groups.setdefault(key, {})[profile["evidence_policy"]] = profile
     for profiles in groups.values():
-        require(set(profiles) == set(POLICIES), "missing default or experimental comparison")
-        original, experimental = (profiles[policy] for policy in POLICIES)
+        require({"similarity", "content_coverage_v1"} <= profiles.keys()
+                and profiles.keys() <= set(POLICIES), "missing default or experimental comparison")
+        original, experimental = (profiles[policy] for policy in ("similarity", "content_coverage_v1"))
         require(original["corpus"] == experimental["corpus"]
                 and original["provider"] == experimental["provider"], "policy comparison inputs differ")
         for first, second in zip(original["rounds"], experimental["rounds"]):
@@ -167,7 +168,7 @@ def validate_abstention_comparison(report):
 
 def validate_development_evidence(root, current, report, *, challenge=False):
     suite, dataset = load_suite(root, challenge=challenge)
-    require(report.get("schema_version") == 1 and report.get("dataset") == dataset
+    require(report.get("schema_version") == 2 and report.get("dataset") == dataset
             and report.get("method") == DEVELOPMENT_METHOD
             and report.get("provider") == provider_identity(HashEmbedding())
             and report.get("competition_ready") is False and report.get("independent_blind") is False,
@@ -181,7 +182,7 @@ def validate_development_evidence(root, current, report, *, challenge=False):
             "development measured source or environment changed")
     profiles = report.get("profiles", [])
     require([row["evidence_policy"] for row in profiles] == list(POLICIES),
-            "development must preserve both policies")
+            "development must preserve every declared policy")
     documents = {row["id"]: row for row in suite["documents"]}
     for profile in profiles:
         rows = profile["rows"]
@@ -194,7 +195,9 @@ def validate_development_evidence(root, current, report, *, challenge=False):
                     and all(identifier in documents for identifier in row["returned"])
                     and all(type(value) in (float, int) and math.isfinite(value) for value in row["scores"]),
                     "development has invalid timing or returned evidence")
-            returned = [{"memory_id": key, "score": value} for key, value in zip(row["returned"], row["scores"])]
+            validate_evidence_row(query, row, documents, profile["evidence_policy"], require_metadata=True)
+            returned = [{"memory_id": key, "score": value, "evidence": info}
+                        for key, value, info in zip(row["returned"], row["scores"], row["evidence"])]
             require(score_request(query, returned, elapsed_ms=row["elapsed_ms"], error_type=row["error_type"]) == row,
                     "development query, labels or scores disagree with evidence")
             if profile["evidence_policy"] == "content_coverage_v1" and row["returned"]:

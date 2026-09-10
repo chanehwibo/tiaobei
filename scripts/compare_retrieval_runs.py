@@ -12,18 +12,63 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from os_agent_memory.complex_retrieval import (
-    CONFIGURATION, FROZEN_SHA256, SUITE_PATH, SUITES, grouped_summaries,
-    make_corpus, score_request, summarize_rows, validate_suite, visible,
+    COMPLETION_THRESHOLDS, CONFIGURATION, FROZEN_SHA256, SUITE_PATH, SUITES, completion_summary,
+    grouped_summaries, make_corpus, score_request, strict_quality_passed, summarize_rows, validate_suite, visible,
+)
+from os_agent_memory.focused_evidence import (
+    POLICY as FOCUSED_EVIDENCE, bundle_supported, normalize_quantities, query_focus, subject_key,
+    support_coverage, support_focus,
 )
 from os_agent_memory.memory_store import MemoryStore, _normalize_search_text
 from os_agent_memory.retrieval_evidence import MIN_COVERAGE, POLICIES, content_coverage
 from os_agent_memory.schemas import KnowledgeMemory
 
 
+def validate_evidence_row(query, row, documents, policy, *, constrained=False, require_metadata=False):
+    """Recompute declared support and attribution without trusting report flags."""
+    metadata = row.get("evidence")
+    if metadata is None:
+        if require_metadata or policy == FOCUSED_EVIDENCE:
+            raise ValueError("missing evidence attribution")
+        return
+    if not isinstance(metadata, list) or len(metadata) != len(row["returned"]):
+        raise ValueError("evidence attribution length mismatch")
+    if policy != FOCUSED_EVIDENCE:
+        if any(item != {} for item in metadata):
+            raise ValueError("legacy policy cannot claim propagated evidence")
+        return
+    if not row["returned"]:
+        return
+    fields = [tuple(_normalize_search_text(documents[key][field]).lower()
+                    for field in ("title", "content")) for key in row["returned"]]
+    text = normalize_quantities(query_focus(_normalize_search_text(query["query"]))).lower()
+    constraints = MemoryStore._evidence_constraints(query.get("required_terms")) if constrained else []
+    if not bundle_supported(text, fields, constraints=constraints):
+        raise ValueError("returned set violates focused evidence support")
+    coverage = round(support_coverage(support_focus(text), fields, constraints=constraints), 4)
+    seed_id = row["returned"][0]
+    subject = subject_key(fields[0][0])
+    keys = {"policy", "direct_score", "origin", "seed_id", "coverage", "document_score", "passage_score"}
+    for index, (item, score) in enumerate(zip(metadata, row["scores"])):
+        if not isinstance(item, dict) or set(item) != keys:
+            raise ValueError("invalid evidence attribution fields")
+        numeric = [item[key] for key in ("direct_score", "document_score", "passage_score", "coverage")]
+        if any(type(value) not in (int, float) or not math.isfinite(value) for value in numeric):
+            raise ValueError("invalid evidence attribution scores")
+        if (item["policy"] != policy or item["seed_id"] != seed_id or item["coverage"] != coverage
+                or item["direct_score"] != max(item["document_score"], item["passage_score"])
+                or score != max(item["direct_score"], metadata[0]["direct_score"])
+                or item["origin"] != ("direct" if index == 0 else "subject_companion")
+                or (index == 0 and item["direct_score"] < CONFIGURATION["min_score"])
+                or (index > 0 and (not subject or subject_key(fields[index][0]) != subject))):
+            raise ValueError("evidence seed, companion, coverage or score attribution mismatch")
+
+
 def validate_report(report, suite):
     """Never accept a summary that disagrees with the frozen query-level evidence."""
     identity = SUITES.get(suite.get("name"))
-    if (report.get("schema_version") != 1 or not report.get("source_unchanged_during_run")
+    version = report.get("schema_version")
+    if (type(version) is not int or version not in (1, 2) or not report.get("source_unchanged_during_run")
             or report.get("competition_ready") is not False or report.get("independent_blind") is not False
             or identity is None or report["dataset"]["sha256"] != identity[1]
             or report["dataset"]["path"] != identity[0].as_posix()
@@ -32,6 +77,8 @@ def validate_report(report, suite):
         raise ValueError("invalid report identity or readiness boundary")
     if not report["profiles"] or not report["source_sha256"] or not report["evaluator_sha256"]:
         raise ValueError("empty report evidence")
+    if version == 2 and report["method"].get("completion_thresholds") != COMPLETION_THRESHOLDS:
+        raise ValueError("completion thresholds changed")
     now = datetime.fromisoformat(report["generated_at_utc"])
     validate_suite(suite, now=now)
     seen = set()
@@ -85,9 +132,15 @@ def validate_report(report, suite):
                     if content_coverage(_normalize_search_text(query["query"]).lower(), fields,
                                         constraints=constraints) < MIN_COVERAGE:
                         raise ValueError("returned set violates declared content coverage policy")
+                if not invalid:
+                    validate_evidence_row(query, row, by_id, policy, constrained=constrained,
+                                          require_metadata=version == 2)
+                metadata = row.get("evidence", [{} for _ in row["returned"]])
                 recounted = score_request(
-                    query, [{"memory_id": key, "score": score} for key, score in zip(row["returned"], row["scores"])],
+                    query, [{"memory_id": key, "score": score, "evidence": info}
+                            for key, score, info in zip(row["returned"], row["scores"], metadata)],
                     elapsed_ms=row["elapsed_ms"], invalid_ids=invalid, error_type=row["error_type"],
+                    include_evidence="evidence" in row,
                 )
                 if recounted != row:
                     raise ValueError("request scores or safety flags disagree with returned evidence")
@@ -99,15 +152,21 @@ def validate_report(report, suite):
                 raise ValueError("group counts or latency disagree with requests")
             if repeat["first_query_ms"] != repeat["rows"][0]["elapsed_ms"]:
                 raise ValueError("first query timing mismatch")
+            if version == 2 and repeat.get("completion") != completion_summary(repeat["rows"]):
+                raise ValueError("completion counts or gates disagree with requests")
         summaries = [repeat["summary"] for repeat in repeats]
         quality = all(row["macro_recall_at_3"] >= .85 and row["no_answer_accuracy"] >= .85 for row in summaries)
         safety = all(row["leaked_records"] == 0 and row["errors"] == 0 for row in summaries)
         latency = all(row["latency_valid"] and row["p95_ms"] <= 500 for row in summaries)
         flags = {"quality_targets_met": quality, "safety_passed": safety,
                  "latency_target_met": latency, "all_targets_met": quality and safety and latency}
+        if version == 2:
+            strict = all(strict_quality_passed(repeat["completion"]) for repeat in repeats)
+            flags.update(strict_quality_targets_met=strict, all_targets_met=quality and strict and safety and latency)
         if any(profile[key] is not value for key, value in flags.items()):
             raise ValueError("profile gate disagrees with measurements")
-    for key in ("quality_targets_met", "safety_passed", "latency_target_met", "all_targets_met"):
+    keys = ("quality_targets_met", "safety_passed", "latency_target_met", "all_targets_met")
+    for key in (*keys, *(("strict_quality_targets_met",) if version == 2 else ())):
         if report[key] is not all(profile[key] for profile in report["profiles"]):
             raise ValueError("run gate disagrees with profiles")
 

@@ -119,6 +119,7 @@ class SearchResult:
     semantic_score: float = 0.0
     status: MemoryStatus = MemoryStatus.ACTIVE
     character_score: float = 0.0
+    evidence: dict[str, object] = field(default_factory=dict)
 
 
 @dataclass(slots=True)

@@ -9,6 +9,10 @@ from functools import lru_cache
 from heapq import nlargest, nsmallest
 
 from .embeddings import EmbeddingProvider, HashEmbedding, cosine_similarity
+from .focused_evidence import (
+    POLICY as FOCUSED_EVIDENCE, body_passages, evidence_text, normalize_quantities,
+    query_focus, select_evidence, support_focus,
+)
 from .retrieval_evidence import MIN_COVERAGE, POLICIES, content_coverage
 from .schemas import (
     AuditEvent,
@@ -284,6 +288,8 @@ class MemoryStore:
         query = _normalize_search_text(query).strip()
         if not query:
             return []
+        if evidence_policy == FOCUSED_EVIDENCE:
+            query = normalize_quantities(query_focus(query))
         if candidate_limit is None:
             candidate_limit = max(64, top_k * 12)
         if candidate_limit < top_k:
@@ -385,6 +391,11 @@ class MemoryStore:
             ]}.values())
 
         scored: list[tuple[float, KnowledgeMemory, float, float, float]] = []
+        direct_details = {}
+        if evidence_policy == FOCUSED_EVIDENCE:
+            focused = evidence_text(support_focus(query.lower()))
+            focused_tokens = self._lexical_tokens(focused)
+            focused_characters = self._chinese_characters(focused)
         for item in candidates:
             if not item.embedding and retrieval_mode != "lexical":
                 item.embedding = self.embedding.encode(self._knowledge_text(item))
@@ -401,10 +412,30 @@ class MemoryStore:
                 score = lexical_score
             elif retrieval_mode == "semantic":
                 score = semantic_score
-            if score < min_score:
+            if evidence_policy == FOCUSED_EVIDENCE:
+                document_score = score
+                passage_score = score
+                if retrieval_mode == "hybrid":
+                    for passage in body_passages(item.content):
+                        passage = normalize_quantities(passage)
+                        lexical = self._lexical_similarity(focused_tokens, self._lexical_tokens(passage))
+                        character = self._lexical_similarity(focused_characters, self._chinese_characters(passage))
+                        passage_score = max(passage_score, .25 * semantic_score + .25 * lexical
+                                            + .45 * character + .05 * item.authority)
+                    score = passage_score
+                direct_details[item.id] = {"document_score": document_score,
+                                          "passage_score": passage_score}
+            if score < min_score and evidence_policy != FOCUSED_EVIDENCE:
                 continue
             scored.append((score, item, lexical_score, semantic_score, character_score))
         ranked = nsmallest(top_k, scored, key=lambda row: (-row[0], row[1].id))
+        evidence = {}
+        if evidence_policy == FOCUSED_EVIDENCE:
+            ranked, evidence = select_evidence(
+                query, scored, top_k=top_k, min_score=min_score, constraints=constraints,
+                normalize=lambda text: _normalize_search_text(text).lower(),
+                direct_details=direct_details,
+            )
         if evidence_policy == "content_coverage_v1":
             documents = [
                 tuple(_normalize_search_text(text).lower() for text in (item.title, item.content))
@@ -423,6 +454,7 @@ class MemoryStore:
                 semantic_score=round(semantic_score, 4),
                 character_score=round(character_score, 4),
                 status=item.status,
+                evidence=evidence.get(item.id, {}),
             )
             for score, item, lexical_score, semantic_score, character_score in ranked
         ]
