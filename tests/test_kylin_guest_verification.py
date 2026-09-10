@@ -48,8 +48,11 @@ class KylinGuestVerificationTest(unittest.TestCase):
             data.mkdir(parents=True)
             (data / "latest_report.json").write_text("{}", encoding="utf-8")
             (data / "frozen_report.json").write_text("{}", encoding="utf-8")
+            development = root / "data/dev"
+            development.mkdir()
+            (development / "suite.json").write_text("{}", encoding="utf-8")
             snapshot = guest.file_hashes(root)
-        self.assertEqual(set(snapshot["raw_sha256"]), {"data/eval/frozen_report.json"})
+        self.assertEqual(set(snapshot["raw_sha256"]), {"data/eval/frozen_report.json", "data/dev/suite.json"})
         self.assertEqual(snapshot["excluded_generated_outputs"], ["data/eval/latest_report.json"])
 
 

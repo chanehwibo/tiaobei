@@ -9,12 +9,12 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from scripts.build_submission import build_submission
+from scripts.build_submission import build_submission, preflight_submission
 from scripts.generate_review_materials import (
     CURRENT_EVIDENCE, DOCUMENTS, EVIDENCE, OFFICE_NAMES, OUTPUT, WINDOWS_EVIDENCE, verify_outputs,
 )
 
-MANIFEST = Path("submission/review_followup_manifest.json")
+MANIFEST = Path("submission/review_implementation_manifest.json")
 WINDOWS_FILES = (
     "ablations.json", "action-readiness.json", "actions.json",
     "compatibility_windows_dev.json", "compatibility_windows_dev.md",
@@ -32,7 +32,8 @@ def make_manifest(legacy):
         "schema_version": 1,
         "package_name": "OS_Agent_反馈落实_已完成初版_待赛事验收",
         "public_sections": [
-            {"target": "00_阅读说明", "files": ["submission/REVIEW_README.md", "docs/37_出题方反馈落实.md"]},
+            {"target": "00_阅读说明",
+             "files": ["submission/REVIEW_README.md", "docs/37_出题方反馈落实.md", "docs/42_四项反馈复核与验收.md"]},
             {"target": "01_当前技术材料",
              "files": [*(str(OUTPUT / name).replace("\\", "/") for name in OFFICE_NAMES),
                        (OUTPUT / "current_report.md").as_posix(), (OUTPUT / "evidence_summary.json").as_posix(),
@@ -41,14 +42,21 @@ def make_manifest(legacy):
              "files": [(WINDOWS_EVIDENCE / name).as_posix() for name in WINDOWS_FILES]},
             {"target": "02_复测证据/复杂场景/当前源码",
              "files": [(CURRENT_EVIDENCE / name).as_posix() for name in
-                       ("complex_current.json", "complex_ablations.json", "complex_constraints.json")]},
+                       ("complex_current.json", "complex_ablations.json", "complex_constraints.json",
+                        "complex_policy_comparison.json", "constraints_policy_comparison.json",
+                        "development_current.json", "development_challenge_current.json")]},
+            {"target": "02_复测证据/复杂场景/初次开发诊断",
+             "files": [(CURRENT_EVIDENCE / name).as_posix() for name in
+                       ("development_initial.json", "development_challenge_initial.json",
+                        "complex_policy_initial.json", "constraints_policy_initial.json")]},
             {"target": "02_复测证据/复杂场景/约束改动前基线",
-             "files": [(CURRENT_EVIDENCE / "complex_before.json").as_posix()]},
+             "files": [(EVIDENCE / "followup-20260910/complex_before.json").as_posix()]},
             {"target": "02_复测证据/复杂场景/历史等输出配对",
              "files": [(EVIDENCE / name).as_posix() for name in
                        ("complex_before.json", "complex_after.json", "complex_comparison.json", "complex_ablations.json")]},
             {"target": "02_复测证据/SDK",
              "files": [(EVIDENCE / "sdk_risk.json").as_posix(),
+                       (CURRENT_EVIDENCE / "native_windows_discovery.json").as_posix(),
                        "artifacts/verification/round5/native/legacy_runtime_started.json"]},
             {"target": "02_复测证据/主办方认可记录",
              "files": ["artifacts/verification/x01-x02/organizer_acceptance_reported_20260909.json"]},
@@ -60,7 +68,7 @@ def make_manifest(legacy):
         "source_section": {
             "target": "03_源代码与说明/project",
             "files": source_files,
-            "trees": list(legacy["source_section"]["trees"]),
+            "trees": sorted(set(legacy["source_section"]["trees"]) | {"data/dev"}),
             "docs": [],
         },
         "external_inputs": list(legacy["external_inputs"]),
@@ -69,9 +77,18 @@ def make_manifest(legacy):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--preflight-only", action="store_true",
+                        help="write/check the allowlist and validate planned links without staging or packaging")
+    parser.add_argument("--preflight-report", type=Path)
     args = parser.parse_args(argv)
-    if args.output.exists():
+    if args.preflight_only == (args.output is not None):
+        parser.error("choose --preflight-only or --output, never both")
+    if args.preflight_report and not args.preflight_only:
+        parser.error("--preflight-report requires --preflight-only")
+    if args.preflight_report and args.preflight_report.exists():
+        raise ValueError("refusing to overwrite preflight evidence")
+    if args.output and args.output.exists():
         raise ValueError("refusing to overwrite a review package")
     checks = verify_outputs(ROOT, ROOT / OUTPUT)
     if not checks["passed"]:
@@ -85,11 +102,19 @@ def main(argv=None):
     else:
         with path.open("x", encoding="utf-8") as stream:
             stream.write(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
-    report = build_submission(
-        project_root=ROOT, output=args.output, manifest_path=path, external_files={}, allow_incomplete=True,
-    )
+    if args.preflight_only:
+        report = preflight_submission(ROOT, path)
+        if args.preflight_report:
+            args.preflight_report.parent.mkdir(parents=True, exist_ok=True)
+            with args.preflight_report.open("x", encoding="utf-8") as stream:
+                stream.write(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+    else:
+        report = build_submission(
+            project_root=ROOT, output=args.output, manifest_path=path, external_files={}, allow_incomplete=True,
+        )
     print(json.dumps({key: value for key, value in report.items() if key != "files"}, ensure_ascii=False, indent=2))
-    print("files=" + str(len(report["files"])))
+    if "files" in report:
+        print("files=" + str(len(report["files"])))
     return 0
 
 

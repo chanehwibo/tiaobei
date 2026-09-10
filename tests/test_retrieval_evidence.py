@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 from unittest.mock import Mock
 
@@ -10,7 +11,7 @@ from os_agent_memory.memory_store import MemoryStore
 from os_agent_memory.retrieval_evidence import MIN_COVERAGE, content_coverage
 from os_agent_memory.service import MemoryService
 from tests.test_evidence_constraints import document
-from scripts.evaluate_evidence_development import evaluate
+from scripts.evaluate_evidence_development import CHALLENGE_DATA, DATA, evaluate, load_suite
 
 
 class RetrievalEvidenceTest(unittest.TestCase):
@@ -86,6 +87,15 @@ class RetrievalEvidenceTest(unittest.TestCase):
                 self.assertEqual(len(profile["rows"]), count)
                 self.assertEqual(profile["summary"]["requests"], count)
                 self.assertEqual(profile["summary"]["errors"], 0)
+
+    def test_challenge_bytes_are_frozen_not_silently_relabelled(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / DATA).parent.mkdir(parents=True)
+            (root / DATA).write_bytes((ROOT / DATA).read_bytes())
+            (root / CHALLENGE_DATA).write_bytes((ROOT / CHALLENGE_DATA).read_bytes() + b"\n")
+            with self.assertRaisesRegex(ValueError, "challenge changed"):
+                load_suite(root, challenge=True)
 
 
 if __name__ == "__main__":

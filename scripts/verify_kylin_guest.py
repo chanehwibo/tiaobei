@@ -41,7 +41,7 @@ def guest_passed(report):
 def file_hashes(root):
     paths = sorted({
         path
-        for folder in ("src", "tests", "scripts", "data/eval", "data/samples", "config")
+        for folder in ("src", "tests", "scripts", "data/eval", "data/dev", "data/samples", "config")
         for path in (root / folder).rglob("*")
         if path.is_file() and path.suffix in {".py", ".json", ".jsonl", ".html", ".ps1", ".sh", ".js", ".cjs", ".css"}
         and path.relative_to(root).as_posix() not in GENERATED_SNAPSHOT_EXCLUSIONS

@@ -28,6 +28,9 @@ class ConstraintSuiteTest(unittest.TestCase):
 
     def test_frozen_data_and_independent_denominators(self):
         self.assertEqual(hashlib.sha256((ROOT / CONSTRAINT_SUITE_PATH).read_bytes()).hexdigest(), CONSTRAINT_SHA256)
+        self.assertIn(CONSTRAINT_SUITE_PATH.name + " -text",
+                      (ROOT / CONSTRAINT_SUITE_PATH.parent / ".gitattributes")
+                      .read_text(encoding="utf-8").splitlines())
         self.assertEqual(build_suite(), self.suite)
         validate_suite(self.suite)
         self.assertEqual(len(self.suite["documents"]), 78)
@@ -78,7 +81,7 @@ class ConstraintSuiteTest(unittest.TestCase):
         # This is a validation fixture, not evidence for the host environment.
         report["environment"].update(system="Windows", python_hash_seed="0")
         snapshot = file_hashes(ROOT)
-        arguments = {"expected_profiles": {(78, 0, "hybrid", value) for value in (False, True)}, "rounds": 1}
+        arguments = {"expected_profiles": {(78, 0, "hybrid", value, "similarity") for value in (False, True)}, "rounds": 1}
         validate_current_complex(ROOT, snapshot, report, self.suite, **arguments)
         for field in ("source", "groups", "provider", "method", "constraints"):
             changed = deepcopy(report)
@@ -101,6 +104,12 @@ class ConstraintSuiteTest(unittest.TestCase):
             rounds=1, constraint_modes=(True,), evidence_policies=("similarity", "content_coverage_v1"),
         )
         validate_report(report, self.suite)
+        report["environment"].update(system="Windows", python_hash_seed="0")
+        validate_current_complex(
+            ROOT, file_hashes(ROOT), report, self.suite,
+            expected_profiles={(78, 0, "hybrid", True, policy)
+                               for policy in ("similarity", "content_coverage_v1")}, rounds=1,
+        )
         first, guarded = report["profiles"]
         self.assertEqual(first["corpus"], guarded["corpus"])
         for original, result in zip(first["rounds"][0]["rows"], guarded["rounds"][0]["rows"]):
@@ -111,3 +120,27 @@ class ConstraintSuiteTest(unittest.TestCase):
             changed["profiles"][1].update(evidence_policy=policy, minimum_evidence_coverage=threshold)
             with self.assertRaises(ValueError):
                 validate_report(changed, self.suite)
+
+    def test_platform_line_endings_use_measured_raw_hashes_without_weakening_source_binding(self):
+        report = deepcopy(self.report)
+        report["environment"].update(system="Windows", python_hash_seed="0")
+        measured = file_hashes(ROOT)
+        checkout = deepcopy(measured)
+        for name in ("src/os_agent_memory/memory_store.py", "scripts/evaluate_complex_retrieval.py"):
+            payload = (ROOT / name).read_bytes()
+            converted = payload.replace(b"\r\n", b"\n") if b"\r\n" in payload else payload.replace(b"\n", b"\r\n")
+            checkout["raw_sha256"][name] = hashlib.sha256(converted).hexdigest()
+            self.assertNotEqual(checkout["raw_sha256"][name], measured["raw_sha256"][name])
+        arguments = {"expected_profiles": {(78, 0, "hybrid", value, "similarity") for value in (False, True)},
+                     "rounds": 1, "measured_snapshot": measured}
+        validate_current_complex(ROOT, checkout, report, self.suite, **arguments)
+        for field in ("source", "evaluator", "normalized"):
+            changed, current = deepcopy(report), deepcopy(checkout)
+            if field == "source":
+                changed["source_sha256"]["src/os_agent_memory/memory_store.py"] = "0" * 64
+            elif field == "evaluator":
+                changed["evaluator_sha256"]["scripts/evaluate_complex_retrieval.py"] = "0" * 64
+            else:
+                current["lf_sha256"]["src/os_agent_memory/memory_store.py"] = "0" * 64
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                validate_current_complex(ROOT, current, changed, self.suite, **arguments)
