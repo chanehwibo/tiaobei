@@ -1,0 +1,3760 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T16:57:49+00:00",
+  "scope": "public_request_regression_not_independent_blind_or_official_certification",
+  "environment": {
+    "system": "Windows",
+    "release": "10",
+    "machine": "AMD64",
+    "python": "3.14.3",
+    "embedding_provider": {
+      "implementation": "os_agent_memory.embeddings.HashEmbedding",
+      "dimensions": 256,
+      "ngram": 2
+    }
+  },
+  "dataset": {
+    "name": "public_request_regression_v1",
+    "sha256": "51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98",
+    "provenance": {
+      "type": "developer_authored_synthetic",
+      "human_data": false,
+      "independent_blind": false,
+      "labels_frozen_before_algorithm_changes": true,
+      "limitations": "Public labels; repeated development evaluation is regression, not blind validation."
+    }
+  },
+  "source_sha256": {
+    "src/os_agent_memory/__init__.py": "79789b69ee6e07b5f8d85fa9bc2482fd0973466e67cd0559319791933f79c828",
+    "src/os_agent_memory/action_evaluation.py": "c9d02e234eb224e0315deaf3cc5e572fab27695172901aafa259848a2ec2d64d",
+    "src/os_agent_memory/action_judging.py": "719d6175c394a1a91afc3054c2909de9bcf6bf69e95477c312e962ea4a9d12c1",
+    "src/os_agent_memory/action_readiness.py": "7309867516f4ca5db3875dcc443492cfac781fc8cabbd35ca0252ed60e5edc32",
+    "src/os_agent_memory/benchmark.py": "51b999b9f1dee71228a5c8997b887b85ed46ba4650d831b83ae75c15b3f47a9f",
+    "src/os_agent_memory/bounded_command.py": "31d055c949ebd001575c4f8e994a72c586fdddf104685a688df410b0588429a7",
+    "src/os_agent_memory/cli.py": "9ce63038fdd4b8452c50335d3f9961bae539a2216e96a3e20dac2c09546fe095",
+    "src/os_agent_memory/compatibility.py": "7584c227acb9d349c8428b08cfb0be10d3f6cdc4a54a229ddb126f48e85e9c5f",
+    "src/os_agent_memory/complex_retrieval.py": "40df840cc7323c3e94653066c70fb06948842aacda641ebd4a173d3fb3f56d6e",
+    "src/os_agent_memory/demo.py": "ad7c3f79e99f81d71cf24d11e73d171cd0de3f5044f756fcd80f94bb6a833bd7",
+    "src/os_agent_memory/diagnostics.py": "6eb90ccdfd24aa6b6200107f3402773933897a9ed83793683210975d6271bcec",
+    "src/os_agent_memory/embeddings.py": "091af84fe0248a826aa524a8a60068c0ae3f03a009b58ce686395ef0ae805d8c",
+    "src/os_agent_memory/evaluation.py": "1007391573b118d4d0e2c694a5e3ca2049738887a3c78fb460b437255fa2cb7a",
+    "src/os_agent_memory/experiments.py": "752ea48c7e0a8e3361c79be251d06234f4071e5769e405150affbe21039c23f8",
+    "src/os_agent_memory/file_memory.py": "5f5344995dde200334510ca971aff87de11ceee8d5c216c9cc8c85d1b56a1d88",
+    "src/os_agent_memory/focused_evidence.py": "9f7a05d8a5054feda5ce0a8007566c2615353e6dec1c2caf67997edec1a60099",
+    "src/os_agent_memory/ingestion.py": "d89215ccf26e7f1483ac46d4f0ebaa1d80aff425375703cbec4c67b4c08e6428",
+    "src/os_agent_memory/knowledge.py": "6c873d74754bcd8ee7cf447618f741205fbe6edb269ed6e5e0ce8af55276165c",
+    "src/os_agent_memory/kylin_native.py": "689f0bbcb913726640486d57b5b66006610ea922fa5dbc2c768bc0160ba95f9f",
+    "src/os_agent_memory/lifecycle.py": "a6b625f5fbb2f63d82847e11c700da3655881653776c46014f1fd22add919850",
+    "src/os_agent_memory/local_judge.py": "ddf055a281b254ecfd6c033bf988f9a6d2e1110599c6f5a91f52cae629365b97",
+    "src/os_agent_memory/memory_store.py": "a6b9f38ab7f3c8e3a317f885c7384388427c249e13408b0e5ed6d7784baffd7b",
+    "src/os_agent_memory/memory_tools.py": "e0435da7f8218d3a56b6999aa13297bad41e6298fa2cf1af7947e04aaf71cf39",
+    "src/os_agent_memory/official_contract.py": "28e30e2d9dc58e554851eafc35cb226d14599181a4ba571805d580613a35c487",
+    "src/os_agent_memory/official_diagnostics.py": "8ac8e5f8b19ce1e322c0d949fb24f85baee2b39ca43fd9624a8a75424233551e",
+    "src/os_agent_memory/persistence.py": "015ef646e7018dec550e1c0a72c5a92eb5994cbc99cc838b05779b352d5eda04",
+    "src/os_agent_memory/preference.py": "0ff1cb7cc0d7fd9824c933660c5a158df7043e11a49c246182c64a0185d17ec4",
+    "src/os_agent_memory/provider_config.py": "6059798f8e2d88c268d548c2782fec20916a778f789d7d563986438be5fc0135",
+    "src/os_agent_memory/request_contract.py": "50a2a2cd4c95feba36c6760d94ea83109e5edfa9f079e4e77f4354efd45e9613",
+    "src/os_agent_memory/request_evaluation.py": "eb085e0394506629e309ca83502d3ff28aaa6fdbef865f08536665f64232d45a",
+    "src/os_agent_memory/resources.py": "ee55bb78dd66a91d45e64251713deda25d0dd322f13e471381d1d73fed99f8f9",
+    "src/os_agent_memory/retrieval_evidence.py": "09c6a097bd0815cfedb9887cba418bc3f3cf38bee0aa50ce9ba2a6888d2de133",
+    "src/os_agent_memory/schemas.py": "9c4b0797081da195e4f4de971622113deba789eae4277678b363f0399ec05905",
+    "src/os_agent_memory/security.py": "797751be58e46f8f02f2e87f846616f55063925cede7271d3f1b40253d9a4013",
+    "src/os_agent_memory/service.py": "bafab84e5f6ce24d00c2aebd55a5bf85906134d5d2b1cf10d0192775581f3961",
+    "src/os_agent_memory/web_server.py": "847a832737335626601c86a75a88a66f1784e07d16ac7e0cbd1b648279ab7255",
+    "src/os_agent_memory/workload.py": "087fd76d05267a69650c66fd9d34bee0f18a75149f39b1d8fd12b6e7e4073e22"
+  },
+  "metrics": {
+    "preference_accuracy": 1.0,
+    "knowledge_recall": 1.0,
+    "conflict_accuracy": 1.0,
+    "retrieval_p95_ms": 48.70519999531098,
+    "sensitive_f1": 1.0
+  },
+  "observation_counts": {
+    "preference_accuracy": 68,
+    "knowledge_recall": 60,
+    "conflict_accuracy": 60,
+    "retrieval_p95_ms": 80,
+    "sensitive_f1": 50
+  },
+  "rubric_diagnostic": {
+    "metrics": {
+      "preference_accuracy": {
+        "value": 1.0,
+        "target": 0.85,
+        "operator": "ge",
+        "requests": 68,
+        "minimum_requests": 50,
+        "passed": true
+      },
+      "knowledge_recall": {
+        "value": 1.0,
+        "target": 0.85,
+        "operator": "ge",
+        "requests": 60,
+        "minimum_requests": 50,
+        "passed": true
+      },
+      "conflict_accuracy": {
+        "value": 1.0,
+        "target": 0.88,
+        "operator": "ge",
+        "requests": 60,
+        "minimum_requests": 50,
+        "passed": true
+      },
+      "retrieval_p95_ms": {
+        "value": 48.70519999531098,
+        "target": 500.0,
+        "operator": "le",
+        "requests": 80,
+        "minimum_requests": 50,
+        "passed": true
+      },
+      "sensitive_f1": {
+        "value": 1.0,
+        "target": 0.9,
+        "operator": "ge",
+        "requests": 50,
+        "minimum_requests": 50,
+        "passed": true
+      }
+    },
+    "all_targets_met": true,
+    "scope": "developer_held_measurements_not_official_certification"
+  },
+  "safety_checks": {
+    "durable_preferences": true,
+    "knowledge_ingestion": true,
+    "no_scope_leaks": true,
+    "no_answer_85": true,
+    "no_redaction_leaks": true
+  },
+  "all_targets_met": true,
+  "official_validation_ready": false,
+  "independent_blind": false,
+  "preference": {
+    "requests": 68,
+    "correct": 68,
+    "accuracy": 1.0,
+    "slot_scores": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "durable_checks_passed": true,
+    "definition": "exact per-request key/value set match, extra or missing slots fail; normalized extraction, not permission to persist",
+    "rows": [
+      {
+        "id": "p-000",
+        "category": "language",
+        "expected": {
+          "output.language": "zh-CN"
+        },
+        "actual": {
+          "output.language": "zh-CN"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-001",
+        "category": "language",
+        "expected": {
+          "output.language": "en"
+        },
+        "actual": {
+          "output.language": "en"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-002",
+        "category": "language",
+        "expected": {
+          "output.language": "zh-CN"
+        },
+        "actual": {
+          "output.language": "zh-CN"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-003",
+        "category": "language",
+        "expected": {
+          "output.language": "en"
+        },
+        "actual": {
+          "output.language": "en"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-004",
+        "category": "language",
+        "expected": {
+          "output.language": "zh-CN"
+        },
+        "actual": {
+          "output.language": "zh-CN"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-005",
+        "category": "language",
+        "expected": {
+          "output.language": "zh-CN"
+        },
+        "actual": {
+          "output.language": "zh-CN"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-006",
+        "category": "verbosity",
+        "expected": {
+          "output.verbosity": "brief"
+        },
+        "actual": {
+          "output.verbosity": "brief"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-007",
+        "category": "verbosity",
+        "expected": {
+          "output.verbosity": "detailed"
+        },
+        "actual": {
+          "output.verbosity": "detailed"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-008",
+        "category": "verbosity",
+        "expected": {
+          "output.verbosity": "brief"
+        },
+        "actual": {
+          "output.verbosity": "brief"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-009",
+        "category": "verbosity",
+        "expected": {
+          "output.verbosity": "detailed"
+        },
+        "actual": {
+          "output.verbosity": "detailed"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-010",
+        "category": "verbosity",
+        "expected": {
+          "output.verbosity": "brief"
+        },
+        "actual": {
+          "output.verbosity": "brief"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-011",
+        "category": "verbosity",
+        "expected": {
+          "output.verbosity": "detailed"
+        },
+        "actual": {
+          "output.verbosity": "detailed"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-012",
+        "category": "format",
+        "expected": {
+          "output.format": "table"
+        },
+        "actual": {
+          "output.format": "table"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-013",
+        "category": "format",
+        "expected": {
+          "output.format": "json"
+        },
+        "actual": {
+          "output.format": "json"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-014",
+        "category": "format",
+        "expected": {
+          "output.format": "markdown"
+        },
+        "actual": {
+          "output.format": "markdown"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-015",
+        "category": "format",
+        "expected": {
+          "output.format": "plain_text"
+        },
+        "actual": {
+          "output.format": "plain_text"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-016",
+        "category": "format",
+        "expected": {
+          "output.format": "table"
+        },
+        "actual": {
+          "output.format": "table"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-017",
+        "category": "structure",
+        "expected": {
+          "output.structure": "step_by_step"
+        },
+        "actual": {
+          "output.structure": "step_by_step"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-018",
+        "category": "structure",
+        "expected": {
+          "output.structure": "step_by_step"
+        },
+        "actual": {
+          "output.structure": "step_by_step"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-019",
+        "category": "structure",
+        "expected": {
+          "output.structure": "step_by_step"
+        },
+        "actual": {
+          "output.structure": "step_by_step"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-020",
+        "category": "negation",
+        "expected": {
+          "output.language": "zh-CN"
+        },
+        "actual": {
+          "output.language": "zh-CN"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-021",
+        "category": "negation",
+        "expected": {
+          "output.format": "plain_text"
+        },
+        "actual": {
+          "output.format": "plain_text"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-022",
+        "category": "negation",
+        "expected": {
+          "output.verbosity": "brief"
+        },
+        "actual": {
+          "output.verbosity": "brief"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-023",
+        "category": "negation",
+        "expected": {
+          "output.format": "markdown"
+        },
+        "actual": {
+          "output.format": "markdown"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-024",
+        "category": "negation",
+        "expected": {
+          "output.language": "en"
+        },
+        "actual": {
+          "output.language": "en"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-025",
+        "category": "negation",
+        "expected": {
+          "output.verbosity": "detailed"
+        },
+        "actual": {
+          "output.verbosity": "detailed"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-026",
+        "category": "negation",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-027",
+        "category": "negation",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-028",
+        "category": "negation",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-029",
+        "category": "negation",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-030",
+        "category": "correction",
+        "expected": {
+          "output.format": "json"
+        },
+        "actual": {
+          "output.format": "json"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-031",
+        "category": "correction",
+        "expected": {
+          "output.verbosity": "detailed"
+        },
+        "actual": {
+          "output.verbosity": "detailed"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-032",
+        "category": "correction",
+        "expected": {
+          "output.language": "zh-CN"
+        },
+        "actual": {
+          "output.language": "zh-CN"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-033",
+        "category": "correction",
+        "expected": {
+          "output.format": "plain_text"
+        },
+        "actual": {
+          "output.format": "plain_text"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-034",
+        "category": "compound",
+        "expected": {
+          "output.language": "zh-CN",
+          "output.format": "json",
+          "output.verbosity": "brief"
+        },
+        "actual": {
+          "output.language": "zh-CN",
+          "output.verbosity": "brief",
+          "output.format": "json"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-035",
+        "category": "compound",
+        "expected": {
+          "output.language": "en",
+          "output.structure": "step_by_step",
+          "output.verbosity": "detailed"
+        },
+        "actual": {
+          "output.language": "en",
+          "output.verbosity": "detailed",
+          "output.structure": "step_by_step"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-036",
+        "category": "compound",
+        "expected": {
+          "output.format": "markdown",
+          "output.structure": "step_by_step",
+          "output.verbosity": "brief"
+        },
+        "actual": {
+          "output.verbosity": "brief",
+          "output.format": "markdown",
+          "output.structure": "step_by_step"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-037",
+        "category": "compound",
+        "expected": {
+          "output.format": "plain_text",
+          "output.language": "zh-CN",
+          "output.verbosity": "detailed"
+        },
+        "actual": {
+          "output.language": "zh-CN",
+          "output.verbosity": "detailed",
+          "output.format": "plain_text"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-038",
+        "category": "compound",
+        "expected": {
+          "output.language": "zh-CN",
+          "output.verbosity": "brief"
+        },
+        "actual": {
+          "output.language": "zh-CN",
+          "output.verbosity": "brief"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-039",
+        "category": "compound",
+        "expected": {
+          "output.language": "zh-CN",
+          "output.format": "markdown"
+        },
+        "actual": {
+          "output.language": "zh-CN",
+          "output.format": "markdown"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-040",
+        "category": "security",
+        "expected": {
+          "security.processing": "local_only"
+        },
+        "actual": {
+          "security.processing": "local_only"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-041",
+        "category": "security",
+        "expected": {
+          "security.processing": "local_only"
+        },
+        "actual": {
+          "security.processing": "local_only"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-042",
+        "category": "security",
+        "expected": {
+          "security.processing": "local_only"
+        },
+        "actual": {
+          "security.processing": "local_only"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-043",
+        "category": "security",
+        "expected": {
+          "security.redaction": "required"
+        },
+        "actual": {
+          "security.redaction": "required"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-044",
+        "category": "security",
+        "expected": {
+          "security.redaction": "required"
+        },
+        "actual": {
+          "security.redaction": "required"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-045",
+        "category": "security",
+        "expected": {
+          "security.confirmation": "required"
+        },
+        "actual": {
+          "security.confirmation": "required"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-046",
+        "category": "security",
+        "expected": {
+          "security.confirmation": "required"
+        },
+        "actual": {
+          "security.confirmation": "required"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-047",
+        "category": "security",
+        "expected": {
+          "security.confirmation": "required"
+        },
+        "actual": {
+          "security.confirmation": "required"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-048",
+        "category": "security",
+        "expected": {
+          "security.processing": "local_only",
+          "security.redaction": "required"
+        },
+        "actual": {
+          "security.processing": "local_only",
+          "security.redaction": "required"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-049",
+        "category": "security",
+        "expected": {
+          "security.processing": "local_only",
+          "security.confirmation": "required"
+        },
+        "actual": {
+          "security.processing": "local_only",
+          "security.confirmation": "required"
+        },
+        "passed": true
+      },
+      {
+        "id": "p-050",
+        "category": "mention",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-051",
+        "category": "mention",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-052",
+        "category": "mention",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-053",
+        "category": "mention",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-054",
+        "category": "mention",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-055",
+        "category": "mention",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-056",
+        "category": "mention",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-057",
+        "category": "mention",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-058",
+        "category": "negative",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-059",
+        "category": "negative",
+        "expected": {},
+        "actual": {},
+        "passed": true
+      },
+      {
+        "id": "p-060",
+        "category": "temporary",
+        "expected": {
+          "output.format": "table"
+        },
+        "actual": {
+          "output.format": "table"
+        },
+        "passed": true,
+        "durable_actual": {},
+        "durable_expected": {},
+        "durable_passed": true
+      },
+      {
+        "id": "p-061",
+        "category": "untrusted",
+        "expected": {},
+        "actual": {},
+        "passed": true,
+        "durable_actual": {},
+        "durable_expected": {},
+        "durable_passed": true
+      },
+      {
+        "id": "p-062",
+        "category": "risk",
+        "expected": {},
+        "actual": {},
+        "passed": true,
+        "durable_actual": {},
+        "durable_expected": {},
+        "durable_passed": true
+      },
+      {
+        "id": "p-063",
+        "category": "tool",
+        "expected": {
+          "preferred_tool:spreadsheet": "sheet_reader"
+        },
+        "actual": {
+          "preferred_tool:spreadsheet": "sheet_reader"
+        },
+        "passed": true,
+        "durable_actual": {},
+        "durable_expected": {},
+        "durable_passed": true
+      },
+      {
+        "id": "p-064",
+        "category": "failed_tool",
+        "expected": {},
+        "actual": {},
+        "passed": true,
+        "durable_actual": {},
+        "durable_expected": {},
+        "durable_passed": true
+      },
+      {
+        "id": "p-065",
+        "category": "rejected_tool",
+        "expected": {},
+        "actual": {},
+        "passed": true,
+        "durable_actual": {},
+        "durable_expected": {},
+        "durable_passed": true
+      },
+      {
+        "id": "p-066",
+        "category": "latest_explicit",
+        "expected": {
+          "output.language": "zh-CN"
+        },
+        "actual": {
+          "output.language": "zh-CN"
+        },
+        "passed": true,
+        "durable_actual": {
+          "output.language": "zh-CN"
+        },
+        "durable_expected": {
+          "output.language": "zh-CN"
+        },
+        "durable_passed": true
+      },
+      {
+        "id": "p-067",
+        "category": "latest_explicit",
+        "expected": {
+          "output.format": "plain_text"
+        },
+        "actual": {
+          "output.format": "plain_text"
+        },
+        "passed": true,
+        "durable_actual": {
+          "output.format": "plain_text"
+        },
+        "durable_expected": {
+          "output.format": "plain_text"
+        },
+        "durable_passed": true
+      }
+    ]
+  },
+  "retrieval": {
+    "records": 10000,
+    "top_k": 3,
+    "requests": 80,
+    "positive_requests": 60,
+    "positive_recall_at_3": 1.0,
+    "ingestion": {
+      "expected_documents": 60,
+      "accepted_records": 60,
+      "knowledge_records": 60,
+      "missing_document_ids": [],
+      "issues": [],
+      "promotion_decisions": [
+        {
+          "record_id": "045d550089381697",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "0fc8b12dd810302f",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "1c2d24f36e91ee1d",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "23d89c648e3ae66e",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "23ef162c77743deb",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "2480fe9a35da28d6",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "2f88691851dc9f83",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "395dc730a5785c2d",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "46f93d775bb43ce7",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "47d4c1f5ba4204ec",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "48436d1c1d43aaf9",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "507a13b1b87bf6c6",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "515808d8a4c89206",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "520f1f31b71e3ede",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "582abffed8c119e3",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "5bbf035c03b56b42",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "5c0506b4c41b4eb5",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "61ace4f826a0dbba",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "63aa56bd06b4f10c",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "658dd1db6018d0df",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "68c3a3fa6c7edd0b",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "754c6d7e169dfc58",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "76e610c8960db6fd",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "7d10fc74175e3f70",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "7e91046705fc3337",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "8443a22b0e9e653b",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "88d83b133cdb490f",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "8c23d74c7cab132f",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "953b03b56bcd50fe",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "964d46fc703a7f77",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "96966894261dd061",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "990e528bdedf0669",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "9999329b6dc5be5c",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "a47f90c36f74bc37",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "a6dae6b2a17f7fe2",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "a706ee4d655a3b34",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "aa291f000d8c013a",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "b9b52a7fb2f7201d",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "bc65c893ece07af6",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "bee9229a206e319a",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "bfad0b5b60c5ad44",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "cea696ad544afe38",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "d2330b305dd696a9",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "d5bbffa049d66c40",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "d89eb6a37d5ed18c",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "defc60298277fe2f",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "e418703a02d44bc0",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "e58244eaac5dca5c",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "ea244847d0617b6a",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "ec2b0c929083ae90",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "ecf82e7340a5ca17",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "ed1f3dca93ba404d",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "ed5393f6acf9e729",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "ef6005c8fda99922",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "f2cf2db2fdf45916",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "f3a4b94cb0d80d0f",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "f3f05447316229f8",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "f96a341e62cf3730",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "fb2cfbd65e64fc00",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        },
+        {
+          "record_id": "fb8826b187b9d39a",
+          "from_tier": "medium",
+          "to_tier": "long",
+          "score": 0.7183,
+          "accepted": true,
+          "reasons": [
+            "promotion_score=0.7183",
+            "evidence_count=1",
+            "average_authority=0.9500",
+            "accepted:promotion_gate_passed"
+          ]
+        }
+      ],
+      "passed": true
+    },
+    "no_answer_requests": 12,
+    "no_answer_accuracy": 1.0,
+    "scope_requests": 8,
+    "scope_leaks": 0,
+    "p95_ms": 48.70519999531098,
+    "p99_ms": 51.872500000172295,
+    "cold_first_ms": 10.179999997490086,
+    "provider": {
+      "implementation": "os_agent_memory.embeddings.HashEmbedding",
+      "dimensions": 256,
+      "ngram": 2
+    },
+    "threshold": 0.265,
+    "method": "production MemoryService.search including lock and serialization; 60 positive topics, 12 no-answer and 8 scope requests; no per-query thresholds or warmup; nearest-rank percentile",
+    "limitations": "synthetic distractors; in-process service, not HTTP/network or Agent reasoning time",
+    "rows": [
+      {
+        "id": "q-000",
+        "category": "finance",
+        "query": "出差车票发票报销需要哪些步骤",
+        "expected": [
+          "d-000"
+        ],
+        "returned": [
+          "d-000"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 10.179999997490086
+      },
+      {
+        "id": "q-001",
+        "category": "finance",
+        "query": "采购物料怎样询价和审批",
+        "expected": [
+          "d-001"
+        ],
+        "returned": [
+          "d-001"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 46.15439999906812
+      },
+      {
+        "id": "q-002",
+        "category": "finance",
+        "query": "发票公司全称和税号怎样校验",
+        "expected": [
+          "d-002"
+        ],
+        "returned": [
+          "d-002"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 47.355100003187545
+      },
+      {
+        "id": "q-003",
+        "category": "finance",
+        "query": "预算超支调剂应如何复核",
+        "expected": [
+          "d-003"
+        ],
+        "returned": [
+          "d-003"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 13.661999997566454
+      },
+      {
+        "id": "q-004",
+        "category": "finance",
+        "query": "付款申请表应包含合同和验收什么字段",
+        "expected": [
+          "d-004"
+        ],
+        "returned": [
+          "d-004"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 25.011499994434416
+      },
+      {
+        "id": "q-005",
+        "category": "finance",
+        "query": "资产设备盘点怎样核对账册",
+        "expected": [
+          "d-005"
+        ],
+        "returned": [
+          "d-005"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 12.344399990979582
+      },
+      {
+        "id": "q-006",
+        "category": "meeting",
+        "query": "会议纪要责任人和截止日期如何记录",
+        "expected": [
+          "d-006"
+        ],
+        "returned": [
+          "d-006"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 47.202600006130524
+      },
+      {
+        "id": "q-007",
+        "category": "meeting",
+        "query": "预约会议室前怎样检查容量设备",
+        "expected": [
+          "d-007"
+        ],
+        "returned": [
+          "d-007"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 12.626399999135174
+      },
+      {
+        "id": "q-008",
+        "category": "meeting",
+        "query": "会议议程如何分配发言讨论时间",
+        "expected": [
+          "d-008"
+        ],
+        "returned": [
+          "d-008"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 27.998500008834526
+      },
+      {
+        "id": "q-009",
+        "category": "meeting",
+        "query": "怎样跟踪会议行动的逾期事项",
+        "expected": [
+          "d-009"
+        ],
+        "returned": [
+          "d-009"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 26.11750000505708
+      },
+      {
+        "id": "q-010",
+        "category": "meeting",
+        "query": "参会通知包含哪些时间地点材料",
+        "expected": [
+          "d-010"
+        ],
+        "returned": [
+          "d-010"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 24.793799995677546
+      },
+      {
+        "id": "q-011",
+        "category": "meeting",
+        "query": "会议录音转写如何确认授权和发言人",
+        "expected": [
+          "d-011"
+        ],
+        "returned": [
+          "d-011"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 29.382799999439158
+      },
+      {
+        "id": "q-012",
+        "category": "document",
+        "query": "公文标题字体页码怎样排版",
+        "expected": [
+          "d-012"
+        ],
+        "returned": [
+          "d-012"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 26.252899988321587
+      },
+      {
+        "id": "q-013",
+        "category": "document",
+        "query": "文档修订记录怎样审阅和接受",
+        "expected": [
+          "d-013"
+        ],
+        "returned": [
+          "d-013"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 46.520200005033985
+      },
+      {
+        "id": "q-014",
+        "category": "document",
+        "query": "合同签章前核对金额和违约责任",
+        "expected": [
+          "d-014"
+        ],
+        "returned": [
+          "d-014",
+          "d-004"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 14.559399991412647
+      },
+      {
+        "id": "q-015",
+        "category": "document",
+        "query": "文档批注怎样按页码汇总意见",
+        "expected": [
+          "d-015"
+        ],
+        "returned": [
+          "d-015"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 25.613899997551925
+      },
+      {
+        "id": "q-016",
+        "category": "document",
+        "query": "标题样式修改后如何更新目录页码",
+        "expected": [
+          "d-016"
+        ],
+        "returned": [
+          "d-016"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 32.87209999689367
+      },
+      {
+        "id": "q-017",
+        "category": "document",
+        "query": "正文引用附件如何编号和命名",
+        "expected": [
+          "d-017"
+        ],
+        "returned": [
+          "d-017"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 45.37310000159778
+      },
+      {
+        "id": "q-018",
+        "category": "files",
+        "query": "项目文件按年度归档如何生成校验和",
+        "expected": [
+          "d-018"
+        ],
+        "returned": [
+          "d-018"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 50.98260000522714
+      },
+      {
+        "id": "q-019",
+        "category": "files",
+        "query": "重复文件删除前怎样比对摘要备份",
+        "expected": [
+          "d-019"
+        ],
+        "returned": [
+          "d-019"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 13.482499998644926
+      },
+      {
+        "id": "q-020",
+        "category": "files",
+        "query": "恢复备份时怎样选择版本校验文件",
+        "expected": [
+          "d-020"
+        ],
+        "returned": [
+          "d-020"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 46.19030001049396
+      },
+      {
+        "id": "q-021",
+        "category": "files",
+        "query": "共享目录如何按职责设置读写权限",
+        "expected": [
+          "d-021"
+        ],
+        "returned": [
+          "d-021"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 27.123899999423884
+      },
+      {
+        "id": "q-022",
+        "category": "files",
+        "query": "压缩交付包怎么剔除秘密并解压复测",
+        "expected": [
+          "d-022"
+        ],
+        "returned": [
+          "d-022"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 29.738600002019666
+      },
+      {
+        "id": "q-023",
+        "category": "files",
+        "query": "项目文件名称怎样包含版本和日期",
+        "expected": [
+          "d-023"
+        ],
+        "returned": [
+          "d-023"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 19.93729999230709
+      },
+      {
+        "id": "q-024",
+        "category": "system",
+        "query": "打印机队列故障怎样检查驱动",
+        "expected": [
+          "d-024"
+        ],
+        "returned": [
+          "d-024"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 11.361099997884594
+      },
+      {
+        "id": "q-025",
+        "category": "system",
+        "query": "磁盘空间不足怎样确认清理缓存",
+        "expected": [
+          "d-025"
+        ],
+        "returned": [
+          "d-025"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 29.044199996860698
+      },
+      {
+        "id": "q-026",
+        "category": "system",
+        "query": "网络不通怎样检查网关和域名解析",
+        "expected": [
+          "d-026"
+        ],
+        "returned": [
+          "d-026"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 9.122600007685833
+      },
+      {
+        "id": "q-027",
+        "category": "system",
+        "query": "安装软件前怎样验证来源签名",
+        "expected": [
+          "d-027"
+        ],
+        "returned": [
+          "d-027"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 25.152899994282052
+      },
+      {
+        "id": "q-028",
+        "category": "system",
+        "query": "服务重启前如何检查依赖和保存日志",
+        "expected": [
+          "d-028"
+        ],
+        "returned": [
+          "d-028"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 23.640100000193343
+      },
+      {
+        "id": "q-029",
+        "category": "system",
+        "query": "系统时钟怎样检查时区和时间源",
+        "expected": [
+          "d-029"
+        ],
+        "returned": [
+          "d-029"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 12.470899993786588
+      },
+      {
+        "id": "q-030",
+        "category": "security",
+        "query": "异常登录后如何冻结会话保留审计",
+        "expected": [
+          "d-030"
+        ],
+        "returned": [
+          "d-030"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 51.66389999794774
+      },
+      {
+        "id": "q-031",
+        "category": "security",
+        "query": "凭据轮换怎样更新服务并撤销旧密钥",
+        "expected": [
+          "d-031"
+        ],
+        "returned": [
+          "d-031"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 26.83459999389015
+      },
+      {
+        "id": "q-032",
+        "category": "security",
+        "query": "连接外设之前怎样登记序列号用途",
+        "expected": [
+          "d-032"
+        ],
+        "returned": [
+          "d-032"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 26.56909999495838
+      },
+      {
+        "id": "q-033",
+        "category": "security",
+        "query": "日志导出怎样替换秘密字段和账号",
+        "expected": [
+          "d-033"
+        ],
+        "returned": [
+          "d-033"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 25.532100000418723
+      },
+      {
+        "id": "q-034",
+        "category": "security",
+        "query": "离职时怎样撤销令牌和共享目录权限",
+        "expected": [
+          "d-034"
+        ],
+        "returned": [
+          "d-034"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 26.78610000293702
+      },
+      {
+        "id": "q-035",
+        "category": "security",
+        "query": "漏洞补丁怎样评估和安排维护窗口",
+        "expected": [
+          "d-035"
+        ],
+        "returned": [
+          "d-035"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 10.075999991386198
+      },
+      {
+        "id": "q-036",
+        "category": "email",
+        "query": "回复客户邮件如何说明诉求和完成时间",
+        "expected": [
+          "d-036"
+        ],
+        "returned": [
+          "d-036"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 24.45589999842923
+      },
+      {
+        "id": "q-037",
+        "category": "email",
+        "query": "发送邮件附件前核对收件人和版本",
+        "expected": [
+          "d-037"
+        ],
+        "returned": [
+          "d-037"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 11.560799990547821
+      },
+      {
+        "id": "q-038",
+        "category": "email",
+        "query": "如何按项目和紧急程度分类邮件",
+        "expected": [
+          "d-038"
+        ],
+        "returned": [
+          "d-038"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 24.679499998455867
+      },
+      {
+        "id": "q-039",
+        "category": "email",
+        "query": "请假邮件怎样说明日期和交接人",
+        "expected": [
+          "d-039"
+        ],
+        "returned": [
+          "d-039"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 23.63799999875482
+      },
+      {
+        "id": "q-040",
+        "category": "email",
+        "query": "询价邮件包含数量交期和税费什么信息",
+        "expected": [
+          "d-040"
+        ],
+        "returned": [
+          "d-040"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 25.555899992468767
+      },
+      {
+        "id": "q-041",
+        "category": "email",
+        "query": "邮件退信怎样检查错误代码附件大小",
+        "expected": [
+          "d-041"
+        ],
+        "returned": [
+          "d-041"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 9.03999998990912
+      },
+      {
+        "id": "q-042",
+        "category": "data",
+        "query": "表格去重如何选择主键和保留备份",
+        "expected": [
+          "d-042"
+        ],
+        "returned": [
+          "d-042"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 48.70519999531098
+      },
+      {
+        "id": "q-043",
+        "category": "data",
+        "query": "表格日期格式和时区怎样统一",
+        "expected": [
+          "d-043"
+        ],
+        "returned": [
+          "d-043"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 45.157800006563775
+      },
+      {
+        "id": "q-044",
+        "category": "data",
+        "query": "统计表缺失值如何追溯来源",
+        "expected": [
+          "d-044"
+        ],
+        "returned": [
+          "d-044"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 28.352100009215064
+      },
+      {
+        "id": "q-045",
+        "category": "data",
+        "query": "透视表分组维度和汇总函数如何校验",
+        "expected": [
+          "d-045"
+        ],
+        "returned": [
+          "d-045"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 51.872500000172295
+      },
+      {
+        "id": "q-046",
+        "category": "data",
+        "query": "导出数据如何检查授权编码分隔符",
+        "expected": [
+          "d-046"
+        ],
+        "returned": [
+          "d-046"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 30.28930000436958
+      },
+      {
+        "id": "q-047",
+        "category": "data",
+        "query": "图表如何标注指标单位和数据来源",
+        "expected": [
+          "d-047"
+        ],
+        "returned": [
+          "d-047"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 26.102499992703088
+      },
+      {
+        "id": "q-048",
+        "category": "project",
+        "query": "需求登记怎样写使用场景验收条件",
+        "expected": [
+          "d-048"
+        ],
+        "returned": [
+          "d-048"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 25.909000003593974
+      },
+      {
+        "id": "q-049",
+        "category": "project",
+        "query": "项目风险台账记录概率和应对措施",
+        "expected": [
+          "d-049"
+        ],
+        "returned": [
+          "d-049"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 29.470800000126474
+      },
+      {
+        "id": "q-050",
+        "category": "project",
+        "query": "版本发布如何回归和确认回滚方案",
+        "expected": [
+          "d-050"
+        ],
+        "returned": [
+          "d-050"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 11.709400001564063
+      },
+      {
+        "id": "q-051",
+        "category": "project",
+        "query": "故障复盘如何记录根因和时间线",
+        "expected": [
+          "d-051"
+        ],
+        "returned": [
+          "d-051"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 36.15010000066832
+      },
+      {
+        "id": "q-052",
+        "category": "project",
+        "query": "工作交接如何确认在办事项文档权限",
+        "expected": [
+          "d-052"
+        ],
+        "returned": [
+          "d-052"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 29.736800002865493
+      },
+      {
+        "id": "q-053",
+        "category": "project",
+        "query": "项目变更怎样评估成本和进度影响",
+        "expected": [
+          "d-053"
+        ],
+        "returned": [
+          "d-053"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 25.335300000733696
+      },
+      {
+        "id": "q-054",
+        "category": "development",
+        "query": "代码审查如何覆盖边界错误安全风险",
+        "expected": [
+          "d-054"
+        ],
+        "returned": [
+          "d-054"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 26.78590000141412
+      },
+      {
+        "id": "q-055",
+        "category": "development",
+        "query": "分支合并怎样解决冲突审查差异",
+        "expected": [
+          "d-055"
+        ],
+        "returned": [
+          "d-055"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 24.85299999534618
+      },
+      {
+        "id": "q-056",
+        "category": "development",
+        "query": "依赖升级怎样核对兼容性许可证",
+        "expected": [
+          "d-056"
+        ],
+        "returned": [
+          "d-056"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 10.937200000626035
+      },
+      {
+        "id": "q-057",
+        "category": "development",
+        "query": "接口文档应写哪些响应结构错误码",
+        "expected": [
+          "d-057"
+        ],
+        "returned": [
+          "d-057"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 50.173900002846494
+      },
+      {
+        "id": "q-058",
+        "category": "development",
+        "query": "性能优化怎样记录基线采样热点",
+        "expected": [
+          "d-058"
+        ],
+        "returned": [
+          "d-058"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 46.198600000934675
+      },
+      {
+        "id": "q-059",
+        "category": "development",
+        "query": "怎样在干净目录复现构建和摘要",
+        "expected": [
+          "d-059"
+        ],
+        "returned": [
+          "d-059"
+        ],
+        "recall_at_3": 1.0,
+        "passed": true,
+        "elapsed_ms": 27.60219998890534
+      },
+      {
+        "id": "n-000",
+        "category": "unanswerable",
+        "query": "超新星核合成的中微子光谱",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 25.350099997012876
+      },
+      {
+        "id": "n-001",
+        "category": "unanswerable",
+        "query": "黑洞吸积盘的相对论喷流",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 24.50440000393428
+      },
+      {
+        "id": "n-002",
+        "category": "unanswerable",
+        "query": "高温超导临界磁场计算",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 22.352400003001094
+      },
+      {
+        "id": "n-003",
+        "category": "unanswerable",
+        "query": "水稻叶绿体基因测序",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 14.377100000274368
+      },
+      {
+        "id": "n-004",
+        "category": "unanswerable",
+        "query": "深海热泉生态系统演替",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 24.882000012439676
+      },
+      {
+        "id": "n-005",
+        "category": "unanswerable",
+        "query": "古文字甲骨释读方法",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 9.725299998535775
+      },
+      {
+        "id": "n-006",
+        "category": "unanswerable",
+        "query": "火星岩石同位素年代",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 10.44739999633748
+      },
+      {
+        "id": "n-007",
+        "category": "unanswerable",
+        "query": "油画颜料折射率测定",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 11.223699999391101
+      },
+      {
+        "id": "n-008",
+        "category": "unanswerable",
+        "query": "量子纠缠贝尔不等式",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 10.937300001387484
+      },
+      {
+        "id": "n-009",
+        "category": "unanswerable",
+        "query": "史前陶器碳十四定年",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 10.227100006886758
+      },
+      {
+        "id": "n-010",
+        "category": "unanswerable",
+        "query": "疫苗蛋白晶体衍射",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 11.69569999910891
+      },
+      {
+        "id": "n-011",
+        "category": "unanswerable",
+        "query": "星际尘埃消光曲线",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 11.14610000513494
+      },
+      {
+        "id": "s-000",
+        "category": "scope",
+        "query": "出差车票发票报销需要哪些步骤",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 4.2347999988123775
+      },
+      {
+        "id": "s-001",
+        "category": "scope",
+        "query": "采购物料怎样询价和审批",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 3.711700002895668
+      },
+      {
+        "id": "s-002",
+        "category": "scope",
+        "query": "发票公司全称和税号怎样校验",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 4.751000000396743
+      },
+      {
+        "id": "s-003",
+        "category": "scope",
+        "query": "预算超支调剂应如何复核",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 3.894099994795397
+      },
+      {
+        "id": "s-004",
+        "category": "scope",
+        "query": "付款申请表应包含合同和验收什么字段",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 4.0563999937148765
+      },
+      {
+        "id": "s-005",
+        "category": "scope",
+        "query": "资产设备盘点怎样核对账册",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 3.7678999942727387
+      },
+      {
+        "id": "s-006",
+        "category": "scope",
+        "query": "会议纪要责任人和截止日期如何记录",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 4.984600003808737
+      },
+      {
+        "id": "s-007",
+        "category": "scope",
+        "query": "预约会议室前怎样检查容量设备",
+        "expected": [],
+        "returned": [],
+        "recall_at_3": null,
+        "passed": true,
+        "elapsed_ms": 3.984299997682683
+      }
+    ]
+  },
+  "conflict": {
+    "requests": 60,
+    "correct": 60,
+    "accuracy": 1.0,
+    "definition": "independent stores; detection AND authority/recency/manual-queue outcome must match",
+    "rows": [
+      {
+        "id": "c-000",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-000",
+        "category": "tenant_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-001",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "forgotten",
+        "passed": true
+      },
+      {
+        "id": "nc-001",
+        "category": "tenant_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-002",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-002",
+        "category": "tenant_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-003",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "conflict_pending",
+        "passed": true
+      },
+      {
+        "id": "nc-003",
+        "category": "tenant_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-004",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-004",
+        "category": "tenant_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-005",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "forgotten",
+        "passed": true
+      },
+      {
+        "id": "nc-005",
+        "category": "tenant_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-006",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-006",
+        "category": "tenant_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-007",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "conflict_pending",
+        "passed": true
+      },
+      {
+        "id": "nc-007",
+        "category": "tenant_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-008",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-008",
+        "category": "tenant_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-009",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "forgotten",
+        "passed": true
+      },
+      {
+        "id": "nc-009",
+        "category": "tenant_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-010",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-010",
+        "category": "user_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-011",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "conflict_pending",
+        "passed": true
+      },
+      {
+        "id": "nc-011",
+        "category": "user_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-012",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-012",
+        "category": "user_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-013",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "forgotten",
+        "passed": true
+      },
+      {
+        "id": "nc-013",
+        "category": "user_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-014",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-014",
+        "category": "user_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-015",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "conflict_pending",
+        "passed": true
+      },
+      {
+        "id": "nc-015",
+        "category": "user_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-016",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-016",
+        "category": "user_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-017",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "forgotten",
+        "passed": true
+      },
+      {
+        "id": "nc-017",
+        "category": "user_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-018",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-018",
+        "category": "user_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-019",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "conflict_pending",
+        "passed": true
+      },
+      {
+        "id": "nc-019",
+        "category": "user_scope",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-020",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-020",
+        "category": "different_conditions",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-021",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "forgotten",
+        "passed": true
+      },
+      {
+        "id": "nc-021",
+        "category": "different_conditions",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-022",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-022",
+        "category": "different_conditions",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-023",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "conflict_pending",
+        "passed": true
+      },
+      {
+        "id": "nc-023",
+        "category": "different_conditions",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-024",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-024",
+        "category": "different_conditions",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-025",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "forgotten",
+        "passed": true
+      },
+      {
+        "id": "nc-025",
+        "category": "complement",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-026",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-026",
+        "category": "complement",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-027",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "conflict_pending",
+        "passed": true
+      },
+      {
+        "id": "nc-027",
+        "category": "complement",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-028",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "nc-028",
+        "category": "complement",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      },
+      {
+        "id": "c-029",
+        "category": "contradiction",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "base_status": "active",
+        "incoming_status": "forgotten",
+        "passed": true
+      },
+      {
+        "id": "nc-029",
+        "category": "complement",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "base_status": "active",
+        "incoming_status": "active",
+        "passed": true
+      }
+    ]
+  },
+  "sensitive": {
+    "requests": 50,
+    "tp": 30,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "redaction_leaks": 0,
+    "rows": [
+      {
+        "id": "se-000",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-001",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-002",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-003",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-004",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-005",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-006",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-007",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-008",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-009",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-010",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-011",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-012",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-013",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-014",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-015",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-016",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-017",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-018",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-019",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-020",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-021",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-022",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-023",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-024",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-025",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-026",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-027",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-028",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "se-029",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-000",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-001",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-002",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-003",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-004",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-005",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-006",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-007",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-008",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-009",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-010",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-011",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-012",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-013",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-014",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-015",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-016",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-017",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-018",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      },
+      {
+        "id": "sn-019",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "redaction_leak": false,
+        "passed": true
+      }
+    ],
+    "definition": "micro entity-type + exact-value occurrence multiset; duplicate/overlapping detections penalized; not third-party span certification"
+  },
+  "release_gate": {
+    "passed": true,
+    "checks": {
+      "five_numeric_targets": true,
+      "required_safety_checks": true,
+      "frozen_dataset": true,
+      "frozen_request_counts": true,
+      "frozen_retrieval_configuration": true,
+      "honest_evidence_scope": true,
+      "distinct_request_rows": true,
+      "denominators_match_rows": true,
+      "summary_matches_details": true,
+      "aggregates_match_request_rows": true
+    },
+    "rubric": {
+      "metrics": {
+        "preference_accuracy": {
+          "value": 1.0,
+          "target": 0.85,
+          "operator": "ge",
+          "requests": 68,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "knowledge_recall": {
+          "value": 1.0,
+          "target": 0.85,
+          "operator": "ge",
+          "requests": 60,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "conflict_accuracy": {
+          "value": 1.0,
+          "target": 0.88,
+          "operator": "ge",
+          "requests": 60,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "retrieval_p95_ms": {
+          "value": 48.70519999531098,
+          "target": 500.0,
+          "operator": "le",
+          "requests": 80,
+          "minimum_requests": 50,
+          "passed": true
+        },
+        "sensitive_f1": {
+          "value": 1.0,
+          "target": 0.9,
+          "operator": "ge",
+          "requests": 50,
+          "minimum_requests": 50,
+          "passed": true
+        }
+      },
+      "all_targets_met": true,
+      "scope": "developer_held_measurements_not_official_certification"
+    },
+    "scope": "frozen_public_synthetic_regression_not_independent_blind_or_official_certification"
+  }
+}

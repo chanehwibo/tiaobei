@@ -1,0 +1,4819 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T13:50:10.314351+00:00",
+  "scope": "public_complex_retrieval_regression_not_official_acceptance",
+  "dataset": {
+    "path": "data/eval/complex_retrieval_v1.json",
+    "sha256": "04b9a5266535e40a4542ae4647a4bba51aabf8edc32bd3a169713a4c4c1f2212",
+    "documents": 132,
+    "distinct_requests": 120,
+    "kinds": {
+      "positive": 72,
+      "no_answer": 24,
+      "scope": 24
+    }
+  },
+  "environment": {
+    "system": "Windows",
+    "release": "10",
+    "machine": "AMD64",
+    "python": "3.14.3",
+    "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+    "logical_cpu_count": 8,
+    "python_hash_seed": "0",
+    "host_fingerprint": "35de1833358f168a17e1d9d12dcb29355dee59b72f3f757bd33aa099ee7dfc5d"
+  },
+  "source_sha256": {
+    "src/os_agent_memory/__init__.py": "79789b69ee6e07b5f8d85fa9bc2482fd0973466e67cd0559319791933f79c828",
+    "src/os_agent_memory/action_evaluation.py": "c9d02e234eb224e0315deaf3cc5e572fab27695172901aafa259848a2ec2d64d",
+    "src/os_agent_memory/action_judging.py": "719d6175c394a1a91afc3054c2909de9bcf6bf69e95477c312e962ea4a9d12c1",
+    "src/os_agent_memory/action_readiness.py": "7309867516f4ca5db3875dcc443492cfac781fc8cabbd35ca0252ed60e5edc32",
+    "src/os_agent_memory/benchmark.py": "51b999b9f1dee71228a5c8997b887b85ed46ba4650d831b83ae75c15b3f47a9f",
+    "src/os_agent_memory/bounded_command.py": "31d055c949ebd001575c4f8e994a72c586fdddf104685a688df410b0588429a7",
+    "src/os_agent_memory/cli.py": "9ce63038fdd4b8452c50335d3f9961bae539a2216e96a3e20dac2c09546fe095",
+    "src/os_agent_memory/compatibility.py": "7584c227acb9d349c8428b08cfb0be10d3f6cdc4a54a229ddb126f48e85e9c5f",
+    "src/os_agent_memory/complex_retrieval.py": "9a8d56e829ed883fbc9f758302afd603701e57dec67c0ce7e43f0291e957b6ec",
+    "src/os_agent_memory/demo.py": "ad7c3f79e99f81d71cf24d11e73d171cd0de3f5044f756fcd80f94bb6a833bd7",
+    "src/os_agent_memory/diagnostics.py": "6eb90ccdfd24aa6b6200107f3402773933897a9ed83793683210975d6271bcec",
+    "src/os_agent_memory/embeddings.py": "091af84fe0248a826aa524a8a60068c0ae3f03a009b58ce686395ef0ae805d8c",
+    "src/os_agent_memory/evaluation.py": "1007391573b118d4d0e2c694a5e3ca2049738887a3c78fb460b437255fa2cb7a",
+    "src/os_agent_memory/experiments.py": "062e663ce722dbbd6ce72a19d35826bf4911073d76369dca0d07dad82fe113ed",
+    "src/os_agent_memory/file_memory.py": "5f5344995dde200334510ca971aff87de11ceee8d5c216c9cc8c85d1b56a1d88",
+    "src/os_agent_memory/focused_evidence.py": "56b5b04881a33088ad3aacd1effeff8f1af1c21751f70e38a9d79077d39023f8",
+    "src/os_agent_memory/ingestion.py": "d89215ccf26e7f1483ac46d4f0ebaa1d80aff425375703cbec4c67b4c08e6428",
+    "src/os_agent_memory/knowledge.py": "6c873d74754bcd8ee7cf447618f741205fbe6edb269ed6e5e0ce8af55276165c",
+    "src/os_agent_memory/kylin_native.py": "689f0bbcb913726640486d57b5b66006610ea922fa5dbc2c768bc0160ba95f9f",
+    "src/os_agent_memory/lifecycle.py": "a6b625f5fbb2f63d82847e11c700da3655881653776c46014f1fd22add919850",
+    "src/os_agent_memory/local_judge.py": "ddf055a281b254ecfd6c033bf988f9a6d2e1110599c6f5a91f52cae629365b97",
+    "src/os_agent_memory/memory_store.py": "544d8d4eacdced0877be8ddd8f48b3aff189576552b0f28be2a79dc68a0799fd",
+    "src/os_agent_memory/memory_tools.py": "e0435da7f8218d3a56b6999aa13297bad41e6298fa2cf1af7947e04aaf71cf39",
+    "src/os_agent_memory/official_contract.py": "28e30e2d9dc58e554851eafc35cb226d14599181a4ba571805d580613a35c487",
+    "src/os_agent_memory/official_diagnostics.py": "8ac8e5f8b19ce1e322c0d949fb24f85baee2b39ca43fd9624a8a75424233551e",
+    "src/os_agent_memory/persistence.py": "015ef646e7018dec550e1c0a72c5a92eb5994cbc99cc838b05779b352d5eda04",
+    "src/os_agent_memory/preference.py": "0ff1cb7cc0d7fd9824c933660c5a158df7043e11a49c246182c64a0185d17ec4",
+    "src/os_agent_memory/provider_config.py": "6059798f8e2d88c268d548c2782fec20916a778f789d7d563986438be5fc0135",
+    "src/os_agent_memory/request_contract.py": "50a2a2cd4c95feba36c6760d94ea83109e5edfa9f079e4e77f4354efd45e9613",
+    "src/os_agent_memory/request_evaluation.py": "eb085e0394506629e309ca83502d3ff28aaa6fdbef865f08536665f64232d45a",
+    "src/os_agent_memory/resources.py": "ee55bb78dd66a91d45e64251713deda25d0dd322f13e471381d1d73fed99f8f9",
+    "src/os_agent_memory/retrieval_evidence.py": "7efaf1a34b1c4b69fefdd5aedca8aa13eb9a14e4d97dd1cb59e8f547fc53bcdb",
+    "src/os_agent_memory/schemas.py": "9c4b0797081da195e4f4de971622113deba789eae4277678b363f0399ec05905",
+    "src/os_agent_memory/security.py": "797751be58e46f8f02f2e87f846616f55063925cede7271d3f1b40253d9a4013",
+    "src/os_agent_memory/service.py": "29cade6f5a87c8884306466a2f65fcff0cc25788e73ea04308d81dad95459a22",
+    "src/os_agent_memory/web_server.py": "d0b1d98044068ca92d4a6dc8205d10222eaa6e3edbbab1eafddc83994ad42d5b",
+    "src/os_agent_memory/workload.py": "087fd76d05267a69650c66fd9d34bee0f18a75149f39b1d8fd12b6e7e4073e22"
+  },
+  "source_unchanged_during_run": true,
+  "evaluator_sha256": {
+    "data/eval/complex_retrieval_v1.json": "04b9a5266535e40a4542ae4647a4bba51aabf8edc32bd3a169713a4c4c1f2212",
+    "src/os_agent_memory/complex_retrieval.py": "9a8d56e829ed883fbc9f758302afd603701e57dec67c0ce7e43f0291e957b6ec",
+    "scripts/evaluate_complex_retrieval.py": "0165fbd6a4eb3526b6989f253b9f77436993839863ac0ee27dced0f20b7bbff4"
+  },
+  "method": {
+    "boundary": "MemoryService.search: lock, query encoding, retrieval, reranking, serialization; no HTTP/Agent",
+    "filler_fraction_denominator": "generated fillers only; fixed difficult documents always present",
+    "percentile": "nearest_rank",
+    "rounds": 1,
+    "query_order": "frozen file order, no query warmup",
+    "repetition_is_independent_sample": false,
+    "controlled_snapshot_bypasses_ingestion": true,
+    "quality_thresholds": {
+      "macro_recall_at_3": 0.85,
+      "no_answer_accuracy": 0.85,
+      "p95_ms": 500
+    },
+    "evidence_policies": [
+      "focused_evidence_v2"
+    ],
+    "v2_score_boundary": "direct seed >= min_score; exact-subject companions carry seed bundle relevance"
+  },
+  "profiles": [
+    {
+      "corpus": {
+        "records": 1000,
+        "fixed_documents": 132,
+        "generated_fillers": 868,
+        "requested_hard_fraction_of_fillers": 0.75,
+        "hard_fillers": 651,
+        "actual_hard_fraction_of_fillers": 0.75,
+        "roles": {
+          "condition": 12,
+          "easy-filler": 217,
+          "evidence": 12,
+          "future": 12,
+          "hard-filler": 651,
+          "main": 12,
+          "nearby": 12,
+          "old": 12,
+          "other-scene": 12,
+          "other-tenant": 12,
+          "other-user": 12,
+          "pending": 12,
+          "quarantined": 12
+        },
+        "sha256": "c6bbbb8cf76aa36a4a29839274c82f9f771c9d5096358391566821553ea71610"
+      },
+      "mode": "hybrid",
+      "configuration": {
+        "top_k": 3,
+        "min_score": 0.265,
+        "dimensions": 256,
+        "ngram": 2
+      },
+      "provider": {
+        "implementation": "os_agent_memory.embeddings.HashEmbedding",
+        "dimensions": 256,
+        "ngram": 2
+      },
+      "build_ms": 820.2943000069354,
+      "rounds": [
+        {
+          "round": 1,
+          "phase": "first_pass_no_query_warmup",
+          "first_query_ms": 30.00389999942854,
+          "summary": {
+            "requests": 120,
+            "positive_requests": 72,
+            "no_answer_requests": 24,
+            "scope_requests": 24,
+            "errors": 0,
+            "macro_recall_at_3": 0.9305555555555556,
+            "precision_at_3": 0.3657407407407407,
+            "mrr_at_3": 0.875,
+            "ndcg_at_3": 0.8895477503968287,
+            "full_evidence_correct": 67,
+            "full_evidence_accuracy": 0.9305555555555556,
+            "no_answer_correct": 24,
+            "no_answer_accuracy": 1.0,
+            "false_answers": 0,
+            "false_answer_rate": 0.0,
+            "irrelevant_returned": 26,
+            "positive_results_returned": 105,
+            "distractor_return_rate": 0.24761904761904763,
+            "scope_empty_correct": 24,
+            "leak_requests": 0,
+            "leaked_records": 0,
+            "p50_ms": 24.023899997700937,
+            "p95_ms": 61.67089998780284,
+            "p99_ms": 77.26389999152161,
+            "max_ms": 90.66790000360925,
+            "latency_valid": true,
+            "failed_ids": [
+              "archive-q4",
+              "expense-q4",
+              "print-q4",
+              "deploy-q4",
+              "backup-q4"
+            ]
+          },
+          "categories": {
+            "conditional": {
+              "requests": 12,
+              "positive_requests": 12,
+              "no_answer_requests": 0,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "full_evidence_correct": 12,
+              "full_evidence_accuracy": 1.0,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 4,
+              "positive_results_returned": 16,
+              "distractor_return_rate": 0.25,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 24.895399998058565,
+              "p95_ms": 68.83530000050087,
+              "p99_ms": 68.83530000050087,
+              "max_ms": 68.83530000050087,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "entity": {
+              "requests": 12,
+              "positive_requests": 12,
+              "no_answer_requests": 0,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "full_evidence_correct": 12,
+              "full_evidence_accuracy": 1.0,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 1,
+              "positive_results_returned": 13,
+              "distractor_return_rate": 0.07692307692307693,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 22.035799993318506,
+              "p95_ms": 45.93459999887273,
+              "p99_ms": 45.93459999887273,
+              "max_ms": 45.93459999887273,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "long_context": {
+              "requests": 12,
+              "positive_requests": 12,
+              "no_answer_requests": 0,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": 0.5833333333333334,
+              "precision_at_3": 0.19444444444444442,
+              "mrr_at_3": 0.5416666666666666,
+              "ndcg_at_3": 0.5525774794642881,
+              "full_evidence_correct": 7,
+              "full_evidence_accuracy": 0.5833333333333334,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 3,
+              "positive_results_returned": 10,
+              "distractor_return_rate": 0.3,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 20.489400005317293,
+              "p95_ms": 73.31050001084805,
+              "p99_ms": 73.31050001084805,
+              "max_ms": 73.31050001084805,
+              "latency_valid": true,
+              "failed_ids": [
+                "archive-q4",
+                "expense-q4",
+                "print-q4",
+                "deploy-q4",
+                "backup-q4"
+              ]
+            },
+            "multi_document": {
+              "requests": 12,
+              "positive_requests": 12,
+              "no_answer_requests": 0,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "full_evidence_correct": 12,
+              "full_evidence_accuracy": 1.0,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 1,
+              "positive_results_returned": 25,
+              "distractor_return_rate": 0.04,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 31.15809999871999,
+              "p95_ms": 63.109099995926954,
+              "p99_ms": 63.109099995926954,
+              "max_ms": 63.109099995926954,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "near_no_answer": {
+              "requests": 24,
+              "positive_requests": 0,
+              "no_answer_requests": 24,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": null,
+              "ndcg_at_3": null,
+              "full_evidence_correct": 0,
+              "full_evidence_accuracy": null,
+              "no_answer_correct": 24,
+              "no_answer_accuracy": 1.0,
+              "false_answers": 0,
+              "false_answer_rate": 0.0,
+              "irrelevant_returned": 0,
+              "positive_results_returned": 0,
+              "distractor_return_rate": 0.0,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 30.578499994589947,
+              "p95_ms": 77.26389999152161,
+              "p99_ms": 90.66790000360925,
+              "max_ms": 90.66790000360925,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "paraphrase": {
+              "requests": 12,
+              "positive_requests": 12,
+              "no_answer_requests": 0,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "full_evidence_correct": 12,
+              "full_evidence_accuracy": 1.0,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 5,
+              "positive_results_returned": 17,
+              "distractor_return_rate": 0.29411764705882354,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 24.42880001035519,
+              "p95_ms": 54.05859999882523,
+              "p99_ms": 54.05859999882523,
+              "max_ms": 54.05859999882523,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "scope": {
+              "requests": 24,
+              "positive_requests": 0,
+              "no_answer_requests": 0,
+              "scope_requests": 24,
+              "errors": 0,
+              "macro_recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": null,
+              "ndcg_at_3": null,
+              "full_evidence_correct": 0,
+              "full_evidence_accuracy": null,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 0,
+              "positive_results_returned": 0,
+              "distractor_return_rate": 0.0,
+              "scope_empty_correct": 24,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 0.4732000088552013,
+              "p95_ms": 1.2999000027775764,
+              "p99_ms": 4.580799999530427,
+              "max_ms": 4.580799999530427,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "width_or_code": {
+              "requests": 12,
+              "positive_requests": 12,
+              "no_answer_requests": 0,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.7083333333333334,
+              "ndcg_at_3": 0.7847090229166835,
+              "full_evidence_correct": 12,
+              "full_evidence_accuracy": 1.0,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 12,
+              "positive_results_returned": 24,
+              "distractor_return_rate": 0.5,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 26.301799996872433,
+              "p95_ms": 69.07479999063071,
+              "p99_ms": 69.07479999063071,
+              "max_ms": 69.07479999063071,
+              "latency_valid": true,
+              "failed_ids": []
+            }
+          },
+          "groups": {
+            "kind": {
+              "no_answer": {
+                "requests": 24,
+                "positive_requests": 0,
+                "no_answer_requests": 24,
+                "scope_requests": 0,
+                "errors": 0,
+                "macro_recall_at_3": null,
+                "precision_at_3": null,
+                "mrr_at_3": null,
+                "ndcg_at_3": null,
+                "full_evidence_correct": 0,
+                "full_evidence_accuracy": null,
+                "no_answer_correct": 24,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 0,
+                "positive_results_returned": 0,
+                "distractor_return_rate": 0.0,
+                "scope_empty_correct": 0,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 30.578499994589947,
+                "p95_ms": 77.26389999152161,
+                "p99_ms": 90.66790000360925,
+                "max_ms": 90.66790000360925,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "positive": {
+                "requests": 72,
+                "positive_requests": 72,
+                "no_answer_requests": 0,
+                "scope_requests": 0,
+                "errors": 0,
+                "macro_recall_at_3": 0.9305555555555556,
+                "precision_at_3": 0.3657407407407407,
+                "mrr_at_3": 0.875,
+                "ndcg_at_3": 0.8895477503968287,
+                "full_evidence_correct": 67,
+                "full_evidence_accuracy": 0.9305555555555556,
+                "no_answer_correct": 0,
+                "no_answer_accuracy": null,
+                "false_answers": 0,
+                "false_answer_rate": null,
+                "irrelevant_returned": 26,
+                "positive_results_returned": 105,
+                "distractor_return_rate": 0.24761904761904763,
+                "scope_empty_correct": 0,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 27.0983999944292,
+                "p95_ms": 63.109099995926954,
+                "p99_ms": 73.31050001084805,
+                "max_ms": 73.31050001084805,
+                "latency_valid": true,
+                "failed_ids": [
+                  "archive-q4",
+                  "expense-q4",
+                  "print-q4",
+                  "deploy-q4",
+                  "backup-q4"
+                ]
+              },
+              "scope": {
+                "requests": 24,
+                "positive_requests": 0,
+                "no_answer_requests": 0,
+                "scope_requests": 24,
+                "errors": 0,
+                "macro_recall_at_3": null,
+                "precision_at_3": null,
+                "mrr_at_3": null,
+                "ndcg_at_3": null,
+                "full_evidence_correct": 0,
+                "full_evidence_accuracy": null,
+                "no_answer_correct": 0,
+                "no_answer_accuracy": null,
+                "false_answers": 0,
+                "false_answer_rate": null,
+                "irrelevant_returned": 0,
+                "positive_results_returned": 0,
+                "distractor_return_rate": 0.0,
+                "scope_empty_correct": 24,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 0.4732000088552013,
+                "p95_ms": 1.2999000027775764,
+                "p99_ms": 4.580799999530427,
+                "max_ms": 4.580799999530427,
+                "latency_valid": true,
+                "failed_ids": []
+              }
+            },
+            "scenario": {
+              "archive": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 0.8333333333333334,
+                "precision_at_3": 0.3333333333333333,
+                "mrr_at_3": 0.75,
+                "ndcg_at_3": 0.7718216255952429,
+                "full_evidence_correct": 5,
+                "full_evidence_accuracy": 0.8333333333333334,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 4,
+                "positive_results_returned": 10,
+                "distractor_return_rate": 0.4,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 28.66820000053849,
+                "p95_ms": 69.07479999063071,
+                "p99_ms": 69.07479999063071,
+                "max_ms": 69.07479999063071,
+                "latency_valid": true,
+                "failed_ids": [
+                  "archive-q4"
+                ]
+              },
+              "backup": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 0.8333333333333334,
+                "precision_at_3": 0.3333333333333333,
+                "mrr_at_3": 0.75,
+                "ndcg_at_3": 0.7718216255952429,
+                "full_evidence_correct": 5,
+                "full_evidence_accuracy": 0.8333333333333334,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 2,
+                "positive_results_returned": 8,
+                "distractor_return_rate": 0.25,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 33.985100002610125,
+                "p95_ms": 68.83530000050087,
+                "p99_ms": 68.83530000050087,
+                "max_ms": 68.83530000050087,
+                "latency_valid": true,
+                "failed_ids": [
+                  "backup-q4"
+                ]
+              },
+              "clipboard": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.38888888888888884,
+                "mrr_at_3": 0.9166666666666666,
+                "ndcg_at_3": 0.9384882922619097,
+                "full_evidence_correct": 6,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 1,
+                "positive_results_returned": 8,
+                "distractor_return_rate": 0.125,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 24.720999994315207,
+                "p95_ms": 61.67089998780284,
+                "p99_ms": 61.67089998780284,
+                "max_ms": 61.67089998780284,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "deploy": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 0.8333333333333334,
+                "precision_at_3": 0.3333333333333333,
+                "mrr_at_3": 0.8333333333333334,
+                "ndcg_at_3": 0.8333333333333334,
+                "full_evidence_correct": 5,
+                "full_evidence_accuracy": 0.8333333333333334,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 2,
+                "positive_results_returned": 8,
+                "distractor_return_rate": 0.25,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 33.81410001020413,
+                "p95_ms": 73.31050001084805,
+                "p99_ms": 73.31050001084805,
+                "max_ms": 73.31050001084805,
+                "latency_valid": true,
+                "failed_ids": [
+                  "deploy-q4"
+                ]
+              },
+              "email": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.38888888888888884,
+                "mrr_at_3": 0.9166666666666666,
+                "ndcg_at_3": 0.9384882922619097,
+                "full_evidence_correct": 6,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 2,
+                "positive_results_returned": 9,
+                "distractor_return_rate": 0.2222222222222222,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 17.377700001816265,
+                "p95_ms": 60.35120000888128,
+                "p99_ms": 60.35120000888128,
+                "max_ms": 60.35120000888128,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "expense": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 0.8333333333333334,
+                "precision_at_3": 0.3333333333333333,
+                "mrr_at_3": 0.8333333333333334,
+                "ndcg_at_3": 0.8333333333333334,
+                "full_evidence_correct": 5,
+                "full_evidence_accuracy": 0.8333333333333334,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 2,
+                "positive_results_returned": 8,
+                "distractor_return_rate": 0.25,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 28.67549999791663,
+                "p95_ms": 63.109099995926954,
+                "p99_ms": 63.109099995926954,
+                "max_ms": 63.109099995926954,
+                "latency_valid": true,
+                "failed_ids": [
+                  "expense-q4"
+                ]
+              },
+              "export": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.38888888888888884,
+                "mrr_at_3": 1.0,
+                "ndcg_at_3": 1.0,
+                "full_evidence_correct": 6,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 1,
+                "positive_results_returned": 8,
+                "distractor_return_rate": 0.125,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 17.09090000076685,
+                "p95_ms": 43.530399998417124,
+                "p99_ms": 43.530399998417124,
+                "max_ms": 43.530399998417124,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "git": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.38888888888888884,
+                "mrr_at_3": 0.9166666666666666,
+                "ndcg_at_3": 0.9384882922619097,
+                "full_evidence_correct": 6,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 3,
+                "positive_results_returned": 10,
+                "distractor_return_rate": 0.3,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 18.272199988132343,
+                "p95_ms": 43.089500002679415,
+                "p99_ms": 43.089500002679415,
+                "max_ms": 43.089500002679415,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "print": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 0.8333333333333334,
+                "precision_at_3": 0.3333333333333333,
+                "mrr_at_3": 0.75,
+                "ndcg_at_3": 0.7718216255952429,
+                "full_evidence_correct": 5,
+                "full_evidence_accuracy": 0.8333333333333334,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 2,
+                "positive_results_returned": 8,
+                "distractor_return_rate": 0.25,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 20.599699986632913,
+                "p95_ms": 60.383400006685406,
+                "p99_ms": 60.383400006685406,
+                "max_ms": 60.383400006685406,
+                "latency_valid": true,
+                "failed_ids": [
+                  "print-q4"
+                ]
+              },
+              "recording": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.38888888888888884,
+                "mrr_at_3": 0.9166666666666666,
+                "ndcg_at_3": 0.9384882922619097,
+                "full_evidence_correct": 6,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 2,
+                "positive_results_returned": 9,
+                "distractor_return_rate": 0.2222222222222222,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 22.035799993318506,
+                "p95_ms": 90.66790000360925,
+                "p99_ms": 90.66790000360925,
+                "max_ms": 90.66790000360925,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "usb": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.38888888888888884,
+                "mrr_at_3": 0.9166666666666666,
+                "ndcg_at_3": 0.9384882922619097,
+                "full_evidence_correct": 6,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 3,
+                "positive_results_returned": 10,
+                "distractor_return_rate": 0.3,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 19.46260000113398,
+                "p95_ms": 34.682199999224395,
+                "p99_ms": 34.682199999224395,
+                "max_ms": 34.682199999224395,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "vpn": {
+                "requests": 10,
+                "positive_requests": 6,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.38888888888888884,
+                "mrr_at_3": 1.0,
+                "ndcg_at_3": 1.0,
+                "full_evidence_correct": 6,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 2,
+                "positive_results_returned": 9,
+                "distractor_return_rate": 0.2222222222222222,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 27.799700008472428,
+                "p95_ms": 47.6490000000922,
+                "p99_ms": 47.6490000000922,
+                "max_ms": 47.6490000000922,
+                "latency_valid": true,
+                "failed_ids": []
+              }
+            }
+          },
+          "rows": [
+            {
+              "id": "archive-q0",
+              "scenario": "archive",
+              "category": "entity",
+              "kind": "positive",
+              "query": "星河研究项目的定稿如何分类并放入只读目录",
+              "expected": [
+                "archive-main"
+              ],
+              "returned": [
+                "archive-main"
+              ],
+              "scores": [
+                0.4982
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4982,
+                  "origin": "direct",
+                  "seed_id": "archive-main",
+                  "coverage": 0.8571,
+                  "document_score": 0.4982,
+                  "passage_score": 0.4982
+                }
+              ],
+              "elapsed_ms": 30.00389999942854,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "archive-q1",
+              "scenario": "archive",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "课题资料定版后怎样核对摘要，星河研究项目不能混入草稿",
+              "expected": [
+                "archive-main"
+              ],
+              "returned": [
+                "archive-main",
+                "archive-evidence"
+              ],
+              "scores": [
+                0.353,
+                0.353
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.353,
+                  "origin": "direct",
+                  "seed_id": "archive-main",
+                  "coverage": 0.7,
+                  "document_score": 0.353,
+                  "passage_score": 0.353
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.297,
+                  "origin": "subject_companion",
+                  "seed_id": "archive-main",
+                  "coverage": 0.7,
+                  "document_score": 0.2332,
+                  "passage_score": 0.297
+                }
+              ],
+              "elapsed_ms": 21.514700012630783,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "archive-q2",
+              "scenario": "archive",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "星河研究项目缺少负责人签字时能直接归档吗",
+              "expected": [
+                "archive-condition"
+              ],
+              "returned": [
+                "archive-condition",
+                "archive-evidence"
+              ],
+              "scores": [
+                0.4927,
+                0.4927
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4927,
+                  "origin": "direct",
+                  "seed_id": "archive-condition",
+                  "coverage": 0.9231,
+                  "document_score": 0.4532,
+                  "passage_score": 0.4927
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3264,
+                  "origin": "subject_companion",
+                  "seed_id": "archive-condition",
+                  "coverage": 0.9231,
+                  "document_score": 0.2741,
+                  "passage_score": 0.3264
+                }
+              ],
+              "elapsed_ms": 29.997599995112978,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "archive-q3",
+              "scenario": "archive",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "星河研究项目归档有哪些执行条件，核验失败怎样回退",
+              "expected": [
+                "archive-condition",
+                "archive-evidence"
+              ],
+              "returned": [
+                "archive-condition",
+                "archive-evidence"
+              ],
+              "scores": [
+                0.5021,
+                0.5021
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5021,
+                  "origin": "direct",
+                  "seed_id": "archive-condition",
+                  "coverage": 0.9231,
+                  "document_score": 0.428,
+                  "passage_score": 0.5021
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4556,
+                  "origin": "subject_companion",
+                  "seed_id": "archive-condition",
+                  "coverage": 0.9231,
+                  "document_score": 0.3036,
+                  "passage_score": 0.4556
+                }
+              ],
+              "elapsed_ms": 28.66820000053849,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "archive-q4",
+              "scenario": "archive",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "我刚整理好星河研究项目的一批定稿，源目录还留着草稿和缓存，也收到展示活动的截图；这次只处理研究课题，归档操作应按哪份流程做",
+              "expected": [
+                "archive-main"
+              ],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 39.68070000701118,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 0.0,
+              "precision_at_3": 0.0,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": 0.0,
+              "irrelevant_returned": 0,
+              "passed": false
+            },
+            {
+              "id": "archive-q5",
+              "scenario": "archive",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "星河研究项目的ＳＨＡ２５６差异清单保留多久，校验失败怎么处理",
+              "expected": [
+                "archive-evidence"
+              ],
+              "returned": [
+                "archive-main",
+                "archive-evidence",
+                "archive-condition"
+              ],
+              "scores": [
+                0.3986,
+                0.4966,
+                0.3986
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3986,
+                  "origin": "direct",
+                  "seed_id": "archive-main",
+                  "coverage": 0.9231,
+                  "document_score": 0.3608,
+                  "passage_score": 0.3986
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4966,
+                  "origin": "subject_companion",
+                  "seed_id": "archive-main",
+                  "coverage": 0.9231,
+                  "document_score": 0.3304,
+                  "passage_score": 0.4966
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3559,
+                  "origin": "subject_companion",
+                  "seed_id": "archive-main",
+                  "coverage": 0.9231,
+                  "document_score": 0.3245,
+                  "passage_score": 0.3559
+                }
+              ],
+              "elapsed_ms": 69.07479999063071,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.5,
+              "ndcg_at_3": 0.6309297535714575,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "archive-negative0",
+              "scenario": "archive",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "星河研究项目归档的云存储跨区域复制价格是多少",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 25.08069999748841,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "archive-negative1",
+              "scenario": "archive",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "星河研究项目负责人出差时免签归档的特别授权编号是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 39.30590000527445,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "archive-scope-tenant",
+              "scenario": "archive",
+              "category": "scope",
+              "kind": "scope",
+              "query": "星河研究项目的定稿如何分类并放入只读目录",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.677700008964166,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "archive-scope-user",
+              "scenario": "archive",
+              "category": "scope",
+              "kind": "scope",
+              "query": "星河研究项目的定稿如何分类并放入只读目录",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.7602999976370484,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "expense-q0",
+              "scenario": "expense",
+              "category": "entity",
+              "kind": "positive",
+              "query": "研发差旅报销怎样关联申请和提交住宿发票",
+              "expected": [
+                "expense-main"
+              ],
+              "returned": [
+                "expense-main"
+              ],
+              "scores": [
+                0.5027
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5027,
+                  "origin": "direct",
+                  "seed_id": "expense-main",
+                  "coverage": 1.0,
+                  "document_score": 0.4831,
+                  "passage_score": 0.5027
+                }
+              ],
+              "elapsed_ms": 22.705499999574386,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "expense-q1",
+              "scenario": "expense",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "研发人员出差住宿每晚的金额上限及票据办理流程",
+              "expected": [
+                "expense-main"
+              ],
+              "returned": [
+                "expense-main",
+                "expense-condition"
+              ],
+              "scores": [
+                0.4016,
+                0.4016
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4016,
+                  "origin": "direct",
+                  "seed_id": "expense-main",
+                  "coverage": 0.7778,
+                  "document_score": 0.3395,
+                  "passage_score": 0.4016
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2968,
+                  "origin": "subject_companion",
+                  "seed_id": "expense-main",
+                  "coverage": 0.7778,
+                  "document_score": 0.2686,
+                  "passage_score": 0.2968
+                }
+              ],
+              "elapsed_ms": 49.51479998999275,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "expense-q2",
+              "scenario": "expense",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "研发差旅报销住酒店超过400元要谁批准",
+              "expected": [
+                "expense-condition"
+              ],
+              "returned": [
+                "expense-condition",
+                "expense-main"
+              ],
+              "scores": [
+                0.4127,
+                0.4127
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4127,
+                  "origin": "direct",
+                  "seed_id": "expense-condition",
+                  "coverage": 0.6364,
+                  "document_score": 0.3715,
+                  "passage_score": 0.4127
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3742,
+                  "origin": "subject_companion",
+                  "seed_id": "expense-condition",
+                  "coverage": 0.6364,
+                  "document_score": 0.3526,
+                  "passage_score": 0.3742
+                }
+              ],
+              "elapsed_ms": 22.08029999746941,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "expense-q3",
+              "scenario": "expense",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "研发差旅报销超额审批条件和发票抬头错误的退回步骤",
+              "expected": [
+                "expense-condition",
+                "expense-evidence"
+              ],
+              "returned": [
+                "expense-condition",
+                "expense-evidence"
+              ],
+              "scores": [
+                0.4909,
+                0.4909
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4909,
+                  "origin": "direct",
+                  "seed_id": "expense-condition",
+                  "coverage": 0.75,
+                  "document_score": 0.438,
+                  "passage_score": 0.4909
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3818,
+                  "origin": "subject_companion",
+                  "seed_id": "expense-condition",
+                  "coverage": 0.75,
+                  "document_score": 0.3544,
+                  "passage_score": 0.3818
+                }
+              ],
+              "elapsed_ms": 63.109099995926954,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "expense-q4",
+              "scenario": "expense",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "这次研发差旅同时有住宿、跨城车票和市内打车单，另一个同事做外勤拜访；我需要研发差旅报销的提交依据和分类流程",
+              "expected": [
+                "expense-main"
+              ],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 38.20850000192877,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 0.0,
+              "precision_at_3": 0.0,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": 0.0,
+              "irrelevant_returned": 0,
+              "passed": false
+            },
+            {
+              "id": "expense-q5",
+              "scenario": "expense",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "研发差旅报销的ＰＤＦ发票原件抬头不符怎样补正",
+              "expected": [
+                "expense-evidence"
+              ],
+              "returned": [
+                "expense-evidence"
+              ],
+              "scores": [
+                0.5672
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5672,
+                  "origin": "direct",
+                  "seed_id": "expense-evidence",
+                  "coverage": 1.0,
+                  "document_score": 0.501,
+                  "passage_score": 0.5672
+                }
+              ],
+              "elapsed_ms": 32.922900005360134,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "expense-negative0",
+              "scenario": "expense",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "研发差旅报销境外信用卡汇兑损失按哪个汇率补偿",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 28.67549999791663,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "expense-negative1",
+              "scenario": "expense",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "研发差旅报销丢失全部票据时的免票特批额度是多少",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 30.578499994589947,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "expense-scope-tenant",
+              "scenario": "expense",
+              "category": "scope",
+              "kind": "scope",
+              "query": "研发差旅报销怎样关联申请和提交住宿发票",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.46269998711068183,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "expense-scope-user",
+              "scenario": "expense",
+              "category": "scope",
+              "kind": "scope",
+              "query": "研发差旅报销怎样关联申请和提交住宿发票",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.45310000132303685,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "usb-q0",
+              "scenario": "usb",
+              "category": "entity",
+              "kind": "positive",
+              "query": "研发终端外设登记扫描和只读接入的操作顺序",
+              "expected": [
+                "usb-main"
+              ],
+              "returned": [
+                "usb-main"
+              ],
+              "scores": [
+                0.5197
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5197,
+                  "origin": "direct",
+                  "seed_id": "usb-main",
+                  "coverage": 0.8889,
+                  "document_score": 0.5197,
+                  "passage_score": 0.5197
+                }
+              ],
+              "elapsed_ms": 27.174999995622784,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "usb-q1",
+              "scenario": "usb",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "实验室电脑插移动存储前怎么查序列号并防止运行介质程序",
+              "expected": [
+                "usb-main"
+              ],
+              "returned": [
+                "usb-main"
+              ],
+              "scores": [
+                0.3969
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3969,
+                  "origin": "direct",
+                  "seed_id": "usb-main",
+                  "coverage": 0.8333,
+                  "document_score": 0.2807,
+                  "passage_score": 0.3969
+                }
+              ],
+              "elapsed_ms": 14.936199993826449,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "usb-q2",
+              "scenario": "usb",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "研发终端外设扫描失败或者不知道归属时能挂载吗",
+              "expected": [
+                "usb-condition"
+              ],
+              "returned": [
+                "usb-condition"
+              ],
+              "scores": [
+                0.4751
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4751,
+                  "origin": "direct",
+                  "seed_id": "usb-condition",
+                  "coverage": 0.8667,
+                  "document_score": 0.4751,
+                  "passage_score": 0.4751
+                }
+              ],
+              "elapsed_ms": 24.895399998058565,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "usb-q3",
+              "scenario": "usb",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "研发终端外设只读接入的条件以及退出前的核验",
+              "expected": [
+                "usb-condition",
+                "usb-evidence"
+              ],
+              "returned": [
+                "usb-condition",
+                "usb-evidence",
+                "usb-main"
+              ],
+              "scores": [
+                0.5085,
+                0.5085,
+                0.5085
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5085,
+                  "origin": "direct",
+                  "seed_id": "usb-condition",
+                  "coverage": 0.9091,
+                  "document_score": 0.414,
+                  "passage_score": 0.5085
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4651,
+                  "origin": "subject_companion",
+                  "seed_id": "usb-condition",
+                  "coverage": 0.9091,
+                  "document_score": 0.3205,
+                  "passage_score": 0.4651
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3987,
+                  "origin": "subject_companion",
+                  "seed_id": "usb-condition",
+                  "coverage": 0.9091,
+                  "document_score": 0.3807,
+                  "passage_score": 0.3987
+                }
+              ],
+              "elapsed_ms": 34.682199999224395,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "usb-q4",
+              "scenario": "usb",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "供应商带来一个装资料的移动盘，研发终端还没登记序列号，展厅同事说他们的盘能用；我需要研发终端外设的接入流程",
+              "expected": [
+                "usb-main"
+              ],
+              "returned": [
+                "usb-main"
+              ],
+              "scores": [
+                0.5233
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5233,
+                  "origin": "direct",
+                  "seed_id": "usb-main",
+                  "coverage": 1.0,
+                  "document_score": 0.4771,
+                  "passage_score": 0.5233
+                }
+              ],
+              "elapsed_ms": 18.45119999779854,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "usb-q5",
+              "scenario": "usb",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "研发终端外设的ＵＳＢ只读挂载核验和卸载记录如何处理",
+              "expected": [
+                "usb-evidence"
+              ],
+              "returned": [
+                "usb-condition",
+                "usb-evidence",
+                "usb-main"
+              ],
+              "scores": [
+                0.4625,
+                0.4891,
+                0.4625
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4625,
+                  "origin": "direct",
+                  "seed_id": "usb-condition",
+                  "coverage": 0.9167,
+                  "document_score": 0.3781,
+                  "passage_score": 0.4625
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4891,
+                  "origin": "subject_companion",
+                  "seed_id": "usb-condition",
+                  "coverage": 0.9167,
+                  "document_score": 0.3298,
+                  "passage_score": 0.4891
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3793,
+                  "origin": "subject_companion",
+                  "seed_id": "usb-condition",
+                  "coverage": 0.9167,
+                  "document_score": 0.3684,
+                  "passage_score": 0.3793
+                }
+              ],
+              "elapsed_ms": 33.91070000361651,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.5,
+              "ndcg_at_3": 0.6309297535714575,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "usb-negative0",
+              "scenario": "usb",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "研发终端外设使用蓝牙键盘的射频认证清单是哪一版",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 19.46260000113398,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "usb-negative1",
+              "scenario": "usb",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "研发终端外设扫描机停机时谁能授予跳过扫描的应急口令",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 33.65140000823885,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "usb-scope-tenant",
+              "scenario": "usb",
+              "category": "scope",
+              "kind": "scope",
+              "query": "研发终端外设登记扫描和只读接入的操作顺序",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.46779999684076756,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "usb-scope-user",
+              "scenario": "usb",
+              "category": "scope",
+              "kind": "scope",
+              "query": "研发终端外设登记扫描和只读接入的操作顺序",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.5206999921938404,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "vpn-q0",
+              "scenario": "vpn",
+              "category": "entity",
+              "kind": "positive",
+              "query": "科研远程接入检查证书和多因素验证的连接流程",
+              "expected": [
+                "vpn-main"
+              ],
+              "returned": [
+                "vpn-main"
+              ],
+              "scores": [
+                0.6568
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.6568,
+                  "origin": "direct",
+                  "seed_id": "vpn-main",
+                  "coverage": 1.0,
+                  "document_score": 0.5304,
+                  "passage_score": 0.6568
+                }
+              ],
+              "elapsed_ms": 27.799700008472428,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "vpn-q1",
+              "scenario": "vpn",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "在家使用科研网怎样连接隧道而不改动其他路由",
+              "expected": [
+                "vpn-main"
+              ],
+              "returned": [
+                "vpn-main",
+                "vpn-evidence"
+              ],
+              "scores": [
+                0.3467,
+                0.3785
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3467,
+                  "origin": "direct",
+                  "seed_id": "vpn-main",
+                  "coverage": 1.0,
+                  "document_score": 0.3467,
+                  "passage_score": 0.3467
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3785,
+                  "origin": "subject_companion",
+                  "seed_id": "vpn-main",
+                  "coverage": 1.0,
+                  "document_score": 0.2704,
+                  "passage_score": 0.3785
+                }
+              ],
+              "elapsed_ms": 30.283100000815466,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "vpn-q2",
+              "scenario": "vpn",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "科研远程接入课题成员离组后证书没过期还可以连接吗",
+              "expected": [
+                "vpn-condition"
+              ],
+              "returned": [
+                "vpn-condition",
+                "vpn-main"
+              ],
+              "scores": [
+                0.5366,
+                0.5366
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5366,
+                  "origin": "direct",
+                  "seed_id": "vpn-condition",
+                  "coverage": 0.8667,
+                  "document_score": 0.4657,
+                  "passage_score": 0.5366
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4428,
+                  "origin": "subject_companion",
+                  "seed_id": "vpn-condition",
+                  "coverage": 0.8667,
+                  "document_score": 0.3625,
+                  "passage_score": 0.4428
+                }
+              ],
+              "elapsed_ms": 31.604399991920218,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "vpn-q3",
+              "scenario": "vpn",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "科研远程接入授权条件与失败后恢复路由的依据",
+              "expected": [
+                "vpn-condition",
+                "vpn-evidence"
+              ],
+              "returned": [
+                "vpn-evidence",
+                "vpn-condition"
+              ],
+              "scores": [
+                0.4087,
+                0.4392
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4087,
+                  "origin": "direct",
+                  "seed_id": "vpn-evidence",
+                  "coverage": 0.8462,
+                  "document_score": 0.4087,
+                  "passage_score": 0.4087
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4392,
+                  "origin": "subject_companion",
+                  "seed_id": "vpn-evidence",
+                  "coverage": 0.8462,
+                  "document_score": 0.3675,
+                  "passage_score": 0.4392
+                }
+              ],
+              "elapsed_ms": 45.11610000918154,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "vpn-q4",
+              "scenario": "vpn",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "我的科研远程接入突然失败，手机访客无线正常，电脑还要保留其他网络路由；重试前应按哪份连接流程检查证书和验证",
+              "expected": [
+                "vpn-main"
+              ],
+              "returned": [
+                "vpn-main"
+              ],
+              "scores": [
+                0.4137
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4137,
+                  "origin": "direct",
+                  "seed_id": "vpn-main",
+                  "coverage": 0.6154,
+                  "document_score": 0.4009,
+                  "passage_score": 0.4137
+                }
+              ],
+              "elapsed_ms": 20.489400005317293,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "vpn-q5",
+              "scenario": "vpn",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "科研远程接入ＶＰＮ隧道地址核验失败怎么恢复",
+              "expected": [
+                "vpn-evidence"
+              ],
+              "returned": [
+                "vpn-evidence"
+              ],
+              "scores": [
+                0.583
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.583,
+                  "origin": "direct",
+                  "seed_id": "vpn-evidence",
+                  "coverage": 1.0,
+                  "document_score": 0.5135,
+                  "passage_score": 0.583
+                }
+              ],
+              "elapsed_ms": 47.6490000000922,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "vpn-negative0",
+              "scenario": "vpn",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "科研远程接入海外节点的带宽补偿服务等级是多少",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 22.79149999958463,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "vpn-negative1",
+              "scenario": "vpn",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "科研远程接入证书过期后临时放行的管理员私有码是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 27.967500005615875,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "vpn-scope-tenant",
+              "scenario": "vpn",
+              "category": "scope",
+              "kind": "scope",
+              "query": "科研远程接入检查证书和多因素验证的连接流程",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.5029000021750107,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "vpn-scope-user",
+              "scenario": "vpn",
+              "category": "scope",
+              "kind": "scope",
+              "query": "科研远程接入检查证书和多因素验证的连接流程",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.46549999387934804,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "print-q0",
+              "scenario": "print",
+              "category": "entity",
+              "kind": "positive",
+              "query": "共享彩印设备A4双面彩色如何选驱动并预览页数",
+              "expected": [
+                "print-main"
+              ],
+              "returned": [
+                "print-main"
+              ],
+              "scores": [
+                0.4927
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4927,
+                  "origin": "direct",
+                  "seed_id": "print-main",
+                  "coverage": 1.0,
+                  "document_score": 0.4927,
+                  "passage_score": 0.4927
+                }
+              ],
+              "elapsed_ms": 17.561300002853386,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "print-q1",
+              "scenario": "print",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "办公室彩色打印机怎样发送保留机密标识的双面文件",
+              "expected": [
+                "print-main"
+              ],
+              "returned": [
+                "print-main",
+                "print-evidence"
+              ],
+              "scores": [
+                0.4594,
+                0.4594
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4594,
+                  "origin": "direct",
+                  "seed_id": "print-main",
+                  "coverage": 1.0,
+                  "document_score": 0.388,
+                  "passage_score": 0.4594
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.1993,
+                  "origin": "subject_companion",
+                  "seed_id": "print-main",
+                  "coverage": 1.0,
+                  "document_score": 0.1993,
+                  "passage_score": 0.1993
+                }
+              ],
+              "elapsed_ms": 20.599699986632913,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "print-q2",
+              "scenario": "print",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "共享彩印设备敏感作业超过20分钟没领取如何处理",
+              "expected": [
+                "print-condition"
+              ],
+              "returned": [
+                "print-condition"
+              ],
+              "scores": [
+                0.5035
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5035,
+                  "origin": "direct",
+                  "seed_id": "print-condition",
+                  "coverage": 0.7857,
+                  "document_score": 0.5007,
+                  "passage_score": 0.5035
+                }
+              ],
+              "elapsed_ms": 31.297399997129105,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "print-q3",
+              "scenario": "print",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "共享彩印设备PIN领取条件和卡纸时取消重复任务的限制",
+              "expected": [
+                "print-condition",
+                "print-evidence"
+              ],
+              "returned": [
+                "print-condition",
+                "print-evidence"
+              ],
+              "scores": [
+                0.4567,
+                0.4661
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4567,
+                  "origin": "direct",
+                  "seed_id": "print-condition",
+                  "coverage": 0.875,
+                  "document_score": 0.4567,
+                  "passage_score": 0.4567
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4661,
+                  "origin": "subject_companion",
+                  "seed_id": "print-condition",
+                  "coverage": 0.875,
+                  "document_score": 0.347,
+                  "passage_score": 0.4661
+                }
+              ],
+              "elapsed_ms": 31.15809999871999,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "print-q4",
+              "scenario": "print",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "我把敏感报告发到共享彩印设备，前台还有另一台黑白机，报告要求双面彩色而且不能丢掉机密标识；发送前该用什么流程",
+              "expected": [
+                "print-main"
+              ],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 24.023899997700937,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 0.0,
+              "precision_at_3": 0.0,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": 0.0,
+              "irrelevant_returned": 0,
+              "passed": false
+            },
+            {
+              "id": "print-q5",
+              "scenario": "print",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "共享彩印设备ＣＵＰＳ作业页数不符时如何暂停和取消",
+              "expected": [
+                "print-evidence"
+              ],
+              "returned": [
+                "print-condition",
+                "print-evidence"
+              ],
+              "scores": [
+                0.3447,
+                0.3447
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3447,
+                  "origin": "direct",
+                  "seed_id": "print-condition",
+                  "coverage": 1.0,
+                  "document_score": 0.3447,
+                  "passage_score": 0.3447
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2928,
+                  "origin": "subject_companion",
+                  "seed_id": "print-condition",
+                  "coverage": 1.0,
+                  "document_score": 0.2905,
+                  "passage_score": 0.2928
+                }
+              ],
+              "elapsed_ms": 18.74129999487195,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.5,
+              "ndcg_at_3": 0.6309297535714575,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "print-negative0",
+              "scenario": "print",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "共享彩印设备碳粉对皮肤过敏的医疗处理方案是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 60.383400006685406,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "print-negative1",
+              "scenario": "print",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "共享彩印设备PIN忘记后绕过现场释放的应急码是多少",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 30.00860000611283,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "print-scope-tenant",
+              "scenario": "print",
+              "category": "scope",
+              "kind": "scope",
+              "query": "共享彩印设备A4双面彩色如何选驱动并预览页数",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.4732000088552013,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "print-scope-user",
+              "scenario": "print",
+              "category": "scope",
+              "kind": "scope",
+              "query": "共享彩印设备A4双面彩色如何选驱动并预览页数",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.4757999995490536,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "deploy-q0",
+              "scenario": "deploy",
+              "category": "entity",
+              "kind": "positive",
+              "query": "统计桌面包离线安装的来源签名和依赖检查流程",
+              "expected": [
+                "deploy-main"
+              ],
+              "returned": [
+                "deploy-main"
+              ],
+              "scores": [
+                0.5575
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5575,
+                  "origin": "direct",
+                  "seed_id": "deploy-main",
+                  "coverage": 0.8333,
+                  "document_score": 0.5062,
+                  "passage_score": 0.5575
+                }
+              ],
+              "elapsed_ms": 19.141800003126264,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "deploy-q1",
+              "scenario": "deploy",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "没有网络时部署统计软件怎样验证摘要并留好卸载入口",
+              "expected": [
+                "deploy-main"
+              ],
+              "returned": [
+                "deploy-main"
+              ],
+              "scores": [
+                0.3195
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3195,
+                  "origin": "direct",
+                  "seed_id": "deploy-main",
+                  "coverage": 0.6,
+                  "document_score": 0.2547,
+                  "passage_score": 0.3195
+                }
+              ],
+              "elapsed_ms": 40.244600008009,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "deploy-q2",
+              "scenario": "deploy",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "统计桌面包依赖冲突时能跳过签名校验升级吗",
+              "expected": [
+                "deploy-condition"
+              ],
+              "returned": [
+                "deploy-condition"
+              ],
+              "scores": [
+                0.5233
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5233,
+                  "origin": "direct",
+                  "seed_id": "deploy-condition",
+                  "coverage": 0.9286,
+                  "document_score": 0.5233,
+                  "passage_score": 0.5233
+                }
+              ],
+              "elapsed_ms": 33.81410001020413,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "deploy-q3",
+              "scenario": "deploy",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "统计桌面包升级前的条件与样例启动失败的回滚步骤",
+              "expected": [
+                "deploy-condition",
+                "deploy-evidence"
+              ],
+              "returned": [
+                "deploy-evidence",
+                "deploy-condition"
+              ],
+              "scores": [
+                0.4372,
+                0.4372
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4372,
+                  "origin": "direct",
+                  "seed_id": "deploy-evidence",
+                  "coverage": 0.8,
+                  "document_score": 0.4008,
+                  "passage_score": 0.4372
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3925,
+                  "origin": "subject_companion",
+                  "seed_id": "deploy-evidence",
+                  "coverage": 0.8,
+                  "document_score": 0.3245,
+                  "passage_score": 0.3925
+                }
+              ],
+              "elapsed_ms": 31.5647999959765,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "deploy-q4",
+              "scenario": "deploy",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "统计桌面包的新版本已经拷到电脑，旁边还有采集软件安装文件，终端目前离线且数据只存一份；正式安装应先遵循什么流程",
+              "expected": [
+                "deploy-main"
+              ],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 73.31050001084805,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 0.0,
+              "precision_at_3": 0.0,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": 0.0,
+              "irrelevant_returned": 0,
+              "passed": false
+            },
+            {
+              "id": "deploy-q5",
+              "scenario": "deploy",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "统计桌面包ＤＥＢ升级后的结果格式核验失败怎样回滚",
+              "expected": [
+                "deploy-evidence"
+              ],
+              "returned": [
+                "deploy-evidence",
+                "deploy-condition",
+                "deploy-main"
+              ],
+              "scores": [
+                0.4826,
+                0.4826,
+                0.4826
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4826,
+                  "origin": "direct",
+                  "seed_id": "deploy-evidence",
+                  "coverage": 1.0,
+                  "document_score": 0.4346,
+                  "passage_score": 0.4826
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3659,
+                  "origin": "subject_companion",
+                  "seed_id": "deploy-evidence",
+                  "coverage": 1.0,
+                  "document_score": 0.3029,
+                  "passage_score": 0.3659
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3006,
+                  "origin": "subject_companion",
+                  "seed_id": "deploy-evidence",
+                  "coverage": 1.0,
+                  "document_score": 0.2728,
+                  "passage_score": 0.3006
+                }
+              ],
+              "elapsed_ms": 34.3330000032438,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "deploy-negative0",
+              "scenario": "deploy",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "统计桌面包GPU驱动的最大显存占用保证是多少",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 42.36720000335481,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "deploy-negative1",
+              "scenario": "deploy",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "统计桌面包未签名插件的临时豁免证书由哪个自动接口生成",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 52.734199998667464,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "deploy-scope-tenant",
+              "scenario": "deploy",
+              "category": "scope",
+              "kind": "scope",
+              "query": "统计桌面包离线安装的来源签名和依赖检查流程",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.7145999989006668,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "deploy-scope-user",
+              "scenario": "deploy",
+              "category": "scope",
+              "kind": "scope",
+              "query": "统计桌面包离线安装的来源签名和依赖检查流程",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.4588000010699034,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "git-q0",
+              "scenario": "git",
+              "category": "entity",
+              "kind": "positive",
+              "query": "研究代码库功能分支提交和发起评审需要哪些检查",
+              "expected": [
+                "git-main"
+              ],
+              "returned": [
+                "git-main",
+                "git-evidence"
+              ],
+              "scores": [
+                0.5772,
+                0.5772
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5772,
+                  "origin": "direct",
+                  "seed_id": "git-main",
+                  "coverage": 1.0,
+                  "document_score": 0.4803,
+                  "passage_score": 0.5772
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3252,
+                  "origin": "subject_companion",
+                  "seed_id": "git-main",
+                  "coverage": 1.0,
+                  "document_score": 0.2789,
+                  "passage_score": 0.3252
+                }
+              ],
+              "elapsed_ms": 20.706500014057383,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "git-q1",
+              "scenario": "git",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "科研程序改动怎样先跑测试查秘密再关联问题送审",
+              "expected": [
+                "git-main"
+              ],
+              "returned": [
+                "git-main"
+              ],
+              "scores": [
+                0.3495
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3495,
+                  "origin": "direct",
+                  "seed_id": "git-main",
+                  "coverage": 0.7692,
+                  "document_score": 0.2991,
+                  "passage_score": 0.3495
+                }
+              ],
+              "elapsed_ms": 24.42880001035519,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "git-q2",
+              "scenario": "git",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "研究代码库作者自己批准且CI通过能合并吗",
+              "expected": [
+                "git-condition"
+              ],
+              "returned": [
+                "git-condition"
+              ],
+              "scores": [
+                0.5065
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5065,
+                  "origin": "direct",
+                  "seed_id": "git-condition",
+                  "coverage": 0.75,
+                  "document_score": 0.4189,
+                  "passage_score": 0.5065
+                }
+              ],
+              "elapsed_ms": 14.819200005149469,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "git-q3",
+              "scenario": "git",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "研究代码库合并准入条件和出错时保留审计的回退方式",
+              "expected": [
+                "git-condition",
+                "git-evidence"
+              ],
+              "returned": [
+                "git-condition",
+                "git-evidence"
+              ],
+              "scores": [
+                0.4008,
+                0.4008
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4008,
+                  "origin": "direct",
+                  "seed_id": "git-condition",
+                  "coverage": 0.75,
+                  "document_score": 0.3614,
+                  "passage_score": 0.4008
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3219,
+                  "origin": "subject_companion",
+                  "seed_id": "git-condition",
+                  "coverage": 0.75,
+                  "document_score": 0.3107,
+                  "passage_score": 0.3219
+                }
+              ],
+              "elapsed_ms": 24.20430000347551,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "git-q4",
+              "scenario": "git",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "我改好研究代码库的一项功能，教学代码库的练习允许直接推送，但这次是共享研究主分支；提交和评审流程应怎样执行",
+              "expected": [
+                "git-main"
+              ],
+              "returned": [
+                "git-main",
+                "git-condition"
+              ],
+              "scores": [
+                0.4533,
+                0.4533
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4533,
+                  "origin": "direct",
+                  "seed_id": "git-main",
+                  "coverage": 0.8889,
+                  "document_score": 0.4533,
+                  "passage_score": 0.4533
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3277,
+                  "origin": "subject_companion",
+                  "seed_id": "git-main",
+                  "coverage": 0.8889,
+                  "document_score": 0.3277,
+                  "passage_score": 0.3277
+                }
+              ],
+              "elapsed_ms": 15.912199989543296,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "git-q5",
+              "scenario": "git",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "研究代码库Ｇｉｔ合并后怎样用ｒｅｖｅｒｔ回退而不改写历史",
+              "expected": [
+                "git-evidence"
+              ],
+              "returned": [
+                "git-main",
+                "git-evidence"
+              ],
+              "scores": [
+                0.3215,
+                0.4316
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3215,
+                  "origin": "direct",
+                  "seed_id": "git-main",
+                  "coverage": 1.0,
+                  "document_score": 0.3215,
+                  "passage_score": 0.3215
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4316,
+                  "origin": "subject_companion",
+                  "seed_id": "git-main",
+                  "coverage": 1.0,
+                  "document_score": 0.3135,
+                  "passage_score": 0.4316
+                }
+              ],
+              "elapsed_ms": 18.272199988132343,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.5,
+              "ndcg_at_3": 0.6309297535714575,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "git-negative0",
+              "scenario": "git",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "研究代码库商业许可证侵权诉讼的律师报价是多少",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 19.669899993459694,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "git-negative1",
+              "scenario": "git",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "研究代码库紧急发布时免除所有评审的隐藏分支名是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 43.089500002679415,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "git-scope-tenant",
+              "scenario": "git",
+              "category": "scope",
+              "kind": "scope",
+              "query": "研究代码库功能分支提交和发起评审需要哪些检查",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.4678999976022169,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "git-scope-user",
+              "scenario": "git",
+              "category": "scope",
+              "kind": "scope",
+              "query": "研究代码库功能分支提交和发起评审需要哪些检查",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.47670000640209764,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "recording-q0",
+              "scenario": "recording",
+              "category": "entity",
+              "kind": "positive",
+              "query": "评审会议录音从授权转写到纪要确认和删除的流程",
+              "expected": [
+                "recording-main"
+              ],
+              "returned": [
+                "recording-main"
+              ],
+              "scores": [
+                0.5172
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5172,
+                  "origin": "direct",
+                  "seed_id": "recording-main",
+                  "coverage": 0.8333,
+                  "document_score": 0.5172,
+                  "passage_score": 0.5172
+                }
+              ],
+              "elapsed_ms": 22.035799993318506,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "recording-q1",
+              "scenario": "recording",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "闭门评审录下的声音怎样整理责任人并在确认后清理",
+              "expected": [
+                "recording-main"
+              ],
+              "returned": [
+                "recording-main",
+                "recording-evidence"
+              ],
+              "scores": [
+                0.3411,
+                0.3604
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3411,
+                  "origin": "direct",
+                  "seed_id": "recording-main",
+                  "coverage": 1.0,
+                  "document_score": 0.3411,
+                  "passage_score": 0.3411
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3604,
+                  "origin": "subject_companion",
+                  "seed_id": "recording-main",
+                  "coverage": 1.0,
+                  "document_score": 0.2978,
+                  "passage_score": 0.3604
+                }
+              ],
+              "elapsed_ms": 54.05859999882523,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "recording-q2",
+              "scenario": "recording",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "评审会议录音有人撤回授权后还能处理他的片段吗",
+              "expected": [
+                "recording-condition"
+              ],
+              "returned": [
+                "recording-condition"
+              ],
+              "scores": [
+                0.4764
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4764,
+                  "origin": "direct",
+                  "seed_id": "recording-condition",
+                  "coverage": 0.9231,
+                  "document_score": 0.4764,
+                  "passage_score": 0.4764
+                }
+              ],
+              "elapsed_ms": 23.352900010650046,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "recording-q3",
+              "scenario": "recording",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "评审会议录音转写的授权条件和清理音频缓存的核验",
+              "expected": [
+                "recording-condition",
+                "recording-evidence"
+              ],
+              "returned": [
+                "recording-evidence",
+                "recording-condition"
+              ],
+              "scores": [
+                0.4697,
+                0.5418
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4697,
+                  "origin": "direct",
+                  "seed_id": "recording-evidence",
+                  "coverage": 1.0,
+                  "document_score": 0.4697,
+                  "passage_score": 0.4697
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5418,
+                  "origin": "subject_companion",
+                  "seed_id": "recording-evidence",
+                  "coverage": 1.0,
+                  "document_score": 0.4053,
+                  "passage_score": 0.5418
+                }
+              ],
+              "elapsed_ms": 28.347500003292225,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "recording-q4",
+              "scenario": "recording",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "我同时收到公开讲座宣传录音和评审会议录音，评审内容有责任分工还没核对，希望形成纪要；这份评审录音应该怎么整理",
+              "expected": [
+                "recording-main"
+              ],
+              "returned": [
+                "recording-main"
+              ],
+              "scores": [
+                0.3766
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3766,
+                  "origin": "direct",
+                  "seed_id": "recording-main",
+                  "coverage": 0.6667,
+                  "document_score": 0.3539,
+                  "passage_score": 0.3766
+                }
+              ],
+              "elapsed_ms": 16.558700008317828,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "recording-q5",
+              "scenario": "recording",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "评审会议录音Ｍａｒｋｄｏｗｎ纪要确认后删除回执怎样保留",
+              "expected": [
+                "recording-evidence"
+              ],
+              "returned": [
+                "recording-main",
+                "recording-evidence"
+              ],
+              "scores": [
+                0.5291,
+                0.5291
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5291,
+                  "origin": "direct",
+                  "seed_id": "recording-main",
+                  "coverage": 1.0,
+                  "document_score": 0.484,
+                  "passage_score": 0.5291
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4747,
+                  "origin": "subject_companion",
+                  "seed_id": "recording-main",
+                  "coverage": 1.0,
+                  "document_score": 0.4747,
+                  "passage_score": 0.4747
+                }
+              ],
+              "elapsed_ms": 19.100999998045154,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.5,
+              "ndcg_at_3": 0.6309297535714575,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "recording-negative0",
+              "scenario": "recording",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "评审会议录音识别地方方言的字错误率承诺是多少",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 90.66790000360925,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "recording-negative1",
+              "scenario": "recording",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "评审会议录音未授权参会者声音的自动豁免规则是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 77.26389999152161,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "recording-scope-tenant",
+              "scenario": "recording",
+              "category": "scope",
+              "kind": "scope",
+              "query": "评审会议录音从授权转写到纪要确认和删除的流程",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.4636999947251752,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "recording-scope-user",
+              "scenario": "recording",
+              "category": "scope",
+              "kind": "scope",
+              "query": "评审会议录音从授权转写到纪要确认和删除的流程",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.45279999903868884,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "clipboard-q0",
+              "scenario": "clipboard",
+              "category": "entity",
+              "kind": "positive",
+              "query": "受限终端剪贴板如何本机粘贴脱敏内容并关闭同步",
+              "expected": [
+                "clipboard-main"
+              ],
+              "returned": [
+                "clipboard-main"
+              ],
+              "scores": [
+                0.5011
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5011,
+                  "origin": "direct",
+                  "seed_id": "clipboard-main",
+                  "coverage": 1.0,
+                  "document_score": 0.5011,
+                  "passage_score": 0.5011
+                }
+              ],
+              "elapsed_ms": 19.62979999370873,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "clipboard-q1",
+              "scenario": "clipboard",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "保密电脑复制结构化数据时怎样限制同步和五分钟留存",
+              "expected": [
+                "clipboard-main"
+              ],
+              "returned": [
+                "clipboard-main"
+              ],
+              "scores": [
+                0.3028
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3028,
+                  "origin": "direct",
+                  "seed_id": "clipboard-main",
+                  "coverage": 0.8889,
+                  "document_score": 0.2623,
+                  "passage_score": 0.3028
+                }
+              ],
+              "elapsed_ms": 27.43940000073053,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "clipboard-q2",
+              "scenario": "clipboard",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "受限终端剪贴板目标应用未登记时可以先复制后补授权吗",
+              "expected": [
+                "clipboard-condition"
+              ],
+              "returned": [
+                "clipboard-condition"
+              ],
+              "scores": [
+                0.5522
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5522,
+                  "origin": "direct",
+                  "seed_id": "clipboard-condition",
+                  "coverage": 0.7333,
+                  "document_score": 0.4685,
+                  "passage_score": 0.5522
+                }
+              ],
+              "elapsed_ms": 61.67089998780284,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "clipboard-q3",
+              "scenario": "clipboard",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "受限终端剪贴板复制的授权条件和清空历史的核验方式",
+              "expected": [
+                "clipboard-condition",
+                "clipboard-evidence"
+              ],
+              "returned": [
+                "clipboard-condition",
+                "clipboard-evidence"
+              ],
+              "scores": [
+                0.5337,
+                0.5337
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5337,
+                  "origin": "direct",
+                  "seed_id": "clipboard-condition",
+                  "coverage": 0.8571,
+                  "document_score": 0.4296,
+                  "passage_score": 0.5337
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4394,
+                  "origin": "subject_companion",
+                  "seed_id": "clipboard-condition",
+                  "coverage": 0.8571,
+                  "document_score": 0.3396,
+                  "passage_score": 0.4394
+                }
+              ],
+              "elapsed_ms": 27.0983999944292,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "clipboard-q4",
+              "scenario": "clipboard",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "受限终端上的资料里有敏感字段，我只是想粘到本机工具，展示台有另一套共享策略；本次应如何处理剪贴板内容",
+              "expected": [
+                "clipboard-main"
+              ],
+              "returned": [
+                "clipboard-main"
+              ],
+              "scores": [
+                0.4004
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4004,
+                  "origin": "direct",
+                  "seed_id": "clipboard-main",
+                  "coverage": 1.0,
+                  "document_score": 0.3933,
+                  "passage_score": 0.4004
+                }
+              ],
+              "elapsed_ms": 25.099499995121732,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "clipboard-q5",
+              "scenario": "clipboard",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "受限终端剪贴板ＪＳＯＮ粘贴后怎样核对脱敏并保留清除回执",
+              "expected": [
+                "clipboard-evidence"
+              ],
+              "returned": [
+                "clipboard-main",
+                "clipboard-evidence"
+              ],
+              "scores": [
+                0.3628,
+                0.3628
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3628,
+                  "origin": "direct",
+                  "seed_id": "clipboard-main",
+                  "coverage": 1.0,
+                  "document_score": 0.3628,
+                  "passage_score": 0.3628
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3272,
+                  "origin": "subject_companion",
+                  "seed_id": "clipboard-main",
+                  "coverage": 1.0,
+                  "document_score": 0.3272,
+                  "passage_score": 0.3272
+                }
+              ],
+              "elapsed_ms": 20.03260000492446,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.5,
+              "ndcg_at_3": 0.6309297535714575,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "clipboard-negative0",
+              "scenario": "clipboard",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "受限终端剪贴板图像OCR对手写体的准确率是多少",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 24.720999994315207,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "clipboard-negative1",
+              "scenario": "clipboard",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "受限终端剪贴板后台保留已删除原文的调试访问码是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 36.89540000050329,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "clipboard-scope-tenant",
+              "scenario": "clipboard",
+              "category": "scope",
+              "kind": "scope",
+              "query": "受限终端剪贴板如何本机粘贴脱敏内容并关闭同步",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.6801000126870349,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "clipboard-scope-user",
+              "scenario": "clipboard",
+              "category": "scope",
+              "kind": "scope",
+              "query": "受限终端剪贴板如何本机粘贴脱敏内容并关闭同步",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.5705000075977296,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "email-q0",
+              "scenario": "email",
+              "category": "entity",
+              "kind": "positive",
+              "query": "合同邮件归档怎样分别保存正文签署附件和摘要清单",
+              "expected": [
+                "email-main"
+              ],
+              "returned": [
+                "email-main"
+              ],
+              "scores": [
+                0.5914
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5914,
+                  "origin": "direct",
+                  "seed_id": "email-main",
+                  "coverage": 1.0,
+                  "document_score": 0.5687,
+                  "passage_score": 0.5914
+                }
+              ],
+              "elapsed_ms": 21.747699996922165,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "email-q1",
+              "scenario": "email",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "合同往来信件有多个修订版本时如何按时间保存",
+              "expected": [
+                "email-main"
+              ],
+              "returned": [
+                "email-main"
+              ],
+              "scores": [
+                0.4084
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4084,
+                  "origin": "direct",
+                  "seed_id": "email-main",
+                  "coverage": 1.0,
+                  "document_score": 0.4084,
+                  "passage_score": 0.4084
+                }
+              ],
+              "elapsed_ms": 17.377700001816265,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "email-q2",
+              "scenario": "email",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "合同邮件归档签署版本不明确能根据宣传产品名直接确认吗",
+              "expected": [
+                "email-condition"
+              ],
+              "returned": [
+                "email-condition",
+                "email-main"
+              ],
+              "scores": [
+                0.5852,
+                0.5852
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5852,
+                  "origin": "direct",
+                  "seed_id": "email-condition",
+                  "coverage": 0.8947,
+                  "document_score": 0.549,
+                  "passage_score": 0.5852
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3406,
+                  "origin": "subject_companion",
+                  "seed_id": "email-condition",
+                  "coverage": 0.8947,
+                  "document_score": 0.2993,
+                  "passage_score": 0.3406
+                }
+              ],
+              "elapsed_ms": 23.840599998948164,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "email-q3",
+              "scenario": "email",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "合同邮件归档最终版确认条件和附件错误时撤回关联的步骤",
+              "expected": [
+                "email-condition",
+                "email-evidence"
+              ],
+              "returned": [
+                "email-evidence",
+                "email-condition"
+              ],
+              "scores": [
+                0.4696,
+                0.5318
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4696,
+                  "origin": "direct",
+                  "seed_id": "email-evidence",
+                  "coverage": 0.8889,
+                  "document_score": 0.4328,
+                  "passage_score": 0.4696
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5318,
+                  "origin": "subject_companion",
+                  "seed_id": "email-evidence",
+                  "coverage": 0.8889,
+                  "document_score": 0.4291,
+                  "passage_score": 0.5318
+                }
+              ],
+              "elapsed_ms": 47.621000005165115,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "email-q4",
+              "scenario": "email",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "我的收件箱混有合同修订邮件和产品宣传邮件，合同最后一封带签署附件，前面还有协商记录；应按什么流程归档合同邮件",
+              "expected": [
+                "email-main"
+              ],
+              "returned": [
+                "email-condition",
+                "email-main"
+              ],
+              "scores": [
+                0.4173,
+                0.4348
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4173,
+                  "origin": "direct",
+                  "seed_id": "email-condition",
+                  "coverage": 0.5,
+                  "document_score": 0.3786,
+                  "passage_score": 0.4173
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4348,
+                  "origin": "subject_companion",
+                  "seed_id": "email-condition",
+                  "coverage": 0.5,
+                  "document_score": 0.375,
+                  "passage_score": 0.4348
+                }
+              ],
+              "elapsed_ms": 16.657300002407283,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.5,
+              "ndcg_at_3": 0.6309297535714575,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "email-q5",
+              "scenario": "email",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "合同邮件归档ＥＭＬ与ＰＤＦ签章页核验有误怎么处理",
+              "expected": [
+                "email-evidence"
+              ],
+              "returned": [
+                "email-evidence"
+              ],
+              "scores": [
+                0.5001
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5001,
+                  "origin": "direct",
+                  "seed_id": "email-evidence",
+                  "coverage": 0.6667,
+                  "document_score": 0.4498,
+                  "passage_score": 0.5001
+                }
+              ],
+              "elapsed_ms": 16.058799999882467,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "email-negative0",
+              "scenario": "email",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "合同邮件归档法院对境外电子签章的判例结论是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 18.458999998983927,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "email-negative1",
+              "scenario": "email",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "合同邮件归档没有负责人确认时的自动签署授权是谁批准的",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 60.35120000888128,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "email-scope-tenant",
+              "scenario": "email",
+              "category": "scope",
+              "kind": "scope",
+              "query": "合同邮件归档怎样分别保存正文签署附件和摘要清单",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 1.2999000027775764,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "email-scope-user",
+              "scenario": "email",
+              "category": "scope",
+              "kind": "scope",
+              "query": "合同邮件归档怎样分别保存正文签署附件和摘要清单",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 4.580799999530427,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "backup-q0",
+              "scenario": "backup",
+              "category": "entity",
+              "kind": "positive",
+              "query": "账册目录备份怎样暂停写入并做加密增量与全量",
+              "expected": [
+                "backup-main"
+              ],
+              "returned": [
+                "backup-main"
+              ],
+              "scores": [
+                0.4578
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4578,
+                  "origin": "direct",
+                  "seed_id": "backup-main",
+                  "coverage": 0.9091,
+                  "document_score": 0.4578,
+                  "passage_score": 0.4578
+                }
+              ],
+              "elapsed_ms": 45.93459999887273,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "backup-q1",
+              "scenario": "backup",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "财务账本备份为什么要分开校验清单并避免复制到素材共享区",
+              "expected": [
+                "backup-main"
+              ],
+              "returned": [
+                "backup-main"
+              ],
+              "scores": [
+                0.3796
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3796,
+                  "origin": "direct",
+                  "seed_id": "backup-main",
+                  "coverage": 0.5909,
+                  "document_score": 0.3796,
+                  "passage_score": 0.3796
+                }
+              ],
+              "elapsed_ms": 48.078599997097626,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "backup-q2",
+              "scenario": "backup",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "账册目录还在写入时能用备份直接覆盖恢复吗",
+              "expected": [
+                "backup-condition"
+              ],
+              "returned": [
+                "backup-condition"
+              ],
+              "scores": [
+                0.5356
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5356,
+                  "origin": "direct",
+                  "seed_id": "backup-condition",
+                  "coverage": 0.9167,
+                  "document_score": 0.5017,
+                  "passage_score": 0.5356
+                }
+              ],
+              "elapsed_ms": 68.83530000050087,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "backup-q3",
+              "scenario": "backup",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "账册目录备份恢复的授权条件及临时目录校验失败如何回退",
+              "expected": [
+                "backup-condition",
+                "backup-evidence"
+              ],
+              "returned": [
+                "backup-condition",
+                "backup-evidence"
+              ],
+              "scores": [
+                0.6242,
+                0.6242
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.6242,
+                  "origin": "direct",
+                  "seed_id": "backup-condition",
+                  "coverage": 1.0,
+                  "document_score": 0.5095,
+                  "passage_score": 0.6242
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4356,
+                  "origin": "subject_companion",
+                  "seed_id": "backup-condition",
+                  "coverage": 1.0,
+                  "document_score": 0.3088,
+                  "passage_score": 0.4356
+                }
+              ],
+              "elapsed_ms": 46.10609999508597,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "backup-q4",
+              "scenario": "backup",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "账册目录和素材目录都在同一台机器，今晚准备做财务备份，白天账册仍有人修改，公开素材另有共享区；正确备份流程是什么",
+              "expected": [
+                "backup-main"
+              ],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 33.985100002610125,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 0.0,
+              "precision_at_3": 0.0,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": 0.0,
+              "irrelevant_returned": 0,
+              "passed": false
+            },
+            {
+              "id": "backup-q5",
+              "scenario": "backup",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "账册目录备份ＡＥＳ恢复后余额汇总和摘要不一致怎样处理",
+              "expected": [
+                "backup-evidence"
+              ],
+              "returned": [
+                "backup-main",
+                "backup-evidence",
+                "backup-condition"
+              ],
+              "scores": [
+                0.3692,
+                0.4496,
+                0.3692
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3692,
+                  "origin": "direct",
+                  "seed_id": "backup-main",
+                  "coverage": 0.9333,
+                  "document_score": 0.3395,
+                  "passage_score": 0.3692
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4496,
+                  "origin": "subject_companion",
+                  "seed_id": "backup-main",
+                  "coverage": 0.9333,
+                  "document_score": 0.3085,
+                  "passage_score": 0.4496
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3627,
+                  "origin": "subject_companion",
+                  "seed_id": "backup-main",
+                  "coverage": 0.9333,
+                  "document_score": 0.3268,
+                  "passage_score": 0.3627
+                }
+              ],
+              "elapsed_ms": 26.301799996872433,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.5,
+              "ndcg_at_3": 0.6309297535714575,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "backup-negative0",
+              "scenario": "backup",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "账册目录备份云灾备机房的地震承保金额是多少",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 14.94210000964813,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "backup-negative1",
+              "scenario": "backup",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "账册目录备份加密密钥丢失后无需授权解密的口令是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 35.91080001206137,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "backup-scope-tenant",
+              "scenario": "backup",
+              "category": "scope",
+              "kind": "scope",
+              "query": "账册目录备份怎样暂停写入并做加密增量与全量",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.46019999717827886,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "backup-scope-user",
+              "scenario": "backup",
+              "category": "scope",
+              "kind": "scope",
+              "query": "账册目录备份怎样暂停写入并做加密增量与全量",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.48380000225733966,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "export-q0",
+              "scenario": "export",
+              "category": "entity",
+              "kind": "positive",
+              "query": "试验数据导出如何选批准批次字段并保存单位和采样时间",
+              "expected": [
+                "export-main"
+              ],
+              "returned": [
+                "export-main"
+              ],
+              "scores": [
+                0.5164
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5164,
+                  "origin": "direct",
+                  "seed_id": "export-main",
+                  "coverage": 1.0,
+                  "document_score": 0.5139,
+                  "passage_score": 0.5164
+                }
+              ],
+              "elapsed_ms": 43.530399998417124,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "export-q1",
+              "scenario": "export",
+              "category": "paraphrase",
+              "kind": "positive",
+              "query": "实验采样结果输出前怎样去掉直接标识又保留只读原记录",
+              "expected": [
+                "export-main"
+              ],
+              "returned": [
+                "export-main"
+              ],
+              "scores": [
+                0.3891
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3891,
+                  "origin": "direct",
+                  "seed_id": "export-main",
+                  "coverage": 0.8333,
+                  "document_score": 0.3891,
+                  "passage_score": 0.3891
+                }
+              ],
+              "elapsed_ms": 14.815400005318224,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "export-q2",
+              "scenario": "export",
+              "category": "conditional",
+              "kind": "positive",
+              "query": "试验数据导出未标明用途时能按公开数据许可证共享吗",
+              "expected": [
+                "export-condition"
+              ],
+              "returned": [
+                "export-condition"
+              ],
+              "scores": [
+                0.6385
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.6385,
+                  "origin": "direct",
+                  "seed_id": "export-condition",
+                  "coverage": 0.9333,
+                  "document_score": 0.5934,
+                  "passage_score": 0.6385
+                }
+              ],
+              "elapsed_ms": 17.09090000076685,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "export-q3",
+              "scenario": "export",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "试验数据导出共享的审批条件与发现敏感列后撤销的步骤",
+              "expected": [
+                "export-condition",
+                "export-evidence"
+              ],
+              "returned": [
+                "export-evidence",
+                "export-condition"
+              ],
+              "scores": [
+                0.4265,
+                0.4265
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4265,
+                  "origin": "direct",
+                  "seed_id": "export-evidence",
+                  "coverage": 0.6875,
+                  "document_score": 0.4227,
+                  "passage_score": 0.4265
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4002,
+                  "origin": "subject_companion",
+                  "seed_id": "export-evidence",
+                  "coverage": 0.6875,
+                  "document_score": 0.3502,
+                  "passage_score": 0.4002
+                }
+              ],
+              "elapsed_ms": 17.1390000032261,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "export-q4",
+              "scenario": "export",
+              "category": "long_context",
+              "kind": "positive",
+              "query": "这次试验数据与公开展示统计放在相邻目录，研究员要导出几个字段并保留采样时间，原始记录不应修改；应按哪份导出流程执行",
+              "expected": [
+                "export-main"
+              ],
+              "returned": [
+                "export-main",
+                "export-condition"
+              ],
+              "scores": [
+                0.4427,
+                0.4427
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4427,
+                  "origin": "direct",
+                  "seed_id": "export-main",
+                  "coverage": 0.8333,
+                  "document_score": 0.4427,
+                  "passage_score": 0.4427
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3085,
+                  "origin": "subject_companion",
+                  "seed_id": "export-main",
+                  "coverage": 0.8333,
+                  "document_score": 0.3085,
+                  "passage_score": 0.3085
+                }
+              ],
+              "elapsed_ms": 16.155500008608215,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "export-q5",
+              "scenario": "export",
+              "category": "width_or_code",
+              "kind": "positive",
+              "query": "试验数据导出ＣＳＶ发现敏感列遗漏时如何撤销副本与链接",
+              "expected": [
+                "export-evidence"
+              ],
+              "returned": [
+                "export-evidence"
+              ],
+              "scores": [
+                0.5334
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.5334,
+                  "origin": "direct",
+                  "seed_id": "export-evidence",
+                  "coverage": 1.0,
+                  "document_score": 0.5334,
+                  "passage_score": 0.5334
+                }
+              ],
+              "elapsed_ms": 35.64520001236815,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 0,
+              "passed": true
+            },
+            {
+              "id": "export-negative0",
+              "scenario": "export",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "试验数据导出对未知病种临床诊断的敏感性是多少",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 18.01119999436196,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "export-negative1",
+              "scenario": "export",
+              "category": "near_no_answer",
+              "kind": "no_answer",
+              "query": "试验数据导出跳过负责人批准的万能许可证编号是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 32.74769999552518,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "export-scope-tenant",
+              "scenario": "export",
+              "category": "scope",
+              "kind": "scope",
+              "query": "试验数据导出如何选批准批次字段并保存单位和采样时间",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.42159999429713935,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "export-scope-user",
+              "scenario": "export",
+              "category": "scope",
+              "kind": "scope",
+              "query": "试验数据导出如何选批准批次字段并保存单位和采样时间",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.40809999336488545,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            }
+          ]
+        }
+      ],
+      "resources": {
+        "wall_ms": 3928.408,
+        "cpu_ms": 3656.25,
+        "cpu_percent_one_core": 93.072,
+        "rss_before_bytes": 25178112,
+        "rss_after_bytes": 59518976,
+        "lifetime_peak_rss_bytes": 59523072,
+        "source": "GetProcessMemoryInfo",
+        "available": true,
+        "error_type": null,
+        "scope": "current_process_only; excludes separate model servers and child processes",
+        "peak_definition": "OS high-water mark since process start, not a per-workload peak"
+      },
+      "quality_targets_met": true,
+      "safety_passed": true,
+      "latency_target_met": true,
+      "all_targets_met": true,
+      "evidence_policy": "focused_evidence_v2",
+      "minimum_evidence_coverage": 0.5
+    }
+  ],
+  "quality_targets_met": true,
+  "safety_passed": true,
+  "latency_target_met": true,
+  "all_targets_met": true,
+  "competition_ready": false,
+  "independent_blind": false,
+  "limitations": [
+    "Twelve scenarios and related requests share vocabulary; 120 distinct inputs are not 120 independent domains.",
+    "Controlled KnowledgeMemory snapshots bypass ingestion and conflict detection; those use separate production gates.",
+    "Generated filler variants are scaling probes, not thousands of independently authored real documents.",
+    "Clock window guards expiry fixtures; a different date window requires a separately versioned suite.",
+    "HashEmbedding only; not native SDK performance or a new V11 verification.",
+    "Fixed .265 across local ablations is diagnostic, not a separately optimized threshold for each mode.",
+    "RSS is current process; high-water mark covers process lifetime and excludes external model servers.",
+    "Optional content_coverage_v1 is lexical abstention, not entailment; it can reject supported paraphrases.",
+    "focused_evidence_v2 uses lexical support and exact-title section links, not semantic entailment."
+  ]
+}

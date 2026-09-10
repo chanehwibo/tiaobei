@@ -1,0 +1,2415 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T12:51:17.497841+00:00",
+  "scope": "public_complex_retrieval_regression_not_official_acceptance",
+  "dataset": {
+    "path": "data/eval/complex_constraints_v1.json",
+    "sha256": "9f03254a21bd93d24e217f470524f55569776ce46a263fc4e53ddb48d44cb5fc",
+    "documents": 78,
+    "distinct_requests": 48,
+    "kinds": {
+      "positive": 24,
+      "no_answer": 12,
+      "scope": 12
+    }
+  },
+  "environment": {
+    "system": "Windows",
+    "release": "10",
+    "machine": "AMD64",
+    "python": "3.14.3",
+    "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+    "logical_cpu_count": 8,
+    "python_hash_seed": "0",
+    "host_fingerprint": "35de1833358f168a17e1d9d12dcb29355dee59b72f3f757bd33aa099ee7dfc5d"
+  },
+  "source_sha256": {
+    "src/os_agent_memory/__init__.py": "79789b69ee6e07b5f8d85fa9bc2482fd0973466e67cd0559319791933f79c828",
+    "src/os_agent_memory/action_evaluation.py": "c9d02e234eb224e0315deaf3cc5e572fab27695172901aafa259848a2ec2d64d",
+    "src/os_agent_memory/action_judging.py": "719d6175c394a1a91afc3054c2909de9bcf6bf69e95477c312e962ea4a9d12c1",
+    "src/os_agent_memory/action_readiness.py": "7309867516f4ca5db3875dcc443492cfac781fc8cabbd35ca0252ed60e5edc32",
+    "src/os_agent_memory/benchmark.py": "51b999b9f1dee71228a5c8997b887b85ed46ba4650d831b83ae75c15b3f47a9f",
+    "src/os_agent_memory/bounded_command.py": "31d055c949ebd001575c4f8e994a72c586fdddf104685a688df410b0588429a7",
+    "src/os_agent_memory/cli.py": "9ce63038fdd4b8452c50335d3f9961bae539a2216e96a3e20dac2c09546fe095",
+    "src/os_agent_memory/compatibility.py": "7584c227acb9d349c8428b08cfb0be10d3f6cdc4a54a229ddb126f48e85e9c5f",
+    "src/os_agent_memory/complex_retrieval.py": "9a8d56e829ed883fbc9f758302afd603701e57dec67c0ce7e43f0291e957b6ec",
+    "src/os_agent_memory/demo.py": "ad7c3f79e99f81d71cf24d11e73d171cd0de3f5044f756fcd80f94bb6a833bd7",
+    "src/os_agent_memory/diagnostics.py": "6eb90ccdfd24aa6b6200107f3402773933897a9ed83793683210975d6271bcec",
+    "src/os_agent_memory/embeddings.py": "091af84fe0248a826aa524a8a60068c0ae3f03a009b58ce686395ef0ae805d8c",
+    "src/os_agent_memory/evaluation.py": "1007391573b118d4d0e2c694a5e3ca2049738887a3c78fb460b437255fa2cb7a",
+    "src/os_agent_memory/experiments.py": "062e663ce722dbbd6ce72a19d35826bf4911073d76369dca0d07dad82fe113ed",
+    "src/os_agent_memory/file_memory.py": "5f5344995dde200334510ca971aff87de11ceee8d5c216c9cc8c85d1b56a1d88",
+    "src/os_agent_memory/focused_evidence.py": "93601729f47c2ff2746b134795e0937a4a0595d6ca5676788b3409b8de33e053",
+    "src/os_agent_memory/ingestion.py": "d89215ccf26e7f1483ac46d4f0ebaa1d80aff425375703cbec4c67b4c08e6428",
+    "src/os_agent_memory/knowledge.py": "6c873d74754bcd8ee7cf447618f741205fbe6edb269ed6e5e0ce8af55276165c",
+    "src/os_agent_memory/kylin_native.py": "689f0bbcb913726640486d57b5b66006610ea922fa5dbc2c768bc0160ba95f9f",
+    "src/os_agent_memory/lifecycle.py": "a6b625f5fbb2f63d82847e11c700da3655881653776c46014f1fd22add919850",
+    "src/os_agent_memory/local_judge.py": "ddf055a281b254ecfd6c033bf988f9a6d2e1110599c6f5a91f52cae629365b97",
+    "src/os_agent_memory/memory_store.py": "0df9c21c4963f136307f151fc1d1e981ac1014313c5348c310ac8612adbe649c",
+    "src/os_agent_memory/memory_tools.py": "e0435da7f8218d3a56b6999aa13297bad41e6298fa2cf1af7947e04aaf71cf39",
+    "src/os_agent_memory/official_contract.py": "28e30e2d9dc58e554851eafc35cb226d14599181a4ba571805d580613a35c487",
+    "src/os_agent_memory/official_diagnostics.py": "8ac8e5f8b19ce1e322c0d949fb24f85baee2b39ca43fd9624a8a75424233551e",
+    "src/os_agent_memory/persistence.py": "015ef646e7018dec550e1c0a72c5a92eb5994cbc99cc838b05779b352d5eda04",
+    "src/os_agent_memory/preference.py": "0ff1cb7cc0d7fd9824c933660c5a158df7043e11a49c246182c64a0185d17ec4",
+    "src/os_agent_memory/provider_config.py": "6059798f8e2d88c268d548c2782fec20916a778f789d7d563986438be5fc0135",
+    "src/os_agent_memory/request_contract.py": "50a2a2cd4c95feba36c6760d94ea83109e5edfa9f079e4e77f4354efd45e9613",
+    "src/os_agent_memory/request_evaluation.py": "eb085e0394506629e309ca83502d3ff28aaa6fdbef865f08536665f64232d45a",
+    "src/os_agent_memory/resources.py": "ee55bb78dd66a91d45e64251713deda25d0dd322f13e471381d1d73fed99f8f9",
+    "src/os_agent_memory/retrieval_evidence.py": "7efaf1a34b1c4b69fefdd5aedca8aa13eb9a14e4d97dd1cb59e8f547fc53bcdb",
+    "src/os_agent_memory/schemas.py": "9c4b0797081da195e4f4de971622113deba789eae4277678b363f0399ec05905",
+    "src/os_agent_memory/security.py": "797751be58e46f8f02f2e87f846616f55063925cede7271d3f1b40253d9a4013",
+    "src/os_agent_memory/service.py": "29cade6f5a87c8884306466a2f65fcff0cc25788e73ea04308d81dad95459a22",
+    "src/os_agent_memory/web_server.py": "d0b1d98044068ca92d4a6dc8205d10222eaa6e3edbbab1eafddc83994ad42d5b",
+    "src/os_agent_memory/workload.py": "087fd76d05267a69650c66fd9d34bee0f18a75149f39b1d8fd12b6e7e4073e22"
+  },
+  "source_unchanged_during_run": true,
+  "evaluator_sha256": {
+    "data/eval/complex_constraints_v1.json": "9f03254a21bd93d24e217f470524f55569776ce46a263fc4e53ddb48d44cb5fc",
+    "src/os_agent_memory/complex_retrieval.py": "9a8d56e829ed883fbc9f758302afd603701e57dec67c0ce7e43f0291e957b6ec",
+    "scripts/evaluate_complex_retrieval.py": "0165fbd6a4eb3526b6989f253b9f77436993839863ac0ee27dced0f20b7bbff4"
+  },
+  "method": {
+    "boundary": "MemoryService.search: lock, query encoding, retrieval, reranking, serialization; no HTTP/Agent",
+    "filler_fraction_denominator": "generated fillers only; fixed difficult documents always present",
+    "percentile": "nearest_rank",
+    "rounds": 1,
+    "query_order": "frozen file order, no query warmup",
+    "repetition_is_independent_sample": false,
+    "controlled_snapshot_bypasses_ingestion": true,
+    "quality_thresholds": {
+      "macro_recall_at_3": 0.85,
+      "no_answer_accuracy": 0.85,
+      "p95_ms": 500
+    },
+    "evidence_policies": [
+      "focused_evidence_v2"
+    ],
+    "v2_score_boundary": "direct seed >= min_score; exact-subject companions carry seed bundle relevance",
+    "constraint_modes": [
+      true
+    ],
+    "constraint_source": "explicit input terms; never generated from relevance labels"
+  },
+  "profiles": [
+    {
+      "corpus": {
+        "records": 78,
+        "fixed_documents": 78,
+        "generated_fillers": 0,
+        "requested_hard_fraction_of_fillers": 0.0,
+        "hard_fillers": 0,
+        "actual_hard_fraction_of_fillers": 0.0,
+        "roles": {
+          "condition": 6,
+          "evidence": 6,
+          "expired": 6,
+          "future": 6,
+          "main": 6,
+          "metadata-only": 6,
+          "near-entity": 6,
+          "near-version": 6,
+          "other-scene": 6,
+          "other-tenant": 6,
+          "other-user": 6,
+          "pending": 6,
+          "quarantined": 6
+        },
+        "sha256": "03eaed94037c3083ae81d02b8f76f558d088029e0a2dd3e78685bf667854eeb1"
+      },
+      "mode": "hybrid",
+      "configuration": {
+        "top_k": 3,
+        "min_score": 0.265,
+        "dimensions": 256,
+        "ngram": 2
+      },
+      "provider": {
+        "implementation": "os_agent_memory.embeddings.HashEmbedding",
+        "dimensions": 256,
+        "ngram": 2
+      },
+      "build_ms": 57.73410000256263,
+      "rounds": [
+        {
+          "round": 1,
+          "phase": "first_pass_no_query_warmup",
+          "first_query_ms": 2.7873999933945015,
+          "summary": {
+            "requests": 48,
+            "positive_requests": 24,
+            "no_answer_requests": 12,
+            "scope_requests": 12,
+            "errors": 0,
+            "macro_recall_at_3": 1.0,
+            "precision_at_3": 0.4166666666666667,
+            "mrr_at_3": 0.9513888888888888,
+            "ndcg_at_3": 0.9637887397321441,
+            "full_evidence_correct": 24,
+            "full_evidence_accuracy": 1.0,
+            "no_answer_correct": 12,
+            "no_answer_accuracy": 1.0,
+            "false_answers": 0,
+            "false_answer_rate": 0.0,
+            "irrelevant_returned": 42,
+            "positive_results_returned": 72,
+            "distractor_return_rate": 0.5833333333333334,
+            "scope_empty_correct": 12,
+            "leak_requests": 0,
+            "leaked_records": 0,
+            "p50_ms": 1.396999999997206,
+            "p95_ms": 2.5562999944668263,
+            "p99_ms": 2.7873999933945015,
+            "max_ms": 2.7873999933945015,
+            "latency_valid": true,
+            "failed_ids": []
+          },
+          "categories": {
+            "absent_version": {
+              "requests": 6,
+              "positive_requests": 0,
+              "no_answer_requests": 6,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": null,
+              "ndcg_at_3": null,
+              "full_evidence_correct": 0,
+              "full_evidence_accuracy": null,
+              "no_answer_correct": 6,
+              "no_answer_accuracy": 1.0,
+              "false_answers": 0,
+              "false_answer_rate": 0.0,
+              "irrelevant_returned": 0,
+              "positive_results_returned": 0,
+              "distractor_return_rate": 0.0,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 0.09819999104365706,
+              "p95_ms": 0.14699999883305281,
+              "p99_ms": 0.14699999883305281,
+              "max_ms": 0.14699999883305281,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "explicit_condition": {
+              "requests": 6,
+              "positive_requests": 6,
+              "no_answer_requests": 0,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "full_evidence_correct": 6,
+              "full_evidence_accuracy": 1.0,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 12,
+              "positive_results_returned": 18,
+              "distractor_return_rate": 0.6666666666666666,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 1.8005999882007018,
+              "p95_ms": 2.7873999933945015,
+              "p99_ms": 2.7873999933945015,
+              "max_ms": 2.7873999933945015,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "mixed_log_context": {
+              "requests": 6,
+              "positive_requests": 6,
+              "no_answer_requests": 0,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.8888888888888888,
+              "ndcg_at_3": 0.9166666666666666,
+              "full_evidence_correct": 6,
+              "full_evidence_accuracy": 1.0,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 12,
+              "positive_results_returned": 18,
+              "distractor_return_rate": 0.6666666666666666,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 1.78310000046622,
+              "p95_ms": 2.4778999941190705,
+              "p99_ms": 2.4778999941190705,
+              "max_ms": 2.4778999941190705,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "multi_document": {
+              "requests": 6,
+              "positive_requests": 6,
+              "no_answer_requests": 0,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "full_evidence_correct": 6,
+              "full_evidence_accuracy": 1.0,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 6,
+              "positive_results_returned": 18,
+              "distractor_return_rate": 0.3333333333333333,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 1.9782000017585233,
+              "p95_ms": 2.5562999944668263,
+              "p99_ms": 2.5562999944668263,
+              "max_ms": 2.5562999944668263,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "scope": {
+              "requests": 12,
+              "positive_requests": 0,
+              "no_answer_requests": 0,
+              "scope_requests": 12,
+              "errors": 0,
+              "macro_recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": null,
+              "ndcg_at_3": null,
+              "full_evidence_correct": 0,
+              "full_evidence_accuracy": null,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 0,
+              "positive_results_returned": 0,
+              "distractor_return_rate": 0.0,
+              "scope_empty_correct": 12,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 0.07280000136233866,
+              "p95_ms": 0.09249999129679054,
+              "p99_ms": 0.09249999129679054,
+              "max_ms": 0.09249999129679054,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "unsupported_relation": {
+              "requests": 6,
+              "positive_requests": 0,
+              "no_answer_requests": 6,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": null,
+              "ndcg_at_3": null,
+              "full_evidence_correct": 0,
+              "full_evidence_accuracy": null,
+              "no_answer_correct": 6,
+              "no_answer_accuracy": 1.0,
+              "false_answers": 0,
+              "false_answer_rate": 0.0,
+              "irrelevant_returned": 0,
+              "positive_results_returned": 0,
+              "distractor_return_rate": 0.0,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 1.0602999973343685,
+              "p95_ms": 1.657599990721792,
+              "p99_ms": 1.657599990721792,
+              "max_ms": 1.657599990721792,
+              "latency_valid": true,
+              "failed_ids": []
+            },
+            "width_identifier": {
+              "requests": 6,
+              "positive_requests": 6,
+              "no_answer_requests": 0,
+              "scope_requests": 0,
+              "errors": 0,
+              "macro_recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.9166666666666666,
+              "ndcg_at_3": 0.9384882922619097,
+              "full_evidence_correct": 6,
+              "full_evidence_accuracy": 1.0,
+              "no_answer_correct": 0,
+              "no_answer_accuracy": null,
+              "false_answers": 0,
+              "false_answer_rate": null,
+              "irrelevant_returned": 12,
+              "positive_results_returned": 18,
+              "distractor_return_rate": 0.6666666666666666,
+              "scope_empty_correct": 0,
+              "leak_requests": 0,
+              "leaked_records": 0,
+              "p50_ms": 1.7738000024110079,
+              "p95_ms": 2.7821999974548817,
+              "p99_ms": 2.7821999974548817,
+              "max_ms": 2.7821999974548817,
+              "latency_valid": true,
+              "failed_ids": []
+            }
+          },
+          "groups": {
+            "kind": {
+              "no_answer": {
+                "requests": 12,
+                "positive_requests": 0,
+                "no_answer_requests": 12,
+                "scope_requests": 0,
+                "errors": 0,
+                "macro_recall_at_3": null,
+                "precision_at_3": null,
+                "mrr_at_3": null,
+                "ndcg_at_3": null,
+                "full_evidence_correct": 0,
+                "full_evidence_accuracy": null,
+                "no_answer_correct": 12,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 0,
+                "positive_results_returned": 0,
+                "distractor_return_rate": 0.0,
+                "scope_empty_correct": 0,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 0.14699999883305281,
+                "p95_ms": 1.657599990721792,
+                "p99_ms": 1.657599990721792,
+                "max_ms": 1.657599990721792,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "positive": {
+                "requests": 24,
+                "positive_requests": 24,
+                "no_answer_requests": 0,
+                "scope_requests": 0,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.4166666666666667,
+                "mrr_at_3": 0.9513888888888888,
+                "ndcg_at_3": 0.9637887397321441,
+                "full_evidence_correct": 24,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 0,
+                "no_answer_accuracy": null,
+                "false_answers": 0,
+                "false_answer_rate": null,
+                "irrelevant_returned": 42,
+                "positive_results_returned": 72,
+                "distractor_return_rate": 0.5833333333333334,
+                "scope_empty_correct": 0,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 1.8299999937880784,
+                "p95_ms": 2.7821999974548817,
+                "p99_ms": 2.7873999933945015,
+                "max_ms": 2.7873999933945015,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "scope": {
+                "requests": 12,
+                "positive_requests": 0,
+                "no_answer_requests": 0,
+                "scope_requests": 12,
+                "errors": 0,
+                "macro_recall_at_3": null,
+                "precision_at_3": null,
+                "mrr_at_3": null,
+                "ndcg_at_3": null,
+                "full_evidence_correct": 0,
+                "full_evidence_accuracy": null,
+                "no_answer_correct": 0,
+                "no_answer_accuracy": null,
+                "false_answers": 0,
+                "false_answer_rate": null,
+                "irrelevant_returned": 0,
+                "positive_results_returned": 0,
+                "distractor_return_rate": 0.0,
+                "scope_empty_correct": 12,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 0.07280000136233866,
+                "p95_ms": 0.09249999129679054,
+                "p99_ms": 0.09249999129679054,
+                "max_ms": 0.09249999129679054,
+                "latency_valid": true,
+                "failed_ids": []
+              }
+            },
+            "scenario": {
+              "certificates": {
+                "requests": 8,
+                "positive_requests": 4,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.41666666666666663,
+                "mrr_at_3": 1.0,
+                "ndcg_at_3": 1.0,
+                "full_evidence_correct": 4,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 7,
+                "positive_results_returned": 12,
+                "distractor_return_rate": 0.5833333333333334,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 0.4474000015761703,
+                "p95_ms": 1.8005999882007018,
+                "p99_ms": 1.8005999882007018,
+                "max_ms": 1.8005999882007018,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "export": {
+                "requests": 8,
+                "positive_requests": 4,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.41666666666666663,
+                "mrr_at_3": 1.0,
+                "ndcg_at_3": 1.0,
+                "full_evidence_correct": 4,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 7,
+                "positive_results_returned": 12,
+                "distractor_return_rate": 0.5833333333333334,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 1.0602999973343685,
+                "p95_ms": 2.5562999944668263,
+                "p99_ms": 2.5562999944668263,
+                "max_ms": 2.5562999944668263,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "failover": {
+                "requests": 8,
+                "positive_requests": 4,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.41666666666666663,
+                "mrr_at_3": 1.0,
+                "ndcg_at_3": 1.0,
+                "full_evidence_correct": 4,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 7,
+                "positive_results_returned": 12,
+                "distractor_return_rate": 0.5833333333333334,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 0.5551999929593876,
+                "p95_ms": 2.4381999974139035,
+                "p99_ms": 2.4381999974139035,
+                "max_ms": 2.4381999974139035,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "ipc": {
+                "requests": 8,
+                "positive_requests": 4,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.41666666666666663,
+                "mrr_at_3": 1.0,
+                "ndcg_at_3": 1.0,
+                "full_evidence_correct": 4,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 7,
+                "positive_results_returned": 12,
+                "distractor_return_rate": 0.5833333333333334,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 1.2187999964226037,
+                "p95_ms": 2.060200000414625,
+                "p99_ms": 2.060200000414625,
+                "max_ms": 2.060200000414625,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "restore": {
+                "requests": 8,
+                "positive_requests": 4,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.41666666666666663,
+                "mrr_at_3": 0.875,
+                "ndcg_at_3": 0.9077324383928644,
+                "full_evidence_correct": 4,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 7,
+                "positive_results_returned": 12,
+                "distractor_return_rate": 0.5833333333333334,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 1.2795999937225133,
+                "p95_ms": 2.4818999954732135,
+                "p99_ms": 2.4818999954732135,
+                "max_ms": 2.4818999954732135,
+                "latency_valid": true,
+                "failed_ids": []
+              },
+              "rollout": {
+                "requests": 8,
+                "positive_requests": 4,
+                "no_answer_requests": 2,
+                "scope_requests": 2,
+                "errors": 0,
+                "macro_recall_at_3": 1.0,
+                "precision_at_3": 0.41666666666666663,
+                "mrr_at_3": 0.8333333333333334,
+                "ndcg_at_3": 0.875,
+                "full_evidence_correct": 4,
+                "full_evidence_accuracy": 1.0,
+                "no_answer_correct": 2,
+                "no_answer_accuracy": 1.0,
+                "false_answers": 0,
+                "false_answer_rate": 0.0,
+                "irrelevant_returned": 7,
+                "positive_results_returned": 12,
+                "distractor_return_rate": 0.5833333333333334,
+                "scope_empty_correct": 2,
+                "leak_requests": 0,
+                "leaked_records": 0,
+                "p50_ms": 1.657599990721792,
+                "p95_ms": 2.7873999933945015,
+                "p99_ms": 2.7873999933945015,
+                "max_ms": 2.7873999933945015,
+                "latency_valid": true,
+                "failed_ids": []
+              }
+            }
+          },
+          "rows": [
+            {
+              "id": "rollout-q0",
+              "scenario": "rollout",
+              "category": "explicit_condition",
+              "kind": "positive",
+              "query": "离线终端AE-17 v2.4升级，工单已经提交但还在REVIEWING，两名复核者只有一人签名；邻机AE-170说可以直接切换。查本机切换前置条件",
+              "expected": [
+                "rollout-condition"
+              ],
+              "returned": [
+                "rollout-condition",
+                "rollout-evidence",
+                "rollout-main"
+              ],
+              "scores": [
+                0.4712,
+                0.4712,
+                0.4712
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4712,
+                  "origin": "direct",
+                  "seed_id": "rollout-condition",
+                  "coverage": 0.5676
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3443,
+                  "origin": "subject_companion",
+                  "seed_id": "rollout-condition",
+                  "coverage": 0.5676
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3667,
+                  "origin": "subject_companion",
+                  "seed_id": "rollout-condition",
+                  "coverage": 0.5676
+                }
+              ],
+              "elapsed_ms": 2.7873999933945015,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "rollout-q1",
+              "scenario": "rollout",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "AE-17 v2.4刚切换后出现unit_mismatch，先核对哪些结果，再按什么顺序恢复配置并保留证据",
+              "expected": [
+                "rollout-condition",
+                "rollout-evidence"
+              ],
+              "returned": [
+                "rollout-evidence",
+                "rollout-condition",
+                "rollout-main"
+              ],
+              "scores": [
+                0.4189,
+                0.4189,
+                0.4189
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4189,
+                  "origin": "direct",
+                  "seed_id": "rollout-evidence",
+                  "coverage": 0.75
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2293,
+                  "origin": "subject_companion",
+                  "seed_id": "rollout-evidence",
+                  "coverage": 0.75
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3691,
+                  "origin": "subject_companion",
+                  "seed_id": "rollout-evidence",
+                  "coverage": 0.75
+                }
+              ],
+              "elapsed_ms": 1.9782000017585233,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "rollout-q2",
+              "scenario": "rollout",
+              "category": "mixed_log_context",
+              "kind": "positive",
+              "query": "AE-17 v2.4目录里同时有旧启动项、新包、唯一数据快照和邻机的升级说明。管理员催着开工，我需要签名校验及备份流程，不能套用AE-170 v2.40",
+              "expected": [
+                "rollout-main"
+              ],
+              "returned": [
+                "rollout-condition",
+                "rollout-evidence",
+                "rollout-main"
+              ],
+              "scores": [
+                0.2834,
+                0.2834,
+                0.2834
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2834,
+                  "origin": "direct",
+                  "seed_id": "rollout-condition",
+                  "coverage": 0.5714
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.1472,
+                  "origin": "subject_companion",
+                  "seed_id": "rollout-condition",
+                  "coverage": 0.5714
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2482,
+                  "origin": "subject_companion",
+                  "seed_id": "rollout-condition",
+                  "coverage": 0.5714
+                }
+              ],
+              "elapsed_ms": 1.7863000102806836,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.3333333333333333,
+              "ndcg_at_3": 0.5,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "rollout-q3",
+              "scenario": "rollout",
+              "category": "width_identifier",
+              "kind": "positive",
+              "query": "ＡＥ-１７ ｖ２.４的工单从REVIEWING到APPROVED后，还要满足哪些复核要求",
+              "expected": [
+                "rollout-condition"
+              ],
+              "returned": [
+                "rollout-condition",
+                "rollout-evidence",
+                "rollout-main"
+              ],
+              "scores": [
+                0.3148,
+                0.3148,
+                0.3148
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3148,
+                  "origin": "direct",
+                  "seed_id": "rollout-condition",
+                  "coverage": 0.6667
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2565,
+                  "origin": "subject_companion",
+                  "seed_id": "rollout-condition",
+                  "coverage": 0.6667
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2416,
+                  "origin": "subject_companion",
+                  "seed_id": "rollout-condition",
+                  "coverage": 0.6667
+                }
+              ],
+              "elapsed_ms": 2.7821999974548817,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "rollout-absent-version",
+              "scenario": "rollout",
+              "category": "absent_version",
+              "kind": "no_answer",
+              "query": "AE-17 v2.4-unreleased正式发布版本的离线终端升级条件是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.14699999883305281,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "rollout-unsupported",
+              "scenario": "rollout",
+              "category": "unsupported_relation",
+              "kind": "no_answer",
+              "query": "AE-17 v2.4在断电恰好发生于启动项切换中间时，硬件控制器保证多少微秒内完成原子恢复",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 1.657599990721792,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "rollout-scope-tenant",
+              "scenario": "rollout",
+              "category": "scope",
+              "kind": "scope",
+              "query": "离线终端AE-17 v2.4升级，工单已经提交但还在REVIEWING，两名复核者只有一人签名；邻机AE-170说可以直接切换。查本机切换前置条件",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.08879999222699553,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "rollout-scope-user",
+              "scenario": "rollout",
+              "category": "scope",
+              "kind": "scope",
+              "query": "离线终端AE-17 v2.4升级，工单已经提交但还在REVIEWING，两名复核者只有一人签名；邻机AE-170说可以直接切换。查本机切换前置条件",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.07439999899361283,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "failover-q0",
+              "scenario": "failover",
+              "category": "explicit_condition",
+              "kind": "positive",
+              "query": "JOB-R8 rev3告警heartbeat_timeout，主节点租约还有40秒，备用节点已收到请求；此时能否转移，查准入条件",
+              "expected": [
+                "failover-condition"
+              ],
+              "returned": [
+                "failover-condition",
+                "failover-evidence",
+                "failover-main"
+              ],
+              "scores": [
+                0.4833,
+                0.4833,
+                0.4833
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4833,
+                  "origin": "direct",
+                  "seed_id": "failover-condition",
+                  "coverage": 0.6429
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2262,
+                  "origin": "subject_companion",
+                  "seed_id": "failover-condition",
+                  "coverage": 0.6429
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3254,
+                  "origin": "subject_companion",
+                  "seed_id": "failover-condition",
+                  "coverage": 0.6429
+                }
+              ],
+              "elapsed_ms": 1.8299999937880784,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "failover-q1",
+              "scenario": "failover",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "JOB-R8 rev3接续后batch_id有缺口且另有重复attempt_id，查切换前条件和切换后核验恢复依据",
+              "expected": [
+                "failover-condition",
+                "failover-evidence"
+              ],
+              "returned": [
+                "failover-evidence",
+                "failover-condition",
+                "failover-main"
+              ],
+              "scores": [
+                0.3614,
+                0.3614,
+                0.3614
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3614,
+                  "origin": "direct",
+                  "seed_id": "failover-evidence",
+                  "coverage": 0.6786
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2063,
+                  "origin": "subject_companion",
+                  "seed_id": "failover-evidence",
+                  "coverage": 0.6786
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2911,
+                  "origin": "subject_companion",
+                  "seed_id": "failover-evidence",
+                  "coverage": 0.6786
+                }
+              ],
+              "elapsed_ms": 2.4381999974139035,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "failover-q2",
+              "scenario": "failover",
+              "category": "mixed_log_context",
+              "kind": "positive",
+              "query": "JOB-R8 rev3昨天重试了一批数据，交接人把attempt_id当成去重键，旁边JOB-R80采用不同方案。我需要本作业checkpoint接续及幂等处理流程",
+              "expected": [
+                "failover-main"
+              ],
+              "returned": [
+                "failover-main",
+                "failover-evidence",
+                "failover-condition"
+              ],
+              "scores": [
+                0.3043,
+                0.3043,
+                0.3043
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3043,
+                  "origin": "direct",
+                  "seed_id": "failover-main",
+                  "coverage": 0.5
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.234,
+                  "origin": "subject_companion",
+                  "seed_id": "failover-main",
+                  "coverage": 0.5
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.1901,
+                  "origin": "subject_companion",
+                  "seed_id": "failover-main",
+                  "coverage": 0.5
+                }
+              ],
+              "elapsed_ms": 1.5700999938417226,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "failover-q3",
+              "scenario": "failover",
+              "category": "width_identifier",
+              "kind": "positive",
+              "query": "ＪＯＢ-R8 rev3告警不消失但租约有效，备用节点切换前有哪些限制",
+              "expected": [
+                "failover-condition"
+              ],
+              "returned": [
+                "failover-condition",
+                "failover-evidence",
+                "failover-main"
+              ],
+              "scores": [
+                0.4105,
+                0.4105,
+                0.4105
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4105,
+                  "origin": "direct",
+                  "seed_id": "failover-condition",
+                  "coverage": 0.75
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2235,
+                  "origin": "subject_companion",
+                  "seed_id": "failover-condition",
+                  "coverage": 0.75
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2589,
+                  "origin": "subject_companion",
+                  "seed_id": "failover-condition",
+                  "coverage": 0.75
+                }
+              ],
+              "elapsed_ms": 1.6013999993447214,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "failover-absent-version",
+              "scenario": "failover",
+              "category": "absent_version",
+              "kind": "no_answer",
+              "query": "JOB-R8 rev3-unreleased正式发布版本的采集作业故障转移条件是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.08860000525601208,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "failover-unsupported",
+              "scenario": "failover",
+              "category": "unsupported_relation",
+              "kind": "no_answer",
+              "query": "JOB-R8 rev3使用跨洲链路时，各运营商的合同丢包赔偿金额和付款日期是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.5551999929593876,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "failover-scope-tenant",
+              "scenario": "failover",
+              "category": "scope",
+              "kind": "scope",
+              "query": "JOB-R8 rev3告警heartbeat_timeout，主节点租约还有40秒，备用节点已收到请求；此时能否转移，查准入条件",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.07280000136233866,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "failover-scope-user",
+              "scenario": "failover",
+              "category": "scope",
+              "kind": "scope",
+              "query": "JOB-R8 rev3告警heartbeat_timeout，主节点租约还有40秒，备用节点已收到请求；此时能否转移，查准入条件",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.07110000296961516,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "restore-q0",
+              "scenario": "restore",
+              "category": "explicit_condition",
+              "kind": "positive",
+              "query": "LEDGER-C6 r2026.09有负责人签字但工单没写目标LSN，中间日志还缺一个片段；查询时间点恢复准入限制",
+              "expected": [
+                "restore-condition"
+              ],
+              "returned": [
+                "restore-condition",
+                "restore-evidence",
+                "restore-main"
+              ],
+              "scores": [
+                0.4862,
+                0.4862,
+                0.4862
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4862,
+                  "origin": "direct",
+                  "seed_id": "restore-condition",
+                  "coverage": 0.6429
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3176,
+                  "origin": "subject_companion",
+                  "seed_id": "restore-condition",
+                  "coverage": 0.6429
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3321,
+                  "origin": "subject_companion",
+                  "seed_id": "restore-condition",
+                  "coverage": 0.6429
+                }
+              ],
+              "elapsed_ms": 1.7733999993652105,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "restore-q1",
+              "scenario": "restore",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "LEDGER-C6 r2026.09准备回放，哪些授权和日志条件必须满足，余额核对失败后保留什么证据",
+              "expected": [
+                "restore-condition",
+                "restore-evidence"
+              ],
+              "returned": [
+                "restore-evidence",
+                "restore-condition",
+                "restore-main"
+              ],
+              "scores": [
+                0.3426,
+                0.3426,
+                0.3426
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3426,
+                  "origin": "direct",
+                  "seed_id": "restore-evidence",
+                  "coverage": 0.76
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.328,
+                  "origin": "subject_companion",
+                  "seed_id": "restore-evidence",
+                  "coverage": 0.76
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2941,
+                  "origin": "subject_companion",
+                  "seed_id": "restore-evidence",
+                  "coverage": 0.76
+                }
+              ],
+              "elapsed_ms": 2.4818999954732135,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "restore-q2",
+              "scenario": "restore",
+              "category": "mixed_log_context",
+              "kind": "positive",
+              "query": "LEDGER-C6 r2026.09备份盘上文件日期与LSN顺序不一致，另有LEDGER-C60的验证副本。请查隔离恢复的正确回放顺序和原目录保护流程",
+              "expected": [
+                "restore-main"
+              ],
+              "returned": [
+                "restore-main",
+                "restore-condition",
+                "restore-evidence"
+              ],
+              "scores": [
+                0.3137,
+                0.3137,
+                0.3137
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3137,
+                  "origin": "direct",
+                  "seed_id": "restore-main",
+                  "coverage": 0.6667
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2116,
+                  "origin": "subject_companion",
+                  "seed_id": "restore-main",
+                  "coverage": 0.6667
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2874,
+                  "origin": "subject_companion",
+                  "seed_id": "restore-main",
+                  "coverage": 0.6667
+                }
+              ],
+              "elapsed_ms": 2.099600009387359,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "restore-q3",
+              "scenario": "restore",
+              "category": "width_identifier",
+              "kind": "positive",
+              "query": "ＬＥＤＧＥＲ-C6 r2026.09目标LSN尚未审批，能直接按备份文件日期恢复吗，查询适用条件",
+              "expected": [
+                "restore-condition"
+              ],
+              "returned": [
+                "restore-main",
+                "restore-condition",
+                "restore-evidence"
+              ],
+              "scores": [
+                0.363,
+                0.363,
+                0.363
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.363,
+                  "origin": "direct",
+                  "seed_id": "restore-main",
+                  "coverage": 0.7619
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.345,
+                  "origin": "subject_companion",
+                  "seed_id": "restore-main",
+                  "coverage": 0.7619
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2806,
+                  "origin": "subject_companion",
+                  "seed_id": "restore-main",
+                  "coverage": 0.7619
+                }
+              ],
+              "elapsed_ms": 1.8471000075805932,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 0.5,
+              "ndcg_at_3": 0.6309297535714575,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "restore-absent-version",
+              "scenario": "restore",
+              "category": "absent_version",
+              "kind": "no_answer",
+              "query": "LEDGER-C6 r2026.09-unreleased正式发布版本的账册时间点恢复条件是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.12009999772999436,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "restore-unsupported",
+              "scenario": "restore",
+              "category": "unsupported_relation",
+              "kind": "no_answer",
+              "query": "LEDGER-C6 r2026.09基础备份和所有日志都彻底丢失后，能保证恢复多少笔不存在副本的交易",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 1.2795999937225133,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "restore-scope-tenant",
+              "scenario": "restore",
+              "category": "scope",
+              "kind": "scope",
+              "query": "LEDGER-C6 r2026.09有负责人签字但工单没写目标LSN，中间日志还缺一个片段；查询时间点恢复准入限制",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.07520000508520752,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "restore-scope-user",
+              "scenario": "restore",
+              "category": "scope",
+              "kind": "scope",
+              "query": "LEDGER-C6 r2026.09有负责人签字但工单没写目标LSN，中间日志还缺一个片段；查询时间点恢复准入限制",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.06640001083724201,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "certificates-q0",
+              "scenario": "certificates",
+              "category": "explicit_condition",
+              "kind": "positive",
+              "query": "APP-Q5 cert-v7的新文件名称正确，但SAN指向另一服务，缓存握手仍显示成功；查证书切换条件",
+              "expected": [
+                "certificates-condition"
+              ],
+              "returned": [
+                "certificates-condition",
+                "certificates-evidence",
+                "certificates-main"
+              ],
+              "scores": [
+                0.4334,
+                0.4334,
+                0.4334
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4334,
+                  "origin": "direct",
+                  "seed_id": "certificates-condition",
+                  "coverage": 0.5862
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2774,
+                  "origin": "subject_companion",
+                  "seed_id": "certificates-condition",
+                  "coverage": 0.5862
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3281,
+                  "origin": "subject_companion",
+                  "seed_id": "certificates-condition",
+                  "coverage": 0.5862
+                }
+              ],
+              "elapsed_ms": 1.8005999882007018,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "certificates-q1",
+              "scenario": "certificates",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "APP-Q5 cert-v7需要哪些SAN和有效期条件，切换后unknown_ca该如何核验及回退",
+              "expected": [
+                "certificates-condition",
+                "certificates-evidence"
+              ],
+              "returned": [
+                "certificates-evidence",
+                "certificates-condition",
+                "certificates-main"
+              ],
+              "scores": [
+                0.3559,
+                0.3559,
+                0.3559
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3559,
+                  "origin": "direct",
+                  "seed_id": "certificates-evidence",
+                  "coverage": 0.8667
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2936,
+                  "origin": "subject_companion",
+                  "seed_id": "certificates-evidence",
+                  "coverage": 0.8667
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2612,
+                  "origin": "subject_companion",
+                  "seed_id": "certificates-evidence",
+                  "coverage": 0.8667
+                }
+              ],
+              "elapsed_ms": 1.4271999971242622,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "certificates-q2",
+              "scenario": "certificates",
+              "category": "mixed_log_context",
+              "kind": "positive",
+              "query": "APP-Q5 cert-v7轮换时旧客户端仍在线，新信任链已经下发，APP-Q50同名证书在旁边目录。查先部署链再切换证书的顺序及身份核对依据",
+              "expected": [
+                "certificates-main"
+              ],
+              "returned": [
+                "certificates-main",
+                "certificates-condition",
+                "certificates-evidence"
+              ],
+              "scores": [
+                0.4651,
+                0.4651,
+                0.4651
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4651,
+                  "origin": "direct",
+                  "seed_id": "certificates-main",
+                  "coverage": 0.7105
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3185,
+                  "origin": "subject_companion",
+                  "seed_id": "certificates-main",
+                  "coverage": 0.7105
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3736,
+                  "origin": "subject_companion",
+                  "seed_id": "certificates-main",
+                  "coverage": 0.7105
+                }
+              ],
+              "elapsed_ms": 1.5891999937593937,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "certificates-q3",
+              "scenario": "certificates",
+              "category": "width_identifier",
+              "kind": "positive",
+              "query": "ＡＰＰ-Q5 cert-v7的新证书处于撤销状态但缓存命中，查是否满足切换准入条件",
+              "expected": [
+                "certificates-condition"
+              ],
+              "returned": [
+                "certificates-condition",
+                "certificates-evidence",
+                "certificates-main"
+              ],
+              "scores": [
+                0.4387,
+                0.4387,
+                0.4387
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4387,
+                  "origin": "direct",
+                  "seed_id": "certificates-condition",
+                  "coverage": 0.65
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.255,
+                  "origin": "subject_companion",
+                  "seed_id": "certificates-condition",
+                  "coverage": 0.65
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2676,
+                  "origin": "subject_companion",
+                  "seed_id": "certificates-condition",
+                  "coverage": 0.65
+                }
+              ],
+              "elapsed_ms": 1.396999999997206,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "certificates-absent-version",
+              "scenario": "certificates",
+              "category": "absent_version",
+              "kind": "no_answer",
+              "query": "APP-Q5 cert-v7-unreleased正式发布版本的应用证书轮换条件是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.07179999374784529,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "certificates-unsupported",
+              "scenario": "certificates",
+              "category": "unsupported_relation",
+              "kind": "no_answer",
+              "query": "APP-Q5 cert-v7在私钥被量子计算破解时，算法供应商的无限期保密担保金额是多少",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.4474000015761703,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "certificates-scope-tenant",
+              "scenario": "certificates",
+              "category": "scope",
+              "kind": "scope",
+              "query": "APP-Q5 cert-v7的新文件名称正确，但SAN指向另一服务，缓存握手仍显示成功；查证书切换条件",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.05839999357704073,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "certificates-scope-user",
+              "scenario": "certificates",
+              "category": "scope",
+              "kind": "scope",
+              "query": "APP-Q5 cert-v7的新文件名称正确，但SAN指向另一服务，缓存握手仍显示成功；查证书切换条件",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.05329999839887023,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "export-q0",
+              "scenario": "export",
+              "category": "explicit_condition",
+              "kind": "positive",
+              "query": "RUN-M4 schema-v3含没有单位的温度行，字段白名单已批准但接收方尚未批准，查询哪些条件阻止导出",
+              "expected": [
+                "export-condition"
+              ],
+              "returned": [
+                "export-condition",
+                "export-evidence",
+                "export-main"
+              ],
+              "scores": [
+                0.4356,
+                0.4356,
+                0.4356
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4356,
+                  "origin": "direct",
+                  "seed_id": "export-condition",
+                  "coverage": 0.6538
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2403,
+                  "origin": "subject_companion",
+                  "seed_id": "export-condition",
+                  "coverage": 0.6538
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3337,
+                  "origin": "subject_companion",
+                  "seed_id": "export-condition",
+                  "coverage": 0.6538
+                }
+              ],
+              "elapsed_ms": 1.5219999913824722,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "export-q1",
+              "scenario": "export",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "RUN-M4 schema-v3导出前需要哪些用途和脱敏授权，导出后发现敏感列应如何核验与撤回",
+              "expected": [
+                "export-condition",
+                "export-evidence"
+              ],
+              "returned": [
+                "export-evidence",
+                "export-condition",
+                "export-main"
+              ],
+              "scores": [
+                0.3701,
+                0.3701,
+                0.3701
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3701,
+                  "origin": "direct",
+                  "seed_id": "export-evidence",
+                  "coverage": 0.7222
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2795,
+                  "origin": "subject_companion",
+                  "seed_id": "export-evidence",
+                  "coverage": 0.7222
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2591,
+                  "origin": "subject_companion",
+                  "seed_id": "export-evidence",
+                  "coverage": 0.7222
+                }
+              ],
+              "elapsed_ms": 2.5562999944668263,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "export-q2",
+              "scenario": "export",
+              "category": "mixed_log_context",
+              "kind": "positive",
+              "query": "RUN-M4 schema-v3的同一批行混有摄氏和华氏、跨日时区及空值，附近还有公开RUN-M40样例。我需要保留原列并添加换算列的导出流程",
+              "expected": [
+                "export-main"
+              ],
+              "returned": [
+                "export-main",
+                "export-condition",
+                "export-evidence"
+              ],
+              "scores": [
+                0.3161,
+                0.3161,
+                0.3161
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3161,
+                  "origin": "direct",
+                  "seed_id": "export-main",
+                  "coverage": 0.6364
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.1576,
+                  "origin": "subject_companion",
+                  "seed_id": "export-main",
+                  "coverage": 0.6364
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2667,
+                  "origin": "subject_companion",
+                  "seed_id": "export-main",
+                  "coverage": 0.6364
+                }
+              ],
+              "elapsed_ms": 2.4778999941190705,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "export-q3",
+              "scenario": "export",
+              "category": "width_identifier",
+              "kind": "positive",
+              "query": "ＲＵＮ-M4 schema-v3接收方未批准时，能引用公开演示批次许可导出吗，查条件",
+              "expected": [
+                "export-condition"
+              ],
+              "returned": [
+                "export-condition",
+                "export-evidence",
+                "export-main"
+              ],
+              "scores": [
+                0.4687,
+                0.4687,
+                0.4687
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.4687,
+                  "origin": "direct",
+                  "seed_id": "export-condition",
+                  "coverage": 0.8095
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2327,
+                  "origin": "subject_companion",
+                  "seed_id": "export-condition",
+                  "coverage": 0.8095
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2902,
+                  "origin": "subject_companion",
+                  "seed_id": "export-condition",
+                  "coverage": 0.8095
+                }
+              ],
+              "elapsed_ms": 1.7738000024110079,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "export-absent-version",
+              "scenario": "export",
+              "category": "absent_version",
+              "kind": "no_answer",
+              "query": "RUN-M4 schema-v3-unreleased正式发布版本的混合单位试验导出条件是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.09819999104365706,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "export-unsupported",
+              "scenario": "export",
+              "category": "unsupported_relation",
+              "kind": "no_answer",
+              "query": "RUN-M4 schema-v3能否仅凭导出的温度数据给出未知病种临床诊断的特异性置信区间",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 1.0602999973343685,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "export-scope-tenant",
+              "scenario": "export",
+              "category": "scope",
+              "kind": "scope",
+              "query": "RUN-M4 schema-v3含没有单位的温度行，字段白名单已批准但接收方尚未批准，查询哪些条件阻止导出",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.076299998909235,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "export-scope-user",
+              "scenario": "export",
+              "category": "scope",
+              "kind": "scope",
+              "query": "RUN-M4 schema-v3含没有单位的温度行，字段白名单已批准但接收方尚未批准，查询哪些条件阻止导出",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.07570000889245421,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "ipc-q0",
+              "scenario": "ipc",
+              "category": "explicit_condition",
+              "kind": "positive",
+              "query": "SYNC-P2 proto-v5重启后收到旧窗口回调，标题一样但session_id已换，预览摘要也不同；查询提交条件",
+              "expected": [
+                "ipc-condition"
+              ],
+              "returned": [
+                "ipc-condition",
+                "ipc-evidence",
+                "ipc-main"
+              ],
+              "scores": [
+                0.419,
+                0.419,
+                0.419
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.419,
+                  "origin": "direct",
+                  "seed_id": "ipc-condition",
+                  "coverage": 0.8148
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2776,
+                  "origin": "subject_companion",
+                  "seed_id": "ipc-condition",
+                  "coverage": 0.8148
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3968,
+                  "origin": "subject_companion",
+                  "seed_id": "ipc-condition",
+                  "coverage": 0.8148
+                }
+              ],
+              "elapsed_ms": 2.05350000760518,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "ipc-q1",
+              "scenario": "ipc",
+              "category": "multi_document",
+              "kind": "positive",
+              "query": "SYNC-P2 proto-v5需要哪些会话和摘要条件，timeout后应按哪份终态核验依据决定是否重试",
+              "expected": [
+                "ipc-condition",
+                "ipc-evidence"
+              ],
+              "returned": [
+                "ipc-evidence",
+                "ipc-condition",
+                "ipc-main"
+              ],
+              "scores": [
+                0.3414,
+                0.3414,
+                0.3414
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3414,
+                  "origin": "direct",
+                  "seed_id": "ipc-evidence",
+                  "coverage": 0.8
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.341,
+                  "origin": "subject_companion",
+                  "seed_id": "ipc-evidence",
+                  "coverage": 0.8
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2918,
+                  "origin": "subject_companion",
+                  "seed_id": "ipc-evidence",
+                  "coverage": 0.8
+                }
+              ],
+              "elapsed_ms": 1.8914000102085993,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.6666666666666666,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 1,
+              "passed": true
+            },
+            {
+              "id": "ipc-q2",
+              "scenario": "ipc",
+              "category": "mixed_log_context",
+              "kind": "positive",
+              "query": "SYNC-P2 proto-v5同一request_id连续收到committed、断线、旧回调，邻进程SYNC-P20还有同名窗口。我需要不重复移动文件的处理顺序和已有回执返回流程",
+              "expected": [
+                "ipc-main"
+              ],
+              "returned": [
+                "ipc-main",
+                "ipc-condition",
+                "ipc-evidence"
+              ],
+              "scores": [
+                0.3961,
+                0.3961,
+                0.3961
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.3961,
+                  "origin": "direct",
+                  "seed_id": "ipc-main",
+                  "coverage": 0.6471
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.1654,
+                  "origin": "subject_companion",
+                  "seed_id": "ipc-main",
+                  "coverage": 0.6471
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2583,
+                  "origin": "subject_companion",
+                  "seed_id": "ipc-main",
+                  "coverage": 0.6471
+                }
+              ],
+              "elapsed_ms": 1.78310000046622,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "ipc-q3",
+              "scenario": "ipc",
+              "category": "width_identifier",
+              "kind": "positive",
+              "query": "ＳＹＮＣ-P2 proto-v5内存缓存显示待处理但请求过期，查询提交前必须核对的条件",
+              "expected": [
+                "ipc-condition"
+              ],
+              "returned": [
+                "ipc-condition",
+                "ipc-evidence",
+                "ipc-main"
+              ],
+              "scores": [
+                0.359,
+                0.359,
+                0.359
+              ],
+              "evidence": [
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.359,
+                  "origin": "direct",
+                  "seed_id": "ipc-condition",
+                  "coverage": 0.6087
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2589,
+                  "origin": "subject_companion",
+                  "seed_id": "ipc-condition",
+                  "coverage": 0.6087
+                },
+                {
+                  "policy": "focused_evidence_v2",
+                  "direct_score": 0.2942,
+                  "origin": "subject_companion",
+                  "seed_id": "ipc-condition",
+                  "coverage": 0.6087
+                }
+              ],
+              "elapsed_ms": 2.060200000414625,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": 1.0,
+              "precision_at_3": 0.3333333333333333,
+              "mrr_at_3": 1.0,
+              "ndcg_at_3": 1.0,
+              "irrelevant_returned": 2,
+              "passed": true
+            },
+            {
+              "id": "ipc-absent-version",
+              "scenario": "ipc",
+              "category": "absent_version",
+              "kind": "no_answer",
+              "query": "SYNC-P2 proto-v5-unreleased正式发布版本的桌面同步重复回调条件是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.11570000788196921,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "ipc-unsupported",
+              "scenario": "ipc",
+              "category": "unsupported_relation",
+              "kind": "no_answer",
+              "query": "SYNC-P2 proto-v5在所有持久化终态和备份同时损坏后，承诺绝对无重复的数学证明编号是什么",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 1.2187999964226037,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "ipc-scope-tenant",
+              "scenario": "ipc",
+              "category": "scope",
+              "kind": "scope",
+              "query": "SYNC-P2 proto-v5重启后收到旧窗口回调，标题一样但session_id已换，预览摘要也不同；查询提交条件",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.09249999129679054,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            },
+            {
+              "id": "ipc-scope-user",
+              "scenario": "ipc",
+              "category": "scope",
+              "kind": "scope",
+              "query": "SYNC-P2 proto-v5重启后收到旧窗口回调，标题一样但session_id已换，预览摘要也不同；查询提交条件",
+              "expected": [],
+              "returned": [],
+              "scores": [],
+              "evidence": [],
+              "elapsed_ms": 0.07009999535512179,
+              "error_type": null,
+              "invalid_ids": [],
+              "recall_at_3": null,
+              "precision_at_3": null,
+              "mrr_at_3": 0.0,
+              "ndcg_at_3": null,
+              "irrelevant_returned": null,
+              "passed": true
+            }
+          ]
+        }
+      ],
+      "resources": {
+        "wall_ms": 114.465,
+        "cpu_ms": 109.375,
+        "cpu_percent_one_core": 95.553,
+        "rss_before_bytes": 25051136,
+        "rss_after_bytes": 27533312,
+        "lifetime_peak_rss_bytes": 27537408,
+        "source": "GetProcessMemoryInfo",
+        "available": true,
+        "error_type": null,
+        "scope": "current_process_only; excludes separate model servers and child processes",
+        "peak_definition": "OS high-water mark since process start, not a per-workload peak"
+      },
+      "quality_targets_met": true,
+      "safety_passed": true,
+      "latency_target_met": true,
+      "all_targets_met": true,
+      "evidence_policy": "focused_evidence_v2",
+      "minimum_evidence_coverage": 0.5,
+      "required_terms_enabled": true
+    }
+  ],
+  "quality_targets_met": true,
+  "safety_passed": true,
+  "latency_target_met": true,
+  "all_targets_met": true,
+  "competition_ready": false,
+  "independent_blind": false,
+  "limitations": [
+    "Six related operational scenarios, 48 different requests; repeated queries are not independent samples.",
+    "Literal evidence filtering is not entailment: unsupported relations retain all entity/version terms.",
+    "Visible-label synthetic regression; thresholds are unchanged, no generalization claim.",
+    "Controlled snapshots bypass ingestion; lifecycle and ingestion are tested separately.",
+    "HashEmbedding only; not native SDK performance or a new V11 verification.",
+    "Fixed .265 across local ablations is diagnostic, not a separately optimized threshold for each mode.",
+    "RSS is current process; high-water mark covers process lifetime and excludes external model servers.",
+    "Optional content_coverage_v1 is lexical abstention, not entailment; it can reject supported paraphrases.",
+    "focused_evidence_v2 uses lexical support and exact-title section links, not semantic entailment."
+  ]
+}

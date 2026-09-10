@@ -1,0 +1,2194 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T13:43:28.103943+00:00",
+  "scope": "visible_development_check_not_blind_or_official_acceptance",
+  "dataset": {
+    "path": "data/dev/evidence_coverage_v1.json",
+    "sha256": "c615c042c4c912b1296c95f485fe28e108b442d4b7b025cf3457330ee4aa7a56",
+    "documents": 10,
+    "distinct_requests": 20,
+    "positive_requests": 10,
+    "no_answer_requests": 10,
+    "challenge_added_after_initial_comparison": false
+  },
+  "method": {
+    "top_k": 3,
+    "min_score": 0.265,
+    "minimum_evidence_coverage": 0.5,
+    "threshold_rule": "predeclared majority coverage; no frozen-test threshold sweep",
+    "boundary": "MemoryService.search",
+    "percentile": "nearest_rank",
+    "rounds": 1,
+    "policies": {
+      "similarity": "legacy scoring without evidence abstention",
+      "content_coverage_v1": "legacy top-k plus strict lexical coverage; no reranking",
+      "focused_evidence_v2": "query focus, exact-subject bundles and property-specific support"
+    }
+  },
+  "provider": {
+    "implementation": "os_agent_memory.embeddings.HashEmbedding",
+    "dimensions": 256,
+    "ngram": 2
+  },
+  "environment": {
+    "system": "Windows",
+    "python": "3.14.3",
+    "python_hash_seed": "0"
+  },
+  "source_sha256": {
+    "raw_sha256": {
+      ".gitattributes": "72c677aff99a69d3e43988bc79debfee293aca673bda80a1d4eb6a6b06343618",
+      "config/action-identities.example.json": "d1c3f5191525e1747b05b02972e022d83db4f07be2f7e89602e4c614240eb3eb",
+      "config/embedding.hash.json": "1d3b65ffd5abe5e8e92ee8c1298f16ec9ff22ee3f775bcedfbe5577f19e207aa",
+      "config/embedding.kylin-native.example.json": "9cb2a575a89d5d1074ee262c5d8d3e25386aaf542db1e38a365b9bcfa7ea887c",
+      "config/embedding.kylin.example.json": "b97b46a38eaee49fe8b6a10b23b4da1420a40674c2cf33be68fe2ec0a20f465c",
+      "data/dev/evidence_coverage_challenge_v1.json": "b4b81a47d46a46add96953bf4ff54e5db8a419b7930ac17545166831e1d61bd3",
+      "data/dev/evidence_coverage_v1.json": "c615c042c4c912b1296c95f485fe28e108b442d4b7b025cf3457330ee4aa7a56",
+      "data/eval/complex_constraints_v1.json": "9f03254a21bd93d24e217f470524f55569776ce46a263fc4e53ddb48d44cb5fc",
+      "data/eval/complex_retrieval_v1.json": "04b9a5266535e40a4542ae4647a4bba51aabf8edc32bd3a169713a4c4c1f2212",
+      "data/eval/office_memory_eval.json": "890d029e0a1d0158b227e32347f7c9599dd66d0b46aed63b1f0a12ad9802822a",
+      "data/eval/office_memory_eval_v2.json": "f7f1e3f6d99a0f3acc528c6ceb00bd8a4692bcdf5cd1dfddd8e20034d50a7db2",
+      "data/eval/office_memory_eval_v3.json": "641a6af67005a80e0e3108505307822630d8f1c7b7122de7da0e80fe10188213",
+      "data/eval/request_regression_v1.json": "51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98",
+      "data/eval/sensitive_official_diagnostic.json": "db1140b22708006be6e6c1c971b61c1363598f4c6b39fd014fd66e6feab36e13",
+      "data/samples/events.jsonl": "a3931f9629b3fcabc271c72245e30c4821f58ea50459a7c92bcbe81a6731dacd",
+      "pyproject.toml": "fb3cf20cb435f63672a103ae12f07eab4f6ac628b814c1ab61244e523c51053d",
+      "scripts/archive_submission.py": "cb97280df2b31a7329bc87491a83b8b7b7db19a7a2c71daa6e14f5d7d741ad23",
+      "scripts/benchmark_service.py": "902009ebe4f209244c28d0d93ab68223e84fbabe323f343a1cb78a6fed75bd17",
+      "scripts/build_review_submission.py": "326021b1ff38ec7f89f194aaaa2494440f5cd10819467fe6ac404cd10f3a20c9",
+      "scripts/build_submission.py": "7149f9e6a3bb9f58496634503bcf8242edc701af492022ddbe4c8901fed067e4",
+      "scripts/check_action_readiness.py": "32f1de3878fdfb78d1bf9cf2cd217408e1e13efba649e573a6509f58c624bf2f",
+      "scripts/check_action_runtime.py": "ce58d3521e7bb2b1728dd0cced64945f1c5f7ba9951edaa69e46c9d1b5dfe153",
+      "scripts/check_dashboard.cjs": "92064905399c2b7cd857aa69fe8f85a32ecc387042c8365a1c8ea3221968e2e8",
+      "scripts/check_deliverables.py": "95f95d6fb248f31e20708577b7c23e793f600cf38acae7c1bbd247ef15c6bcfb",
+      "scripts/check_kylin_native.py": "dd6fba20ecf840bed8d3e36ec13bcb18d2fb6d1e9588a678390fc52627a4cd34",
+      "scripts/check_source.py": "9d3debd3913ff1ce3317ee1a2652a6c9a53f66a000b0ac65a8f2af9c13127983",
+      "scripts/compare_retrieval_runs.py": "3f5a26cf2e663960add03abc9b4ed493e6c1112a3516b97733f9bec9a864fb59",
+      "scripts/evaluate_actions.py": "4c2ce726d6e6b17312d4cd59a0817e31ccc5df163e42e3d4853aec2625e20240",
+      "scripts/evaluate_complex_retrieval.py": "0165fbd6a4eb3526b6989f253b9f77436993839863ac0ee27dced0f20b7bbff4",
+      "scripts/evaluate_evidence_development.py": "ddd1404538e0b52a16863719f8755078e0778d5e22da620ab489a0b7c315b3f0",
+      "scripts/evaluate_official.py": "3deee34b0cfb9fc0910af8917628e1eeb1ace2ca6ae4de5dae4503e48a6d9c99",
+      "scripts/evaluate_requests.py": "44f8fd790e9f40c95338cb48c7039d6eed61122c2a70f448e33ccbd8d46439dc",
+      "scripts/evaluate_v3.py": "9947789e90b2f8533162e9bbac182bed69fae1da68f7e0a016b5eacabd4c31b4",
+      "scripts/generate_complex_suite.py": "f8b2d6b858e6b61f820492a0340a9b42d407b717515a34973b285b400c7a60af",
+      "scripts/generate_constraint_suite.py": "d06661c2b5d1d297287b11aab842505cd14d51de4aa2b6624751455422935651",
+      "scripts/generate_eval_v2.py": "8a65f5b9dc9a195ff6e58faa742d304275da96c2c03b94109741a7a28b4192c4",
+      "scripts/generate_eval_v3.py": "feecd2e050b6824957ee4ce6db67f4eedbad899624383e48416137ea49b6e9a8",
+      "scripts/generate_evidence_materials.py": "54143bec51aeab73310b67cf085f9c57215bb1d2a15b86236f910247d0c6203c",
+      "scripts/generate_historical_ppt.py": "38c1bc197ee3c7e088c4f94729d811c2296fed328b355bdf9d88bf3537ee22ef",
+      "scripts/generate_ppt.py": "c45a2538a6a88f0f5a27fa20f9c8dacc01f9ef2216c3caaae80953cae0a24238",
+      "scripts/generate_request_suite.py": "62fd7ddbd2ab6f88abc09750b6d92dff15dad71efc0f9869513dde6b205b3b2b",
+      "scripts/generate_review_materials.py": "382dcc4f57d865e4e650b6aa8e2ef77e3e459825b8f61dc662dd1fedbdd2cc92",
+      "scripts/generate_round4_materials.py": "d05563923d27f2afd8c219061465db97f3f578d9ac7dfc604abfaf5240380464",
+      "scripts/generate_round5_materials.py": "3396e27c66be3f791823c1a8ea35d3b81711698cbb997992f7e14b171c85bff4",
+      "scripts/generate_takeover_materials.py": "eb327454ad556d6a949289ccebb4724292cd1d7cbe03ee62a7b81111e85e0f8e",
+      "scripts/generate_technical_doc.py": "bb667ce54e6350ef138d3a444a58b60c58a0cd93563d8a209efa879c36bb3f0c",
+      "scripts/judge_actions.py": "335a8b593ebd42d9d80254cbf6a478f73201dfee754f2a1eae210025f0547434",
+      "scripts/local_judge.py": "59ac4d98bfe3c88ee949ed9f2518eb817c91b1f586acea8f48328e6ba164aa34",
+      "scripts/manage_lab.py": "d010850592c50f72a20dd3e88d516e9b6290125e7428979039d66d35544fe5c2",
+      "scripts/material_status.py": "4e33d8250f3faa45f027dce2169a904079a5c1158b76f1c70928e36be201ebbd",
+      "scripts/memory_tools.py": "4b33d5bc104ecefa890689bea9bc6a295d60291520f95ef8f4732c494d517211",
+      "scripts/run_ablations.py": "4a3bbbd8081fb4d8852f1811c53c98dcb98fc3766c5c3f8826514f2a8fba8ad9",
+      "scripts/run_demo.ps1": "446158a5cba403d49601760bc20184bd819e8a258240e1153a851e1021ebbd47",
+      "scripts/submission_links.py": "052f30b456a6b210e18ec73eb5a782247615abd9c0897f09763d094e7f3cfddc",
+      "scripts/summarize_sdk_risk.py": "82c88104558aa334e432b644a95f7b3bfbcf5073e257c55d2d0a64d5e2dbe10f",
+      "scripts/verify_kylin_guest.py": "bc446308dc2d62226f5d9aab43d68fdec4b6dcbe035312b8157bfe18ce668e69",
+      "scripts/verify_release.py": "4377016835fb51d331dfd7aa741c787f23e74a79986b18285986d7f65bb58372",
+      "src/os_agent_memory/__init__.py": "79789b69ee6e07b5f8d85fa9bc2482fd0973466e67cd0559319791933f79c828",
+      "src/os_agent_memory/action_evaluation.py": "c9d02e234eb224e0315deaf3cc5e572fab27695172901aafa259848a2ec2d64d",
+      "src/os_agent_memory/action_judging.py": "719d6175c394a1a91afc3054c2909de9bcf6bf69e95477c312e962ea4a9d12c1",
+      "src/os_agent_memory/action_readiness.py": "7309867516f4ca5db3875dcc443492cfac781fc8cabbd35ca0252ed60e5edc32",
+      "src/os_agent_memory/benchmark.py": "51b999b9f1dee71228a5c8997b887b85ed46ba4650d831b83ae75c15b3f47a9f",
+      "src/os_agent_memory/bounded_command.py": "31d055c949ebd001575c4f8e994a72c586fdddf104685a688df410b0588429a7",
+      "src/os_agent_memory/cli.py": "9ce63038fdd4b8452c50335d3f9961bae539a2216e96a3e20dac2c09546fe095",
+      "src/os_agent_memory/compatibility.py": "7584c227acb9d349c8428b08cfb0be10d3f6cdc4a54a229ddb126f48e85e9c5f",
+      "src/os_agent_memory/complex_retrieval.py": "9a8d56e829ed883fbc9f758302afd603701e57dec67c0ce7e43f0291e957b6ec",
+      "src/os_agent_memory/dashboard.html": "21121e40ff802713a998c8e83614ee47994d2481d80b027e8033b71ed265adff",
+      "src/os_agent_memory/demo.py": "ad7c3f79e99f81d71cf24d11e73d171cd0de3f5044f756fcd80f94bb6a833bd7",
+      "src/os_agent_memory/diagnostics.py": "6eb90ccdfd24aa6b6200107f3402773933897a9ed83793683210975d6271bcec",
+      "src/os_agent_memory/embeddings.py": "091af84fe0248a826aa524a8a60068c0ae3f03a009b58ce686395ef0ae805d8c",
+      "src/os_agent_memory/evaluation.py": "1007391573b118d4d0e2c694a5e3ca2049738887a3c78fb460b437255fa2cb7a",
+      "src/os_agent_memory/experiments.py": "062e663ce722dbbd6ce72a19d35826bf4911073d76369dca0d07dad82fe113ed",
+      "src/os_agent_memory/file_memory.py": "5f5344995dde200334510ca971aff87de11ceee8d5c216c9cc8c85d1b56a1d88",
+      "src/os_agent_memory/focused_evidence.py": "45a0ff7c990a8c5030cd47f51957741de3a9b28a05ce6dbb6fe87c4258dc73a5",
+      "src/os_agent_memory/ingestion.py": "d89215ccf26e7f1483ac46d4f0ebaa1d80aff425375703cbec4c67b4c08e6428",
+      "src/os_agent_memory/knowledge.py": "6c873d74754bcd8ee7cf447618f741205fbe6edb269ed6e5e0ce8af55276165c",
+      "src/os_agent_memory/kylin_native.py": "689f0bbcb913726640486d57b5b66006610ea922fa5dbc2c768bc0160ba95f9f",
+      "src/os_agent_memory/lifecycle.py": "a6b625f5fbb2f63d82847e11c700da3655881653776c46014f1fd22add919850",
+      "src/os_agent_memory/local_judge.py": "ddf055a281b254ecfd6c033bf988f9a6d2e1110599c6f5a91f52cae629365b97",
+      "src/os_agent_memory/memory_store.py": "544d8d4eacdced0877be8ddd8f48b3aff189576552b0f28be2a79dc68a0799fd",
+      "src/os_agent_memory/memory_tools.py": "e0435da7f8218d3a56b6999aa13297bad41e6298fa2cf1af7947e04aaf71cf39",
+      "src/os_agent_memory/official_contract.py": "28e30e2d9dc58e554851eafc35cb226d14599181a4ba571805d580613a35c487",
+      "src/os_agent_memory/official_diagnostics.py": "8ac8e5f8b19ce1e322c0d949fb24f85baee2b39ca43fd9624a8a75424233551e",
+      "src/os_agent_memory/persistence.py": "015ef646e7018dec550e1c0a72c5a92eb5994cbc99cc838b05779b352d5eda04",
+      "src/os_agent_memory/preference.py": "0ff1cb7cc0d7fd9824c933660c5a158df7043e11a49c246182c64a0185d17ec4",
+      "src/os_agent_memory/provider_config.py": "6059798f8e2d88c268d548c2782fec20916a778f789d7d563986438be5fc0135",
+      "src/os_agent_memory/request_contract.py": "50a2a2cd4c95feba36c6760d94ea83109e5edfa9f079e4e77f4354efd45e9613",
+      "src/os_agent_memory/request_evaluation.py": "eb085e0394506629e309ca83502d3ff28aaa6fdbef865f08536665f64232d45a",
+      "src/os_agent_memory/resources.py": "ee55bb78dd66a91d45e64251713deda25d0dd322f13e471381d1d73fed99f8f9",
+      "src/os_agent_memory/retrieval_evidence.py": "7efaf1a34b1c4b69fefdd5aedca8aa13eb9a14e4d97dd1cb59e8f547fc53bcdb",
+      "src/os_agent_memory/schemas.py": "9c4b0797081da195e4f4de971622113deba789eae4277678b363f0399ec05905",
+      "src/os_agent_memory/security.py": "797751be58e46f8f02f2e87f846616f55063925cede7271d3f1b40253d9a4013",
+      "src/os_agent_memory/service.py": "29cade6f5a87c8884306466a2f65fcff0cc25788e73ea04308d81dad95459a22",
+      "src/os_agent_memory/web_server.py": "d0b1d98044068ca92d4a6dc8205d10222eaa6e3edbbab1eafddc83994ad42d5b",
+      "src/os_agent_memory/workload.py": "087fd76d05267a69650c66fd9d34bee0f18a75149f39b1d8fd12b6e7e4073e22",
+      "tests/judge_fixtures.py": "89c18c8d14820e350c901c834e90b556448ef6d2f0dc2d7302e1d0e590e76464",
+      "tests/test_action_evaluation.py": "7dc3d7a040bd547fa08e189059b340eee341c3cc82e0953e5dcf481f096a8a2a",
+      "tests/test_action_judging.py": "d3d2b2aee4a54524c22e727c5aecaadfc42e4f600a9c8642e4341331be37af80",
+      "tests/test_action_readiness.py": "a9126d9909789940ccaf36a86a94bf5c12a3098d3903fb560570a2905e7f2eed",
+      "tests/test_action_runtime.py": "c4433098fc8218160389ca3fa3722a6ed2f838f20e23da2a2c92fff1cd7246bc",
+      "tests/test_archive_submission.py": "a761d94aec6c3e88ff748d6a4b23d76c62ac251d926ed6b063068b74960f1518",
+      "tests/test_benchmark.py": "b986989c926b9eec3f5723fa339fef2f314df6e0974073850442a6a8e85d8c89",
+      "tests/test_benchmark_entrypoints.py": "f6450b96397c7cf32a8b109130aa2184f9b90a05b7f2892aef2ff477753569b8",
+      "tests/test_bounded_command.py": "298d3cbb10f154171090f9b7c05105c579450f96f4dafc5de09f115f3e6033b8",
+      "tests/test_compatibility.py": "40805211aec804a5f77e301e15e19e4fdcfdfdc5788da4745ae3fcefe29ea6ee",
+      "tests/test_complex_retrieval.py": "65cabe404ba0e564b637508c364eefe340b7026653a603059be294a9027a40b4",
+      "tests/test_constraint_suite.py": "a1c14a41955369d7f02887331f6d9ab67fbdbaa3537050614222277661d6cb8a",
+      "tests/test_cross_session_actions.py": "4990dffab5bd169b3a1183071084868914548da7df645f3644f455b72f523e45",
+      "tests/test_deliverables.py": "152ecba0fdb48365fc45b18d7b6746547c7cefdd1aec920c3e626ea9d2767ab9",
+      "tests/test_diagnostics.py": "e2ed84383c98177f331c6185c9dfe3ec56e81f095284d881c9823460c0582eec",
+      "tests/test_evaluation_v3.py": "88772665a669fc73e09922bd2d0f19c2dab34e2fde1609153e3b9a28455f88ed",
+      "tests/test_evidence_constraints.py": "399640a355d0cc0b478e420f98a7b2fbf28b1bef2726e1914468234f6198eeef",
+      "tests/test_evidence_materials.py": "0bd274912478e893af3908548c43129f08438f7fc993d9ebe0e8708696e5264e",
+      "tests/test_file_memory.py": "09d6a371db277b74438bc49d32a5553f0b6bf91f7b9d48f9192504228f793053",
+      "tests/test_focused_evidence.py": "3e171f16f1934bffc9eba44ee6bf7f9aed70b737aa02f7fc09b567b4c66d8ae9",
+      "tests/test_incremental.py": "4ac642ac17280e553741d2c68024d88ab76f29505ad5f0b15f9114af40f174aa",
+      "tests/test_kylin_guest_verification.py": "b6fcbd104db98bcaad54c80c22b02ad3ff4180eaf8ba1ea5e33c7e1ee73cfc47",
+      "tests/test_kylin_native.py": "5ee745fa0885b708b2b5f5ed51800746beece0ae15df6d5c5d1cb338292c01f8",
+      "tests/test_lab_isolation.py": "3225dd85f73626f3673ebe36e4bdf80e528883636ae98524198800b7d5d5ec73",
+      "tests/test_local_judge.py": "68fdf915ab70ca0f0a5012f36d0fa5b953852f5aebd0671df904ad03f2a26bc2",
+      "tests/test_material_status.py": "b2da9c29eca9af8a39044e693fa87c7de6ddcb267c01daf7d68edc7a760b736d",
+      "tests/test_memory_pipeline.py": "27fccc667158ac6bf24c5d37f9c7e38c70dead6a742fd8b7324ed828269da9ae",
+      "tests/test_memory_tools.py": "8b3828096613f93daa6426f26227337a14e2bf7fb7e2d700f67cd07f80bc9cf6",
+      "tests/test_metric_privacy.py": "ac0b097a768ec7811d0afb7e97e49641c0e41912a81d8c1fadef5a7d2e7d8356",
+      "tests/test_official_contract.py": "d99791db5e95248b371e4e8cb55c8818c4c281e3baead1adbe997d99fc308a5c",
+      "tests/test_official_diagnostics.py": "1e8f6977a47638598470c9f5aa029bcc1fbbe05c848687f9d592f61203e7c2d7",
+      "tests/test_packaging.py": "6163fe53141363b86304b774567e7b70d9f9bb3b747bbac2349f5e62aaef7586",
+      "tests/test_preference_alignment.py": "5f7689a794550e7ce474e68d69e1336b258e037c88c95145677448ae05227589",
+      "tests/test_provider_config.py": "f65095d9b6f53d752b5c54fde9f05d4429502cbba1081cd08dc2f6cda199ca8a",
+      "tests/test_release_verification.py": "b476b8a81e5c0d84ae646d2d80facb110426f9ed7999cf146b1415f04234c384",
+      "tests/test_request_contract.py": "3b406df7cf401a64a57bd524075caa2f964c3298f3fa07fe5a7cfaca700fef56",
+      "tests/test_request_evaluation.py": "48f129d0384e43abe9e7aaa5704c1db9bb5a2698eb996a2a72bc8054871283b0",
+      "tests/test_request_quality.py": "1a8177eb7a3722fe23953714df3a04054c4b06af59db4cd29f37f72d932e2915",
+      "tests/test_retrieval_comparison.py": "0e779ffde198edb368ad7b7c29062cc11407e80e01f8edafdec74359288c39a4",
+      "tests/test_retrieval_evidence.py": "f41b211b7b648d1af2d1974bb48bfee59a9a1dd7d898ec8fbab2a07e498ccc5a",
+      "tests/test_retrieval_hard_cases.py": "bf1972fc8e20a4bcb18f3093e01a423fe2449884febf169a3ee4f9bb7b6575a3",
+      "tests/test_retrieval_optimization.py": "ce86f497a9e4bb5b11f140c1396b2fd4ba91674769dfaeddd632cc595da00fcf",
+      "tests/test_review_materials.py": "ab8a84d8e65270d2d24deacd978c72a4a69b1eb935754f24bfefb160af0dcfe7",
+      "tests/test_round2.py": "77fb6527572f88f22da346fa0be5bf4311bc849877e535a549161d29167f67fc",
+      "tests/test_sdk_risk.py": "a88bfa65430268c58e7271361e4d7c453ffff9e529b7733b4eb2383c69cce08e",
+      "tests/test_security_adversarial.py": "8566d5c8eedd5e8b89d4f75a8256522f03986ffeed918fddab19e938b1d9e622",
+      "tests/test_submission_links.py": "b55a2f2357bd166002c191cc4395fa31f9a9aa795cfa6bb944ba4197732c2295",
+      "tests/test_takeover_materials.py": "2f0e6955e8da566da896b76a0a909b95464af7caa0ef5d82b0bcfd7bb8acffe6",
+      "tests/test_web_server.py": "5f13e57d867e32d913d78a203be5c64ec2dee6828a6abedc883c889096673413",
+      "tests/test_workload.py": "4ed3380b85586e4f21ea6335ffd701f6e24f0179eed8ccd6b3780ea71e043302"
+    },
+    "lf_sha256": {
+      ".gitattributes": "72c677aff99a69d3e43988bc79debfee293aca673bda80a1d4eb6a6b06343618",
+      "config/action-identities.example.json": "d1c3f5191525e1747b05b02972e022d83db4f07be2f7e89602e4c614240eb3eb",
+      "config/embedding.hash.json": "1d3b65ffd5abe5e8e92ee8c1298f16ec9ff22ee3f775bcedfbe5577f19e207aa",
+      "config/embedding.kylin-native.example.json": "9cb2a575a89d5d1074ee262c5d8d3e25386aaf542db1e38a365b9bcfa7ea887c",
+      "config/embedding.kylin.example.json": "b97b46a38eaee49fe8b6a10b23b4da1420a40674c2cf33be68fe2ec0a20f465c",
+      "data/dev/evidence_coverage_challenge_v1.json": "b4b81a47d46a46add96953bf4ff54e5db8a419b7930ac17545166831e1d61bd3",
+      "data/dev/evidence_coverage_v1.json": "c615c042c4c912b1296c95f485fe28e108b442d4b7b025cf3457330ee4aa7a56",
+      "data/eval/complex_constraints_v1.json": "9f03254a21bd93d24e217f470524f55569776ce46a263fc4e53ddb48d44cb5fc",
+      "data/eval/complex_retrieval_v1.json": "04b9a5266535e40a4542ae4647a4bba51aabf8edc32bd3a169713a4c4c1f2212",
+      "data/eval/office_memory_eval.json": "890d029e0a1d0158b227e32347f7c9599dd66d0b46aed63b1f0a12ad9802822a",
+      "data/eval/office_memory_eval_v2.json": "09c31187c3b781dccdd97a9484e215e50ad7fec84abc436c7e1c54c163e5aaaf",
+      "data/eval/office_memory_eval_v3.json": "289f36672da6aee8a480ac9ff17f1c7c4f6ef85bcd092a349baf38b6ac919d53",
+      "data/eval/request_regression_v1.json": "51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98",
+      "data/eval/sensitive_official_diagnostic.json": "db1140b22708006be6e6c1c971b61c1363598f4c6b39fd014fd66e6feab36e13",
+      "data/samples/events.jsonl": "a3931f9629b3fcabc271c72245e30c4821f58ea50459a7c92bcbe81a6731dacd",
+      "pyproject.toml": "fb3cf20cb435f63672a103ae12f07eab4f6ac628b814c1ab61244e523c51053d",
+      "scripts/archive_submission.py": "cb97280df2b31a7329bc87491a83b8b7b7db19a7a2c71daa6e14f5d7d741ad23",
+      "scripts/benchmark_service.py": "902009ebe4f209244c28d0d93ab68223e84fbabe323f343a1cb78a6fed75bd17",
+      "scripts/build_review_submission.py": "326021b1ff38ec7f89f194aaaa2494440f5cd10819467fe6ac404cd10f3a20c9",
+      "scripts/build_submission.py": "7149f9e6a3bb9f58496634503bcf8242edc701af492022ddbe4c8901fed067e4",
+      "scripts/check_action_readiness.py": "32f1de3878fdfb78d1bf9cf2cd217408e1e13efba649e573a6509f58c624bf2f",
+      "scripts/check_action_runtime.py": "ce58d3521e7bb2b1728dd0cced64945f1c5f7ba9951edaa69e46c9d1b5dfe153",
+      "scripts/check_dashboard.cjs": "92064905399c2b7cd857aa69fe8f85a32ecc387042c8365a1c8ea3221968e2e8",
+      "scripts/check_deliverables.py": "95f95d6fb248f31e20708577b7c23e793f600cf38acae7c1bbd247ef15c6bcfb",
+      "scripts/check_kylin_native.py": "dd6fba20ecf840bed8d3e36ec13bcb18d2fb6d1e9588a678390fc52627a4cd34",
+      "scripts/check_source.py": "9d3debd3913ff1ce3317ee1a2652a6c9a53f66a000b0ac65a8f2af9c13127983",
+      "scripts/compare_retrieval_runs.py": "3f5a26cf2e663960add03abc9b4ed493e6c1112a3516b97733f9bec9a864fb59",
+      "scripts/evaluate_actions.py": "4c2ce726d6e6b17312d4cd59a0817e31ccc5df163e42e3d4853aec2625e20240",
+      "scripts/evaluate_complex_retrieval.py": "0165fbd6a4eb3526b6989f253b9f77436993839863ac0ee27dced0f20b7bbff4",
+      "scripts/evaluate_evidence_development.py": "ddd1404538e0b52a16863719f8755078e0778d5e22da620ab489a0b7c315b3f0",
+      "scripts/evaluate_official.py": "3deee34b0cfb9fc0910af8917628e1eeb1ace2ca6ae4de5dae4503e48a6d9c99",
+      "scripts/evaluate_requests.py": "44f8fd790e9f40c95338cb48c7039d6eed61122c2a70f448e33ccbd8d46439dc",
+      "scripts/evaluate_v3.py": "9947789e90b2f8533162e9bbac182bed69fae1da68f7e0a016b5eacabd4c31b4",
+      "scripts/generate_complex_suite.py": "f8b2d6b858e6b61f820492a0340a9b42d407b717515a34973b285b400c7a60af",
+      "scripts/generate_constraint_suite.py": "d06661c2b5d1d297287b11aab842505cd14d51de4aa2b6624751455422935651",
+      "scripts/generate_eval_v2.py": "8a65f5b9dc9a195ff6e58faa742d304275da96c2c03b94109741a7a28b4192c4",
+      "scripts/generate_eval_v3.py": "feecd2e050b6824957ee4ce6db67f4eedbad899624383e48416137ea49b6e9a8",
+      "scripts/generate_evidence_materials.py": "9603437d4f63591009f9e84ae7bd65eb5a215ba62d49ae642d77b8e2ed289ff1",
+      "scripts/generate_historical_ppt.py": "38c1bc197ee3c7e088c4f94729d811c2296fed328b355bdf9d88bf3537ee22ef",
+      "scripts/generate_ppt.py": "c45a2538a6a88f0f5a27fa20f9c8dacc01f9ef2216c3caaae80953cae0a24238",
+      "scripts/generate_request_suite.py": "62fd7ddbd2ab6f88abc09750b6d92dff15dad71efc0f9869513dde6b205b3b2b",
+      "scripts/generate_review_materials.py": "382dcc4f57d865e4e650b6aa8e2ef77e3e459825b8f61dc662dd1fedbdd2cc92",
+      "scripts/generate_round4_materials.py": "d05563923d27f2afd8c219061465db97f3f578d9ac7dfc604abfaf5240380464",
+      "scripts/generate_round5_materials.py": "3396e27c66be3f791823c1a8ea35d3b81711698cbb997992f7e14b171c85bff4",
+      "scripts/generate_takeover_materials.py": "eb327454ad556d6a949289ccebb4724292cd1d7cbe03ee62a7b81111e85e0f8e",
+      "scripts/generate_technical_doc.py": "bb667ce54e6350ef138d3a444a58b60c58a0cd93563d8a209efa879c36bb3f0c",
+      "scripts/judge_actions.py": "335a8b593ebd42d9d80254cbf6a478f73201dfee754f2a1eae210025f0547434",
+      "scripts/local_judge.py": "59ac4d98bfe3c88ee949ed9f2518eb817c91b1f586acea8f48328e6ba164aa34",
+      "scripts/manage_lab.py": "d010850592c50f72a20dd3e88d516e9b6290125e7428979039d66d35544fe5c2",
+      "scripts/material_status.py": "4e33d8250f3faa45f027dce2169a904079a5c1158b76f1c70928e36be201ebbd",
+      "scripts/memory_tools.py": "4b33d5bc104ecefa890689bea9bc6a295d60291520f95ef8f4732c494d517211",
+      "scripts/run_ablations.py": "4a3bbbd8081fb4d8852f1811c53c98dcb98fc3766c5c3f8826514f2a8fba8ad9",
+      "scripts/run_demo.ps1": "446158a5cba403d49601760bc20184bd819e8a258240e1153a851e1021ebbd47",
+      "scripts/submission_links.py": "052f30b456a6b210e18ec73eb5a782247615abd9c0897f09763d094e7f3cfddc",
+      "scripts/summarize_sdk_risk.py": "82c88104558aa334e432b644a95f7b3bfbcf5073e257c55d2d0a64d5e2dbe10f",
+      "scripts/verify_kylin_guest.py": "bc446308dc2d62226f5d9aab43d68fdec4b6dcbe035312b8157bfe18ce668e69",
+      "scripts/verify_release.py": "4377016835fb51d331dfd7aa741c787f23e74a79986b18285986d7f65bb58372",
+      "src/os_agent_memory/__init__.py": "79789b69ee6e07b5f8d85fa9bc2482fd0973466e67cd0559319791933f79c828",
+      "src/os_agent_memory/action_evaluation.py": "c9d02e234eb224e0315deaf3cc5e572fab27695172901aafa259848a2ec2d64d",
+      "src/os_agent_memory/action_judging.py": "719d6175c394a1a91afc3054c2909de9bcf6bf69e95477c312e962ea4a9d12c1",
+      "src/os_agent_memory/action_readiness.py": "7309867516f4ca5db3875dcc443492cfac781fc8cabbd35ca0252ed60e5edc32",
+      "src/os_agent_memory/benchmark.py": "51b999b9f1dee71228a5c8997b887b85ed46ba4650d831b83ae75c15b3f47a9f",
+      "src/os_agent_memory/bounded_command.py": "31d055c949ebd001575c4f8e994a72c586fdddf104685a688df410b0588429a7",
+      "src/os_agent_memory/cli.py": "9ce63038fdd4b8452c50335d3f9961bae539a2216e96a3e20dac2c09546fe095",
+      "src/os_agent_memory/compatibility.py": "7584c227acb9d349c8428b08cfb0be10d3f6cdc4a54a229ddb126f48e85e9c5f",
+      "src/os_agent_memory/complex_retrieval.py": "9a8d56e829ed883fbc9f758302afd603701e57dec67c0ce7e43f0291e957b6ec",
+      "src/os_agent_memory/dashboard.html": "21121e40ff802713a998c8e83614ee47994d2481d80b027e8033b71ed265adff",
+      "src/os_agent_memory/demo.py": "ad7c3f79e99f81d71cf24d11e73d171cd0de3f5044f756fcd80f94bb6a833bd7",
+      "src/os_agent_memory/diagnostics.py": "6eb90ccdfd24aa6b6200107f3402773933897a9ed83793683210975d6271bcec",
+      "src/os_agent_memory/embeddings.py": "091af84fe0248a826aa524a8a60068c0ae3f03a009b58ce686395ef0ae805d8c",
+      "src/os_agent_memory/evaluation.py": "1007391573b118d4d0e2c694a5e3ca2049738887a3c78fb460b437255fa2cb7a",
+      "src/os_agent_memory/experiments.py": "062e663ce722dbbd6ce72a19d35826bf4911073d76369dca0d07dad82fe113ed",
+      "src/os_agent_memory/file_memory.py": "5f5344995dde200334510ca971aff87de11ceee8d5c216c9cc8c85d1b56a1d88",
+      "src/os_agent_memory/focused_evidence.py": "45a0ff7c990a8c5030cd47f51957741de3a9b28a05ce6dbb6fe87c4258dc73a5",
+      "src/os_agent_memory/ingestion.py": "d89215ccf26e7f1483ac46d4f0ebaa1d80aff425375703cbec4c67b4c08e6428",
+      "src/os_agent_memory/knowledge.py": "6c873d74754bcd8ee7cf447618f741205fbe6edb269ed6e5e0ce8af55276165c",
+      "src/os_agent_memory/kylin_native.py": "689f0bbcb913726640486d57b5b66006610ea922fa5dbc2c768bc0160ba95f9f",
+      "src/os_agent_memory/lifecycle.py": "a6b625f5fbb2f63d82847e11c700da3655881653776c46014f1fd22add919850",
+      "src/os_agent_memory/local_judge.py": "ddf055a281b254ecfd6c033bf988f9a6d2e1110599c6f5a91f52cae629365b97",
+      "src/os_agent_memory/memory_store.py": "544d8d4eacdced0877be8ddd8f48b3aff189576552b0f28be2a79dc68a0799fd",
+      "src/os_agent_memory/memory_tools.py": "e0435da7f8218d3a56b6999aa13297bad41e6298fa2cf1af7947e04aaf71cf39",
+      "src/os_agent_memory/official_contract.py": "28e30e2d9dc58e554851eafc35cb226d14599181a4ba571805d580613a35c487",
+      "src/os_agent_memory/official_diagnostics.py": "8ac8e5f8b19ce1e322c0d949fb24f85baee2b39ca43fd9624a8a75424233551e",
+      "src/os_agent_memory/persistence.py": "015ef646e7018dec550e1c0a72c5a92eb5994cbc99cc838b05779b352d5eda04",
+      "src/os_agent_memory/preference.py": "0ff1cb7cc0d7fd9824c933660c5a158df7043e11a49c246182c64a0185d17ec4",
+      "src/os_agent_memory/provider_config.py": "6059798f8e2d88c268d548c2782fec20916a778f789d7d563986438be5fc0135",
+      "src/os_agent_memory/request_contract.py": "50a2a2cd4c95feba36c6760d94ea83109e5edfa9f079e4e77f4354efd45e9613",
+      "src/os_agent_memory/request_evaluation.py": "eb085e0394506629e309ca83502d3ff28aaa6fdbef865f08536665f64232d45a",
+      "src/os_agent_memory/resources.py": "ee55bb78dd66a91d45e64251713deda25d0dd322f13e471381d1d73fed99f8f9",
+      "src/os_agent_memory/retrieval_evidence.py": "7efaf1a34b1c4b69fefdd5aedca8aa13eb9a14e4d97dd1cb59e8f547fc53bcdb",
+      "src/os_agent_memory/schemas.py": "9c4b0797081da195e4f4de971622113deba789eae4277678b363f0399ec05905",
+      "src/os_agent_memory/security.py": "797751be58e46f8f02f2e87f846616f55063925cede7271d3f1b40253d9a4013",
+      "src/os_agent_memory/service.py": "29cade6f5a87c8884306466a2f65fcff0cc25788e73ea04308d81dad95459a22",
+      "src/os_agent_memory/web_server.py": "d0b1d98044068ca92d4a6dc8205d10222eaa6e3edbbab1eafddc83994ad42d5b",
+      "src/os_agent_memory/workload.py": "087fd76d05267a69650c66fd9d34bee0f18a75149f39b1d8fd12b6e7e4073e22",
+      "tests/judge_fixtures.py": "89c18c8d14820e350c901c834e90b556448ef6d2f0dc2d7302e1d0e590e76464",
+      "tests/test_action_evaluation.py": "7dc3d7a040bd547fa08e189059b340eee341c3cc82e0953e5dcf481f096a8a2a",
+      "tests/test_action_judging.py": "d3d2b2aee4a54524c22e727c5aecaadfc42e4f600a9c8642e4341331be37af80",
+      "tests/test_action_readiness.py": "a9126d9909789940ccaf36a86a94bf5c12a3098d3903fb560570a2905e7f2eed",
+      "tests/test_action_runtime.py": "c4433098fc8218160389ca3fa3722a6ed2f838f20e23da2a2c92fff1cd7246bc",
+      "tests/test_archive_submission.py": "a761d94aec6c3e88ff748d6a4b23d76c62ac251d926ed6b063068b74960f1518",
+      "tests/test_benchmark.py": "b986989c926b9eec3f5723fa339fef2f314df6e0974073850442a6a8e85d8c89",
+      "tests/test_benchmark_entrypoints.py": "f6450b96397c7cf32a8b109130aa2184f9b90a05b7f2892aef2ff477753569b8",
+      "tests/test_bounded_command.py": "298d3cbb10f154171090f9b7c05105c579450f96f4dafc5de09f115f3e6033b8",
+      "tests/test_compatibility.py": "40805211aec804a5f77e301e15e19e4fdcfdfdc5788da4745ae3fcefe29ea6ee",
+      "tests/test_complex_retrieval.py": "65cabe404ba0e564b637508c364eefe340b7026653a603059be294a9027a40b4",
+      "tests/test_constraint_suite.py": "a1c14a41955369d7f02887331f6d9ab67fbdbaa3537050614222277661d6cb8a",
+      "tests/test_cross_session_actions.py": "4990dffab5bd169b3a1183071084868914548da7df645f3644f455b72f523e45",
+      "tests/test_deliverables.py": "152ecba0fdb48365fc45b18d7b6746547c7cefdd1aec920c3e626ea9d2767ab9",
+      "tests/test_diagnostics.py": "e2ed84383c98177f331c6185c9dfe3ec56e81f095284d881c9823460c0582eec",
+      "tests/test_evaluation_v3.py": "88772665a669fc73e09922bd2d0f19c2dab34e2fde1609153e3b9a28455f88ed",
+      "tests/test_evidence_constraints.py": "399640a355d0cc0b478e420f98a7b2fbf28b1bef2726e1914468234f6198eeef",
+      "tests/test_evidence_materials.py": "0bd274912478e893af3908548c43129f08438f7fc993d9ebe0e8708696e5264e",
+      "tests/test_file_memory.py": "09d6a371db277b74438bc49d32a5553f0b6bf91f7b9d48f9192504228f793053",
+      "tests/test_focused_evidence.py": "3e171f16f1934bffc9eba44ee6bf7f9aed70b737aa02f7fc09b567b4c66d8ae9",
+      "tests/test_incremental.py": "4ac642ac17280e553741d2c68024d88ab76f29505ad5f0b15f9114af40f174aa",
+      "tests/test_kylin_guest_verification.py": "b6fcbd104db98bcaad54c80c22b02ad3ff4180eaf8ba1ea5e33c7e1ee73cfc47",
+      "tests/test_kylin_native.py": "5ee745fa0885b708b2b5f5ed51800746beece0ae15df6d5c5d1cb338292c01f8",
+      "tests/test_lab_isolation.py": "3225dd85f73626f3673ebe36e4bdf80e528883636ae98524198800b7d5d5ec73",
+      "tests/test_local_judge.py": "68fdf915ab70ca0f0a5012f36d0fa5b953852f5aebd0671df904ad03f2a26bc2",
+      "tests/test_material_status.py": "b2da9c29eca9af8a39044e693fa87c7de6ddcb267c01daf7d68edc7a760b736d",
+      "tests/test_memory_pipeline.py": "27fccc667158ac6bf24c5d37f9c7e38c70dead6a742fd8b7324ed828269da9ae",
+      "tests/test_memory_tools.py": "8b3828096613f93daa6426f26227337a14e2bf7fb7e2d700f67cd07f80bc9cf6",
+      "tests/test_metric_privacy.py": "ac0b097a768ec7811d0afb7e97e49641c0e41912a81d8c1fadef5a7d2e7d8356",
+      "tests/test_official_contract.py": "d99791db5e95248b371e4e8cb55c8818c4c281e3baead1adbe997d99fc308a5c",
+      "tests/test_official_diagnostics.py": "1e8f6977a47638598470c9f5aa029bcc1fbbe05c848687f9d592f61203e7c2d7",
+      "tests/test_packaging.py": "6163fe53141363b86304b774567e7b70d9f9bb3b747bbac2349f5e62aaef7586",
+      "tests/test_preference_alignment.py": "5f7689a794550e7ce474e68d69e1336b258e037c88c95145677448ae05227589",
+      "tests/test_provider_config.py": "f65095d9b6f53d752b5c54fde9f05d4429502cbba1081cd08dc2f6cda199ca8a",
+      "tests/test_release_verification.py": "b476b8a81e5c0d84ae646d2d80facb110426f9ed7999cf146b1415f04234c384",
+      "tests/test_request_contract.py": "3b406df7cf401a64a57bd524075caa2f964c3298f3fa07fe5a7cfaca700fef56",
+      "tests/test_request_evaluation.py": "48f129d0384e43abe9e7aaa5704c1db9bb5a2698eb996a2a72bc8054871283b0",
+      "tests/test_request_quality.py": "1a8177eb7a3722fe23953714df3a04054c4b06af59db4cd29f37f72d932e2915",
+      "tests/test_retrieval_comparison.py": "0e779ffde198edb368ad7b7c29062cc11407e80e01f8edafdec74359288c39a4",
+      "tests/test_retrieval_evidence.py": "f41b211b7b648d1af2d1974bb48bfee59a9a1dd7d898ec8fbab2a07e498ccc5a",
+      "tests/test_retrieval_hard_cases.py": "bf1972fc8e20a4bcb18f3093e01a423fe2449884febf169a3ee4f9bb7b6575a3",
+      "tests/test_retrieval_optimization.py": "ce86f497a9e4bb5b11f140c1396b2fd4ba91674769dfaeddd632cc595da00fcf",
+      "tests/test_review_materials.py": "ab8a84d8e65270d2d24deacd978c72a4a69b1eb935754f24bfefb160af0dcfe7",
+      "tests/test_round2.py": "77fb6527572f88f22da346fa0be5bf4311bc849877e535a549161d29167f67fc",
+      "tests/test_sdk_risk.py": "a88bfa65430268c58e7271361e4d7c453ffff9e529b7733b4eb2383c69cce08e",
+      "tests/test_security_adversarial.py": "8566d5c8eedd5e8b89d4f75a8256522f03986ffeed918fddab19e938b1d9e622",
+      "tests/test_submission_links.py": "b55a2f2357bd166002c191cc4395fa31f9a9aa795cfa6bb944ba4197732c2295",
+      "tests/test_takeover_materials.py": "2f0e6955e8da566da896b76a0a909b95464af7caa0ef5d82b0bcfd7bb8acffe6",
+      "tests/test_web_server.py": "5f13e57d867e32d913d78a203be5c64ec2dee6828a6abedc883c889096673413",
+      "tests/test_workload.py": "4ed3380b85586e4f21ea6335ffd701f6e24f0179eed8ccd6b3780ea71e043302"
+    },
+    "normalization": "CRLF to LF only; no other bytes changed",
+    "excluded_generated_outputs": [
+      "data/eval/latest_report.json"
+    ]
+  },
+  "source_unchanged_during_run": true,
+  "profiles": [
+    {
+      "evidence_policy": "similarity",
+      "summary": {
+        "requests": 20,
+        "positive_requests": 10,
+        "no_answer_requests": 10,
+        "scope_requests": 0,
+        "errors": 0,
+        "macro_recall_at_3": 1.0,
+        "precision_at_3": 0.3333333333333333,
+        "mrr_at_3": 1.0,
+        "ndcg_at_3": 1.0,
+        "full_evidence_correct": 10,
+        "full_evidence_accuracy": 1.0,
+        "no_answer_correct": 3,
+        "no_answer_accuracy": 0.3,
+        "false_answers": 7,
+        "false_answer_rate": 0.7,
+        "irrelevant_returned": 8,
+        "positive_results_returned": 18,
+        "distractor_return_rate": 0.4444444444444444,
+        "scope_empty_correct": 0,
+        "leak_requests": 0,
+        "leaked_records": 0,
+        "p50_ms": 0.6602999928873032,
+        "p95_ms": 0.945699997828342,
+        "p99_ms": 1.1713999992934987,
+        "max_ms": 1.1713999992934987,
+        "latency_valid": true,
+        "failed_ids": [
+          "scale-3",
+          "attachment-3",
+          "attachment-4",
+          "clock-3",
+          "clock-4",
+          "english-3",
+          "english-4"
+        ]
+      },
+      "rows": [
+        {
+          "id": "scale-1",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "positive",
+          "query": "计量台CAL-B9校准前静置多久，用标准砝码进行几次测量",
+          "expected": [
+            "scale-operation"
+          ],
+          "returned": [
+            "scale-operation"
+          ],
+          "scores": [
+            0.5733
+          ],
+          "evidence": [
+            {}
+          ],
+          "elapsed_ms": 0.7458999898517504,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 0,
+          "passed": true
+        },
+        {
+          "id": "scale-2",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "positive",
+          "query": "计量台CAL-B9三次读数偏差超过0.2克时怎样处理，是否保留原始读数",
+          "expected": [
+            "scale-evidence"
+          ],
+          "returned": [
+            "scale-evidence",
+            "scale-operation"
+          ],
+          "scores": [
+            0.5263,
+            0.2898
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.6095999997342005,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "scale-3",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "计量台CAL-B9的标准砝码采购单价和供应商税号是什么",
+          "expected": [],
+          "returned": [
+            "scale-operation"
+          ],
+          "scores": [
+            0.3333
+          ],
+          "evidence": [
+            {}
+          ],
+          "elapsed_ms": 0.7317999989027157,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": false
+        },
+        {
+          "id": "scale-4",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "计量台CAL-B9的长期精度漂移保证和终身赔付额度是多少",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 1.1713999992934987,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "attachment-1",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "positive",
+          "query": "维修工单附件怎样去掉人员姓名和设备口令，原件保存在什么目录",
+          "expected": [
+            "attachment-operation"
+          ],
+          "returned": [
+            "attachment-operation",
+            "attachment-evidence"
+          ],
+          "scores": [
+            0.6155,
+            0.2742
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.945699997828342,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "attachment-2",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "positive",
+          "query": "维修工单附件上传后检查哪些内容，口令残留时怎样撤销分享链接",
+          "expected": [
+            "attachment-evidence"
+          ],
+          "returned": [
+            "attachment-evidence",
+            "attachment-operation"
+          ],
+          "scores": [
+            0.5323,
+            0.2915
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.9334999922430143,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "attachment-3",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "维修工单附件的图像压缩算法专利归属和授权费用是多少",
+          "expected": [],
+          "returned": [
+            "attachment-operation"
+          ],
+          "scores": [
+            0.2972
+          ],
+          "evidence": [
+            {}
+          ],
+          "elapsed_ms": 0.8018999942578375,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": false
+        },
+        {
+          "id": "attachment-4",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "维修工单附件上传到境外机房的电费分摊比例是多少",
+          "expected": [],
+          "returned": [
+            "attachment-evidence",
+            "attachment-operation"
+          ],
+          "scores": [
+            0.2798,
+            0.2733
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.7506999972974882,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": false
+        },
+        {
+          "id": "keys-1",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "positive",
+          "query": "设备间钥匙领取时需出示什么工单，借用时间由谁登记",
+          "expected": [
+            "keys-operation"
+          ],
+          "returned": [
+            "keys-operation"
+          ],
+          "scores": [
+            0.5423
+          ],
+          "evidence": [
+            {}
+          ],
+          "elapsed_ms": 0.8776000031502917,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 0,
+          "passed": true
+        },
+        {
+          "id": "keys-2",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "positive",
+          "query": "设备间钥匙交回后怎样核对门号和数量，钥匙缺失通知谁",
+          "expected": [
+            "keys-evidence"
+          ],
+          "returned": [
+            "keys-evidence",
+            "keys-operation"
+          ],
+          "scores": [
+            0.5686,
+            0.4041
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.8177999989129603,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "keys-3",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "设备间钥匙材料的热膨胀系数和冶炼温度是多少",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 0.5058999959146604,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "keys-4",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "设备间钥匙丢失后的商业保险承保金额与免责条款是什么",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 0.4952000017510727,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "clock-1",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "positive",
+          "query": "测量站时钟源变更前如何暂停采样和保存偏移，何时先校正",
+          "expected": [
+            "clock-operation"
+          ],
+          "returned": [
+            "clock-operation",
+            "clock-evidence"
+          ],
+          "scores": [
+            0.5397,
+            0.419
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.5691999976988882,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "clock-2",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "positive",
+          "query": "测量站时钟源切换后时间戳倒序时怎样恢复并保留告警记录",
+          "expected": [
+            "clock-evidence"
+          ],
+          "returned": [
+            "clock-evidence",
+            "clock-operation"
+          ],
+          "scores": [
+            0.6064,
+            0.3299
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.5407999997260049,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "clock-3",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "测量站时钟源的卫星轨道倾角和地面天线采购预算是什么",
+          "expected": [],
+          "returned": [
+            "clock-evidence",
+            "clock-operation"
+          ],
+          "scores": [
+            0.2824,
+            0.2785
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.5512000061571598,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": false
+        },
+        {
+          "id": "clock-4",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "测量站时钟源的供应商破产后保证金清算日期是什么",
+          "expected": [],
+          "returned": [
+            "clock-operation",
+            "clock-evidence"
+          ],
+          "scores": [
+            0.2814,
+            0.2779
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.5619000003207475,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": false
+        },
+        {
+          "id": "english-1",
+          "scenario": "english",
+          "category": "development",
+          "kind": "positive",
+          "query": "What inventory and reviewers are required for Laboratory cabinet handover",
+          "expected": [
+            "english-operation"
+          ],
+          "returned": [
+            "english-operation",
+            "english-evidence"
+          ],
+          "scores": [
+            0.716,
+            0.6346
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.7329000072786584,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "english-2",
+          "scenario": "english",
+          "category": "development",
+          "kind": "positive",
+          "query": "After Laboratory cabinet handover how should missing containers and a count mismatch be recorded",
+          "expected": [
+            "english-evidence"
+          ],
+          "returned": [
+            "english-evidence",
+            "english-operation"
+          ],
+          "scores": [
+            0.7596,
+            0.5929
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.6067000067560002,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "english-3",
+          "scenario": "english",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "What is the patented thermal insulation coefficient of the Laboratory cabinet handover equipment",
+          "expected": [],
+          "returned": [
+            "english-evidence",
+            "english-operation"
+          ],
+          "scores": [
+            0.5827,
+            0.5695
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.6602999928873032,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": false
+        },
+        {
+          "id": "english-4",
+          "scenario": "english",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "Which insurance settlement currency covers bankruptcy during Laboratory cabinet handover",
+          "expected": [],
+          "returned": [
+            "english-evidence",
+            "english-operation"
+          ],
+          "scores": [
+            0.546,
+            0.5277
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.6181000062497333,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "evidence_policy": "content_coverage_v1",
+      "summary": {
+        "requests": 20,
+        "positive_requests": 10,
+        "no_answer_requests": 10,
+        "scope_requests": 0,
+        "errors": 0,
+        "macro_recall_at_3": 1.0,
+        "precision_at_3": 0.3333333333333333,
+        "mrr_at_3": 1.0,
+        "ndcg_at_3": 1.0,
+        "full_evidence_correct": 10,
+        "full_evidence_accuracy": 1.0,
+        "no_answer_correct": 10,
+        "no_answer_accuracy": 1.0,
+        "false_answers": 0,
+        "false_answer_rate": 0.0,
+        "irrelevant_returned": 8,
+        "positive_results_returned": 18,
+        "distractor_return_rate": 0.4444444444444444,
+        "scope_empty_correct": 0,
+        "leak_requests": 0,
+        "leaked_records": 0,
+        "p50_ms": 0.8582000009482726,
+        "p95_ms": 1.0454000002937391,
+        "p99_ms": 1.075799998943694,
+        "max_ms": 1.075799998943694,
+        "latency_valid": true,
+        "failed_ids": []
+      },
+      "rows": [
+        {
+          "id": "scale-1",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "positive",
+          "query": "计量台CAL-B9校准前静置多久，用标准砝码进行几次测量",
+          "expected": [
+            "scale-operation"
+          ],
+          "returned": [
+            "scale-operation"
+          ],
+          "scores": [
+            0.5733
+          ],
+          "evidence": [
+            {}
+          ],
+          "elapsed_ms": 0.7660999981453642,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 0,
+          "passed": true
+        },
+        {
+          "id": "scale-2",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "positive",
+          "query": "计量台CAL-B9三次读数偏差超过0.2克时怎样处理，是否保留原始读数",
+          "expected": [
+            "scale-evidence"
+          ],
+          "returned": [
+            "scale-evidence",
+            "scale-operation"
+          ],
+          "scores": [
+            0.5263,
+            0.2898
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.752799998736009,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "scale-3",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "计量台CAL-B9的标准砝码采购单价和供应商税号是什么",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 0.5664000054821372,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "scale-4",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "计量台CAL-B9的长期精度漂移保证和终身赔付额度是多少",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 0.46070000098552555,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "attachment-1",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "positive",
+          "query": "维修工单附件怎样去掉人员姓名和设备口令，原件保存在什么目录",
+          "expected": [
+            "attachment-operation"
+          ],
+          "returned": [
+            "attachment-operation",
+            "attachment-evidence"
+          ],
+          "scores": [
+            0.6155,
+            0.2742
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.6990999972913414,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "attachment-2",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "positive",
+          "query": "维修工单附件上传后检查哪些内容，口令残留时怎样撤销分享链接",
+          "expected": [
+            "attachment-evidence"
+          ],
+          "returned": [
+            "attachment-evidence",
+            "attachment-operation"
+          ],
+          "scores": [
+            0.5323,
+            0.2915
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 1.0036999883595854,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "attachment-3",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "维修工单附件的图像压缩算法专利归属和授权费用是多少",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 1.043199998093769,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "attachment-4",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "维修工单附件上传到境外机房的电费分摊比例是多少",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 0.7994000043254346,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "keys-1",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "positive",
+          "query": "设备间钥匙领取时需出示什么工单，借用时间由谁登记",
+          "expected": [
+            "keys-operation"
+          ],
+          "returned": [
+            "keys-operation"
+          ],
+          "scores": [
+            0.5423
+          ],
+          "evidence": [
+            {}
+          ],
+          "elapsed_ms": 0.825099996291101,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 0,
+          "passed": true
+        },
+        {
+          "id": "keys-2",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "positive",
+          "query": "设备间钥匙交回后怎样核对门号和数量，钥匙缺失通知谁",
+          "expected": [
+            "keys-evidence"
+          ],
+          "returned": [
+            "keys-evidence",
+            "keys-operation"
+          ],
+          "scores": [
+            0.5686,
+            0.4041
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.8648000075481832,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "keys-3",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "设备间钥匙材料的热膨胀系数和冶炼温度是多少",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 0.6450000073527917,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "keys-4",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "设备间钥匙丢失后的商业保险承保金额与免责条款是什么",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 0.8582000009482726,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "clock-1",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "positive",
+          "query": "测量站时钟源变更前如何暂停采样和保存偏移，何时先校正",
+          "expected": [
+            "clock-operation"
+          ],
+          "returned": [
+            "clock-operation",
+            "clock-evidence"
+          ],
+          "scores": [
+            0.5397,
+            0.419
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 1.0454000002937391,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "clock-2",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "positive",
+          "query": "测量站时钟源切换后时间戳倒序时怎样恢复并保留告警记录",
+          "expected": [
+            "clock-evidence"
+          ],
+          "returned": [
+            "clock-evidence",
+            "clock-operation"
+          ],
+          "scores": [
+            0.6064,
+            0.3299
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.981699995463714,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "clock-3",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "测量站时钟源的卫星轨道倾角和地面天线采购预算是什么",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 0.9353000059491023,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "clock-4",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "测量站时钟源的供应商破产后保证金清算日期是什么",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 0.9055999980773777,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "english-1",
+          "scenario": "english",
+          "category": "development",
+          "kind": "positive",
+          "query": "What inventory and reviewers are required for Laboratory cabinet handover",
+          "expected": [
+            "english-operation"
+          ],
+          "returned": [
+            "english-operation",
+            "english-evidence"
+          ],
+          "scores": [
+            0.716,
+            0.6346
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 0.9332000045105815,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "english-2",
+          "scenario": "english",
+          "category": "development",
+          "kind": "positive",
+          "query": "After Laboratory cabinet handover how should missing containers and a count mismatch be recorded",
+          "expected": [
+            "english-evidence"
+          ],
+          "returned": [
+            "english-evidence",
+            "english-operation"
+          ],
+          "scores": [
+            0.7596,
+            0.5929
+          ],
+          "evidence": [
+            {},
+            {}
+          ],
+          "elapsed_ms": 1.075799998943694,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "english-3",
+          "scenario": "english",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "What is the patented thermal insulation coefficient of the Laboratory cabinet handover equipment",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 0.9940999880200252,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "english-4",
+          "scenario": "english",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "Which insurance settlement currency covers bankruptcy during Laboratory cabinet handover",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 0.6703999970341101,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "evidence_policy": "focused_evidence_v2",
+      "summary": {
+        "requests": 20,
+        "positive_requests": 10,
+        "no_answer_requests": 10,
+        "scope_requests": 0,
+        "errors": 0,
+        "macro_recall_at_3": 1.0,
+        "precision_at_3": 0.3333333333333333,
+        "mrr_at_3": 1.0,
+        "ndcg_at_3": 1.0,
+        "full_evidence_correct": 10,
+        "full_evidence_accuracy": 1.0,
+        "no_answer_correct": 10,
+        "no_answer_accuracy": 1.0,
+        "false_answers": 0,
+        "false_answer_rate": 0.0,
+        "irrelevant_returned": 10,
+        "positive_results_returned": 20,
+        "distractor_return_rate": 0.5,
+        "scope_empty_correct": 0,
+        "leak_requests": 0,
+        "leaked_records": 0,
+        "p50_ms": 1.8705999973462895,
+        "p95_ms": 3.705499999341555,
+        "p99_ms": 3.867599996738136,
+        "max_ms": 3.867599996738136,
+        "latency_valid": true,
+        "failed_ids": []
+      },
+      "rows": [
+        {
+          "id": "scale-1",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "positive",
+          "query": "计量台CAL-B9校准前静置多久，用标准砝码进行几次测量",
+          "expected": [
+            "scale-operation"
+          ],
+          "returned": [
+            "scale-operation",
+            "scale-evidence"
+          ],
+          "scores": [
+            0.762,
+            0.762
+          ],
+          "evidence": [
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.762,
+              "origin": "direct",
+              "seed_id": "scale-operation",
+              "coverage": 1.0,
+              "document_score": 0.5733,
+              "passage_score": 0.762
+            },
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.2454,
+              "origin": "subject_companion",
+              "seed_id": "scale-operation",
+              "coverage": 1.0,
+              "document_score": 0.2454,
+              "passage_score": 0.2454
+            }
+          ],
+          "elapsed_ms": 2.1326999994926155,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "scale-2",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "positive",
+          "query": "计量台CAL-B9三次读数偏差超过0.2克时怎样处理，是否保留原始读数",
+          "expected": [
+            "scale-evidence"
+          ],
+          "returned": [
+            "scale-evidence",
+            "scale-operation"
+          ],
+          "scores": [
+            0.5263,
+            0.5263
+          ],
+          "evidence": [
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.5263,
+              "origin": "direct",
+              "seed_id": "scale-evidence",
+              "coverage": 0.75,
+              "document_score": 0.5263,
+              "passage_score": 0.5263
+            },
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.2898,
+              "origin": "subject_companion",
+              "seed_id": "scale-evidence",
+              "coverage": 0.75,
+              "document_score": 0.2898,
+              "passage_score": 0.2898
+            }
+          ],
+          "elapsed_ms": 2.8553000011015683,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "scale-3",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "计量台CAL-B9的标准砝码采购单价和供应商税号是什么",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 1.8128999945474789,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "scale-4",
+          "scenario": "scale",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "计量台CAL-B9的长期精度漂移保证和终身赔付额度是多少",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 1.2461000005714595,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "attachment-1",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "positive",
+          "query": "维修工单附件怎样去掉人员姓名和设备口令，原件保存在什么目录",
+          "expected": [
+            "attachment-operation"
+          ],
+          "returned": [
+            "attachment-operation",
+            "attachment-evidence"
+          ],
+          "scores": [
+            0.6155,
+            0.6155
+          ],
+          "evidence": [
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.6155,
+              "origin": "direct",
+              "seed_id": "attachment-operation",
+              "coverage": 1.0,
+              "document_score": 0.6155,
+              "passage_score": 0.6155
+            },
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.2742,
+              "origin": "subject_companion",
+              "seed_id": "attachment-operation",
+              "coverage": 1.0,
+              "document_score": 0.2742,
+              "passage_score": 0.2742
+            }
+          ],
+          "elapsed_ms": 2.2683999995933846,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "attachment-2",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "positive",
+          "query": "维修工单附件上传后检查哪些内容，口令残留时怎样撤销分享链接",
+          "expected": [
+            "attachment-evidence"
+          ],
+          "returned": [
+            "attachment-evidence",
+            "attachment-operation"
+          ],
+          "scores": [
+            0.5563,
+            0.5563
+          ],
+          "evidence": [
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.5563,
+              "origin": "direct",
+              "seed_id": "attachment-evidence",
+              "coverage": 0.8333,
+              "document_score": 0.5323,
+              "passage_score": 0.5563
+            },
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.3615,
+              "origin": "subject_companion",
+              "seed_id": "attachment-evidence",
+              "coverage": 0.8333,
+              "document_score": 0.2915,
+              "passage_score": 0.3615
+            }
+          ],
+          "elapsed_ms": 3.1792999943718314,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "attachment-3",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "维修工单附件的图像压缩算法专利归属和授权费用是多少",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 1.6075000021373853,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "attachment-4",
+          "scenario": "attachment",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "维修工单附件上传到境外机房的电费分摊比例是多少",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 1.1913000053027645,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "keys-1",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "positive",
+          "query": "设备间钥匙领取时需出示什么工单，借用时间由谁登记",
+          "expected": [
+            "keys-operation"
+          ],
+          "returned": [
+            "keys-operation",
+            "keys-evidence"
+          ],
+          "scores": [
+            0.6508,
+            0.6508
+          ],
+          "evidence": [
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.6508,
+              "origin": "direct",
+              "seed_id": "keys-operation",
+              "coverage": 1.0,
+              "document_score": 0.5423,
+              "passage_score": 0.6508
+            },
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.232,
+              "origin": "subject_companion",
+              "seed_id": "keys-operation",
+              "coverage": 1.0,
+              "document_score": 0.232,
+              "passage_score": 0.232
+            }
+          ],
+          "elapsed_ms": 1.6327000048477203,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "keys-2",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "positive",
+          "query": "设备间钥匙交回后怎样核对门号和数量，钥匙缺失通知谁",
+          "expected": [
+            "keys-evidence"
+          ],
+          "returned": [
+            "keys-evidence",
+            "keys-operation"
+          ],
+          "scores": [
+            0.5686,
+            0.5686
+          ],
+          "evidence": [
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.5686,
+              "origin": "direct",
+              "seed_id": "keys-evidence",
+              "coverage": 1.0,
+              "document_score": 0.5686,
+              "passage_score": 0.5686
+            },
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.4041,
+              "origin": "subject_companion",
+              "seed_id": "keys-evidence",
+              "coverage": 1.0,
+              "document_score": 0.4041,
+              "passage_score": 0.4041
+            }
+          ],
+          "elapsed_ms": 2.5462000048719347,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "keys-3",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "设备间钥匙材料的热膨胀系数和冶炼温度是多少",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 3.705499999341555,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "keys-4",
+          "scenario": "keys",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "设备间钥匙丢失后的商业保险承保金额与免责条款是什么",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 1.7010999872582033,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "clock-1",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "positive",
+          "query": "测量站时钟源变更前如何暂停采样和保存偏移，何时先校正",
+          "expected": [
+            "clock-operation"
+          ],
+          "returned": [
+            "clock-operation",
+            "clock-evidence"
+          ],
+          "scores": [
+            0.5397,
+            0.5397
+          ],
+          "evidence": [
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.5397,
+              "origin": "direct",
+              "seed_id": "clock-operation",
+              "coverage": 0.9231,
+              "document_score": 0.5397,
+              "passage_score": 0.5397
+            },
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.419,
+              "origin": "subject_companion",
+              "seed_id": "clock-operation",
+              "coverage": 0.9231,
+              "document_score": 0.419,
+              "passage_score": 0.419
+            }
+          ],
+          "elapsed_ms": 2.4643000069772825,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "clock-2",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "positive",
+          "query": "测量站时钟源切换后时间戳倒序时怎样恢复并保留告警记录",
+          "expected": [
+            "clock-evidence"
+          ],
+          "returned": [
+            "clock-evidence",
+            "clock-operation"
+          ],
+          "scores": [
+            0.6064,
+            0.6064
+          ],
+          "evidence": [
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.6064,
+              "origin": "direct",
+              "seed_id": "clock-evidence",
+              "coverage": 1.0,
+              "document_score": 0.6064,
+              "passage_score": 0.6064
+            },
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.3299,
+              "origin": "subject_companion",
+              "seed_id": "clock-evidence",
+              "coverage": 1.0,
+              "document_score": 0.3299,
+              "passage_score": 0.3299
+            }
+          ],
+          "elapsed_ms": 2.330300005269237,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "clock-3",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "测量站时钟源的卫星轨道倾角和地面天线采购预算是什么",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 1.7908000008901581,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "clock-4",
+          "scenario": "clock",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "测量站时钟源的供应商破产后保证金清算日期是什么",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 1.532000009319745,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "english-1",
+          "scenario": "english",
+          "category": "development",
+          "kind": "positive",
+          "query": "What inventory and reviewers are required for Laboratory cabinet handover",
+          "expected": [
+            "english-operation"
+          ],
+          "returned": [
+            "english-operation",
+            "english-evidence"
+          ],
+          "scores": [
+            0.716,
+            0.716
+          ],
+          "evidence": [
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.716,
+              "origin": "direct",
+              "seed_id": "english-operation",
+              "coverage": 0.6667,
+              "document_score": 0.716,
+              "passage_score": 0.716
+            },
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.6346,
+              "origin": "subject_companion",
+              "seed_id": "english-operation",
+              "coverage": 0.6667,
+              "document_score": 0.6346,
+              "passage_score": 0.6346
+            }
+          ],
+          "elapsed_ms": 1.6121999942697585,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "english-2",
+          "scenario": "english",
+          "category": "development",
+          "kind": "positive",
+          "query": "After Laboratory cabinet handover how should missing containers and a count mismatch be recorded",
+          "expected": [
+            "english-evidence"
+          ],
+          "returned": [
+            "english-evidence",
+            "english-operation"
+          ],
+          "scores": [
+            0.7596,
+            0.7596
+          ],
+          "evidence": [
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.7596,
+              "origin": "direct",
+              "seed_id": "english-evidence",
+              "coverage": 0.8333,
+              "document_score": 0.7596,
+              "passage_score": 0.7596
+            },
+            {
+              "policy": "focused_evidence_v2",
+              "direct_score": 0.5929,
+              "origin": "subject_companion",
+              "seed_id": "english-evidence",
+              "coverage": 0.8333,
+              "document_score": 0.5929,
+              "passage_score": 0.5929
+            }
+          ],
+          "elapsed_ms": 2.4766999995335937,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": 1.0,
+          "precision_at_3": 0.3333333333333333,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0,
+          "irrelevant_returned": 1,
+          "passed": true
+        },
+        {
+          "id": "english-3",
+          "scenario": "english",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "What is the patented thermal insulation coefficient of the Laboratory cabinet handover equipment",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 3.867599996738136,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        },
+        {
+          "id": "english-4",
+          "scenario": "english",
+          "category": "development",
+          "kind": "no_answer",
+          "query": "Which insurance settlement currency covers bankruptcy during Laboratory cabinet handover",
+          "expected": [],
+          "returned": [],
+          "scores": [],
+          "evidence": [],
+          "elapsed_ms": 1.8705999973462895,
+          "error_type": null,
+          "invalid_ids": [],
+          "recall_at_3": null,
+          "precision_at_3": null,
+          "mrr_at_3": 0.0,
+          "ndcg_at_3": null,
+          "irrelevant_returned": null,
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "competition_ready": false,
+  "independent_blind": false,
+  "limitations": [
+    "Visible development requests, not production incidents or generalization evidence.",
+    "Lexical coverage is not relation entailment or negation reasoning.",
+    "v1 only abstains. v2 changes query focus and evidence selection; bundle scores are not direct similarities.",
+    "The fixed .265 threshold gates direct seeds; a companion carries its seed's bundle relevance."
+  ]
+}
