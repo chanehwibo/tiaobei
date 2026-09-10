@@ -16,8 +16,8 @@ from os_agent_memory.complex_retrieval import (
     grouped_summaries, make_corpus, score_request, strict_quality_passed, summarize_rows, validate_suite, visible,
 )
 from os_agent_memory.focused_evidence import (
-    POLICY as FOCUSED_EVIDENCE, bundle_supported, is_answer_request, normalize_quantities, query_focus, subject_key,
-    support_coverage, support_focus,
+    POLICY as FOCUSED_EVIDENCE, bundle_supported, focus_request, is_answer_request, subject_key,
+    preserve_subject_text, support_coverage, support_focus,
 )
 from os_agent_memory.memory_store import MemoryStore, _normalize_search_text
 from os_agent_memory.retrieval_evidence import MIN_COVERAGE, POLICIES, content_coverage
@@ -50,8 +50,16 @@ def validate_evidence_row(query, row, documents, policy, *, constrained=False, r
         return
     fields = [tuple(_normalize_search_text(documents[key][field]).lower()
                     for field in ("title", "content")) for key in row["returned"]]
-    text = normalize_quantities(query_focus(_normalize_search_text(query["query"]))).lower()
     constraints = MemoryStore._evidence_constraints(query.get("required_terms")) if constrained else []
+    request = focus_request(_normalize_search_text(query["query"]), explicit_terms=bool(constraints))
+    if request.ambiguous or not request.text:
+        raise ValueError("ambiguous or empty focused request cannot claim answer evidence")
+    if not constraints:
+        constraints = MemoryStore._evidence_constraints(request.subject_terms)
+    text = preserve_subject_text(_normalize_search_text(query["query"]), request.text, constraints).lower()
+    if any(not all(any(pattern.search(field) for field in document) for _term, pattern in constraints)
+           for document in fields):
+        raise ValueError("returned record violates request subject identity")
     if not bundle_supported(text, fields, constraints=constraints):
         raise ValueError("returned set violates focused evidence support")
     coverage = round(support_coverage(support_focus(text), fields, constraints=constraints), 4)

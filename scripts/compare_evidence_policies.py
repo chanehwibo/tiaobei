@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "src")]
 from os_agent_memory.complex_retrieval import COMPLETION_THRESHOLDS, SUITES
 from os_agent_memory.embeddings import HashEmbedding
-from os_agent_memory.focused_evidence import POLICY
+from os_agent_memory.focused_evidence import POLICY, SUBJECT_BOUNDARY
 from os_agent_memory.provider_config import provider_identity
 from os_agent_memory.retrieval_evidence import POLICIES
 from scripts.compare_retrieval_runs import validate_report
@@ -90,6 +90,7 @@ def compare_policies(report, *, root=ROOT, sizes=(1000, 10000), hard_fractions=(
         "quality_thresholds": {"macro_recall_at_3": .85, "no_answer_accuracy": .85, "p95_ms": 500},
         "completion_thresholds": dict(COMPLETION_THRESHOLDS), "evidence_policies": list(POLICIES),
         "v2_score_boundary": "direct seed >= min_score; exact-subject companions carry seed bundle relevance",
+        "v2_subject_boundary": SUBJECT_BOUNDARY,
         **({"constraint_modes": [use_constraints],
             "constraint_source": "explicit input terms; never generated from relevance labels"}
            if name == "complex_constraints_v1" else {}),

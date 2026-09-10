@@ -20,7 +20,7 @@ class FocusedEvidenceReportTest(unittest.TestCase):
         cls.suite = json.loads((ROOT / CONSTRAINT_SUITE_PATH).read_bytes())
         cls.report = run_complex_evaluation(
             ROOT, suite_name="complex_constraints_v1", sizes=(78,), hard_fractions=(0,),
-            rounds=1, constraint_modes=(True,),
+            rounds=1, constraint_modes=(False, True),
         )
 
     def test_recounts_complete_evidence_separately_from_average_recall(self):
@@ -48,6 +48,16 @@ class FocusedEvidenceReportTest(unittest.TestCase):
         self.assertTrue(self.report["strict_quality_targets_met"])
         self.assertFalse(self.report["independent_blind"])
         self.assertFalse(self.report["competition_ready"])
+
+    def test_unfiltered_report_cannot_substitute_a_near_subject(self):
+        report = deepcopy(self.report)
+        profile = report["profiles"][0]
+        self.assertFalse(profile["required_terms_enabled"])
+        row = next(row for row in profile["rounds"][0]["rows"] if row["id"] == "failover-q2")
+        index = row["returned"].index("failover-main")
+        row["returned"][index] = "failover-near-entity"
+        with self.assertRaisesRegex(ValueError, "subject identity"):
+            validate_report(report, self.suite)
 
     def test_missing_or_forged_metadata_completion_and_threshold_are_rejected(self):
         for field in ("seed", "score", "coverage", "missing", "completion", "threshold", "strict"):

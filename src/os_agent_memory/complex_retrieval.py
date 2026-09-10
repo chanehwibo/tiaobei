@@ -17,6 +17,7 @@ from .resources import resource_snapshot, resource_usage
 from .schemas import KnowledgeMemory, MemoryStatus
 from .service import MemoryService
 from .memory_store import MemoryStore, _normalize_search_text
+from .focused_evidence import SUBJECT_BOUNDARY
 from .retrieval_evidence import DEFAULT_POLICY, MIN_COVERAGE, POLICIES
 
 FROZEN_SHA256 = "04b9a5266535e40a4542ae4647a4bba51aabf8edc32bd3a169713a4c4c1f2212"
@@ -353,6 +354,7 @@ def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .7
             "completion_thresholds": dict(COMPLETION_THRESHOLDS),
             "evidence_policies": list(evidence_policies),
             "v2_score_boundary": "direct seed >= min_score; exact-subject companions carry seed bundle relevance",
+            "v2_subject_boundary": SUBJECT_BOUNDARY,
             **({"constraint_modes": list(constraint_modes),
                 "constraint_source": "explicit input terms; never generated from relevance labels"}
                if suite_name != "complex_retrieval_v1" else {}),
@@ -369,5 +371,6 @@ def run_complex_evaluation(root, *, sizes=(1000, 10000), hard_fractions=(0.0, .7
             "RSS is current process; high-water mark covers process lifetime and excludes external model servers.",
             "Optional content_coverage_v1 is lexical abstention, not entailment; it can reject supported paraphrases.",
             "focused_evidence_v2 uses lexical support and exact-title section links, not semantic entailment.",
+            "Disabling explicit constraints does not disable v2's query-derived literal subject preservation.",
         ],
     }

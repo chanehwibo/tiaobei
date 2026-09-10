@@ -64,6 +64,19 @@ class EvidencePolicyComparisonTest(unittest.TestCase):
         self.assertTrue(result["rows"][0]["reference"]["failed_ids"])
         self.assertEqual(result["rows"][0]["candidate"]["failed_ids"], [])
 
+    def test_constraints_off_keeps_the_same_strict_nonregression_gates(self):
+        with patch.dict(os.environ, {"PYTHONHASHSEED": "0"}):
+            report = run_complex_evaluation(
+                ROOT, suite_name="complex_constraints_v1", sizes=(78,), hard_fractions=(0,),
+                rounds=1, constraint_modes=(False,), evidence_policies=POLICIES,
+            )
+        result = compare_policies(report, sizes=(78,), hard_fractions=(0,), rounds=1, use_constraints=False)
+        self.assertTrue(result["optimization_gates_passed"])
+        self.assertFalse(result["rows"][0]["required_terms_enabled"])
+        self.assertEqual(result["paired_request_count_per_reference"], 48)
+        with self.assertRaises(ValueError):
+            self.compare(report)
+
     def test_missing_profiles_policies_rounds_or_grouped_results_are_rejected(self):
         for kind in ("profile", "policy", "round", "group", "dimensions", "constraints", "provider"):
             report = deepcopy(self.report)

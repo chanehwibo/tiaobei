@@ -6,6 +6,7 @@ Neither relevance labels, record IDs, tags nor source IDs participate in it.
 from __future__ import annotations
 
 from collections import defaultdict
+from dataclasses import dataclass
 import re
 
 from .retrieval_evidence import MIN_COVERAGE, PARTICLES, PARTS, CJK, QUESTION_WORDS, _features
@@ -57,6 +58,31 @@ PREREQUISITE_BODY = re.compile(
     r"\b(?:only if|provided that|preconditions|prerequisites)\b"
 )
 DIRECTIVE = re.compile(r"(?:^|[,\uff0c;\uff1b\u3002.!?\n])\s*(?:\u8bf7|\u67e5(?:\u8be2)?)")
+LITERAL_TOKEN = re.compile(r"(?<![a-z0-9_.-])[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*(?![a-z0-9_-]|\.[a-z0-9])")
+VERSION_TOKEN = re.compile(
+    r"(?:(?:v|rev|r)[0-9]+|(?:[a-z][a-z0-9]*-)+(?:v|rev)[0-9]+)"
+    r"(?:\.[0-9]+)*(?:[-_][a-z0-9]+)*"
+)
+EXCLUDED_REFERENCE = re.compile(
+    r"^\s*(?:(?:\u4e0d\u80fd|\u4e0d\u8981|\u4e0d\u5f97)(?:\u5957\u7528|\u53c2\u8003|\u5f15\u7528|\u4f7f\u7528)|"
+    r"\u4e0d(?:\u67e5\u8be2|\u67e5)|\u800c\u975e|\u6392\u9664|\u5ffd\u7565|"
+    r"(?:not|ignore|exclude|do not use)\b)"
+)
+CONTEXT_REFERENCE = re.compile(
+    r"\u65c1\u8fb9|\u90bb\u673a|\u90bb\u8fdb\u7a0b|\u9644\u8fd1|\u53e6\u6709|"
+    r"\b(?:neighboring|nearby|another machine)\b"
+)
+SUBJECT_BOUNDARY = (
+    "literal-identity-v1: unambiguous request entity/version must occur in every title/body; "
+    "explicit caller terms take precedence; ambiguous multi-subject requests abstain"
+)
+
+
+@dataclass(frozen=True)
+class FocusedQuery:
+    text: str
+    subject_terms: tuple[str, ...] = ()
+    ambiguous: bool = False
 
 
 def is_answer_request(query: str) -> bool:
@@ -104,6 +130,66 @@ def query_focus(query: str) -> str:
             if focused:
                 return focused
     return query
+
+
+def _subject_literals(text: str, *, narrated=False) -> tuple[set[str], set[str]]:
+    entities, versions = set(), set()
+    for index, clause in enumerate(CLAUSE.findall(text.lower())):
+        if EXCLUDED_REFERENCE.search(clause):
+            continue
+        if (narrated and index and CONTEXT_REFERENCE.search(clause)
+                and not INTERROGATIVE.search(clause) and not DIRECTIVE.search(clause)):
+            continue
+        for token in LITERAL_TOKEN.findall(clause):
+            if VERSION_TOKEN.fullmatch(token):
+                versions.add(token)
+            elif "-" in token and re.search(r"[0-9]", token):
+                entities.add(token)
+    return entities, versions
+
+
+def focus_request(query: str, *, explicit_terms=False) -> FocusedQuery:
+    """Retain literal identity when dropping background, without consulting data.
+
+    This deliberately handles formatted identifiers, not general coreference.
+    Multiple requested entities/versions cannot be proved by one subject bundle.
+    """
+    def omit_excluded_subject(match):
+        exclusion = EXCLUDED_REFERENCE.search(match[0].lower())
+        if exclusion and any(_subject_literals(match[0][exclusion.end():])):
+            return ""
+        return match[0]
+
+    focused = query_focus(query)
+    text = CLAUSE.sub(omit_excluded_subject, focused).strip(" ,\uff0c;\uff1b\u3002.!?\uff01\uff1f\n")
+    text = normalize_quantities(text)
+    if explicit_terms:
+        return FocusedQuery(text)
+    target = text
+    if focused == query:
+        # A later command can explicitly replace a narrated subject. Earlier
+        # questions are not narration and must not be silently discarded.
+        for command in DIRECTIVE.finditer(text):
+            if not INTERROGATIVE.search(text[:command.start()]):
+                tail = text[command.end():]
+                if _subject_literals(tail)[0]:
+                    target = tail
+                    break
+    entities, versions = _subject_literals(target, narrated=target == text and focused == query)
+    if not entities and focused != query:
+        inherited, inherited_versions = _subject_literals(query[:len(query) - len(focused)], narrated=True)
+        entities = inherited
+        versions = versions or inherited_versions
+    ambiguous = len(entities) > 1 or (bool(entities) and len(versions) > 1)
+    terms = tuple(sorted(entities) + sorted(versions)) if entities and not ambiguous else ()
+    return FocusedQuery(text, terms, ambiguous)
+
+
+def preserve_subject_text(original: str, focused: str, constraints) -> str:
+    """Keep requested identity in scoring as well as filtering, without repeats."""
+    missing = [term for term, pattern in constraints
+               if pattern.search(original.lower()) and not pattern.search(focused.lower())]
+    return " ".join([*missing, focused])
 
 
 def support_focus(query: str) -> str:

@@ -11,7 +11,7 @@ from heapq import nlargest, nsmallest
 from .embeddings import EmbeddingProvider, HashEmbedding, cosine_similarity
 from .focused_evidence import (
     POLICY as FOCUSED_EVIDENCE, body_passages, evidence_text, normalize_quantities,
-    is_answer_request, lookup_attribution, query_focus, select_evidence, support_focus,
+    focus_request, is_answer_request, lookup_attribution, preserve_subject_text, select_evidence, support_focus,
 )
 from .retrieval_evidence import DEFAULT_POLICY, MIN_COVERAGE, POLICIES, content_coverage
 from .schemas import (
@@ -289,14 +289,19 @@ class MemoryStore:
         if not query:
             return []
         focused_answer = evidence_policy == FOCUSED_EVIDENCE and is_answer_request(query)
-        if focused_answer:
-            query = normalize_quantities(query_focus(query))
         if candidate_limit is None:
             candidate_limit = max(64, top_k * 12)
         if candidate_limit < top_k:
             raise ValueError("candidate_limit must be greater than or equal to top_k")
         if not 0.0 <= min_score <= 1.0:
             raise ValueError("min_score must be between zero and one")
+        if focused_answer:
+            request = focus_request(query, explicit_terms=bool(constraints))
+            if request.ambiguous or not request.text:
+                return []
+            if not constraints:
+                constraints = self._evidence_constraints(request.subject_terms)
+            query = preserve_subject_text(query, request.text, constraints)
 
         point = self._parse_time(now or utc_now())
         self.expire_knowledge(now=point.isoformat())

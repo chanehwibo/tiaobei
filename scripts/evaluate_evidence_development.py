@@ -31,7 +31,7 @@ METHOD = {
     "policies": {
         "similarity": "legacy scoring without evidence abstention",
         "content_coverage_v1": "legacy top-k plus strict lexical coverage; no reranking",
-        "focused_evidence_v2": "query focus, exact-subject bundles and property-specific support",
+        "focused_evidence_v2": "query focus with literal identity, exact-subject bundles and property-specific support",
     },
 }
 
