@@ -1,0 +1,260 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T11:36:28.429065+00:00",
+  "scope": "pptx_wps_rasters_not_official_or_human_acceptance",
+  "source_sha256": "0a503e1075e0b01a82896ee68dc49bd206e297ef6900dd0c59d82f0e6a681877",
+  "checker_sha256": "a3d7fa57db7ffdae7cad518a8237a89560dd02875540234a3d200ca5c870bc11",
+  "pdf_sha256": null,
+  "page_count": 23,
+  "body_paragraphs_checked": 0,
+  "missing_paragraphs": [],
+  "geometric_paragraph_matches": [],
+  "pages": [
+    {
+      "page": 1,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.0438625,
+      "image_sha256": "b4734fbe9dd43878364414d49d5cddf1e14e640f87ba7975b63246c2933d9f88",
+      "passed": true
+    },
+    {
+      "page": 2,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.050061805555555554,
+      "image_sha256": "61394fee2d9cdce438c117b264f8cd0289d068661042c23f5e22bd37de952fd2",
+      "passed": true
+    },
+    {
+      "page": 3,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04289861111111111,
+      "image_sha256": "f708e7664930a0e0423883fa823d57f50fc634060ddcf9269061d9401038ab06",
+      "passed": true
+    },
+    {
+      "page": 4,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.048946527777777776,
+      "image_sha256": "4c83c9f039afa9740c337ba51fd4068eedcde8730297f62921c6cbad2e435a54",
+      "passed": true
+    },
+    {
+      "page": 5,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.050610416666666665,
+      "image_sha256": "92f96e960220bfb4c984265f031a71b2820a340c7b733fb07b8e30e5713bcfd8",
+      "passed": true
+    },
+    {
+      "page": 6,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.05159513888888889,
+      "image_sha256": "2b211f7eee5a8190e504d391ea94cf5d0f0c599da66b3c2c6ff3bf1694e4662d",
+      "passed": true
+    },
+    {
+      "page": 7,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04442430555555556,
+      "image_sha256": "875780a6a4088404762b1a8c9e14440e5c9503216a4a305130f6911a0420e787",
+      "passed": true
+    },
+    {
+      "page": 8,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.09450069444444445,
+      "image_sha256": "7430c017be214c0eddef32e270ae4c497c3b2c3e851620fb3b693d7aeea6f8ff",
+      "passed": true
+    },
+    {
+      "page": 9,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04527847222222222,
+      "image_sha256": "862e5512cb0d9a4d65d75f55c728e2b4bd83f9cc5605c82b0cd6651312a1d0f4",
+      "passed": true
+    },
+    {
+      "page": 10,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.1107173611111111,
+      "image_sha256": "52867aae9bff0a0073e4856b2d349f8121ee27b85b51ba8037e8aa1428563f72",
+      "passed": true
+    },
+    {
+      "page": 11,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.042340972222222224,
+      "image_sha256": "8b6f8091de0157a0ba51b909a6f5d6751c5372c5bee1a93777f09a4d7a1ce6f2",
+      "passed": true
+    },
+    {
+      "page": 12,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.10242222222222222,
+      "image_sha256": "8f6ffc5640ec265e5ea982b86e2d9ddba38732ed67a561b32dd794a5a5c19d74",
+      "passed": true
+    },
+    {
+      "page": 13,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.12449027777777778,
+      "image_sha256": "34e8a7c1454bc97eb6e5e72b644511dc48913e4cbb37942cce900ba0c9b1345a",
+      "passed": true
+    },
+    {
+      "page": 14,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.05452222222222222,
+      "image_sha256": "a75d54a8fcfaf66669a193fe52ffdb3d9fa5b6f9f1c554a6a2fe3b724a0b854e",
+      "passed": true
+    },
+    {
+      "page": 15,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.16172291666666666,
+      "image_sha256": "4427bd674baad08f271bb893348083f41bcdc3cfa0d62e4eb28aa4b8dbd121a3",
+      "passed": true
+    },
+    {
+      "page": 16,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.12762708333333334,
+      "image_sha256": "2ad80951e8dfea10857ec7806df51f0a164c2a453bd5a2f77c86bc37e7771fec",
+      "passed": true
+    },
+    {
+      "page": 17,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04837430555555555,
+      "image_sha256": "7a2cf0201b0e0bb8352358eefee79ea6bbbc100bf5a4fa835ded752c4ce73396",
+      "passed": true
+    },
+    {
+      "page": 18,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.11900416666666666,
+      "image_sha256": "1e61c073df0d95aa3030becd96c505f587d85192f446c2f4e2b29e16ff99e9f0",
+      "passed": true
+    },
+    {
+      "page": 19,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.1136625,
+      "image_sha256": "c892ab90e72d5fd8a81c1ce1e8965bd0554dd0cdbc1a6bd837756b9835f4a669",
+      "passed": true
+    },
+    {
+      "page": 20,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.048453472222222224,
+      "image_sha256": "b43ae6466eaa79ae106ced52b517b7af63a9fa3166907f7bf6416759c25c81a1",
+      "passed": true
+    },
+    {
+      "page": 21,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.046802777777777776,
+      "image_sha256": "9d85d1f69e7bb97f770bf61f2eceda9c599ebcccf2e91fdc5a35f2789f28079a",
+      "passed": true
+    },
+    {
+      "page": 22,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.04500277777777778,
+      "image_sha256": "db7ba029e69d73fbd7626ebf1ce1fcf5a7fc4cf7f5fec7bdf47b11a8aa4b674e",
+      "passed": true
+    },
+    {
+      "page": 23,
+      "size": [
+        1600,
+        900
+      ],
+      "ink_fraction": 0.06615416666666667,
+      "image_sha256": "28d2d30d21216966923af1d3359d912680d386548dc560e0229fb28ab8ef692d",
+      "passed": true
+    }
+  ],
+  "checks": {
+    "all_pages_nonblank_and_in_bounds": true,
+    "all_docx_body_paragraphs_present": true,
+    "expected_slide_count": true
+  },
+  "passed": true,
+  "visual_review": "Agent raster review is recorded separately.",
+  "competition_ready": false,
+  "contact_sheets": [
+    "contact-01.png",
+    "contact-02.png",
+    "contact-03.png",
+    "contact-04.png",
+    "contact-05.png",
+    "contact-06.png"
+  ]
+}

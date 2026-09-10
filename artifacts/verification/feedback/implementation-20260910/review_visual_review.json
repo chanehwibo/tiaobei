@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T11:46:35.0767535Z",
+  "scope": "agent_visual_review_of_actual_wps_rasters_not_human_or_official_acceptance",
+  "passed": true,
+  "human_review_performed": false,
+  "competition_ready": false,
+  "deliverables": {
+    "OS_Agent_技术方案与复测报告.docx": {
+      "sha256": "26569d6a2cd9e2f134f1586feb9c43de14492a8d7b4c6f4e0ce93523f8b4b2d6",
+      "render_report_sha256": "233ca19c3432a8195205b171514bd64612cf977296c529c070ebe075a3e92f36",
+      "page_count": 39,
+      "reviewed_pages": [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+        11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+        31, 32, 33, 34, 35, 36, 37, 38, 39
+      ],
+      "review_method": "Inspected all ten contact sheets of actual WPS page rasters and the full-size architecture page 9; separately checked paragraph presence and page bounds.",
+      "passed": true,
+      "layout_observations": [
+        "Short chapter tail pages 6, 16 and 39 retain substantive text and the footer; none is footer-only.",
+        "The category table starts with its header at the end of page 27 and repeats the header with data on page 28."
+      ]
+    },
+    "OS_Agent_反馈落实答辩稿.pptx": {
+      "sha256": "0a503e1075e0b01a82896ee68dc49bd206e297ef6900dd0c59d82f0e6a681877",
+      "render_report_sha256": "9b8799afe8f004a536c0128be3d08aaa92bcc63479f8f308068b38d28bb0d3b7",
+      "page_count": 23,
+      "reviewed_pages": [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+        11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        21, 22, 23
+      ],
+      "review_method": "Inspected all six contact sheets of actual WPS slide rasters, covering every slide at the recorded 1600 by 900 render size.",
+      "passed": true
+    }
+  },
+  "checks": {
+    "all_pages_accounted_for": true,
+    "no_footer_only_blank_page": true,
+    "architecture_diagram_on_single_page_9": true,
+    "no_observed_clipping_or_overlap": true,
+    "continued_table_headers_present": true,
+    "all_1262_docx_body_paragraphs_present": true,
+    "current_metrics_and_risk_labels_visible": true,
+    "experimental_failures_and_default_off_visible": true,
+    "no_packaging_instruction_visible": true
+  },
+  "notes": [
+    "This is an Agent visual and content-preservation check, not a human sign-off or competition acceptance.",
+    "Current 350-test Windows results, serial complex comparisons and development counterexamples remain separate from historical paired timing.",
+    "The SDK retest risk, missing current V11 evidence, abstention failures and the default-off experimental policy are explicitly visible.",
+    "The document retains short tail pages and a repeated table header at a page boundary; no content loss was observed."
+  ]
+}
