@@ -48,3 +48,21 @@ class MetricPrivacyTest(unittest.TestCase):
             report = scan_sensitive_text(root, [path])
             self.assertEqual(len(report["approved_numeric_metric_findings"]), 1)
             self.assertEqual(len(report["unexpected_findings"]), 1)
+
+    def test_render_ink_fraction_is_numeric_but_identifiers_remain_blocked(self):
+        fraction = FRACTION
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "render.json"
+            path.write_text('{\n"ink_fraction": ' + fraction + '\n}', encoding="utf-8")
+            report = scan_sensitive_text(root, [path])
+            self.assertTrue(report["passed"])
+            self.assertEqual(len(report["approved_numeric_metric_findings"]), 1)
+            for key, value in (("ink_fraction", '"' + fraction + '"'),
+                               ("ink_fraction", "1" * 18),
+                               ("ink_fraction", "1" + fraction[1:]),
+                               ("ink_fraction", "-" + fraction),
+                               ("identifier", fraction)):
+                with self.subTest(key=key, value=value):
+                    path.write_text('{\n"' + key + '": ' + value + '\n}', encoding="utf-8")
+                    self.assertFalse(scan_sensitive_text(root, [path])["passed"])

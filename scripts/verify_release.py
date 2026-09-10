@@ -219,6 +219,7 @@ def _is_probability_metric(line: str, relative: str) -> bool:
         "macro_recall_at_3", "precision_at_3", "recall_at_3", "mrr_at_3", "ndcg_at_3",
         "full_evidence_accuracy", "no_answer_accuracy", "false_answer_rate", "distractor_return_rate",
         "before_recall_at_3", "after_recall_at_3", "before_no_answer_accuracy", "after_no_answer_accuracy",
+        "ink_fraction",  # Raster check: fraction of nonwhite pixels, bounded to [0, 1].
     }
     return (len(value) == 1 and next(iter(value)) in probability_keys
             and type(next(iter(value.values()))) is float and 0 <= next(iter(value.values())) <= 1)
