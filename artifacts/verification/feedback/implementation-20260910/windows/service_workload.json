@@ -1,0 +1,108 @@
+{
+  "environment": {
+    "system": "Windows",
+    "python": "3.14.3"
+  },
+  "rounds": 30,
+  "results": [
+    {
+      "records": 100,
+      "service_ingest_ms": 200.894,
+      "single_add_ms": 50.361,
+      "restart_load_ms": 42.677,
+      "mixed_query_p50_ms": 3.183,
+      "mixed_query_p95_ms": 4.004,
+      "mixed_query_p99_ms": 4.331,
+      "http_query_p99_ms": 23.018,
+      "concurrent_operations": 33,
+      "concurrent_operations_per_second": 148.385,
+      "all_queries_nonempty": true,
+      "query_counts": {
+        "sequential": 30,
+        "concurrent": 30,
+        "http": 10
+      },
+      "correct_queries": {
+        "sequential": 30,
+        "concurrent": 30,
+        "http": 10
+      },
+      "integrity_checks": {
+        "sequential_target_recalled": true,
+        "concurrent_target_recalled": true,
+        "http_target_recalled": true,
+        "restart_record_count": true
+      },
+      "integrity_passed": true,
+      "persisted_knowledge": 104,
+      "sqlite_bytes": 593920,
+      "retrieval_under_500ms": true,
+      "process_resources": {
+        "wall_ms": 1421.905,
+        "cpu_ms": 703.125,
+        "cpu_percent_one_core": 49.45,
+        "rss_before_bytes": 207470592,
+        "rss_after_bytes": 215916544,
+        "lifetime_peak_rss_bytes": 703709184,
+        "source": "GetProcessMemoryInfo",
+        "available": true,
+        "error_type": null,
+        "scope": "current_process_only; excludes separate model servers and child processes",
+        "peak_definition": "OS high-water mark since process start, not a per-workload peak"
+      }
+    },
+    {
+      "records": 1000,
+      "service_ingest_ms": 4709.666,
+      "single_add_ms": 346.849,
+      "restart_load_ms": 234.47,
+      "mixed_query_p50_ms": 8.321,
+      "mixed_query_p95_ms": 10.061,
+      "mixed_query_p99_ms": 10.625,
+      "http_query_p99_ms": 27.737,
+      "concurrent_operations": 33,
+      "concurrent_operations_per_second": 30.515,
+      "all_queries_nonempty": true,
+      "query_counts": {
+        "sequential": 30,
+        "concurrent": 30,
+        "http": 10
+      },
+      "correct_queries": {
+        "sequential": 30,
+        "concurrent": 30,
+        "http": 10
+      },
+      "integrity_checks": {
+        "sequential_target_recalled": true,
+        "concurrent_target_recalled": true,
+        "http_target_recalled": true,
+        "restart_record_count": true
+      },
+      "integrity_passed": true,
+      "persisted_knowledge": 1004,
+      "sqlite_bytes": 5279744,
+      "retrieval_under_500ms": true,
+      "process_resources": {
+        "wall_ms": 7596.495,
+        "cpu_ms": 6890.625,
+        "cpu_percent_one_core": 90.708,
+        "rss_before_bytes": 215916544,
+        "rss_after_bytes": 235769856,
+        "lifetime_peak_rss_bytes": 703709184,
+        "source": "GetProcessMemoryInfo",
+        "available": true,
+        "error_type": null,
+        "scope": "current_process_only; excludes separate model servers and child processes",
+        "peak_definition": "OS high-water mark since process start, not a per-workload peak"
+      }
+    }
+  ],
+  "integrity_passed": true,
+  "method": "MemoryService ingestion including lifecycle, conflict detection and SQLite commit; diverse queries; restart; 4 threads mixed reads/writes; localhost HTTP",
+  "limitations": [
+    "Measured environment only; no real model or native Kylin SDK execution.",
+    "Service API is a single-process serialized writer; cross-process writers are unsupported.",
+    "Small samples describe this workload; p99 is empirical, not a production SLA."
+  ]
+}
