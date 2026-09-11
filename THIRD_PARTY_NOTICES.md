@@ -1,6 +1,6 @@
 # 第三方软件与素材说明
 
-更新时间：2026-09-05
+更新时间：2026-09-11
 
 ## 1. 核心程序依赖
 
@@ -20,6 +20,12 @@ Python 本身的许可文本由 Python Software Foundation 发布，使用者应
 `python-pptx` 的常见传递依赖包括 `lxml`（BSD-3-Clause）、`Pillow`（MIT-CMU）、`XlsxWriter`（BSD-2-Clause）和 `typing-extensions`（PSF-2.0）。`python-docx` 的常见传递依赖包括 `lxml` 和 `typing-extensions`。实际依赖树以安装环境为准。
 
 以上软件名称和商标归各自权利人所有。本仓库的 MIT 许可证不改变第三方组件的许可证。
+
+2026-09-11详细材料工具另直接使用Pillow绘制原创方案框图；
+私有渲染核验可选PyMuPDF（AGPL-3.0或商业许可，以实际版本许可为准），
+只生成及结构核验Office时不需要PyMuPDF。核心算法不依赖这些库。
+本机渲染使用已安装WPS及Windows字体，不随仓库分发办公软件、字体文件或模型。
+PPT框图为项目原创的可编辑形状与连线，没有复制论文图片或第三方图库素材。
 
 ## 3. 数据与素材来源
 
