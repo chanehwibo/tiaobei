@@ -1,0 +1,939 @@
+{
+  "scope": "office_render_text_coverage_layout_and_pixel_checks",
+  "structural": {
+    "scope": "source_bound_ooxml_content_anonymity_and_editability",
+    "passed": true,
+    "runtime_file_count": 149,
+    "word": {
+      "expected_pages": 54,
+      "section_pages": {
+        "1.1": 4,
+        "1.2": 4,
+        "1.3": 5,
+        "2.1": 6,
+        "2.2": 7,
+        "2.3": 7,
+        "2.4": 8,
+        "3.1": 9,
+        "3.2": 10,
+        "3.3": 10,
+        "4.1": 12,
+        "4.2": 12,
+        "4.3": 13,
+        "5.1": 14,
+        "5.2": 15,
+        "5.3": 16,
+        "6.1": 17,
+        "6.2": 17,
+        "6.3": 18,
+        "7.1": 19,
+        "7.2": 20,
+        "7.3": 20,
+        "7.4": 21,
+        "7.5": 22,
+        "8.1": 23,
+        "8.2": 24,
+        "8.3": 24,
+        "9.1": 26,
+        "9.2": 27,
+        "9.3": 27,
+        "10.1": 29,
+        "10.2": 29,
+        "10.3": 30,
+        "11.1": 31,
+        "11.2": 31,
+        "11.3": 32,
+        "12.1": 33,
+        "12.2": 33,
+        "12.3": 34,
+        "12.4": 34,
+        "12.5": 35,
+        "12.6": 36,
+        "13.1": 37,
+        "13.2": 37,
+        "13.3": 38,
+        "13.4": 38,
+        "13.5": 39,
+        "13.6": 40,
+        "14.1": 41,
+        "14.2": 41,
+        "14.3": 42,
+        "14.4": 42,
+        "15.1": 44,
+        "15.2": 44,
+        "15.3": 45,
+        "15.4": 45,
+        "15.5": 46,
+        "16.1": 47,
+        "16.2": 47,
+        "17.1": 49,
+        "17.2": 50,
+        "17.3": 50,
+        "18.1": 52,
+        "18.2": 52,
+        "18.3": 53,
+        "18.4": 54,
+        "18.5": 54
+      },
+      "page_map_from_render": true,
+      "topics": 67,
+      "chapters": 18,
+      "figures": 25,
+      "native_tables": 38
+    },
+    "presentation": {
+      "slides": 53,
+      "editable_diagrams": 25,
+      "native_tables": 24,
+      "topic_numbers": [
+        "1.1",
+        "1.2",
+        "1.3",
+        "2.1",
+        "2.2",
+        "3.1",
+        "3.2",
+        "4.1",
+        "4.2",
+        "4.3",
+        "5.1",
+        "5.2",
+        "5.3",
+        "6.1",
+        "6.2",
+        "7.1",
+        "7.2",
+        "7.3",
+        "7.4",
+        "8.1",
+        "8.2",
+        "9.1",
+        "9.2",
+        "10.1",
+        "10.2",
+        "10.3",
+        "11.1",
+        "11.2",
+        "11.3",
+        "12.1",
+        "12.2",
+        "12.3",
+        "12.4",
+        "12.5",
+        "12.6",
+        "13.1",
+        "13.2",
+        "13.3",
+        "13.4",
+        "13.4",
+        "13.5",
+        "13.6",
+        "14.1",
+        "14.2",
+        "14.4",
+        "15.1",
+        "15.3",
+        "16.1",
+        "17.1",
+        "17.2",
+        "17.3"
+      ]
+    },
+    "office_sha256": {
+      "OS_Agent_技术方案_20260911.docx": "80d0a6e55877361139de211d3522a781e0cf18caa0f67ec66e784f2f0224c779",
+      "OS_Agent_项目报告_20260911.pptx": "aae241d25714a423c8456b5c82276fd2b67788693337eee952c8545cb7301213"
+    },
+    "checks": {
+      "source_and_evidence_revalidated": true,
+      "output_hashes_match": true,
+      "tool_hashes_checked": true,
+      "all_word_sections_paragraphs_and_tables_present": true,
+      "presenter_notes_complete": true,
+      "identity_and_obsolete_status_scan_passed": true,
+      "metadata_anonymous_and_no_external_relationships": true,
+      "native_ppt_diagrams_and_tables_verified": true,
+      "shapes_inside_canvas": true,
+      "no_delivered_pdf_or_zip": true
+    },
+    "visual_review_required": true,
+    "competition_ready": false
+  },
+  "word_rendered_pages": 54,
+  "ppt_rendered_slides": 53,
+  "word_pages": [
+    {
+      "page": 1,
+      "characters": 322,
+      "issues": []
+    },
+    {
+      "page": 2,
+      "characters": 371,
+      "issues": []
+    },
+    {
+      "page": 3,
+      "characters": 488,
+      "issues": []
+    },
+    {
+      "page": 4,
+      "characters": 673,
+      "issues": []
+    },
+    {
+      "page": 5,
+      "characters": 825,
+      "issues": []
+    },
+    {
+      "page": 6,
+      "characters": 540,
+      "issues": []
+    },
+    {
+      "page": 7,
+      "characters": 796,
+      "issues": []
+    },
+    {
+      "page": 8,
+      "characters": 1216,
+      "issues": []
+    },
+    {
+      "page": 9,
+      "characters": 597,
+      "issues": []
+    },
+    {
+      "page": 10,
+      "characters": 646,
+      "issues": []
+    },
+    {
+      "page": 11,
+      "characters": 302,
+      "issues": []
+    },
+    {
+      "page": 12,
+      "characters": 678,
+      "issues": []
+    },
+    {
+      "page": 13,
+      "characters": 680,
+      "issues": []
+    },
+    {
+      "page": 14,
+      "characters": 430,
+      "issues": []
+    },
+    {
+      "page": 15,
+      "characters": 439,
+      "issues": []
+    },
+    {
+      "page": 16,
+      "characters": 499,
+      "issues": []
+    },
+    {
+      "page": 17,
+      "characters": 702,
+      "issues": []
+    },
+    {
+      "page": 18,
+      "characters": 877,
+      "issues": []
+    },
+    {
+      "page": 19,
+      "characters": 524,
+      "issues": []
+    },
+    {
+      "page": 20,
+      "characters": 711,
+      "issues": []
+    },
+    {
+      "page": 21,
+      "characters": 677,
+      "issues": []
+    },
+    {
+      "page": 22,
+      "characters": 650,
+      "issues": []
+    },
+    {
+      "page": 23,
+      "characters": 481,
+      "issues": []
+    },
+    {
+      "page": 24,
+      "characters": 624,
+      "issues": []
+    },
+    {
+      "page": 25,
+      "characters": 288,
+      "issues": []
+    },
+    {
+      "page": 26,
+      "characters": 434,
+      "issues": []
+    },
+    {
+      "page": 27,
+      "characters": 622,
+      "issues": []
+    },
+    {
+      "page": 28,
+      "characters": 273,
+      "issues": []
+    },
+    {
+      "page": 29,
+      "characters": 725,
+      "issues": []
+    },
+    {
+      "page": 30,
+      "characters": 714,
+      "issues": []
+    },
+    {
+      "page": 31,
+      "characters": 933,
+      "issues": []
+    },
+    {
+      "page": 32,
+      "characters": 523,
+      "issues": []
+    },
+    {
+      "page": 33,
+      "characters": 555,
+      "issues": []
+    },
+    {
+      "page": 34,
+      "characters": 1080,
+      "issues": []
+    },
+    {
+      "page": 35,
+      "characters": 724,
+      "issues": []
+    },
+    {
+      "page": 36,
+      "characters": 514,
+      "issues": []
+    },
+    {
+      "page": 37,
+      "characters": 801,
+      "issues": []
+    },
+    {
+      "page": 38,
+      "characters": 884,
+      "issues": []
+    },
+    {
+      "page": 39,
+      "characters": 1066,
+      "issues": []
+    },
+    {
+      "page": 40,
+      "characters": 883,
+      "issues": []
+    },
+    {
+      "page": 41,
+      "characters": 742,
+      "issues": []
+    },
+    {
+      "page": 42,
+      "characters": 910,
+      "issues": []
+    },
+    {
+      "page": 43,
+      "characters": 339,
+      "issues": []
+    },
+    {
+      "page": 44,
+      "characters": 1036,
+      "issues": []
+    },
+    {
+      "page": 45,
+      "characters": 907,
+      "issues": []
+    },
+    {
+      "page": 46,
+      "characters": 1009,
+      "issues": []
+    },
+    {
+      "page": 47,
+      "characters": 1134,
+      "issues": []
+    },
+    {
+      "page": 48,
+      "characters": 240,
+      "issues": []
+    },
+    {
+      "page": 49,
+      "characters": 488,
+      "issues": []
+    },
+    {
+      "page": 50,
+      "characters": 630,
+      "issues": []
+    },
+    {
+      "page": 51,
+      "characters": 304,
+      "issues": []
+    },
+    {
+      "page": 52,
+      "characters": 1132,
+      "issues": []
+    },
+    {
+      "page": 53,
+      "characters": 1206,
+      "issues": []
+    },
+    {
+      "page": 54,
+      "characters": 1301,
+      "issues": []
+    }
+  ],
+  "ppt_slides": [
+    {
+      "slide": 1,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1024,
+      "nonblank": true
+    },
+    {
+      "slide": 2,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.0847,
+      "nonblank": true
+    },
+    {
+      "slide": 3,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1464,
+      "nonblank": true
+    },
+    {
+      "slide": 4,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1569,
+      "nonblank": true
+    },
+    {
+      "slide": 5,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1486,
+      "nonblank": true
+    },
+    {
+      "slide": 6,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1522,
+      "nonblank": true
+    },
+    {
+      "slide": 7,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1752,
+      "nonblank": true
+    },
+    {
+      "slide": 8,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1422,
+      "nonblank": true
+    },
+    {
+      "slide": 9,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1604,
+      "nonblank": true
+    },
+    {
+      "slide": 10,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1615,
+      "nonblank": true
+    },
+    {
+      "slide": 11,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1449,
+      "nonblank": true
+    },
+    {
+      "slide": 12,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.163,
+      "nonblank": true
+    },
+    {
+      "slide": 13,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1581,
+      "nonblank": true
+    },
+    {
+      "slide": 14,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1515,
+      "nonblank": true
+    },
+    {
+      "slide": 15,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1547,
+      "nonblank": true
+    },
+    {
+      "slide": 16,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1582,
+      "nonblank": true
+    },
+    {
+      "slide": 17,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1519,
+      "nonblank": true
+    },
+    {
+      "slide": 18,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1597,
+      "nonblank": true
+    },
+    {
+      "slide": 19,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1605,
+      "nonblank": true
+    },
+    {
+      "slide": 20,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1423,
+      "nonblank": true
+    },
+    {
+      "slide": 21,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.165,
+      "nonblank": true
+    },
+    {
+      "slide": 22,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.15,
+      "nonblank": true
+    },
+    {
+      "slide": 23,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1537,
+      "nonblank": true
+    },
+    {
+      "slide": 24,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1563,
+      "nonblank": true
+    },
+    {
+      "slide": 25,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1588,
+      "nonblank": true
+    },
+    {
+      "slide": 26,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1651,
+      "nonblank": true
+    },
+    {
+      "slide": 27,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1568,
+      "nonblank": true
+    },
+    {
+      "slide": 28,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1669,
+      "nonblank": true
+    },
+    {
+      "slide": 29,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1732,
+      "nonblank": true
+    },
+    {
+      "slide": 30,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1754,
+      "nonblank": true
+    },
+    {
+      "slide": 31,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1531,
+      "nonblank": true
+    },
+    {
+      "slide": 32,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1632,
+      "nonblank": true
+    },
+    {
+      "slide": 33,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1718,
+      "nonblank": true
+    },
+    {
+      "slide": 34,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1389,
+      "nonblank": true
+    },
+    {
+      "slide": 35,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1695,
+      "nonblank": true
+    },
+    {
+      "slide": 36,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1677,
+      "nonblank": true
+    },
+    {
+      "slide": 37,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1615,
+      "nonblank": true
+    },
+    {
+      "slide": 38,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.132,
+      "nonblank": true
+    },
+    {
+      "slide": 39,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1322,
+      "nonblank": true
+    },
+    {
+      "slide": 40,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1351,
+      "nonblank": true
+    },
+    {
+      "slide": 41,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.143,
+      "nonblank": true
+    },
+    {
+      "slide": 42,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1763,
+      "nonblank": true
+    },
+    {
+      "slide": 43,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.156,
+      "nonblank": true
+    },
+    {
+      "slide": 44,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1541,
+      "nonblank": true
+    },
+    {
+      "slide": 45,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1721,
+      "nonblank": true
+    },
+    {
+      "slide": 46,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1554,
+      "nonblank": true
+    },
+    {
+      "slide": 47,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1655,
+      "nonblank": true
+    },
+    {
+      "slide": 48,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1049,
+      "nonblank": true
+    },
+    {
+      "slide": 49,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1564,
+      "nonblank": true
+    },
+    {
+      "slide": 50,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1573,
+      "nonblank": true
+    },
+    {
+      "slide": 51,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1743,
+      "nonblank": true
+    },
+    {
+      "slide": 52,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1718,
+      "nonblank": true
+    },
+    {
+      "slide": 53,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1737,
+      "nonblank": true
+    }
+  ],
+  "contact_sheets": [
+    "word-contact-01.jpg",
+    "word-contact-02.jpg",
+    "word-contact-03.jpg",
+    "word-contact-04.jpg",
+    "word-contact-05.jpg",
+    "ppt-contact-01.jpg",
+    "ppt-contact-02.jpg",
+    "ppt-contact-03.jpg",
+    "ppt-contact-04.jpg",
+    "ppt-contact-05.jpg",
+    "ppt-contact-06.jpg"
+  ],
+  "issues": [],
+  "automated_render_checks_passed": true,
+  "human_visual_review_recorded": false,
+  "ppt_render_source_equivalence": {
+    "scope": "all_uncompressed_office_parts_identical",
+    "parts": 251,
+    "source_sha256": "aae241d25714a423c8456b5c82276fd2b67788693337eee952c8545cb7301213",
+    "rendered_source_sha256": "d3ff7634daf7e8b16d42378ba537ce77bd927b234acf78affe0b16ea81734cf9",
+    "passed": true
+  },
+  "private_pdf_is_not_a_deliverable": true,
+  "competition_ready": false
+}

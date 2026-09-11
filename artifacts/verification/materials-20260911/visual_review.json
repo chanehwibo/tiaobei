@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-11",
+  "scope": "document_layout_review_not_competition_acceptance",
+  "reviewer_kind": "coding_agent_visual_inspection",
+  "agent_visual_review_recorded": true,
+  "human_approval_pending": true,
+  "office_raw_sha256": {
+    "OS_Agent_技术方案_20260911.docx": "80d0a6e55877361139de211d3522a781e0cf18caa0f67ec66e784f2f0224c779",
+    "OS_Agent_项目报告_20260911.pptx": "aae241d25714a423c8456b5c82276fd2b67788693337eee952c8545cb7301213"
+  },
+  "automated_report_raw_sha256": "7e6c20ad8dce696f24fda277ae7ad9739bbad3b80ef19b1333ed72414def6736",
+  "word_layout_raw_sha256": "c5c64eb508a9aa1a6f60b48a7dc464800d56831f8e3e7f9e8c51514956ef978b",
+  "word": {
+    "rendered_pages": 54,
+    "contact_sheets_reviewed": 5,
+    "pages_covered_by_contact_review": 54,
+    "full_size_pages_reviewed": [2, 7, 20, 29, 39, 45, 54],
+    "final_render_matches_reviewed_draft_page_png_hashes": true,
+    "matched_page_pngs": 54
+  },
+  "presentation": {
+    "rendered_slides": 53,
+    "contact_sheets_reviewed": 6,
+    "slides_covered_by_contact_review": 53,
+    "full_size_slides_reviewed": [6, 17, 39],
+    "reused_render_all_uncompressed_office_parts_identical": true,
+    "identical_parts": 251
+  },
+  "observations": [
+    "No visible clipping or incoherent text and diagram overlap was found in the reviewed pages.",
+    "Chapter endings can have deliberate whitespace to keep tables and code blocks intact.",
+    "Word page references matched the measured render; other fonts or Office engines can repaginate.",
+    "PPT diagrams and tables are native editable Office objects."
+  ],
+  "delivered_pdf": false,
+  "packaged": false,
+  "competition_uploaded": false,
+  "competition_ready": false
+}
