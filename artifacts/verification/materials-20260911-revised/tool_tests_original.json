@@ -1,0 +1,21 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "docs/materials_20260911",
+    "-p",
+    "test_materials.py",
+    "-v"
+  ],
+  "returncode": 0,
+  "passed": true,
+  "error_type": null,
+  "duration_ms": 29936.185,
+  "output_tail": "test_actual_evidence_and_all_comparison_gates (test_materials.MaterialTests.test_actual_evidence_and_all_comparison_gates) ... ok\ntest_changed_document_tool_snapshot_is_rejected (test_materials.MaterialTests.test_changed_document_tool_snapshot_is_rejected) ... ok\ntest_changed_office_bytes_are_rejected (test_materials.MaterialTests.test_changed_office_bytes_are_rejected) ... ok\ntest_changed_provenance_is_rejected (test_materials.MaterialTests.test_changed_provenance_is_rejected) ... ok\ntest_changed_raw_measurement_is_rejected (test_materials.MaterialTests.test_changed_raw_measurement_is_rejected) ... ok\ntest_changed_runtime_snapshot_is_rejected (test_materials.MaterialTests.test_changed_runtime_snapshot_is_rejected) ... ok\ntest_diagram_labels_fit_and_boxes_stay_inside_canvas (test_materials.MaterialTests.test_diagram_labels_fit_and_boxes_stay_inside_canvas) ... ok\ntest_duplicate_json_keys_are_rejected (test_materials.MaterialTests.test_duplicate_json_keys_are_rejected) ... ok\ntest_existing_directory_and_outside_project_are_rejected (test_materials.MaterialTests.test_existing_directory_and_outside_project_are_rejected) ... ok\ntest_generated_pair_passes_strict_structural_checks (test_materials.MaterialTests.test_generated_pair_passes_strict_structural_checks) ... ok\ntest_identity_and_external_relationships_are_rejected (test_materials.MaterialTests.test_identity_and_external_relationships_are_rejected) ... ok\ntest_missing_hash_entry_is_rejected (test_materials.MaterialTests.test_missing_hash_entry_is_rejected) ... ok\ntest_page_map_rejects_missing_or_invalid_pages (test_materials.MaterialTests.test_page_map_rejects_missing_or_invalid_pages) ... ok\ntest_page_map_requires_matching_source (test_materials.MaterialTests.test_page_map_requires_matching_source) ... ok\ntest_pdf_is_not_a_deliverable (test_materials.MaterialTests.test_pdf_is_not_a_deliverable) ... ok\ntest_render_reuse_requires_all_parts_to_match (test_materials.MaterialTests.test_render_reuse_requires_all_parts_to_match) ... ok\ntest_sections_tables_and_diagrams_are_consistent (test_materials.MaterialTests.test_sections_tables_and_diagrams_are_consistent) ... ok\ntest_unsupported_acceptance_claim_is_rejected (test_materials.MaterialTests.test_unsupported_acceptance_claim_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 18 tests in 28.327s\n\nOK"
+}

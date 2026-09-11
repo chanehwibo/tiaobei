@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "-X",
+    "utf8",
+    "-S",
+    "scripts/check_source.py"
+  ],
+  "returncode": 1,
+  "passed": false,
+  "error_type": null,
+  "duration_ms": 24801.646,
+  "output_tail": "{'python_310_syntax_files': 130, 'privacy_findings': 1}"
+}

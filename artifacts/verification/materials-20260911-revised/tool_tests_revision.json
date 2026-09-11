@@ -1,0 +1,21 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "docs/materials_20260911_revision",
+    "-p",
+    "test_revision.py",
+    "-v"
+  ],
+  "returncode": 0,
+  "passed": true,
+  "error_type": null,
+  "duration_ms": 36242.639,
+  "output_tail": "test_all_four_scoring_topics_have_detailed_sections (test_revision.RevisionTests.test_all_four_scoring_topics_have_detailed_sections) ... ok\ntest_analysis_rejects_source_changed_during_read (test_revision.RevisionTests.test_analysis_rejects_source_changed_during_read) ... ok\ntest_analysis_rejects_unbound_source (test_revision.RevisionTests.test_analysis_rejects_unbound_source) ... ok\ntest_changed_office_bytes_are_rejected (test_revision.RevisionTests.test_changed_office_bytes_are_rejected) ... ok\ntest_detailed_word_text_cannot_be_removed_and_rehashed (test_revision.RevisionTests.test_detailed_word_text_cannot_be_removed_and_rehashed) ... ok\ntest_existing_outputs_and_outside_workspace_are_rejected (test_revision.RevisionTests.test_existing_outputs_and_outside_workspace_are_rejected) ... ok\ntest_metric_example_is_explicitly_illustrative (test_revision.RevisionTests.test_metric_example_is_explicitly_illustrative) ... ok\ntest_missing_hash_entry_is_rejected (test_revision.RevisionTests.test_missing_hash_entry_is_rejected) ... ok\ntest_original_technical_chapters_are_preserved (test_revision.RevisionTests.test_original_technical_chapters_are_preserved) ... ok\ntest_page_map_binds_layout_source (test_revision.RevisionTests.test_page_map_binds_layout_source) ... ok\ntest_page_map_rejects_missing_invalid_or_unsorted_pages (test_revision.RevisionTests.test_page_map_rejects_missing_invalid_or_unsorted_pages) ... ok\ntest_pair_passes_strict_checks (test_revision.RevisionTests.test_pair_passes_strict_checks) ... ok\ntest_pdf_and_zip_are_not_delivered (test_revision.RevisionTests.test_pdf_and_zip_are_not_delivered) ... ok\ntest_policy_counts_and_quality_cost_are_not_speedup (test_revision.RevisionTests.test_policy_counts_and_quality_cost_are_not_speedup) ... ok\ntest_provenance_and_derived_values_are_revalidated (test_revision.RevisionTests.test_provenance_and_derived_values_are_revalidated) ... ok\ntest_render_record_binds_source_and_all_output_bytes (test_revision.RevisionTests.test_render_record_binds_source_and_all_output_bytes) ... ok\ntest_sdk_risk_must_remain_visible_not_just_in_notes (test_revision.RevisionTests.test_sdk_risk_must_remain_visible_not_just_in_notes) ... ok\ntest_small_ppt_table_font_is_rejected (test_revision.RevisionTests.test_small_ppt_table_font_is_rejected) ... ok\ntest_tool_snapshot_is_required (test_revision.RevisionTests.test_tool_snapshot_is_required) ... ok\ntest_twenty_slide_narrative_and_cross_references (test_revision.RevisionTests.test_twenty_slide_narrative_and_cross_references) ... ok\ntest_unsupported_claim_is_rejected (test_revision.RevisionTests.test_unsupported_claim_is_rejected) ... ok\ntest_validated_source_and_controls_stay_separate (test_revision.RevisionTests.test_validated_source_and_controls_stay_separate) ... ok\ntest_wilson_uncertainty_and_assumptions (test_revision.RevisionTests.test_wilson_uncertainty_and_assumptions) ... ok\n\n----------------------------------------------------------------------\nRan 23 tests in 34.561s\n\nOK"
+}

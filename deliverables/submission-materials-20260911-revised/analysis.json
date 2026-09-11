@@ -1,0 +1,155 @@
+{
+  "scope": "recomputed_frozen_results_and_illustrative_statistics_not_new_measurements",
+  "input_raw_sha256": {
+    "data/eval/request_regression_v1.json": "51ce224491a4252b69d282138785b28f4a9b8a64212b512f587dd48bfbcd1a98",
+    "data/eval/complex_retrieval_v1.json": "04b9a5266535e40a4542ae4647a4bba51aabf8edc32bd3a169713a4c4c1f2212",
+    "data/eval/complex_constraints_v1.json": "9f03254a21bd93d24e217f470524f55569776ce46a263fc4e53ddb48d44cb5fc",
+    "artifacts/verification/feedback/focused-20260911/windows-final/final_verification.json": "8c5945b02467a37dbaf6f16f56bbb4fdadbb482a3b57c4521a3ae058e6ca66b4",
+    "artifacts/verification/feedback/focused-20260911/windows-final/requests.json": "609b68160919810444e40de8c607cf801d880b5e396f92f6562f78dc33894915",
+    "artifacts/verification/feedback/focused-20260911/windows-final/service_workload.json": "7aa485dd65089a4de71d96db7bb7ec65daad6b2b3ae15db89d19683d1041623c",
+    "artifacts/verification/feedback/focused-20260911/complex-policies.json": "3257b737c10cb1766b84841891964440599de202aba42622fcf5ab7c8b871736",
+    "artifacts/verification/feedback/focused-20260911/complex-policy-comparison.json": "ecb1dc91753c3517e33813bcc3d4fc1f3b3895bf96dcdb62663040d042910300",
+    "artifacts/verification/feedback/focused-20260911/constraints-policies-enforce.json": "3c820dbfa0216d74c0b7bc7d032245e167f25bd054dffac4986343ec9c3a3c9b",
+    "artifacts/verification/feedback/focused-20260911/constraints-comparison-enforce.json": "7e6c2ded12d2f68cde987a23191df677a4930d6a0479d8bead069c7e39aa5e32",
+    "artifacts/verification/feedback/focused-20260911/constraints-policies-none.json": "8b7b1398f0163021add323712277eaa45cd834d3e782477d0830b1ffa26eb6c6",
+    "artifacts/verification/feedback/focused-20260911/constraints-comparison-none.json": "32d509b0acaf01c7896beec03e51ee25cbdf48ae76f4bf4d44bed4efef033557",
+    "artifacts/verification/feedback/focused-20260911/development-final.json": "9ce4a818fbfaaf1eaf0c49256ad5c6fc458587efb2180eb48fd4965eec5aae28",
+    "data/dev/evidence_coverage_v1.json": "c615c042c4c912b1296c95f485fe28e108b442d4b7b025cf3457330ee4aa7a56",
+    "artifacts/verification/feedback/focused-20260911/development-challenge-final.json": "f35b9cddc0ad705e8eb4d66c5531b1dde2b4e179facf8c0878a770814ae19911",
+    "data/dev/evidence_coverage_challenge_v1.json": "b4b81a47d46a46add96953bf4ff54e5db8a419b7930ac17545166831e1d61bd3",
+    "artifacts/verification/feedback/sdk_risk.json": "b6d5d372e462f785209e6a1741e0d38a93cc2978571bbc4a4611fd3b0566d2e4",
+    "artifacts/verification/round5/native/legacy_runtime_started.json": "0d75ff37cc7966d22c266fa40a1913b87c47ed00e54af047d8aa9e0abae85306"
+  },
+  "profile": {
+    "records": 10000,
+    "hard_fraction_of_fillers": 0.75,
+    "round_for_quality": 1,
+    "distinct_requests": 120,
+    "provider": "HashEmbedding",
+    "top_k": 3,
+    "min_score": 0.265
+  },
+  "policies": {
+    "similarity": {
+      "positive_requests": 72,
+      "full_evidence_correct": 68,
+      "no_answer_requests": 24,
+      "no_answer_correct": 1,
+      "macro_recall_at_3": 0.9444444444444444,
+      "precision_at_3": 0.37037037037037035,
+      "mrr_at_3": 0.8773148148148148,
+      "ndcg_at_3": 0.889098780843627,
+      "irrelevant_returned": 110,
+      "positive_results_returned": 190,
+      "distractor_return_rate": 0.5789473684210527,
+      "p95_ms": 39.39949999039527,
+      "multi_document_correct": 12,
+      "p95_rounds_ms": [
+        39.39949999039527,
+        39.310599997406825,
+        38.95039999042638
+      ]
+    },
+    "content_coverage_v1": {
+      "positive_requests": 72,
+      "full_evidence_correct": 59,
+      "no_answer_requests": 24,
+      "no_answer_correct": 22,
+      "macro_recall_at_3": 0.8194444444444444,
+      "precision_at_3": 0.32870370370370366,
+      "mrr_at_3": 0.7662037037037037,
+      "ndcg_at_3": 0.7743507321333086,
+      "irrelevant_returned": 92,
+      "positive_results_returned": 163,
+      "distractor_return_rate": 0.5644171779141104,
+      "p95_ms": 38.56000000087079,
+      "multi_document_correct": 12,
+      "p95_rounds_ms": [
+        38.56000000087079,
+        40.10990000097081,
+        40.24339999887161
+      ]
+    },
+    "focused_evidence_v2": {
+      "positive_requests": 72,
+      "full_evidence_correct": 72,
+      "no_answer_requests": 24,
+      "no_answer_correct": 24,
+      "macro_recall_at_3": 1.0,
+      "precision_at_3": 0.3888888888888889,
+      "mrr_at_3": 0.9444444444444444,
+      "ndcg_at_3": 0.9589921948412731,
+      "irrelevant_returned": 39,
+      "positive_results_returned": 123,
+      "distractor_return_rate": 0.3170731707317073,
+      "p95_ms": 67.60530000610743,
+      "multi_document_correct": 12,
+      "p95_rounds_ms": [
+        67.60530000610743,
+        66.06730000930838,
+        66.72380000236444
+      ]
+    }
+  },
+  "delta_vs_similarity": {
+    "full_evidence_requests": 4,
+    "correct_no_answer_requests": 23,
+    "recall_percentage_points": 5.555555555555558,
+    "precision_percentage_points": 1.8518518518518545,
+    "distractor_rate_percentage_points": -26.187419768934532,
+    "p95_first_round_ms": 28.205800015712157,
+    "p95_first_round_relative_increase": 0.7158923342323662
+  },
+  "wilson_95_illustration": [
+    {
+      "successes": 72,
+      "total": 72,
+      "lower": 0.9493488274035422,
+      "upper": 1.0
+    },
+    {
+      "successes": 24,
+      "total": 24,
+      "lower": 0.8620237953250198,
+      "upper": 1.0
+    },
+    {
+      "successes": 12,
+      "total": 12,
+      "lower": 0.7575059933447592,
+      "upper": 1.0
+    },
+    {
+      "successes": 6,
+      "total": 6,
+      "lower": 0.6096657120978346,
+      "upper": 1.0
+    }
+  ],
+  "wilson_assumptions_met": false,
+  "wilson_interpretation": "Independent Bernoulli illustration only; visible clustered regression is not a population sample.",
+  "worked_example": {
+    "scope": "illustrative_metric_example_not_an_experiment",
+    "expected": [
+      "g1",
+      "g2"
+    ],
+    "returned": [
+      "g1",
+      "d1",
+      "g2"
+    ],
+    "recall_at_3": 1.0,
+    "full_evidence": true,
+    "precision_at_3": 0.6666666666666666,
+    "mrr_at_3": 1.0,
+    "dcg": 1.5,
+    "ideal_dcg": 1.6309297535714575,
+    "ndcg_at_3": 0.9197207891481876,
+    "distractor_return_rate": 0.3333333333333333
+  },
+  "new_performance_run": false,
+  "independent_blind": false,
+  "external_benchmark_executed": false,
+  "competition_ready": false
+}

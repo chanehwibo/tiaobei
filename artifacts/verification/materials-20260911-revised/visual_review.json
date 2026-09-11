@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-11",
+  "scope": "twenty_slide_and_expanded_word_layout_review_not_competition_acceptance",
+  "reviewer_kind": "coding_agent_visual_inspection",
+  "agent_visual_review_recorded": true,
+  "human_approval_pending": true,
+  "office_raw_sha256": {
+    "OS_Agent_技术方案_评分重点详述版_20260911.docx": "ab894891a10688f16d8bfa18d49eaf262344bc277dd018313d3b71a8b118afd7",
+    "OS_Agent_项目报告_20页精简版_20260911.pptx": "b936ff82d4d177f74a369dc9e13aa98516331720dcbe9ffcd180fa106f4ab849"
+  },
+  "automated_report_raw_sha256": "e5a5980e6efa1b6e78ee59809b4286859df8191f3d4b3b07355123fb39874711",
+  "word_layout_raw_sha256": "7e24111348bdd7f6ba9da7881fe24a1612bee98c9840ed9bc5cf091823e534c3",
+  "word": {
+    "rendered_pages": 66,
+    "contact_sheets_reviewed": 6,
+    "pages_covered_by_contact_review": 66,
+    "full_size_pages_reviewed": [1, 2, 33, 35, 44, 51],
+    "final_render_matches_reviewed_draft_page_png_hashes": true,
+    "matched_page_pngs": 66,
+    "measured_section_pages_match_directory": true
+  },
+  "presentation": {
+    "rendered_slides": 20,
+    "contact_sheets_reviewed": 5,
+    "slides_covered_by_contact_review": 20,
+    "contact_thumbnail_pixels_per_slide": [700, 394],
+    "final_render_matches_reviewed_draft_slide_png_hashes": true,
+    "matched_slide_pngs": 20,
+    "freshly_rendered_final_office": true,
+    "reused_previous_render": false,
+    "editable_diagrams": 10,
+    "native_tables": 7,
+    "minimum_table_font_pt": 18
+  },
+  "contact_sheet_hash_comparison": {
+    "compared": 11,
+    "identical": 11
+  },
+  "observations": [
+    "All Word and PPT pages were covered by contact-sheet inspection, with dense Word sections enlarged.",
+    "The final Office pair was rendered read-only again and all page images matched the reviewed draft.",
+    "No visible text clipping or incoherent overlap among diagrams, tables and text was found.",
+    "Related work, innovation, evaluation methods and performance caveats are visible in PPT body content.",
+    "Word retains detailed implementation and manuals while expanding the four scoring priorities.",
+    "Some chapter endings retain whitespace to avoid splitting tables or code blocks.",
+    "Page counts are specific to the inspected WPS and fonts; other Office engines may repaginate."
+  ],
+  "new_runtime_test_run": false,
+  "new_performance_run": false,
+  "native_latency_passed": false,
+  "independent_blind": false,
+  "delivered_pdf": false,
+  "packaged": false,
+  "competition_uploaded": false,
+  "competition_ready": false
+}

@@ -9,10 +9,12 @@
 
 2026-09-11继续优化后的结论见[四项反馈复核](docs/42_四项反馈复核与验收.md)，
 近期记忆系统和公开基准的机制对比见[相关工作补充](docs/43_近期相关工作与评测对照.md)。
-按最新官方提交规则重新编制的
-[54页技术方案Word](deliverables/submission-materials-20260911/OS_Agent_技术方案_20260911.docx)和
-[53页项目报告PPT](deliverables/submission-materials-20260911/OS_Agent_项目报告_20260911.pptx)
-已生成并核验，详见[材料交付记录](docs/46_项目报告与技术方案交付核验.md)。
+按最新反馈修订的
+[20页精简项目报告PPT](deliverables/submission-materials-20260911-revised/OS_Agent_项目报告_20页精简版_20260911.pptx)和
+[66页评分重点详述Word](deliverables/submission-materials-20260911-revised/OS_Agent_技术方案_评分重点详述版_20260911.docx)
+已生成并核验，详见[修订核验记录](docs/47_精简PPT与评分重点Word修订核验.md)。
+Word新增12节，详细展开相关工作、技术创新性、评测口径和性能可信度；
+原53页PPT与54页Word保留在[原版交付记录](docs/46_项目报告与技术方案交付核验.md)。
 
 已有多源记忆、显式授权的Markdown/YAML、偏好修正、混合检索、冲突隔离、可审计遗忘、
 SQLite与本地HTTP服务；支持5会话50轮行动评测框架及逐请求指标核验。
@@ -40,7 +42,8 @@ HashEmbedding的成绩不代表原生SDK成绩，详见[SDK证据边界](docs/27
 当前Windows源码运行392项测试，无失败、1项平台条件跳过，17项工程检查通过。
 冻结五项的四项质量为100%，80个不同服务查询的P95为48.145ms；固定分母及阈值不变。
 原始证据见`artifacts/verification/feedback/focused-20260911/windows-final/`。
-新版Word/PPT绑定上述当前源码和证据，均含25张框图；本次材料制作不重新测时延。
+新版Word/PPT绑定上述当前源码和证据；Word保留25张框图，20页PPT选用10张可编辑框图。
+本次材料修订不修改运行算法或重测时延，23项新增材料工具测试和18项原工具测试另计。
 既有39页Word及23页PPT只对应`implementation-20260910`历史源码，继续保留而不覆盖。
 历史V11的HTTP连接曾被系统网络管控拒绝，核心仅7/8通过；当前源码的V11部署仍待复验，
 不以Windows新结果或历史V11数值替代双环境验收。
@@ -81,7 +84,7 @@ python -m pip install -e ".[deliverables]"
 ```
 
 新版材料生成器另使用Pillow绘图，渲染核验可选PyMuPDF；
-依赖、字体、两次生成及严格核验见[材料工具说明](docs/materials_20260911/README.md)。
+依赖、字体、两次生成及严格核验见[材料工具说明](docs/materials_20260911_revision/README.md)。
 
 不安装项目包时，也可临时设置模块路径：
 
@@ -109,13 +112,13 @@ python -X utf8 -S scripts/evaluate_requests.py --size 10000 --require-frozen --o
 python .\scripts\verify_release.py --artifact-dir artifacts/runtime/verification --sizes 100,1000,5000,10000 --rounds 30
 ```
 
-当前Windows固定证据位于 `artifacts/verification/feedback/focused-20260911/windows-final/`，V11失败轮次位于 `artifacts/verification/takeover/kylin_initial/`；其他已封存目录只对应各自历史源码。逐请求命令对五项数值、样本数和附加安全门槛执行硬检查，未达标返回非零。完整验收还执行源码编译、全部测试、v1/v2 历史诊断、v3 检索回归、衰减消融、真实服务命中与RSS、规模性能、兼容性、演示预检、材料及隐私检查，通常需数分钟。CI另执行严格双环境源绑定材料检查，当前该项尚未通过；旧Office生成器绑定历史证据，不能用其旧检查结果证明本轮材料。新版使用`docs/materials_20260911/qa.py`单独严格核验，材料检查不替代双环境或赛事验收。`local_release_checks_passed` 与 `competition_submission_ready` 分开；真实 SDK/新领域需重新校准，0.265 不保证通用。复杂集的严格复测及三策略不退化命令见第45号报告。
+当前Windows固定证据位于 `artifacts/verification/feedback/focused-20260911/windows-final/`，V11失败轮次位于 `artifacts/verification/takeover/kylin_initial/`；其他已封存目录只对应各自历史源码。逐请求命令对五项数值、样本数和附加安全门槛执行硬检查，未达标返回非零。完整验收还执行源码编译、全部测试、v1/v2 历史诊断、v3 检索回归、衰减消融、真实服务命中与RSS、规模性能、兼容性、演示预检、材料及隐私检查，通常需数分钟。CI另执行严格双环境源绑定材料检查，当前该项尚未通过；旧Office生成器绑定历史证据，不能用其旧检查结果证明本轮材料。新版使用`docs/materials_20260911_revision/qa.py`单独严格核验，材料检查不替代双环境或赛事验收。`local_release_checks_passed` 与 `competition_submission_ready` 分开；真实 SDK/新领域需重新校准，0.265 不保证通用。复杂集的严格复测及三策略不退化命令见第45号报告。
 
 ## 初版技术审阅
 
 当前材料及阅读顺序见 [审阅说明](submission/REVIEW_README.md)。
 **本轮不打包，等待负责人审阅后另行授权。** 本轮交付工程、Markdown及原始复测证据，
-另按最新要求重编详细Word/PPT，位于`deliverables/submission-materials-20260911/`。
+另按最新要求提供20页精简PPT与评分重点详述Word，位于`deliverables/submission-materials-20260911-revised/`。
 本次只提供一个DOCX和一个PPTX及说明清单，不提供交付PDF，不生成赛事ZIP或上传。
 新版使用独立生成器、当前运行源码摘要和固定证据，已实际渲染及逐页视觉检查。
 旧Office、`review_implementation_manifest.json`及其他审阅清单仍绑定历史版本；
@@ -139,7 +142,7 @@ tests/                   单元、集成、HTTP E2E、安全与打包测试
 
 ## 文档入口
 
-- 最新Word/PPT：[材料目录](deliverables/submission-materials-20260911/README.md)；[交付核验](docs/46_项目报告与技术方案交付核验.md)
+- 最新Word/PPT：[材料目录](deliverables/submission-materials-20260911-revised/README.md)；[修订核验](docs/47_精简PPT与评分重点Word修订核验.md)
 - 技术方案：`docs/09_技术方案正文.md`
 - 本次反馈与证据：`docs/37_出题方反馈落实.md`；接续历史：`docs/35_接管实施与交付记录.md`
 - 复杂拒答、完整召回与不退化验收：`docs/45_复杂拒答与完整召回优化验收.md`

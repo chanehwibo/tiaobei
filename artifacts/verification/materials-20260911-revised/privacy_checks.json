@@ -1,0 +1,23 @@
+{
+  "scope": "revised_materials_and_whole_workspace_privacy_boundaries",
+  "new_delivery_scope_file_count": 26,
+  "new_delivery_scope_scanned_text_files": 24,
+  "new_delivery_scope_scanned_office_documents": 2,
+  "new_delivery_scope_includes_verification_reports": true,
+  "new_delivery_scope_passed": true,
+  "new_delivery_scope_unexpected_findings": [],
+  "whole_workspace_passed": false,
+  "whole_workspace_unexpected_findings": [
+    {
+      "path": "deliverables/submission-materials-20260911/~$OS_Agent_项目报告_20260911.pptx",
+      "line": null,
+      "kind": "unscannable_office_document"
+    }
+  ],
+  "whole_workspace_only_open_original_ppt_owner_file": true,
+  "open_owner_file_modified": false,
+  "open_owner_file_staged": false,
+  "scanner_modified": false,
+  "current_office_binary_diagrams_visually_reviewed": true,
+  "competition_ready": false
+}

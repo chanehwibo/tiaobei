@@ -1,0 +1,728 @@
+{
+  "scope": "revised_office_render_text_coverage_layout_and_pixel_checks",
+  "structural": {
+    "scope": "revised_ooxml_content_anonymity_editability_and_evidence",
+    "passed": true,
+    "runtime_file_count": 149,
+    "word": {
+      "expected_pages": 66,
+      "section_pages": {
+        "1.1": 4,
+        "1.2": 4,
+        "1.3": 5,
+        "2.1": 6,
+        "2.2": 7,
+        "2.3": 7,
+        "2.4": 8,
+        "3.1": 9,
+        "3.2": 10,
+        "3.3": 10,
+        "4.1": 12,
+        "4.2": 12,
+        "4.3": 13,
+        "5.1": 14,
+        "5.2": 15,
+        "5.3": 16,
+        "6.1": 17,
+        "6.2": 17,
+        "6.3": 18,
+        "7.1": 19,
+        "7.2": 20,
+        "7.3": 20,
+        "7.4": 21,
+        "7.5": 22,
+        "8.1": 23,
+        "8.2": 24,
+        "8.3": 24,
+        "9.1": 26,
+        "9.2": 27,
+        "9.3": 27,
+        "10.1": 29,
+        "10.2": 29,
+        "10.3": 30,
+        "11.1": 31,
+        "11.2": 31,
+        "11.3": 32,
+        "11.4": 32,
+        "11.5": 33,
+        "11.6": 34,
+        "11.7": 35,
+        "11.8": 36,
+        "12.1": 38,
+        "12.2": 38,
+        "12.3": 39,
+        "12.4": 39,
+        "12.5": 40,
+        "12.6": 41,
+        "12.7": 41,
+        "12.8": 42,
+        "12.9": 43,
+        "12.10": 44,
+        "13.1": 46,
+        "13.2": 46,
+        "13.3": 47,
+        "13.4": 47,
+        "13.5": 48,
+        "13.6": 49,
+        "13.7": 50,
+        "13.8": 50,
+        "13.9": 51,
+        "14.1": 53,
+        "14.2": 53,
+        "14.3": 54,
+        "14.4": 54,
+        "15.1": 56,
+        "15.2": 56,
+        "15.3": 57,
+        "15.4": 57,
+        "15.5": 58,
+        "16.1": 59,
+        "16.2": 59,
+        "17.1": 61,
+        "17.2": 62,
+        "17.3": 62,
+        "18.1": 64,
+        "18.2": 64,
+        "18.3": 65,
+        "18.4": 66,
+        "18.5": 66
+      },
+      "page_map_from_render": true,
+      "chapters": 18,
+      "topics": 79,
+      "figures": 25,
+      "native_tables": 49,
+      "scoring_focus": [
+        {
+          "topic": "相关工作对比",
+          "sections": "11.1–11.4、18.4–18.5",
+          "detail": "经典与近期工作、逐维度差异、引用及公平比较边界"
+        },
+        {
+          "topic": "技术创新性",
+          "sections": "11.3、11.5–11.8",
+          "detail": "问题、机制、实现、证据、可证伪假设与未实现路线"
+        },
+        {
+          "topic": "评测口径说明",
+          "sections": "12.1–12.10",
+          "detail": "固定分母、真值、干扰、公式算例、计时、重复与复现"
+        },
+        {
+          "topic": "性能可信度",
+          "sections": "13.1–13.9、10.3、17章",
+          "detail": "完整结果、质量代价、证据等级、有效性威胁及复验条件"
+        }
+      ]
+    },
+    "presentation": {
+      "slides": 20,
+      "editable_diagrams": 10,
+      "native_tables": 7,
+      "minimum_table_font_pt": 18,
+      "speaker_notes": true,
+      "body_scoring_topics_visible": true
+    },
+    "office_sha256": {
+      "OS_Agent_技术方案_评分重点详述版_20260911.docx": "ab894891a10688f16d8bfa18d49eaf262344bc277dd018313d3b71a8b118afd7",
+      "OS_Agent_项目报告_20页精简版_20260911.pptx": "b936ff82d4d177f74a369dc9e13aa98516331720dcbe9ffcd180fa106f4ab849"
+    },
+    "checks": {
+      "source_and_evidence_revalidated": true,
+      "output_hashes_match": true,
+      "tool_hashes_checked": true,
+      "derived_analysis_recomputed": true,
+      "all_word_details_and_tables_present": true,
+      "twenty_slides_with_curated_notes": true,
+      "scoring_topics_and_risks_visible": true,
+      "word_cross_references_valid": true,
+      "identity_and_obsolete_status_scan_passed": true,
+      "anonymous_metadata": true,
+      "native_diagrams_and_tables_verified": true,
+      "shapes_inside_canvas": true,
+      "no_delivered_pdf_or_zip": true
+    },
+    "visual_review_required": true,
+    "competition_ready": false
+  },
+  "word_rendered_pages": 66,
+  "ppt_rendered_slides": 20,
+  "word_pages": [
+    {
+      "page": 1,
+      "characters": 473,
+      "issues": []
+    },
+    {
+      "page": 2,
+      "characters": 409,
+      "issues": []
+    },
+    {
+      "page": 3,
+      "characters": 481,
+      "issues": []
+    },
+    {
+      "page": 4,
+      "characters": 673,
+      "issues": []
+    },
+    {
+      "page": 5,
+      "characters": 825,
+      "issues": []
+    },
+    {
+      "page": 6,
+      "characters": 540,
+      "issues": []
+    },
+    {
+      "page": 7,
+      "characters": 796,
+      "issues": []
+    },
+    {
+      "page": 8,
+      "characters": 1216,
+      "issues": []
+    },
+    {
+      "page": 9,
+      "characters": 597,
+      "issues": []
+    },
+    {
+      "page": 10,
+      "characters": 646,
+      "issues": []
+    },
+    {
+      "page": 11,
+      "characters": 302,
+      "issues": []
+    },
+    {
+      "page": 12,
+      "characters": 678,
+      "issues": []
+    },
+    {
+      "page": 13,
+      "characters": 680,
+      "issues": []
+    },
+    {
+      "page": 14,
+      "characters": 430,
+      "issues": []
+    },
+    {
+      "page": 15,
+      "characters": 439,
+      "issues": []
+    },
+    {
+      "page": 16,
+      "characters": 499,
+      "issues": []
+    },
+    {
+      "page": 17,
+      "characters": 702,
+      "issues": []
+    },
+    {
+      "page": 18,
+      "characters": 877,
+      "issues": []
+    },
+    {
+      "page": 19,
+      "characters": 524,
+      "issues": []
+    },
+    {
+      "page": 20,
+      "characters": 711,
+      "issues": []
+    },
+    {
+      "page": 21,
+      "characters": 677,
+      "issues": []
+    },
+    {
+      "page": 22,
+      "characters": 650,
+      "issues": []
+    },
+    {
+      "page": 23,
+      "characters": 481,
+      "issues": []
+    },
+    {
+      "page": 24,
+      "characters": 624,
+      "issues": []
+    },
+    {
+      "page": 25,
+      "characters": 288,
+      "issues": []
+    },
+    {
+      "page": 26,
+      "characters": 434,
+      "issues": []
+    },
+    {
+      "page": 27,
+      "characters": 622,
+      "issues": []
+    },
+    {
+      "page": 28,
+      "characters": 273,
+      "issues": []
+    },
+    {
+      "page": 29,
+      "characters": 725,
+      "issues": []
+    },
+    {
+      "page": 30,
+      "characters": 714,
+      "issues": []
+    },
+    {
+      "page": 31,
+      "characters": 936,
+      "issues": []
+    },
+    {
+      "page": 32,
+      "characters": 1105,
+      "issues": []
+    },
+    {
+      "page": 33,
+      "characters": 1159,
+      "issues": []
+    },
+    {
+      "page": 34,
+      "characters": 1345,
+      "issues": []
+    },
+    {
+      "page": 35,
+      "characters": 995,
+      "issues": []
+    },
+    {
+      "page": 36,
+      "characters": 805,
+      "issues": []
+    },
+    {
+      "page": 37,
+      "characters": 448,
+      "issues": []
+    },
+    {
+      "page": 38,
+      "characters": 558,
+      "issues": []
+    },
+    {
+      "page": 39,
+      "characters": 1080,
+      "issues": []
+    },
+    {
+      "page": 40,
+      "characters": 724,
+      "issues": []
+    },
+    {
+      "page": 41,
+      "characters": 795,
+      "issues": []
+    },
+    {
+      "page": 42,
+      "characters": 1173,
+      "issues": []
+    },
+    {
+      "page": 43,
+      "characters": 1186,
+      "issues": []
+    },
+    {
+      "page": 44,
+      "characters": 919,
+      "issues": []
+    },
+    {
+      "page": 45,
+      "characters": 458,
+      "issues": []
+    },
+    {
+      "page": 46,
+      "characters": 802,
+      "issues": []
+    },
+    {
+      "page": 47,
+      "characters": 884,
+      "issues": []
+    },
+    {
+      "page": 48,
+      "characters": 1066,
+      "issues": []
+    },
+    {
+      "page": 49,
+      "characters": 883,
+      "issues": []
+    },
+    {
+      "page": 50,
+      "characters": 1185,
+      "issues": []
+    },
+    {
+      "page": 51,
+      "characters": 1186,
+      "issues": []
+    },
+    {
+      "page": 52,
+      "characters": 662,
+      "issues": []
+    },
+    {
+      "page": 53,
+      "characters": 742,
+      "issues": []
+    },
+    {
+      "page": 54,
+      "characters": 910,
+      "issues": []
+    },
+    {
+      "page": 55,
+      "characters": 339,
+      "issues": []
+    },
+    {
+      "page": 56,
+      "characters": 1036,
+      "issues": []
+    },
+    {
+      "page": 57,
+      "characters": 907,
+      "issues": []
+    },
+    {
+      "page": 58,
+      "characters": 1009,
+      "issues": []
+    },
+    {
+      "page": 59,
+      "characters": 1134,
+      "issues": []
+    },
+    {
+      "page": 60,
+      "characters": 240,
+      "issues": []
+    },
+    {
+      "page": 61,
+      "characters": 488,
+      "issues": []
+    },
+    {
+      "page": 62,
+      "characters": 630,
+      "issues": []
+    },
+    {
+      "page": 63,
+      "characters": 304,
+      "issues": []
+    },
+    {
+      "page": 64,
+      "characters": 1132,
+      "issues": []
+    },
+    {
+      "page": 65,
+      "characters": 1264,
+      "issues": []
+    },
+    {
+      "page": 66,
+      "characters": 1301,
+      "issues": []
+    }
+  ],
+  "ppt_slides": [
+    {
+      "slide": 1,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.0966,
+      "nonblank": true
+    },
+    {
+      "slide": 2,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.0874,
+      "nonblank": true
+    },
+    {
+      "slide": 3,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1402,
+      "nonblank": true
+    },
+    {
+      "slide": 4,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1505,
+      "nonblank": true
+    },
+    {
+      "slide": 5,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1568,
+      "nonblank": true
+    },
+    {
+      "slide": 6,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1495,
+      "nonblank": true
+    },
+    {
+      "slide": 7,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1463,
+      "nonblank": true
+    },
+    {
+      "slide": 8,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1468,
+      "nonblank": true
+    },
+    {
+      "slide": 9,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.173,
+      "nonblank": true
+    },
+    {
+      "slide": 10,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1688,
+      "nonblank": true
+    },
+    {
+      "slide": 11,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.0996,
+      "nonblank": true
+    },
+    {
+      "slide": 12,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1465,
+      "nonblank": true
+    },
+    {
+      "slide": 13,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1548,
+      "nonblank": true
+    },
+    {
+      "slide": 14,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1849,
+      "nonblank": true
+    },
+    {
+      "slide": 15,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.16,
+      "nonblank": true
+    },
+    {
+      "slide": 16,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1417,
+      "nonblank": true
+    },
+    {
+      "slide": 17,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1328,
+      "nonblank": true
+    },
+    {
+      "slide": 18,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1779,
+      "nonblank": true
+    },
+    {
+      "slide": 19,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1593,
+      "nonblank": true
+    },
+    {
+      "slide": 20,
+      "size": [
+        1600,
+        900
+      ],
+      "dark_pixel_fraction": 0.1049,
+      "nonblank": true
+    }
+  ],
+  "contact_sheets": [
+    "word-contact-01.jpg",
+    "word-contact-02.jpg",
+    "word-contact-03.jpg",
+    "word-contact-04.jpg",
+    "word-contact-05.jpg",
+    "word-contact-06.jpg",
+    "ppt-contact-01.jpg",
+    "ppt-contact-02.jpg",
+    "ppt-contact-03.jpg",
+    "ppt-contact-04.jpg",
+    "ppt-contact-05.jpg"
+  ],
+  "issues": [],
+  "automated_render_checks_passed": true,
+  "human_visual_review_recorded": false,
+  "ppt_render_source_equivalence": null,
+  "word_render_provenance": {
+    "scope": "read_only_wps_render_for_private_layout_review",
+    "kind": "word",
+    "source_name": "OS_Agent_技术方案_评分重点详述版_20260911.docx",
+    "source_raw_sha256": "ab894891a10688f16d8bfa18d49eaf262344bc277dd018313d3b71a8b118afd7",
+    "source_unchanged": true,
+    "count": 66,
+    "rendered_at_utc": "2026-09-11T04:25:23.1270208Z",
+    "output_raw_sha256": {
+      "document.pdf": "3bdb54510fb7f13f0edefa86bc4d66a44f29249007fb5dbb3c7c61f57dff2ee7"
+    },
+    "private_pdf_is_not_a_deliverable": true
+  },
+  "ppt_render_provenance": {
+    "scope": "read_only_wps_render_for_private_layout_review",
+    "kind": "ppt",
+    "source_name": "OS_Agent_项目报告_20页精简版_20260911.pptx",
+    "source_raw_sha256": "b936ff82d4d177f74a369dc9e13aa98516331720dcbe9ffcd180fa106f4ab849",
+    "source_unchanged": true,
+    "count": 20,
+    "rendered_at_utc": "2026-09-11T04:25:23.5141864Z",
+    "output_raw_sha256": {
+      "幻灯片1.PNG": "6d3f484c6ad274b752e1650048ee51eae6fb15fa925ae13e0cc31992da98c432",
+      "幻灯片10.PNG": "ce2ec3882305582cf122373735198beb47578cb12ebe08497e1e7de5f029ffbd",
+      "幻灯片11.PNG": "6e9614609fb083e26195984585b6c5cadc03e7778d538a17989afddc19198d1a",
+      "幻灯片12.PNG": "436aff24115230b0da17601edb620947ed606b06548dd0f217f2b6add17498f1",
+      "幻灯片13.PNG": "36df5ce9ba02a393ddc62808e26e48dcb7018b98ac2f81483665552f4500690c",
+      "幻灯片14.PNG": "9202bfd173e3412fe89dd54cfff4834495f04f90df06aeff191670dd98f65a87",
+      "幻灯片15.PNG": "6948514df43af9c860e70137f25530c0a90c3eb0ff221bd3d4cb5372d7970fb8",
+      "幻灯片16.PNG": "0254c3230b05a7dc61379ed104e38f513a507f533dd6c9eded47d0e002b2e735",
+      "幻灯片17.PNG": "f923cf7cc19f8e7f2e3cc71fcc3ead9b52bb6debcd332fbfba22f86ca4b9ac01",
+      "幻灯片18.PNG": "f897c355cf93d302ac1c8ccbad1cfc01bca987d09d6e5dedff5f98b0ff97ce5d",
+      "幻灯片19.PNG": "75826d264c31b406241356484e826452afc841c1863dfb0b297b9da1c494c977",
+      "幻灯片2.PNG": "3d18670057dc27d20a52fa7daa3a063f7880d6f9c5bb19e9786b202068bc7184",
+      "幻灯片20.PNG": "517c0879fd4a862d2014e0cf4de7769685b7789db26156a6e4e5fcf20f2aac97",
+      "幻灯片3.PNG": "1b1e91cdc6f51cea4f5afa61ad850648e8a2d45f1590f38cd6a2daf299e42dc3",
+      "幻灯片4.PNG": "cac71514ce8dec639ce390f1ad9b3a1cb90f276d54b4c7c2e5685652238fdcae",
+      "幻灯片5.PNG": "57f8dde76b613c4df65dc0fa76832a8babb511d373d037e2cc7ff19dfcffee29",
+      "幻灯片6.PNG": "7196552936da1963a2093ab6ebf02ab26fad81b77fb4002dce31c86e5047e073",
+      "幻灯片7.PNG": "e672f90b91bc6e5f8c885afe8619fa28a5e455fa7ec7155b79f9df4175bf7ea0",
+      "幻灯片8.PNG": "844dc95ccff5e06384fa5924adc8db40ef1947e122dca5f521c13ab578705889",
+      "幻灯片9.PNG": "585038aa0c5bd5c13093e1ed32c78a42adc827a902391573da66f04bcf9bc1cf"
+    },
+    "private_pdf_is_not_a_deliverable": true
+  },
+  "private_pdf_is_not_a_deliverable": true,
+  "competition_ready": false
+}

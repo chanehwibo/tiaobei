@@ -1,0 +1,716 @@
+{
+  "word": [
+    {
+      "section": "1.1",
+      "title": "项目目标与交付边界",
+      "diagram": null,
+      "expected_page": 4
+    },
+    {
+      "section": "1.2",
+      "title": "提交规则与章节对应",
+      "diagram": null,
+      "expected_page": 4
+    },
+    {
+      "section": "1.3",
+      "title": "使用场景与实用价值",
+      "diagram": null,
+      "expected_page": 5
+    },
+    {
+      "section": "2.1",
+      "title": "总体架构与职责分层",
+      "diagram": "architecture",
+      "expected_page": 6
+    },
+    {
+      "section": "2.2",
+      "title": "研究服务与官方工具的边界",
+      "diagram": "two_routes",
+      "expected_page": 7
+    },
+    {
+      "section": "2.3",
+      "title": "核心数据模型",
+      "diagram": null,
+      "expected_page": 7
+    },
+    {
+      "section": "2.4",
+      "title": "模块落地与代码导航",
+      "diagram": null,
+      "expected_page": 8
+    },
+    {
+      "section": "3.1",
+      "title": "六类多源事件接入",
+      "diagram": null,
+      "expected_page": 9
+    },
+    {
+      "section": "3.2",
+      "title": "规范化、脱敏与跨重启去重",
+      "diagram": "ingestion",
+      "expected_page": 10
+    },
+    {
+      "section": "3.3",
+      "title": "质量、风险与接入授权",
+      "diagram": null,
+      "expected_page": 10
+    },
+    {
+      "section": "4.1",
+      "title": "偏好动态捕捉",
+      "diagram": "preference",
+      "expected_page": 12
+    },
+    {
+      "section": "4.2",
+      "title": "偏好权重与时间衰减",
+      "diagram": null,
+      "expected_page": 12
+    },
+    {
+      "section": "4.3",
+      "title": "偏好版本化与历史管理",
+      "diagram": "versions",
+      "expected_page": 13
+    },
+    {
+      "section": "5.1",
+      "title": "短期、中期与长期记忆流转",
+      "diagram": "lifecycle",
+      "expected_page": 14
+    },
+    {
+      "section": "5.2",
+      "title": "晋升门槛与状态转换",
+      "diagram": "promotion",
+      "expected_page": 15
+    },
+    {
+      "section": "5.3",
+      "title": "官方 Markdown 记忆工具方案",
+      "diagram": "file_memory",
+      "expected_page": 16
+    },
+    {
+      "section": "6.1",
+      "title": "知识结构化与来源保留",
+      "diagram": null,
+      "expected_page": 17
+    },
+    {
+      "section": "6.2",
+      "title": "知识冲突治理",
+      "diagram": "conflicts",
+      "expected_page": 17
+    },
+    {
+      "section": "6.3",
+      "title": "检索可见性与有效时间",
+      "diagram": null,
+      "expected_page": 18
+    },
+    {
+      "section": "7.1",
+      "title": "候选召回与混合评分",
+      "diagram": "retrieval",
+      "expected_page": 19
+    },
+    {
+      "section": "7.2",
+      "title": "focused_evidence_v2 实现流程",
+      "diagram": "focused",
+      "expected_page": 20
+    },
+    {
+      "section": "7.3",
+      "title": "主体、版本与显式约束",
+      "diagram": null,
+      "expected_page": 20
+    },
+    {
+      "section": "7.4",
+      "title": "拒答、安全过滤与支持检查",
+      "diagram": "abstention",
+      "expected_page": 21
+    },
+    {
+      "section": "7.5",
+      "title": "返回结构与历史策略兼容",
+      "diagram": null,
+      "expected_page": 22
+    },
+    {
+      "section": "8.1",
+      "title": "端侧轻量部署方案",
+      "diagram": "deployment",
+      "expected_page": 23
+    },
+    {
+      "section": "8.2",
+      "title": "持久化、重启与失败回滚",
+      "diagram": "persistence",
+      "expected_page": 24
+    },
+    {
+      "section": "8.3",
+      "title": "轻量化设计的取舍",
+      "diagram": null,
+      "expected_page": 24
+    },
+    {
+      "section": "9.1",
+      "title": "敏感信息过滤方案",
+      "diagram": "security",
+      "expected_page": 26
+    },
+    {
+      "section": "9.2",
+      "title": "可确认遗忘与审计闭环",
+      "diagram": "forget",
+      "expected_page": 27
+    },
+    {
+      "section": "9.3",
+      "title": "威胁模型与残余安全风险",
+      "diagram": null,
+      "expected_page": 27
+    },
+    {
+      "section": "10.1",
+      "title": "Embedding 与原生 SDK 适配",
+      "diagram": "sdk",
+      "expected_page": 29
+    },
+    {
+      "section": "10.2",
+      "title": "银河麒麟 V11 适配结论",
+      "diagram": null,
+      "expected_page": 29
+    },
+    {
+      "section": "10.3",
+      "title": "真实 SDK 风险解除流程",
+      "diagram": "sdk_acceptance",
+      "expected_page": 30
+    },
+    {
+      "section": "11.1",
+      "title": "相关工作对比：经典路线",
+      "diagram": null,
+      "expected_page": 31
+    },
+    {
+      "section": "11.2",
+      "title": "相关工作对比：近期系统与基准",
+      "diagram": null,
+      "expected_page": 31
+    },
+    {
+      "section": "11.3",
+      "title": "创新主张与对照证据",
+      "diagram": null,
+      "expected_page": 32
+    },
+    {
+      "section": "11.4",
+      "title": "相关工作逐维度比较与选型理由",
+      "diagram": null,
+      "expected_page": 32
+    },
+    {
+      "section": "11.5",
+      "title": "技术创新一：OS事件治理的一致性组合",
+      "diagram": null,
+      "expected_page": 33
+    },
+    {
+      "section": "11.6",
+      "title": "技术创新二：聚焦问题的证据集合选择",
+      "diagram": null,
+      "expected_page": 34
+    },
+    {
+      "section": "11.7",
+      "title": "技术创新三：逐请求不退化与证据可复算",
+      "diagram": null,
+      "expected_page": 35
+    },
+    {
+      "section": "11.8",
+      "title": "创新主张的可证伪条件与技术路线取舍",
+      "diagram": null,
+      "expected_page": 36
+    },
+    {
+      "section": "12.1",
+      "title": "效果验证报告：整体设计",
+      "diagram": "evaluation",
+      "expected_page": 38
+    },
+    {
+      "section": "12.2",
+      "title": "冻结五项的分母与失败规则",
+      "diagram": null,
+      "expected_page": 38
+    },
+    {
+      "section": "12.3",
+      "title": "复杂场景与干扰数据设计",
+      "diagram": null,
+      "expected_page": 39
+    },
+    {
+      "section": "12.4",
+      "title": "召回、排序、干扰与拒答口径",
+      "diagram": null,
+      "expected_page": 39
+    },
+    {
+      "section": "12.5",
+      "title": "对照实验与不退化门禁",
+      "diagram": "gates",
+      "expected_page": 40
+    },
+    {
+      "section": "12.6",
+      "title": "性能计时与环境口径",
+      "diagram": "timing",
+      "expected_page": 41
+    },
+    {
+      "section": "12.7",
+      "title": "样本构建、真值来源与标签隔离",
+      "diagram": null,
+      "expected_page": 41
+    },
+    {
+      "section": "12.8",
+      "title": "指标公式、完整算例与失败计分",
+      "diagram": null,
+      "expected_page": 42
+    },
+    {
+      "section": "12.9",
+      "title": "样本规模、不确定性与重复测量",
+      "diagram": null,
+      "expected_page": 43
+    },
+    {
+      "section": "12.10",
+      "title": "可复现步骤、对照公平性与消融计划",
+      "diagram": null,
+      "expected_page": 44
+    },
+    {
+      "section": "13.1",
+      "title": "效果验证结果：冻结五项",
+      "diagram": null,
+      "expected_page": 46
+    },
+    {
+      "section": "13.2",
+      "title": "效果验证结果：复杂完整性",
+      "diagram": null,
+      "expected_page": 46
+    },
+    {
+      "section": "13.3",
+      "title": "排序质量与残余干扰",
+      "diagram": null,
+      "expected_page": 47
+    },
+    {
+      "section": "13.4",
+      "title": "全矩阵检索 P95",
+      "diagram": null,
+      "expected_page": 47
+    },
+    {
+      "section": "13.5",
+      "title": "分层延迟与真实服务负载",
+      "diagram": null,
+      "expected_page": 48
+    },
+    {
+      "section": "13.6",
+      "title": "历史诊断、失败留证与限制",
+      "diagram": null,
+      "expected_page": 49
+    },
+    {
+      "section": "13.7",
+      "title": "性能可信度：主张、证据与边界对应",
+      "diagram": null,
+      "expected_page": 50
+    },
+    {
+      "section": "13.8",
+      "title": "同条件三策略结果与质量成本分析",
+      "diagram": null,
+      "expected_page": 50
+    },
+    {
+      "section": "13.9",
+      "title": "有效性威胁与风险解除优先级",
+      "diagram": null,
+      "expected_page": 51
+    },
+    {
+      "section": "14.1",
+      "title": "场景案例：终端升级与回滚证据",
+      "diagram": "case_upgrade",
+      "expected_page": 53
+    },
+    {
+      "section": "14.2",
+      "title": "场景案例：版本缺失与关系缺证据",
+      "diagram": null,
+      "expected_page": 53
+    },
+    {
+      "section": "14.3",
+      "title": "场景案例：偏好修改、冲突与遗忘",
+      "diagram": null,
+      "expected_page": 54
+    },
+    {
+      "section": "14.4",
+      "title": "授权真实案例的采集与验收",
+      "diagram": null,
+      "expected_page": 54
+    },
+    {
+      "section": "15.1",
+      "title": "用户手册：Windows 安装与启动",
+      "diagram": null,
+      "expected_page": 56
+    },
+    {
+      "section": "15.2",
+      "title": "用户手册：V11 安装与兼容检查",
+      "diagram": null,
+      "expected_page": 56
+    },
+    {
+      "section": "15.3",
+      "title": "用户手册：日常操作流程",
+      "diagram": "user_workflow",
+      "expected_page": 57
+    },
+    {
+      "section": "15.4",
+      "title": "用户手册：功能操作与预期",
+      "diagram": null,
+      "expected_page": 57
+    },
+    {
+      "section": "15.5",
+      "title": "备份、故障排查与撤除",
+      "diagram": null,
+      "expected_page": 58
+    },
+    {
+      "section": "16.1",
+      "title": "开发接口：读取与参数契约",
+      "diagram": null,
+      "expected_page": 59
+    },
+    {
+      "section": "16.2",
+      "title": "开发接口：搜索与两阶段遗忘示例",
+      "diagram": null,
+      "expected_page": 59
+    },
+    {
+      "section": "17.1",
+      "title": "官方跨会话行动评测对齐",
+      "diagram": "action",
+      "expected_page": 61
+    },
+    {
+      "section": "17.2",
+      "title": "独立 Judge 与人工复核方案",
+      "diagram": "judge",
+      "expected_page": 62
+    },
+    {
+      "section": "17.3",
+      "title": "赛事验收与交付检查表",
+      "diagram": null,
+      "expected_page": 62
+    },
+    {
+      "section": "18.1",
+      "title": "复现命令：冻结与复杂回归",
+      "diagram": null,
+      "expected_page": 64
+    },
+    {
+      "section": "18.2",
+      "title": "原始证据索引与阅读顺序",
+      "diagram": null,
+      "expected_page": 64
+    },
+    {
+      "section": "18.3",
+      "title": "数据摘要、版本与材料追溯",
+      "diagram": null,
+      "expected_page": 65
+    },
+    {
+      "section": "18.4",
+      "title": "参考文献与官方依据",
+      "diagram": null,
+      "expected_page": 66
+    },
+    {
+      "section": "18.5",
+      "title": "近期文献与来源使用说明",
+      "diagram": null,
+      "expected_page": 66
+    }
+  ],
+  "presentation": [
+    {
+      "slide": 1,
+      "title": "OS Agent 多源融合记忆优化系统",
+      "word_sections": [
+        "1.1",
+        "1.2"
+      ],
+      "diagram": null
+    },
+    {
+      "slide": 2,
+      "title": "让记忆可用，也让错误记忆可控",
+      "word_sections": [
+        "1.3",
+        "3.1",
+        "14.3"
+      ],
+      "diagram": null
+    },
+    {
+      "slide": 3,
+      "title": "总体架构：服务边界统一治理",
+      "word_sections": [
+        "2.1",
+        "2.2",
+        "2.4"
+      ],
+      "diagram": "architecture"
+    },
+    {
+      "slide": 4,
+      "title": "多源接入：先清洗，再累计可信证据",
+      "word_sections": [
+        "3.1",
+        "3.2",
+        "3.3"
+      ],
+      "diagram": "ingestion"
+    },
+    {
+      "slide": 5,
+      "title": "记忆流转：偏好可更新，历史可解释",
+      "word_sections": [
+        "4.1",
+        "4.2",
+        "4.3",
+        "5.1",
+        "5.2"
+      ],
+      "diagram": "lifecycle"
+    },
+    {
+      "slide": 6,
+      "title": "检索方案：可见性过滤与混合候选",
+      "word_sections": [
+        "7.1",
+        "7.2",
+        "7.3",
+        "7.4"
+      ],
+      "diagram": "retrieval"
+    },
+    {
+      "slide": 7,
+      "title": "冲突先隔离，遗忘可确认",
+      "word_sections": [
+        "6.2",
+        "9.1",
+        "9.2",
+        "9.3"
+      ],
+      "diagram": "forget"
+    },
+    {
+      "slide": 8,
+      "title": "端侧部署与真实SDK证据边界",
+      "word_sections": [
+        "8.1",
+        "8.2",
+        "10.1",
+        "10.2",
+        "10.3"
+      ],
+      "diagram": "deployment"
+    },
+    {
+      "slide": 9,
+      "title": "相关工作：已有机制与本项目差异",
+      "word_sections": [
+        "11.1",
+        "11.2",
+        "11.4",
+        "18.4",
+        "18.5"
+      ],
+      "diagram": null
+    },
+    {
+      "slide": 10,
+      "title": "相关评测：召回不等于回答正确",
+      "word_sections": [
+        "11.2",
+        "11.4",
+        "12.7",
+        "18.5"
+      ],
+      "diagram": null
+    },
+    {
+      "slide": 11,
+      "title": "技术创新性：三项可核验工程贡献",
+      "word_sections": [
+        "11.3",
+        "11.5",
+        "11.6",
+        "11.7",
+        "11.8"
+      ],
+      "diagram": null
+    },
+    {
+      "slide": 12,
+      "title": "关键算法：focused_evidence_v2",
+      "word_sections": [
+        "7.3",
+        "7.4",
+        "11.6"
+      ],
+      "diagram": "focused"
+    },
+    {
+      "slide": 13,
+      "title": "评测设计：复杂场景与干扰都进入分母",
+      "word_sections": [
+        "12.1",
+        "12.3",
+        "12.7"
+      ],
+      "diagram": null
+    },
+    {
+      "slide": 14,
+      "title": "评测口径：公式、失败和计时明确",
+      "word_sections": [
+        "12.2",
+        "12.4",
+        "12.6",
+        "12.8",
+        "12.9"
+      ],
+      "diagram": null
+    },
+    {
+      "slide": 15,
+      "title": "对照与门禁：修复不能损害旧成功题",
+      "word_sections": [
+        "11.7",
+        "12.5",
+        "12.10"
+      ],
+      "diagram": "gates"
+    },
+    {
+      "slide": 16,
+      "title": "冻结五项：当前配置全部达到门槛",
+      "word_sections": [
+        "12.2",
+        "13.1"
+      ],
+      "diagram": null
+    },
+    {
+      "slide": 17,
+      "title": "复杂结果：完整与拒答修复，噪声仍存在",
+      "word_sections": [
+        "13.2",
+        "13.3",
+        "13.8"
+      ],
+      "diagram": null
+    },
+    {
+      "slide": 18,
+      "title": "性能可信度：计时边界与质量成本",
+      "word_sections": [
+        "12.6",
+        "12.9",
+        "13.4",
+        "13.5",
+        "13.8"
+      ],
+      "diagram": "timing_boundary"
+    },
+    {
+      "slide": 19,
+      "title": "场景案例：升级、回滚与无依据请求",
+      "word_sections": [
+        "14.1",
+        "14.2"
+      ],
+      "diagram": "case_upgrade"
+    },
+    {
+      "slide": 20,
+      "title": "结论与验收：证据充分披露，风险独立关闭",
+      "word_sections": [
+        "13.6",
+        "13.7",
+        "13.9",
+        "17.3",
+        "18.2"
+      ],
+      "diagram": null
+    }
+  ],
+  "scoring_focus": [
+    {
+      "topic": "相关工作对比",
+      "sections": "11.1–11.4、18.4–18.5",
+      "detail": "经典与近期工作、逐维度差异、引用及公平比较边界"
+    },
+    {
+      "topic": "技术创新性",
+      "sections": "11.3、11.5–11.8",
+      "detail": "问题、机制、实现、证据、可证伪假设与未实现路线"
+    },
+    {
+      "topic": "评测口径说明",
+      "sections": "12.1–12.10",
+      "detail": "固定分母、真值、干扰、公式算例、计时、重复与复现"
+    },
+    {
+      "topic": "性能可信度",
+      "sections": "13.1–13.9、10.3、17章",
+      "detail": "完整结果、质量代价、证据等级、有效性威胁及复验条件"
+    }
+  ]
+}
