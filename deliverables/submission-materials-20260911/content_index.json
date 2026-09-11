@@ -1,0 +1,714 @@
+{
+  "word": [
+    {
+      "section": "1.1",
+      "title": "项目目标与交付边界",
+      "expected_page": 4,
+      "diagram": null
+    },
+    {
+      "section": "1.2",
+      "title": "提交规则与章节对应",
+      "expected_page": 4,
+      "diagram": null
+    },
+    {
+      "section": "1.3",
+      "title": "使用场景与实用价值",
+      "expected_page": 5,
+      "diagram": null
+    },
+    {
+      "section": "2.1",
+      "title": "总体架构与职责分层",
+      "expected_page": 6,
+      "diagram": "architecture"
+    },
+    {
+      "section": "2.2",
+      "title": "研究服务与官方工具的边界",
+      "expected_page": 7,
+      "diagram": "two_routes"
+    },
+    {
+      "section": "2.3",
+      "title": "核心数据模型",
+      "expected_page": 7,
+      "diagram": null
+    },
+    {
+      "section": "2.4",
+      "title": "模块落地与代码导航",
+      "expected_page": 8,
+      "diagram": null
+    },
+    {
+      "section": "3.1",
+      "title": "六类多源事件接入",
+      "expected_page": 9,
+      "diagram": null
+    },
+    {
+      "section": "3.2",
+      "title": "规范化、脱敏与跨重启去重",
+      "expected_page": 10,
+      "diagram": "ingestion"
+    },
+    {
+      "section": "3.3",
+      "title": "质量、风险与接入授权",
+      "expected_page": 10,
+      "diagram": null
+    },
+    {
+      "section": "4.1",
+      "title": "偏好动态捕捉",
+      "expected_page": 12,
+      "diagram": "preference"
+    },
+    {
+      "section": "4.2",
+      "title": "偏好权重与时间衰减",
+      "expected_page": 12,
+      "diagram": null
+    },
+    {
+      "section": "4.3",
+      "title": "偏好版本化与历史管理",
+      "expected_page": 13,
+      "diagram": "versions"
+    },
+    {
+      "section": "5.1",
+      "title": "短期、中期与长期记忆流转",
+      "expected_page": 14,
+      "diagram": "lifecycle"
+    },
+    {
+      "section": "5.2",
+      "title": "晋升门槛与状态转换",
+      "expected_page": 15,
+      "diagram": "promotion"
+    },
+    {
+      "section": "5.3",
+      "title": "官方 Markdown 记忆工具方案",
+      "expected_page": 16,
+      "diagram": "file_memory"
+    },
+    {
+      "section": "6.1",
+      "title": "知识结构化与来源保留",
+      "expected_page": 17,
+      "diagram": null
+    },
+    {
+      "section": "6.2",
+      "title": "知识冲突治理",
+      "expected_page": 17,
+      "diagram": "conflicts"
+    },
+    {
+      "section": "6.3",
+      "title": "检索可见性与有效时间",
+      "expected_page": 18,
+      "diagram": null
+    },
+    {
+      "section": "7.1",
+      "title": "候选召回与混合评分",
+      "expected_page": 19,
+      "diagram": "retrieval"
+    },
+    {
+      "section": "7.2",
+      "title": "focused_evidence_v2 实现流程",
+      "expected_page": 20,
+      "diagram": "focused"
+    },
+    {
+      "section": "7.3",
+      "title": "主体、版本与显式约束",
+      "expected_page": 20,
+      "diagram": null
+    },
+    {
+      "section": "7.4",
+      "title": "拒答、安全过滤与支持检查",
+      "expected_page": 21,
+      "diagram": "abstention"
+    },
+    {
+      "section": "7.5",
+      "title": "返回结构与历史策略兼容",
+      "expected_page": 22,
+      "diagram": null
+    },
+    {
+      "section": "8.1",
+      "title": "端侧轻量部署方案",
+      "expected_page": 23,
+      "diagram": "deployment"
+    },
+    {
+      "section": "8.2",
+      "title": "持久化、重启与失败回滚",
+      "expected_page": 24,
+      "diagram": "persistence"
+    },
+    {
+      "section": "8.3",
+      "title": "轻量化设计的取舍",
+      "expected_page": 24,
+      "diagram": null
+    },
+    {
+      "section": "9.1",
+      "title": "敏感信息过滤方案",
+      "expected_page": 26,
+      "diagram": "security"
+    },
+    {
+      "section": "9.2",
+      "title": "可确认遗忘与审计闭环",
+      "expected_page": 27,
+      "diagram": "forget"
+    },
+    {
+      "section": "9.3",
+      "title": "威胁模型与残余安全风险",
+      "expected_page": 27,
+      "diagram": null
+    },
+    {
+      "section": "10.1",
+      "title": "Embedding 与原生 SDK 适配",
+      "expected_page": 29,
+      "diagram": "sdk"
+    },
+    {
+      "section": "10.2",
+      "title": "银河麒麟 V11 适配结论",
+      "expected_page": 29,
+      "diagram": null
+    },
+    {
+      "section": "10.3",
+      "title": "真实 SDK 风险解除流程",
+      "expected_page": 30,
+      "diagram": "sdk_acceptance"
+    },
+    {
+      "section": "11.1",
+      "title": "相关工作对比：经典路线",
+      "expected_page": 31,
+      "diagram": null
+    },
+    {
+      "section": "11.2",
+      "title": "相关工作对比：近期系统与基准",
+      "expected_page": 31,
+      "diagram": null
+    },
+    {
+      "section": "11.3",
+      "title": "创新主张与对照证据",
+      "expected_page": 32,
+      "diagram": null
+    },
+    {
+      "section": "12.1",
+      "title": "效果验证报告：整体设计",
+      "expected_page": 33,
+      "diagram": "evaluation"
+    },
+    {
+      "section": "12.2",
+      "title": "冻结五项的分母与失败规则",
+      "expected_page": 33,
+      "diagram": null
+    },
+    {
+      "section": "12.3",
+      "title": "复杂场景与干扰数据设计",
+      "expected_page": 34,
+      "diagram": null
+    },
+    {
+      "section": "12.4",
+      "title": "召回、排序、干扰与拒答口径",
+      "expected_page": 34,
+      "diagram": null
+    },
+    {
+      "section": "12.5",
+      "title": "对照实验与不退化门禁",
+      "expected_page": 35,
+      "diagram": "gates"
+    },
+    {
+      "section": "12.6",
+      "title": "性能计时与环境口径",
+      "expected_page": 36,
+      "diagram": "timing"
+    },
+    {
+      "section": "13.1",
+      "title": "效果验证结果：冻结五项",
+      "expected_page": 37,
+      "diagram": null
+    },
+    {
+      "section": "13.2",
+      "title": "效果验证结果：复杂完整性",
+      "expected_page": 37,
+      "diagram": null
+    },
+    {
+      "section": "13.3",
+      "title": "排序质量与残余干扰",
+      "expected_page": 38,
+      "diagram": null
+    },
+    {
+      "section": "13.4",
+      "title": "全矩阵检索 P95",
+      "expected_page": 38,
+      "diagram": null
+    },
+    {
+      "section": "13.5",
+      "title": "分层延迟与真实服务负载",
+      "expected_page": 39,
+      "diagram": null
+    },
+    {
+      "section": "13.6",
+      "title": "历史诊断、失败留证与限制",
+      "expected_page": 40,
+      "diagram": null
+    },
+    {
+      "section": "14.1",
+      "title": "场景案例：终端升级与回滚证据",
+      "expected_page": 41,
+      "diagram": "case_upgrade"
+    },
+    {
+      "section": "14.2",
+      "title": "场景案例：版本缺失与关系缺证据",
+      "expected_page": 41,
+      "diagram": null
+    },
+    {
+      "section": "14.3",
+      "title": "场景案例：偏好修改、冲突与遗忘",
+      "expected_page": 42,
+      "diagram": null
+    },
+    {
+      "section": "14.4",
+      "title": "授权真实案例的采集与验收",
+      "expected_page": 42,
+      "diagram": null
+    },
+    {
+      "section": "15.1",
+      "title": "用户手册：Windows 安装与启动",
+      "expected_page": 44,
+      "diagram": null
+    },
+    {
+      "section": "15.2",
+      "title": "用户手册：V11 安装与兼容检查",
+      "expected_page": 44,
+      "diagram": null
+    },
+    {
+      "section": "15.3",
+      "title": "用户手册：日常操作流程",
+      "expected_page": 45,
+      "diagram": "user_workflow"
+    },
+    {
+      "section": "15.4",
+      "title": "用户手册：功能操作与预期",
+      "expected_page": 45,
+      "diagram": null
+    },
+    {
+      "section": "15.5",
+      "title": "备份、故障排查与撤除",
+      "expected_page": 46,
+      "diagram": null
+    },
+    {
+      "section": "16.1",
+      "title": "开发接口：读取与参数契约",
+      "expected_page": 47,
+      "diagram": null
+    },
+    {
+      "section": "16.2",
+      "title": "开发接口：搜索与两阶段遗忘示例",
+      "expected_page": 47,
+      "diagram": null
+    },
+    {
+      "section": "17.1",
+      "title": "官方跨会话行动评测对齐",
+      "expected_page": 49,
+      "diagram": "action"
+    },
+    {
+      "section": "17.2",
+      "title": "独立 Judge 与人工复核方案",
+      "expected_page": 50,
+      "diagram": "judge"
+    },
+    {
+      "section": "17.3",
+      "title": "赛事验收与交付检查表",
+      "expected_page": 50,
+      "diagram": null
+    },
+    {
+      "section": "18.1",
+      "title": "复现命令：冻结与复杂回归",
+      "expected_page": 52,
+      "diagram": null
+    },
+    {
+      "section": "18.2",
+      "title": "原始证据索引与阅读顺序",
+      "expected_page": 52,
+      "diagram": null
+    },
+    {
+      "section": "18.3",
+      "title": "数据摘要、版本与材料追溯",
+      "expected_page": 53,
+      "diagram": null
+    },
+    {
+      "section": "18.4",
+      "title": "参考文献与官方依据",
+      "expected_page": 54,
+      "diagram": null
+    },
+    {
+      "section": "18.5",
+      "title": "近期文献与来源使用说明",
+      "expected_page": 54,
+      "diagram": null
+    }
+  ],
+  "presentation": [
+    {
+      "slide": 3,
+      "section": "1.1",
+      "title": "项目目标与交付边界",
+      "diagram": null
+    },
+    {
+      "slide": 4,
+      "section": "1.2",
+      "title": "提交规则与章节对应",
+      "diagram": null
+    },
+    {
+      "slide": 5,
+      "section": "1.3",
+      "title": "使用场景与实用价值",
+      "diagram": null
+    },
+    {
+      "slide": 6,
+      "section": "2.1",
+      "title": "总体架构与职责分层",
+      "diagram": "architecture"
+    },
+    {
+      "slide": 7,
+      "section": "2.2",
+      "title": "研究服务与官方工具的边界",
+      "diagram": "two_routes"
+    },
+    {
+      "slide": 8,
+      "section": "3.1",
+      "title": "六类多源事件接入",
+      "diagram": null
+    },
+    {
+      "slide": 9,
+      "section": "3.2",
+      "title": "规范化、脱敏与跨重启去重",
+      "diagram": "ingestion"
+    },
+    {
+      "slide": 10,
+      "section": "4.1",
+      "title": "偏好动态捕捉",
+      "diagram": "preference"
+    },
+    {
+      "slide": 11,
+      "section": "4.2",
+      "title": "偏好权重与时间衰减",
+      "diagram": null
+    },
+    {
+      "slide": 12,
+      "section": "4.3",
+      "title": "偏好版本化与历史管理",
+      "diagram": "versions"
+    },
+    {
+      "slide": 13,
+      "section": "5.1",
+      "title": "短期、中期与长期记忆流转",
+      "diagram": "lifecycle"
+    },
+    {
+      "slide": 14,
+      "section": "5.2",
+      "title": "晋升门槛与状态转换",
+      "diagram": "promotion"
+    },
+    {
+      "slide": 15,
+      "section": "5.3",
+      "title": "官方 Markdown 记忆工具方案",
+      "diagram": "file_memory"
+    },
+    {
+      "slide": 16,
+      "section": "6.1",
+      "title": "知识结构化与来源保留",
+      "diagram": null
+    },
+    {
+      "slide": 17,
+      "section": "6.2",
+      "title": "知识冲突治理",
+      "diagram": "conflicts"
+    },
+    {
+      "slide": 18,
+      "section": "7.1",
+      "title": "候选召回与混合评分",
+      "diagram": "retrieval"
+    },
+    {
+      "slide": 19,
+      "section": "7.2",
+      "title": "focused_evidence_v2 实现流程",
+      "diagram": "focused"
+    },
+    {
+      "slide": 20,
+      "section": "7.3",
+      "title": "主体、版本与显式约束",
+      "diagram": null
+    },
+    {
+      "slide": 21,
+      "section": "7.4",
+      "title": "拒答、安全过滤与支持检查",
+      "diagram": "abstention"
+    },
+    {
+      "slide": 22,
+      "section": "8.1",
+      "title": "端侧轻量部署方案",
+      "diagram": "deployment"
+    },
+    {
+      "slide": 23,
+      "section": "8.2",
+      "title": "持久化、重启与失败回滚",
+      "diagram": "persistence"
+    },
+    {
+      "slide": 24,
+      "section": "9.1",
+      "title": "敏感信息过滤方案",
+      "diagram": "security"
+    },
+    {
+      "slide": 25,
+      "section": "9.2",
+      "title": "可确认遗忘与审计闭环",
+      "diagram": "forget"
+    },
+    {
+      "slide": 26,
+      "section": "10.1",
+      "title": "Embedding 与原生 SDK 适配",
+      "diagram": "sdk"
+    },
+    {
+      "slide": 27,
+      "section": "10.2",
+      "title": "银河麒麟 V11 适配结论",
+      "diagram": null
+    },
+    {
+      "slide": 28,
+      "section": "10.3",
+      "title": "真实 SDK 风险解除流程",
+      "diagram": "sdk_acceptance"
+    },
+    {
+      "slide": 29,
+      "section": "11.1",
+      "title": "相关工作对比：经典路线",
+      "diagram": null
+    },
+    {
+      "slide": 30,
+      "section": "11.2",
+      "title": "相关工作对比：近期系统与基准",
+      "diagram": null
+    },
+    {
+      "slide": 31,
+      "section": "11.3",
+      "title": "创新主张与对照证据",
+      "diagram": null
+    },
+    {
+      "slide": 32,
+      "section": "12.1",
+      "title": "效果验证报告：整体设计",
+      "diagram": "evaluation"
+    },
+    {
+      "slide": 33,
+      "section": "12.2",
+      "title": "冻结五项的分母与失败规则",
+      "diagram": null
+    },
+    {
+      "slide": 34,
+      "section": "12.3",
+      "title": "复杂场景与干扰数据设计",
+      "diagram": null
+    },
+    {
+      "slide": 35,
+      "section": "12.4",
+      "title": "召回、排序、干扰与拒答口径",
+      "diagram": null
+    },
+    {
+      "slide": 36,
+      "section": "12.5",
+      "title": "对照实验与不退化门禁",
+      "diagram": "gates"
+    },
+    {
+      "slide": 37,
+      "section": "12.6",
+      "title": "性能计时与环境口径",
+      "diagram": "timing"
+    },
+    {
+      "slide": 38,
+      "section": "13.1",
+      "title": "效果验证结果：冻结五项",
+      "diagram": null
+    },
+    {
+      "slide": 39,
+      "section": "13.2",
+      "title": "效果验证结果：复杂完整性",
+      "diagram": null
+    },
+    {
+      "slide": 40,
+      "section": "13.3",
+      "title": "排序质量与残余干扰",
+      "diagram": null
+    },
+    {
+      "slide": 41,
+      "section": "13.4",
+      "title": "全矩阵检索 P95：原120请求",
+      "diagram": null
+    },
+    {
+      "slide": 42,
+      "section": "13.4",
+      "title": "全矩阵检索 P95：约束48请求",
+      "diagram": null
+    },
+    {
+      "slide": 43,
+      "section": "13.5",
+      "title": "分层延迟与真实服务负载",
+      "diagram": null
+    },
+    {
+      "slide": 44,
+      "section": "13.6",
+      "title": "历史诊断、失败留证与限制",
+      "diagram": null
+    },
+    {
+      "slide": 45,
+      "section": "14.1",
+      "title": "场景案例：终端升级与回滚证据",
+      "diagram": "case_upgrade"
+    },
+    {
+      "slide": 46,
+      "section": "14.2",
+      "title": "场景案例：版本缺失与关系缺证据",
+      "diagram": null
+    },
+    {
+      "slide": 47,
+      "section": "14.4",
+      "title": "授权真实案例的采集与验收",
+      "diagram": null
+    },
+    {
+      "slide": 48,
+      "section": "15.1",
+      "title": "用户手册：Windows 安装与启动",
+      "diagram": null
+    },
+    {
+      "slide": 49,
+      "section": "15.3",
+      "title": "用户手册：日常操作流程",
+      "diagram": "user_workflow"
+    },
+    {
+      "slide": 50,
+      "section": "16.1",
+      "title": "开发接口：读取与参数契约",
+      "diagram": null
+    },
+    {
+      "slide": 51,
+      "section": "17.1",
+      "title": "官方跨会话行动评测对齐",
+      "diagram": "action"
+    },
+    {
+      "slide": 52,
+      "section": "17.2",
+      "title": "独立 Judge 与人工复核方案",
+      "diagram": "judge"
+    },
+    {
+      "slide": 53,
+      "section": "17.3",
+      "title": "赛事验收与交付检查表",
+      "diagram": null
+    }
+  ]
+}
