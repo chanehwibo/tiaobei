@@ -738,8 +738,25 @@ class MemoryStore:
         return cls._parse_time(incoming) < cls._parse_time(current)
 
     def _find_conflicts(self, candidate: KnowledgeMemory) -> list[str]:
+        possible_ids = None
+        if not re.search(r"[0-9]+(?:\.[0-9]+)?(?:天|小时|元|次|%)", candidate.content):
+            # A polarity conflict requires the opposite marker in the other
+            # body. Character postings are a conservative superset (title hits
+            # and scattered characters are still checked by the original rule).
+            # Numeric conflicts retain the exhaustive path below.
+            possible_ids = set()
+            counterparts = {other for a, b in self.CONTRADICTION_PAIRS
+                            for marker, other in ((a, b), (b, a)) if marker in candidate.content}
+            for term in counterparts:
+                postings = [self._character_index.get(char, set()) for char in set(term)]
+                if postings:
+                    possible_ids.update(set.intersection(*postings))
+            if not possible_ids:
+                return []
         conflicts: list[str] = []
         for item in self.knowledge.values():
+            if possible_ids is not None and item.id not in possible_ids:
+                continue
             if item.id == candidate.id or item.status not in {MemoryStatus.ACTIVE, MemoryStatus.CONFLICT_PENDING}:
                 continue
             if item.tenant_id != candidate.tenant_id or item.user_id != candidate.user_id:

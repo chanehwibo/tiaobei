@@ -88,6 +88,10 @@ HTTP支持同名字段，未知值返回400。0.265沿用旧v3开发集校准，
 
 列出待决冲突，或用 `auto`、`accept_incoming`、`keep_existing`、`keep_both`、`merge`、`manual_review` 处理指定知识。
 
+新增知识使用已有字符索引筛选可能含有相反规则词的候选，再执行原冲突规则和作用域检查。
+候选筛选只减少比较次数，不修改冲突阈值；含天数、小时、金额、次数或百分比的规则保留完整比较。
+直接修改 `store.knowledge` 后必须调用 `rebuild_index()`，服务层导入、遗忘和重启会维护索引。
+
 ### forget_preview(...) / forget_confirm(plan_id, tenant_id, user_id)
 
 preview 参数：instruction、tenant_id、user_id、hard_delete=False、ttl_seconds=300。preview 零修改；confirm 才执行，并返回 affected IDs 和 audit_id。
