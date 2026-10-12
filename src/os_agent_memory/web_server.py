@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import math
+import ipaddress
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
@@ -12,6 +14,7 @@ from .retrieval_evidence import DEFAULT_POLICY
 
 
 MAX_REQUEST_BYTES = 1_000_000
+REQUEST_TIMEOUT_SECONDS = 10
 
 
 def dashboard_html() -> str:
@@ -26,9 +29,31 @@ def create_server(
     port: int = 8765,
 ) -> ThreadingHTTPServer:
     class MemoryRequestHandler(BaseHTTPRequestHandler):
+        def setup(self) -> None:
+            super().setup()
+            self.connection.settimeout(REQUEST_TIMEOUT_SECONDS)
+
+        def _check_browser_request(self) -> None:
+            hosts = self.headers.get_all("Host", [])
+            bound_host, bound_port = self.server.server_address[:2]
+            names = {host.lower(), bound_host.lower()}
+            if ipaddress.ip_address(bound_host).is_loopback:
+                names.add("localhost")
+            allowed = {f"{name}:{bound_port}" for name in names}
+            if bound_port == 80:
+                allowed.update(names)
+            if len(hosts) != 1 or hosts[0].lower() not in allowed:
+                raise PermissionError("untrusted Host header")
+            origins = self.headers.get_all("Origin", [])
+            if len(origins) > 1 or (origins and origins[0].lower() != "http://" + hosts[0].lower()):
+                raise PermissionError("cross-origin request is forbidden")
+            if self.headers.get("Sec-Fetch-Site") == "cross-site":
+                raise PermissionError("cross-site request is forbidden")
+
         def do_GET(self) -> None:  # noqa: N802
             parsed = urlparse(self.path)
             try:
+                self._check_browser_request()
                 if parsed.path == "/":
                     self._send_text(dashboard_html(), content_type="text/html; charset=utf-8")
                     return
@@ -57,14 +82,14 @@ def create_server(
                     self._send_json({"error": "not_found"}, HTTPStatus.NOT_FOUND)
             except (KeyError, TypeError, ValueError) as exc:
                 self._send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+            except PermissionError as exc:
+                self._send_json({"error": str(exc)}, HTTPStatus.FORBIDDEN)
 
         def do_POST(self) -> None:  # noqa: N802
             parsed = urlparse(self.path)
             try:
+                self._check_browser_request()
                 body = self._read_json()
-                origin = self.headers.get("Origin")
-                if origin and origin != "http://" + self.headers.get("Host", ""):
-                    raise PermissionError("cross-origin mutation is forbidden")
                 if parsed.path == "/api/demo":
                     if not isinstance(body.get("reset", False), bool):
                         raise ValueError("reset must be boolean")
@@ -75,13 +100,15 @@ def create_server(
                         raise ValueError("records must be an array")
                     result = service.ingest(records)
                 elif parsed.path == "/api/search":
+                    if body.get("scene") is not None and not isinstance(body["scene"], str):
+                        raise ValueError("scene must be a string or null")
                     result = service.search(
                         self._required(body, "query"),
                         tenant_id=self._required(body, "tenant_id"),
                         user_id=self._required(body, "user_id"),
-                        scene=str(body.get("scene") or "") or None,
-                        top_k=int(body.get("top_k", 5)),
-                        min_score=float(body.get("min_score", MemoryStore.DEFAULT_MIN_SCORE)),
+                        scene=body.get("scene") or None,
+                        top_k=body.get("top_k", 5),
+                        min_score=body.get("min_score", MemoryStore.DEFAULT_MIN_SCORE),
                         retrieval_mode=body.get("retrieval_mode", "hybrid"),
                         required_terms=body.get("required_terms"),
                         evidence_policy=body.get("evidence_policy", DEFAULT_POLICY),
@@ -123,10 +150,35 @@ def create_server(
             return
 
         def _read_json(self) -> dict[str, Any]:
-            length = int(self.headers.get("Content-Length", "0"))
+            lengths = self.headers.get_all("Content-Length", [])
+            if self.headers.get("Transfer-Encoding") or len(lengths) != 1 or not lengths[0].isdigit():
+                raise ValueError("one Content-Length and no Transfer-Encoding are required")
+            length = int(lengths[0])
             if length <= 0 or length > MAX_REQUEST_BYTES:
                 raise ValueError(f"request body must be 1..{MAX_REQUEST_BYTES} bytes")
-            payload = json.loads(self.rfile.read(length).decode("utf-8"))
+            try:
+                raw = self.rfile.read(length)
+            except TimeoutError as exc:
+                raise ValueError("request body read timed out") from exc
+            if len(raw) != length:
+                raise ValueError("incomplete request body")
+
+            def object_pairs(pairs):
+                result = {}
+                for key, value in pairs:
+                    if key in result:
+                        raise ValueError("duplicate JSON field")
+                    result[key] = value
+                return result
+
+            def finite_number(value):
+                number = float(value)
+                if not math.isfinite(number):
+                    raise ValueError("JSON numbers must be finite")
+                return number
+
+            payload = json.loads(raw.decode("utf-8"), object_pairs_hook=object_pairs,
+                                 parse_constant=finite_number, parse_float=finite_number)
             if not isinstance(payload, dict):
                 raise ValueError("request body must be a JSON object")
             return payload

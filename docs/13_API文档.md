@@ -10,6 +10,12 @@
 
 当前 API 用于 localhost 演示，没有身份认证。调用方传入的 tenant/user 必须由可信上层身份系统绑定，不能直接信任终端用户任意填写。
 
+HTTP 在读取请求体前检查 Host、Origin 和跨站请求标志；仅接受绑定主机及其端口，
+回环监听额外接受 localhost。CLI 不必提供 Origin；浏览器的 Origin 如存在必须与 Host 同源。
+请求体读取的空闲超时为10秒；需提供唯一 Content-Length，不支持分块传输。
+重复 JSON 键、NaN/Infinity、溢出浮点数及非对象 JSON 返回400。
+这些检查用于保护本地演示，不替代身份认证或多用户授权系统。
+
 ## 2. Python 服务层
 
 ```python
@@ -36,6 +42,9 @@ service = MemoryService(database_path="artifacts/runtime/memory.sqlite")
 ### `search(query, tenant_id, user_id, scene=None, top_k=5, min_score=0.265, include_pending=False, retrieval_mode="hybrid", required_terms=None, evidence_policy="focused_evidence_v2")`
 
 返回带综合、词法、语义分数的知识列表。业务回答不得把 `include_pending` 设为 true；该选项仅用于冲突诊断。
+
+`top_k` 必须是正整数，`min_score` 必须是0到1之间的数值，两者均不接受布尔值或数字字符串。
+`scene` 为字符串或null。Python底层的 `candidate_limit` 必须为不小于 `top_k` 的整数。
 
 `retrieval_mode` 可为 `hybrid`、`lexical`、`semantic`。`required_terms` 是调用方明确提供的
 证据约束，最多16个字符串，每个1至128字符；所有词项都必须在同一条知识的标题或正文中出现。

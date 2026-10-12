@@ -278,23 +278,25 @@ class MemoryStore:
         required_terms: list[str] | tuple[str, ...] | None = None,
         evidence_policy: str = DEFAULT_POLICY,
     ) -> list[SearchResult]:
+        if not isinstance(query, str):
+            raise ValueError("query must be a string")
+        if type(top_k) is not int or top_k <= 0:
+            raise ValueError("top_k must be a positive integer")
+        if candidate_limit is not None and (type(candidate_limit) is not int or candidate_limit < top_k):
+            raise ValueError("candidate_limit must be an integer greater than or equal to top_k")
+        if type(min_score) not in (int, float) or not 0.0 <= min_score <= 1.0:
+            raise ValueError("min_score must be a number between zero and one")
         if retrieval_mode not in {"hybrid", "lexical", "semantic"}:
             raise ValueError("unknown retrieval_mode")
         if evidence_policy not in POLICIES:
             raise ValueError("unknown evidence_policy")
         constraints = self._evidence_constraints(required_terms)
-        if top_k <= 0:
-            raise ValueError("top_k must be positive")
         query = _normalize_search_text(query).strip()
         if not query:
             return []
         focused_answer = evidence_policy == FOCUSED_EVIDENCE and is_answer_request(query)
         if candidate_limit is None:
             candidate_limit = max(64, top_k * 12)
-        if candidate_limit < top_k:
-            raise ValueError("candidate_limit must be greater than or equal to top_k")
-        if not 0.0 <= min_score <= 1.0:
-            raise ValueError("min_score must be between zero and one")
         if focused_answer:
             request = focus_request(query, explicit_terms=bool(constraints))
             if request.ambiguous or not request.text:
