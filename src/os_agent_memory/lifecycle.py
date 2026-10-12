@@ -35,13 +35,13 @@ class ShortTermMemoryBuffer:
         if default_ttl_seconds <= 0:
             raise ValueError("default_ttl_seconds must be positive")
         self.default_ttl_seconds = default_ttl_seconds
-        self._entries: dict[str, ShortTermEntry] = {}
+        self._entries: dict[tuple[str, str, str], ShortTermEntry] = {}
 
     def add(self, record: DataRecord) -> ShortTermEntry:
         ttl_seconds = record.ttl_seconds or self.default_ttl_seconds
         expires_at = _as_datetime(record.timestamp) + timedelta(seconds=ttl_seconds)
         entry = ShortTermEntry(record=record, expires_at=expires_at.isoformat(timespec="seconds"))
-        self._entries[record.id] = entry
+        self._entries[(record.tenant_id, record.user_id, record.id)] = entry
         return entry
 
     def active(
@@ -71,10 +71,10 @@ class ShortTermMemoryBuffer:
         ]
         for record_id in expired:
             del self._entries[record_id]
-        return sorted(expired)
+        return sorted(key[2] for key in expired)
 
-    def remove(self, record_id: str) -> bool:
-        return self._entries.pop(record_id, None) is not None
+    def remove(self, record_id: str, *, tenant_id: str, user_id: str) -> bool:
+        return self._entries.pop((tenant_id, user_id, record_id), None) is not None
 
     def __len__(self) -> int:
         return len(self._entries)

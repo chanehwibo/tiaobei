@@ -22,6 +22,13 @@ service = MemoryService(database_path="artifacts/runtime/memory.sqlite")
 
 接收事件字典迭代器；返回 accepted/rejected/duplicate 数、issues、偏好、知识、promotion_decisions 和 stats。单条低证据留在中期；跨请求与重启去重。配置数据库时增量原子提交，失败回滚服务状态。
 
+事件 ID 在 `(tenant_id, user_id)` 内唯一；不同所有者可以使用同一个来源 ID，
+导入响应中的偏好和知识也按该作用域关联来源。短期记忆使用同样的键，避免同名事件互相覆盖。
+同一批中同作用域、同 ID 而正文等指纹字段不同的事件报告 `event_id_conflict`。
+`authority` 必须为有限数值（不接受布尔值）；`ttl_seconds` 接受正整数或整数字符串，
+拒绝布尔值、小数和超出日期范围的值；非法行计入 issues，其余有效行继续处理。
+直接使用 `ShortTermMemoryBuffer.remove` 时也必须传入 `tenant_id` 与 `user_id`。
+
 ### `preferences(tenant_id, user_id, scene=None)`
 
 返回当前 active 偏好，按 key 排序。scene 存在时只返回全局或适用该场景的偏好。

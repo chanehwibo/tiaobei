@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import json
+import math
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -42,7 +43,7 @@ class DataIngestionPipeline:
 
     def ingest_with_report(self, raw_records: Iterable[dict[str, Any]]) -> IngestionBatch:
         batch = IngestionBatch(issues=list(self.last_load_issues))
-        seen_ids: set[str] = set()
+        seen_ids: dict[tuple[str, str, str], str] = {}
         seen_fingerprints: set[str] = set()
         for index, raw in enumerate(raw_records, start=1):
             try:
@@ -62,10 +63,14 @@ class DataIngestionPipeline:
                     record.timestamp,
                     record.content,
                 )
-                if record.id in seen_ids or fingerprint in seen_fingerprints:
+                key = (record.tenant_id, record.user_id, record.id)
+                if key in seen_ids and seen_ids[key] != fingerprint:
+                    batch.issues.append(IngestionIssue(index=index, reason="event_id_conflict", record_id=record.id))
+                    continue
+                if key in seen_ids or fingerprint in seen_fingerprints:
                     batch.duplicate_count += 1
                     continue
-                seen_ids.add(record.id)
+                seen_ids[key] = fingerprint
                 seen_fingerprints.add(fingerprint)
                 batch.records.append(record)
             except (TypeError, ValueError) as exc:
@@ -108,9 +113,15 @@ class DataIngestionPipeline:
             raise ValueError(f"unsupported_privacy_level: {privacy_level!r}")
         ttl_seconds = raw.get("ttl_seconds")
         if ttl_seconds is not None:
+            if isinstance(ttl_seconds, bool) or not isinstance(ttl_seconds, (int, str)):
+                raise ValueError("ttl_seconds must be a positive integer")
             ttl_seconds = int(ttl_seconds)
             if ttl_seconds <= 0:
                 raise ValueError("ttl_seconds must be positive")
+            try:
+                datetime.fromisoformat(timestamp) + timedelta(seconds=ttl_seconds)
+            except OverflowError as exc:
+                raise ValueError("ttl_seconds exceeds the supported timestamp range") from exc
         record_id = str(
             raw.get("id")
             or stable_id(source_type.value, tenant_id, user_id, scene, timestamp, content)
@@ -192,9 +203,12 @@ class DataIngestionPipeline:
     ) -> float:
         if value is not None:
             try:
-                return max(0.0, min(float(value), 1.0))
-            except (TypeError, ValueError) as exc:
-                raise ValueError("authority must be numeric") from exc
+                number = float(value)
+                if isinstance(value, bool) or not math.isfinite(number):
+                    raise ValueError("non-finite authority")
+                return max(0.0, min(number, 1.0))
+            except (TypeError, ValueError, OverflowError) as exc:
+                raise ValueError("authority must be finite and numeric") from exc
         defaults = {
             SourceType.MANUAL_CONFIG: 0.95,
             SourceType.TOOL_RESULT: 0.75,

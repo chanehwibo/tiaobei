@@ -120,11 +120,11 @@ class MemoryService:
             fresh.append(record)
         batch.records = fresh
         decisions = self.lifecycle.process(batch.records)
-        evidence_ids = {record.id for record in batch.records}
+        evidence_ids = {(record.tenant_id, record.user_id, record.id) for record in batch.records}
         preferences = [item for item in self.store.preferences.values()
-                       if evidence_ids.intersection(item.evidence_ids)]
+                       if any((item.tenant_id, item.user_id, source) in evidence_ids for source in item.evidence_ids)]
         knowledge = [item for item in self.store.knowledge.values()
-                     if evidence_ids.intersection(item.source_ids)]
+                     if any((item.tenant_id, item.user_id, source) in evidence_ids for source in item.source_ids)]
         self._save_if_requested(persist)
         return to_primitive(
             {
