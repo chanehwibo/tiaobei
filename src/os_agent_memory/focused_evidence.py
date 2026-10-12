@@ -59,6 +59,11 @@ PREREQUISITE_BODY = re.compile(
 )
 DIRECTIVE = re.compile(r"(?:^|[,\uff0c;\uff1b\u3002.!?\n])\s*(?:\u8bf7|\u67e5(?:\u8be2)?)")
 LITERAL_TOKEN = re.compile(r"(?<![a-z0-9_.-])[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*(?![a-z0-9_-]|\.[a-z0-9])")
+# Compact codes need an explicit entity noun; bare SHA256/UTF8 are ordinary
+# search terms. Keep the noun as part of the literal evidence constraint.
+COMPACT_SUBJECT_PREFIX = re.compile(
+    r"(?:\b(?:sensor|device|model|controller|machine)\s+|(?:传感器|型号|控制器|机型)\s*)$"
+)
 VERSION_TOKEN = re.compile(
     r"(?:(?:v|rev|r)[0-9]+|(?:[a-z][a-z0-9]*-)+(?:v|rev)[0-9]+)"
     r"(?:\.[0-9]+)*(?:[-_][a-z0-9]+)*"
@@ -73,7 +78,7 @@ CONTEXT_REFERENCE = re.compile(
     r"\b(?:neighboring|nearby|another machine)\b"
 )
 SUBJECT_BOUNDARY = (
-    "literal-identity-v1: unambiguous request entity/version must occur in every title/body; "
+    "literal-identity-v2: formatted or noun-qualified compact entity/version must occur in every title/body; "
     "explicit caller terms take precedence; ambiguous multi-subject requests abstain"
 )
 
@@ -140,11 +145,16 @@ def _subject_literals(text: str, *, narrated=False) -> tuple[set[str], set[str]]
         if (narrated and index and CONTEXT_REFERENCE.search(clause)
                 and not INTERROGATIVE.search(clause) and not DIRECTIVE.search(clause)):
             continue
-        for token in LITERAL_TOKEN.findall(clause):
+        for match in LITERAL_TOKEN.finditer(clause):
+            token = match[0]
             if VERSION_TOKEN.fullmatch(token):
                 versions.add(token)
             elif "-" in token and re.search(r"[0-9]", token):
                 entities.add(token)
+            elif re.fullmatch(r"[a-z]+[0-9][a-z0-9]*", token):
+                prefix = COMPACT_SUBJECT_PREFIX.search(clause[:match.start()])
+                if prefix:
+                    entities.add(prefix[0] + token)
     return entities, versions
 
 
