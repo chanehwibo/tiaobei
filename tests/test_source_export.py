@@ -20,7 +20,7 @@ class SourceExportTest(unittest.TestCase):
                                       check=True, capture_output=True)
             git("init")
             git("config", "user.name", "Fixture")
-            git("config", "user.email", "fixture@example.invalid")
+            git("config", "user.email", "demo@example.com")
             git("config", "core.autocrlf", "false")
             (root / "app.py").write_bytes(b"print('committed')\n")
             git("add", "app.py")

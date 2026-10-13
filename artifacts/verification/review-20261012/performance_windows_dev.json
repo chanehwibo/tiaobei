@@ -1,0 +1,143 @@
+{
+  "benchmark": "hash_embedding_hybrid_retrieval",
+  "generated_at_utc": "2026-10-12T13:01:22+00:00",
+  "environment": {
+    "system": "Windows",
+    "release": "10",
+    "machine": "AMD64",
+    "python": "3.14.3",
+    "kylin_os": false,
+    "embedding_provider": {
+      "implementation": "os_agent_memory.embeddings.HashEmbedding",
+      "dimensions": 256,
+      "ngram": 2
+    }
+  },
+  "method": {
+    "rounds_per_size": 30,
+    "cold_definition": "first query after vector/index construction",
+    "hot_definition": "subsequent repeated in-process queries",
+    "memory_definition": "tracemalloc peak Python allocations during build and queries",
+    "process_memory_definition": "OS resident memory snapshots; peak is process-lifetime high-water mark",
+    "cpu_definition": "process CPU / elapsed wall time; 100 percent means one full CPU core",
+    "resource_scope": "build, queries and persistence in this process; separate models/containers excluded",
+    "disk_definition": "SQLite v2 file size after complete persistence",
+    "pass_rule": "max(cold query, hot p99) <= 500ms"
+  },
+  "results": [
+    {
+      "records": 100,
+      "top_k": 5,
+      "index_build_ms": 172.845,
+      "cold_query_ms": 17.128,
+      "hot_query_p50_ms": 10.881,
+      "hot_query_p95_ms": 18.628,
+      "hot_query_p99_ms": 23.1,
+      "throughput_qps": 77.53,
+      "peak_python_memory_mb": 2.733,
+      "sqlite_disk_mb": 0.449,
+      "returned_results": 5,
+      "meets_500ms": true,
+      "process_resources": {
+        "wall_ms": 719.936,
+        "cpu_ms": 625.0,
+        "cpu_percent_one_core": 86.813,
+        "rss_before_bytes": 190685184,
+        "rss_after_bytes": 193470464,
+        "lifetime_peak_rss_bytes": 323772416,
+        "source": "GetProcessMemoryInfo",
+        "available": true,
+        "error_type": null,
+        "scope": "current_process_only; excludes separate model servers and child processes",
+        "peak_definition": "OS high-water mark since process start, not a per-workload peak"
+      }
+    },
+    {
+      "records": 1000,
+      "top_k": 5,
+      "index_build_ms": 1546.841,
+      "cold_query_ms": 43.437,
+      "hot_query_p50_ms": 40.597,
+      "hot_query_p95_ms": 52.345,
+      "hot_query_p99_ms": 54.612,
+      "throughput_qps": 24.34,
+      "peak_python_memory_mb": 22.664,
+      "sqlite_disk_mb": 4.047,
+      "returned_results": 5,
+      "meets_500ms": true,
+      "process_resources": {
+        "wall_ms": 3126.527,
+        "cpu_ms": 3031.25,
+        "cpu_percent_one_core": 96.953,
+        "rss_before_bytes": 193470464,
+        "rss_after_bytes": 202895360,
+        "lifetime_peak_rss_bytes": 323772416,
+        "source": "GetProcessMemoryInfo",
+        "available": true,
+        "error_type": null,
+        "scope": "current_process_only; excludes separate model servers and child processes",
+        "peak_definition": "OS high-water mark since process start, not a per-workload peak"
+      }
+    },
+    {
+      "records": 5000,
+      "top_k": 5,
+      "index_build_ms": 7903.183,
+      "cold_query_ms": 110.834,
+      "hot_query_p50_ms": 134.278,
+      "hot_query_p95_ms": 155.824,
+      "hot_query_p99_ms": 174.502,
+      "throughput_qps": 7.39,
+      "peak_python_memory_mb": 143.095,
+      "sqlite_disk_mb": 20.02,
+      "returned_results": 5,
+      "meets_500ms": true,
+      "process_resources": {
+        "wall_ms": 13089.658,
+        "cpu_ms": 12968.75,
+        "cpu_percent_one_core": 99.076,
+        "rss_before_bytes": 202895360,
+        "rss_after_bytes": 272818176,
+        "lifetime_peak_rss_bytes": 459202560,
+        "source": "GetProcessMemoryInfo",
+        "available": true,
+        "error_type": null,
+        "scope": "current_process_only; excludes separate model servers and child processes",
+        "peak_definition": "OS high-water mark since process start, not a per-workload peak"
+      }
+    },
+    {
+      "records": 10000,
+      "top_k": 5,
+      "index_build_ms": 16323.506,
+      "cold_query_ms": 250.441,
+      "hot_query_p50_ms": 278.402,
+      "hot_query_p95_ms": 380.58,
+      "hot_query_p99_ms": 384.437,
+      "throughput_qps": 3.52,
+      "peak_python_memory_mb": 243.957,
+      "sqlite_disk_mb": 39.984,
+      "returned_results": 5,
+      "meets_500ms": true,
+      "process_resources": {
+        "wall_ms": 26897.29,
+        "cpu_ms": 26406.25,
+        "cpu_percent_one_core": 98.174,
+        "rss_before_bytes": 272818176,
+        "rss_after_bytes": 336539648,
+        "lifetime_peak_rss_bytes": 701587456,
+        "source": "GetProcessMemoryInfo",
+        "available": true,
+        "error_type": null,
+        "scope": "current_process_only; excludes separate model servers and child processes",
+        "peak_definition": "OS high-water mark since process start, not a per-workload peak"
+      }
+    }
+  ],
+  "all_meet_500ms": true,
+  "limitations": [
+    "Development-machine benchmark; not a real Galaxy Kylin OS result.",
+    "Uses deterministic HashEmbedding; real Kylin SDK must be benchmarked separately.",
+    "Synthetic records measure retrieval scaling, not end-user task completion quality."
+  ]
+}

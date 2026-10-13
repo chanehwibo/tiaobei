@@ -1,0 +1,419 @@
+{
+  "suite": "office_memory_eval_v1",
+  "split": "all",
+  "top_k": 3,
+  "metrics": {
+    "preference_accuracy": 0.7778,
+    "preference_precision": 1.0,
+    "preference_recall": 0.7778,
+    "preference_f1": 0.875,
+    "knowledge_precision_at_k": 0.5555,
+    "knowledge_recall_at_k": 1.0,
+    "knowledge_mrr": 1.0,
+    "knowledge_ndcg_at_k": 1.0,
+    "knowledge_search_latency_ms": 0.421,
+    "conflict_accuracy": 1.0,
+    "conflict_precision": 1.0,
+    "conflict_recall": 1.0,
+    "conflict_f1": 1.0,
+    "forget_accuracy": 1.0,
+    "forget_precision": 1.0,
+    "forget_recall": 1.0,
+    "forget_f1": 1.0,
+    "forget_misdelete_rate": 0.0
+  },
+  "counts": {
+    "records": 11,
+    "preferences": 7,
+    "preference_versions": 8,
+    "knowledge": 7,
+    "knowledge_conflicts": 0
+  },
+  "details": {
+    "preferences": [
+      {
+        "tenant_id": "default",
+        "user_id": "u-demo",
+        "key": "output.format",
+        "expected_value": "table",
+        "predicted_value": null,
+        "confidence": null,
+        "version": null,
+        "scenes": [],
+        "evidence_ids": [],
+        "passed": false
+      },
+      {
+        "tenant_id": "default",
+        "user_id": "u-demo",
+        "key": "output.language",
+        "expected_value": "zh-CN",
+        "predicted_value": "zh-CN",
+        "confidence": 0.988,
+        "version": 1,
+        "scenes": [
+          "office_report"
+        ],
+        "evidence_ids": [
+          "evt-001"
+        ],
+        "passed": true
+      },
+      {
+        "tenant_id": "default",
+        "user_id": "u-demo",
+        "key": "output.structure",
+        "expected_value": "step_by_step",
+        "predicted_value": null,
+        "confidence": null,
+        "version": null,
+        "scenes": [],
+        "evidence_ids": [],
+        "passed": false
+      },
+      {
+        "tenant_id": "default",
+        "user_id": "u-demo",
+        "key": "output.verbosity",
+        "expected_value": "brief",
+        "predicted_value": "brief",
+        "confidence": 0.988,
+        "version": 1,
+        "scenes": [
+          "office_report"
+        ],
+        "evidence_ids": [
+          "evt-001"
+        ],
+        "passed": true
+      },
+      {
+        "tenant_id": "default",
+        "user_id": "u-demo",
+        "key": "preferred_tool:meeting_summary",
+        "expected_value": "meeting_minutes_parser",
+        "predicted_value": "meeting_minutes_parser",
+        "confidence": 0.684,
+        "version": 1,
+        "scenes": [
+          "meeting_summary"
+        ],
+        "evidence_ids": [
+          "evt-008",
+          "evt-009"
+        ],
+        "passed": true
+      },
+      {
+        "tenant_id": "default",
+        "user_id": "u-demo",
+        "key": "preferred_tool:office_report",
+        "expected_value": "spreadsheet_parser",
+        "predicted_value": "spreadsheet_parser",
+        "confidence": 0.856,
+        "version": 1,
+        "scenes": [
+          "office_report"
+        ],
+        "evidence_ids": [
+          "evt-002"
+        ],
+        "passed": true
+      },
+      {
+        "tenant_id": "default",
+        "user_id": "u-demo",
+        "key": "security.confirmation",
+        "expected_value": "required",
+        "predicted_value": "required",
+        "confidence": 0.988,
+        "version": 1,
+        "scenes": [
+          "security"
+        ],
+        "evidence_ids": [
+          "evt-005"
+        ],
+        "passed": true
+      },
+      {
+        "tenant_id": "default",
+        "user_id": "u-demo",
+        "key": "security.processing",
+        "expected_value": "local_only",
+        "predicted_value": "local_only",
+        "confidence": 0.988,
+        "version": 1,
+        "scenes": [
+          "security"
+        ],
+        "evidence_ids": [
+          "evt-005"
+        ],
+        "passed": true
+      },
+      {
+        "tenant_id": "default",
+        "user_id": "u-demo",
+        "key": "security.redaction",
+        "expected_value": "required",
+        "predicted_value": "required",
+        "confidence": 0.988,
+        "version": 1,
+        "scenes": [
+          "office_report",
+          "security"
+        ],
+        "evidence_ids": [
+          "evt-001",
+          "evt-010"
+        ],
+        "passed": true
+      }
+    ],
+    "retrieval": [
+      {
+        "query": "新版报销流程审批票据",
+        "expected_titles": [
+          "报销流程规则更新"
+        ],
+        "returned_titles": [
+          "报销流程规则更新",
+          "报销失败案例",
+          "报销邮件模板"
+        ],
+        "hit_titles": [
+          "报销流程规则更新"
+        ],
+        "expected_empty": false,
+        "precision": 0.3333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0,
+        "passed": true
+      },
+      {
+        "query": "报销邮件模板字段",
+        "expected_titles": [
+          "报销邮件模板"
+        ],
+        "returned_titles": [
+          "报销邮件模板",
+          "报销失败案例",
+          "会议纪要模板与流程"
+        ],
+        "hit_titles": [
+          "报销邮件模板"
+        ],
+        "expected_empty": false,
+        "precision": 0.3333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0,
+        "passed": true
+      },
+      {
+        "query": "报销失败日期不一致案例",
+        "expected_titles": [
+          "报销失败案例"
+        ],
+        "returned_titles": [
+          "报销失败案例",
+          "会议待办责任规则",
+          "报销邮件模板"
+        ],
+        "hit_titles": [
+          "报销失败案例"
+        ],
+        "expected_empty": false,
+        "precision": 0.3333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0,
+        "passed": true
+      },
+      {
+        "query": "会议待办责任人截止日期模板",
+        "expected_titles": [
+          "会议纪要模板与流程"
+        ],
+        "returned_titles": [
+          "会议纪要模板与流程",
+          "会议待办责任规则",
+          "报销邮件模板"
+        ],
+        "hit_titles": [
+          "会议纪要模板与流程"
+        ],
+        "expected_empty": false,
+        "precision": 0.3333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0,
+        "passed": true
+      },
+      {
+        "query": "项目例会风险项谁负责什么时候完成",
+        "expected_titles": [
+          "会议待办责任规则"
+        ],
+        "returned_titles": [
+          "会议待办责任规则"
+        ],
+        "hit_titles": [
+          "会议待办责任规则"
+        ],
+        "expected_empty": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0,
+        "passed": true
+      },
+      {
+        "query": "量子芯片低温封装实验参数",
+        "expected_titles": [],
+        "returned_titles": [],
+        "hit_titles": [],
+        "expected_empty": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0,
+        "passed": true
+      }
+    ],
+    "conflicts": [
+      {
+        "id": "conflict-001",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "conflict_with_count": 1,
+        "resolution_strategy": "accept_incoming",
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "resolved_status": "active",
+        "resolved_content": "新版报销流程禁止先提交审批后补充票据。",
+        "passed": true
+      },
+      {
+        "id": "conflict-002",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "conflict_with_count": 0,
+        "resolution_strategy": null,
+        "base_status": "active",
+        "incoming_status": "active",
+        "resolved_status": null,
+        "resolved_content": "报销邮件模板可补充事由字段和审批编号。",
+        "passed": true
+      },
+      {
+        "id": "conflict-003",
+        "expected_conflict": false,
+        "actual_conflict": false,
+        "conflict_with_count": 0,
+        "resolution_strategy": null,
+        "base_status": "active",
+        "incoming_status": "active",
+        "resolved_status": null,
+        "resolved_content": "会议纪要模板可增加风险项和阻塞事项字段。",
+        "passed": true
+      },
+      {
+        "id": "conflict-004",
+        "expected_conflict": true,
+        "actual_conflict": true,
+        "conflict_with_count": 1,
+        "resolution_strategy": "merge",
+        "base_status": "forgotten",
+        "incoming_status": "active",
+        "resolved_status": "active",
+        "resolved_content": "新版报销联系人信息必须删除手机号并脱敏。",
+        "passed": true
+      }
+    ],
+    "forget": [
+      {
+        "instruction": "删除报销模板相关记忆",
+        "matched_keywords": [
+          "报销模板",
+          "报销",
+          "模板"
+        ],
+        "expected_forgotten_titles": [
+          "报销邮件模板"
+        ],
+        "expected_retained_titles": [
+          "报销流程规则更新",
+          "报销失败案例"
+        ],
+        "actual_forgotten_titles": [
+          "报销邮件模板"
+        ],
+        "missed_forgotten_titles": [],
+        "unexpected_forgotten_titles": [],
+        "wrongly_forgotten_titles": [],
+        "passed": true
+      },
+      {
+        "instruction": "清除隐私安全相关记忆",
+        "matched_keywords": [
+          "隐私安全",
+          "安全",
+          "隐私"
+        ],
+        "expected_forgotten_titles": [
+          "端侧隐私策略"
+        ],
+        "expected_retained_titles": [
+          "报销邮件模板"
+        ],
+        "actual_forgotten_titles": [
+          "端侧隐私策略"
+        ],
+        "missed_forgotten_titles": [],
+        "unexpected_forgotten_titles": [],
+        "wrongly_forgotten_titles": [],
+        "passed": true
+      },
+      {
+        "instruction": "删除会议纪要模板相关记忆",
+        "matched_keywords": [
+          "会议纪要模板",
+          "模板"
+        ],
+        "expected_forgotten_titles": [
+          "会议纪要模板与流程"
+        ],
+        "expected_retained_titles": [
+          "报销邮件模板",
+          "会议待办责任规则"
+        ],
+        "actual_forgotten_titles": [
+          "会议纪要模板与流程"
+        ],
+        "missed_forgotten_titles": [],
+        "unexpected_forgotten_titles": [],
+        "wrongly_forgotten_titles": [],
+        "passed": true
+      }
+    ]
+  },
+  "targets": {
+    "preference_accuracy": false,
+    "preference_precision": true,
+    "preference_recall": false,
+    "preference_f1": true,
+    "knowledge_precision_at_k": true,
+    "knowledge_recall_at_k": true,
+    "knowledge_mrr": true,
+    "knowledge_ndcg_at_k": true,
+    "knowledge_search_latency_ms": true,
+    "conflict_accuracy": true,
+    "conflict_f1": true,
+    "forget_accuracy": true,
+    "forget_f1": true,
+    "forget_misdelete_rate": true
+  }
+}

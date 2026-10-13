@@ -1,0 +1,75 @@
+[
+  {
+    "path": "597080-麒麟忆枢：OS Agent多源融合记忆优化与高效检索系统.zip",
+    "bytes": 199068791,
+    "sha256": "ee3671fa3d7af6c8469856bb2514bb147bf8d8389f430a2a5d6a8a614a6fc99f",
+    "members": 8,
+    "unwanted_count": 0,
+    "unwanted_examples": []
+  },
+  {
+    "path": "os-agent-memory-optimizer.zip",
+    "bytes": 117162807,
+    "sha256": "34a1693efaa4b82f4d99a143abfff9bada5fe61f590fe594c62e9b811a5915ef",
+    "members": 6427,
+    "unwanted_count": 4137,
+    "unwanted_examples": [
+      "os-agent-memory-optimizer/.git/",
+      "os-agent-memory-optimizer/.git/COMMIT_EDITMSG",
+      "os-agent-memory-optimizer/.git/FETCH_HEAD",
+      "os-agent-memory-optimizer/.git/HEAD",
+      "os-agent-memory-optimizer/.git/config",
+      "os-agent-memory-optimizer/.git/description",
+      "os-agent-memory-optimizer/.git/hooks/",
+      "os-agent-memory-optimizer/.git/hooks/applypatch-msg.sample",
+      "os-agent-memory-optimizer/.git/hooks/commit-msg.sample",
+      "os-agent-memory-optimizer/.git/hooks/fsmonitor-watchman.sample"
+    ]
+  },
+  {
+    "path": "历史版本/os-agent-memory-optimizer.zip",
+    "bytes": 17379703,
+    "sha256": "3acd08fbe2d9859112a0de23f12f88b1a9d94945da65a00c432432c90f240283",
+    "members": 3032,
+    "unwanted_count": 1917,
+    "unwanted_examples": [
+      "os-agent-memory-optimizer/.git/",
+      "os-agent-memory-optimizer/.git/COMMIT_EDITMSG",
+      "os-agent-memory-optimizer/.git/FETCH_HEAD",
+      "os-agent-memory-optimizer/.git/HEAD",
+      "os-agent-memory-optimizer/.git/config",
+      "os-agent-memory-optimizer/.git/description",
+      "os-agent-memory-optimizer/.git/hooks/",
+      "os-agent-memory-optimizer/.git/hooks/applypatch-msg.sample",
+      "os-agent-memory-optimizer/.git/hooks/commit-msg.sample",
+      "os-agent-memory-optimizer/.git/hooks/fsmonitor-watchman.sample"
+    ]
+  },
+  {
+    "path": "597080-麒麟忆枢：OS Agent多源融合记忆优化与高效检索系统/597080-麒麟忆枢：OS Agent多源融合记忆优化与高效检索系统/演示视频.zip",
+    "bytes": 74494457,
+    "sha256": "bd7cab4c4e147acb44a091a87ccebb42477d6c15d0c7cac0b389d11f8c252464",
+    "members": 2,
+    "unwanted_count": 0,
+    "unwanted_examples": []
+  },
+  {
+    "path": "597080-麒麟忆枢：OS Agent多源融合记忆优化与高效检索系统/源代码/os-agent-memory-optimizer.zip",
+    "bytes": 117162807,
+    "sha256": "34a1693efaa4b82f4d99a143abfff9bada5fe61f590fe594c62e9b811a5915ef",
+    "members": 6427,
+    "unwanted_count": 4137,
+    "unwanted_examples": [
+      "os-agent-memory-optimizer/.git/",
+      "os-agent-memory-optimizer/.git/COMMIT_EDITMSG",
+      "os-agent-memory-optimizer/.git/FETCH_HEAD",
+      "os-agent-memory-optimizer/.git/HEAD",
+      "os-agent-memory-optimizer/.git/config",
+      "os-agent-memory-optimizer/.git/description",
+      "os-agent-memory-optimizer/.git/hooks/",
+      "os-agent-memory-optimizer/.git/hooks/applypatch-msg.sample",
+      "os-agent-memory-optimizer/.git/hooks/commit-msg.sample",
+      "os-agent-memory-optimizer/.git/hooks/fsmonitor-watchman.sample"
+    ]
+  }
+]

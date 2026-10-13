@@ -1,0 +1,49 @@
+{
+  "measured_commit": "750db308eeb39759dcc471a49fbdc730a4701e3e",
+  "full_suite": {
+    "tests": 414,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "release_checks": 17,
+  "source_export_test": {
+    "additional_tests": 1,
+    "passed": true,
+    "commit": "85a93fd"
+  },
+  "competition_ready": false,
+  "current_working_materials_verified": false,
+  "video": {
+    "duration_seconds": 589.333333,
+    "bytes": 55405798,
+    "sha256": "9b8ec07e4e5d4d684a2f7c6c7c9e62d2d6bdbdb2c4af11bd3d9c8472860801bd",
+    "full_decode_passed": true,
+    "visual_samples_seconds": [
+      10,
+      300,
+      580
+    ],
+    "identity_paths_visible": true,
+    "official_anonymity_verified": false,
+    "recording_matches_current_source": false
+  },
+  "performance_scope": "Windows/Python 3.14.3/HashEmbedding256; one run per configuration; background workloads overlapped; not a controlled statistical speedup estimate",
+  "files_sha256": {
+    "action-readiness.json": "71812dd79931cad3d9c89562615cf0ebbb9c3446a167df3288d914839c40cb07",
+    "archive-inventory.json": "a92219bbad07d2b5722c4faac22744b0a0dcab1159c429699f285c303c16a527",
+    "complex-final.json": "7f91199ae555ec804b1b07d7139d68535a07885468210514ec243795443bf91a",
+    "complex-initial-regression.json": "8b16370971e4f65adb1dfe328c11a47d4264642f5ff1757cdd4c5a308319c9f4",
+    "constraints-final.json": "0e158a6bae1f79b08b90ca15a74fc08ba3c23af4e682e3e115ec554dc715841b",
+    "evaluation_v1_final.json": "cd23fa314e0c3a3693e27377b60128d5bd6e980ab6bb5cd195573c770f29fea6",
+    "evaluation_v2_test_final.json": "8da9f55ee8c488ec1bbbff21a24b2c9a9cf1a4c214e71a3f6d4227761f087c45",
+    "evaluation_v3.json": "cbb8b61f6ef5d120b3722a6976def4a57af2dda2e557f48155555d6a40446b95",
+    "final_verification.json": "6d072fd1569b957d7993500a0e5c0d3f1666f7847e05962750722e6aa64a79ab",
+    "final_verification.md": "bc59bb76a3635d75fc8c981c2ac1be2a4a3d08f21044d420f209f458d06be875",
+    "performance_windows_dev.json": "3b4ec4c5fbde2d99132048d2826e17d868f2d621aba980492be60a08ba9e3c26",
+    "performance_windows_dev.md": "2c22cf1804e94ab620b2c5bf75137940b95636b486e5740ff6288916322c5d31",
+    "requests.json": "f09435167927fbf08b07fe0a77d7ae47d67a15d874dbb7e3aa1c7a25db37982b",
+    "service-after.json": "4b7fdc7b1cb7d84baf663985f22d0be85ead3e63333e30dd35a12aefe8a92129",
+    "service-before.json": "26475950ec17737bb42e6eaea1143123ee2b2fffd29d9e93ab32a29b8a18c42f"
+  }
+}

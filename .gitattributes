@@ -8,4 +8,5 @@
 /artifacts/verification/x01-judge/** -text
 /artifacts/verification/takeover/** -text
 /artifacts/verification/feedback/** -text
+/artifacts/verification/review-20261012/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 /deliverables/** -text
